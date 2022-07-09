@@ -1,19 +1,28 @@
 # Introduction to Flix
 
-Flix is a principled functional, logic, and imperative programming language
-developed at [Aarhus University](https://cs.au.dk/), at the [University of
-Waterloo](https://uwaterloo.ca/), and by a community of [open source
-contributors](https://github.com/flix/flix).
+Flix is a principled functional, logic, and
+imperative programming language developed at
+[Aarhus University](https://cs.au.dk/), at the
+[University of Waterloo](https://uwaterloo.ca/), and
+by a community of
+[open source contributors](https://github.com/flix/flix).
 
-Flix is inspired by OCaml and Haskell with ideas from Rust and Scala. Flix looks
-like Scala, but its type system is based on Hindley-Milner. Two unique features
-of Flix are its polymorphic effect system and its support for first-class
-Datalog constraints. Flix compiles to efficient JVM bytecode, runs on the Java
-Virtual Machine, and supports full tail call elimination.
+Flix is inspired by OCaml and Haskell with ideas from
+Rust and Scala.
+Flix looks like Scala, but its type system is based
+on Hindley-Milner.
+Two unique features of Flix are its polymorphic
+effect system and its support for first-class Datalog
+constraints.
+Flix compiles to efficient JVM bytecode, runs on the
+Java Virtual Machine, and supports full tail call
+elimination.
 
-Here are a few Flix programs to illustrate the look and feel of the language:
+Here are a few Flix programs to illustrate the look
+and feel of the language:
 
-This program illustrates the use of algebraic data types and pattern matching:
+This program illustrates the use of algebraic data
+types and pattern matching:
 
 ```flix
 /// An algebraic data type for shapes.

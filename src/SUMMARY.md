@@ -1,4 +1,4 @@
 # Summary
 
-- [Introduction to Flix](./chapter_1.md)
+- [Introduction to Flix](./introduction.md)
 - [Tips and Tricks](./tips-and-tricks.md)

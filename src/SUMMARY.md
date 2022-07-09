@@ -6,6 +6,7 @@
   - [Tuples](./data-types3.md)
   - [Enumerated Types](./data-types4.md)
   - [Recursive Types](./data-types5.md)
+  - [Polymorphic Types](./data-types6.md)
 - [Tips and Tricks](./chapter_15.md)
   - [Singleton Enums](./ch15-singleton-enums.md)
   - [Type Casts](./ch15-type-casts.md)

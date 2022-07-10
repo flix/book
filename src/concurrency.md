@@ -46,7 +46,8 @@ of size zero; for a get and a put to happen both
 processes must rendezvous (block) until the message
 is passed from sender to receiver.
 
-Here is an example of sending and receiving a message over a channel:
+Here is an example of sending and receiving a message
+over a channel:
 
 ```flix
 def send(c: Channel[Int32]): Unit & Impure = c <- 42; ()

@@ -181,44 +181,15 @@ The table below gives an overview of the syntax.
 Note: the return types and effects must always be
 specifed but are omitted for a simpler overview.
 
-<Table>
-<thead>
-<tr>
-<th>Import</th>
-<th>Syntax</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Constructor</td>
-<td>`import new Foo.Bar.Baz(...)`</td>
-</tr>
-<tr>
-<td>Object Method</td>
-<td>`import Foo.Bar.baz(...) [as name]`</td>
-</tr>
-<tr>
-<td>Static Method</td>
-<td>`import static Foo.Bar.baz(...) [as name]`</td>
-</tr>
-<tr>
-<td>Get Object Field</td>
-<td>`import get Foo.Bar.baz as getValue`</td>
-</tr>
-<tr>
-<td>Set Object Field</td>
-<td>`import set Foo.Bar.baz as setValue`</td>
-</tr>
-<tr>
-<td>Get Static Field</td>
-<td>`import static get Foo.Bar.baz as getValue`</td>
-</tr>
-<tr>
-<td>Set Static Field</td>
-<td>`import static set Foo.Bar.baz as setValue`</td>
-</tr>
-</tbody>
-</Table>
+| Import           | Syntax                                      |
+|:----------------:|:-------------------------------------------:|
+| Constructor      | `import new Foo.Bar.Baz(...)`               |
+| Object Method    | `import Foo.Bar.baz(...) [as name]`         |
+| Static Method    | `import static Foo.Bar.baz(...) [as name]`  |
+| Get Object Field | `import get Foo.Bar.baz as getValue`        |
+| Set Object Field | `import set Foo.Bar.baz as setValue`        |
+| Get Static Field | `import static get Foo.Bar.baz as getValue` |
+| Set Static Field | `import static set Foo.Bar.baz as setValue` |
 
 ## Limitations
 

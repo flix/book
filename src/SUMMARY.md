@@ -1,4 +1,16 @@
 # Summary
 
 - [Introduction to Flix](./chapter_1.md)
+- [Data Types](./data-types.md)
+- [Functions](./functions.md)
+- [Lists](./lists.md)
+- [Records](./records.md)
+- [References](./references.md)
+- [Arrays](./arrays.md)
+- [Namespaces](./namespaces.md)
+- [Concurrency](./concurrency.md)
+- [Effects](./effects.md)
+- [Fixpoints](./fixpoints.md)
+- [Interoperability](./interoperability.md)
+- [Build & Packages](./build-and-packages.md)
 - [Tips & Tricks](./tips-and-tricks.md)

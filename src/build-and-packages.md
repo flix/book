@@ -17,44 +17,15 @@ compile, run, and test a Flix project.
 
 The Flix build system supports the following commands:
 
-<Table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>`init`</td>
-<td>creates a new project in the current directory.</td>
-</tr>
-<tr>
-<td>`check`</td>
-<td>checks the current project for errors.</td>
-</tr>
-<tr>
-<td>`build`</td>
-<td>builds (i.e. compiles) the current project.</td>
-</tr>
-<tr>
-<td>`build-jar`</td>
-<td>builds a jar-file from the current project.</td>
-</tr>
-<tr>
-<td>`build-pkg`</td>
-<td>builds a fpkg-file from the current project.</td>
-</tr>
-<tr>
-<td>`run`</td>
-<td>runs main for the current project.</td>
-</tr>
-<tr>
-<td>`test`</td>
-<td>runs tests for the current project.</td>
-</tr>
-</tbody>
-</Table>
+| Command     | Description                                     |
+|:-----------:|:-----------------------------------------------:|
+| `init`      | Creates a new project in the current directory. |
+| `check`     | Checks the current project for errors.          |
+| `build`     | Builds (i.e. compiles) the current project.     |
+| `build-jar` | Builds a jar-file from the current project.     |
+| `build-pkg` | Builds a fpkg-file from the current project.    |
+| `run`       | Runs main for the current project.              |
+| `test`      | Runs tests for the current project.             |
 
 A command is executed by running `flix <command>` in
 the project directory.

@@ -11,6 +11,7 @@
 - [Concurrency](./concurrency.md)
 - [Effects](./effects.md)
 - [Fixpoints](./fixpoints.md)
+- [Interoperability](./interoperability.md)
 - [Tips and Tricks](./chapter_15.md)
   - [Singleton Enums](./ch15-singleton-enums.md)
   - [Type Casts](./ch15-type-casts.md)

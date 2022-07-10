@@ -1,6 +1,6 @@
 # Summary
 
-- [Introduction to Flix](./chapter_1.md)
+- [Introduction to Flix](./introduction.md)
 - [Data Types](./data-types.md)
 - [Functions](./functions.md)
 - [Lists](./lists.md)

@@ -121,7 +121,9 @@ star in that movie.
 #### Design Note
 
 Flix enforces that programs are stratified, i.e. a
-program must not have recursive dependencies on which there is use of negation. If there is, the Flix compiler rejects the program.
+program must not have recursive dependencies on
+which there is use of negation.
+If there is, the Flix compiler rejects the program.
 
 ## Programming with First-class Constraints
 

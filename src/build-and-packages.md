@@ -45,7 +45,8 @@ This is the recommended way to use the build system.
 Code:
 
 1. create a new empty folder,
-2. open the folder in Visual Studio Code (`File -> Open Folder...`), and
+2. open the folder in Visual Studio Code
+   (`File -> Open Folder...`), and
 3. press `CTRL + SHIFT + P` and type `Flix init`.
 
 ## Creating a New Project

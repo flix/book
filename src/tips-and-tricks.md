@@ -1,60 +1,49 @@
 # Tips & Tricks
 
-
-This page documents a few features that make Flix code easier to read and write.
-
+This page documents a few features that make Flix
+code easier to read and write.
 
 ## Main
 
-
-The entry point of any Flix program is the `main` function which *must* have the
-signature:
-
+The entry point of any Flix program is the `main`
+function which *must* have the signature:
 
 ```flix
-
-def main(): Unit & Impure = ...
-
+def main(): Unit & Impure
 ```
 
+That is, the `main` function
 
-That is, the main function (i) must return `Unit`, and (ii) must
-be `Impure`.
+1. must return `Unit`, and
+2. must be `Impure`.
 
-
-
-The signature of `main` does not specify any arguments, but the command line
-arguments passed to the program can be accessed by calling `Environment.getArgs()`.
-
+The signature of `main` does not specify any
+arguments, but the command line arguments passed to
+the program can be accessed by calling
+`Environment.getArgs()`.
 
 ```flix
-
 def main(): Unit & Impure=
-let args = Environment.getArgs();
-...
-
+    let args = Environment.getArgs();
+    ...
 ```
 
+Flix requires main to be `Impure`.
+If main was pure there would be no reason to run the
+program.
+Typically the impurity requirement is satisfied
+because main prints to the console or has another
+side-effect.
 
-Flix requires main to be `Impure`. If main was pure there would be no reason to run
-the program. Typically the impurity requirement is satisfied because main prints to the console
-or has another side-effect.
+## Printing to Standard Out
 
-
-
-
-## Printing to the Standard Out
-
-
-The Flix prelude defines two impure functions: `print` and `println` that
-can be used to print a string to standard out.
+The Flix prelude defines two impure functions:
+`print` and `println` that can be used to print a
+string to standard out.
 For example:
 
-
 ```flix
-
 println("Hello World")
-
 ```
 
 

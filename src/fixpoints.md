@@ -76,177 +76,169 @@ did not have to declare the type of `Edge` nor of
 
 ## Stratified Negation
 
-
-Flix supports *stratified negation* which allow restricted use of negation in rule
-bodies. For example:
-
+Flix supports *stratified negation* which allow
+restricted use of negation in rule bodies.
+For example:
 
 ```flix
-
 def main(): Unit & Impure =
-let movies = #{
-Movie("The Hateful Eight").
-Movie("Interstellar").
-};
-let actors = #{
-StarringIn("The Hateful Eight", "Samuel L. Jackson").
-StarringIn("The Hateful Eight", "Kurt Russel").
-StarringIn("The Hateful Eight", "Quentin Tarantino").
-StarringIn("Interstellar", "Matthew McConaughey").
-StarringIn("Interstellar", "Anne Hathaway").
-};
-let directors = #{
-DirectedBy("The Hateful Eight", "Quentin Tarantino").
-DirectedBy("Interstellar", "Christopher Nolan").
-};
-let rule = #{
-MovieWithoutDirector(title) :- 
-Movie(title), 
-DirectedBy(title, name), 
-not StarringIn(title, name).
-};
-query movies, actors, directors, rule 
-select title from MovieWithoutDirector(title) |> println
-
-
+    let movies = #{
+        Movie("The Hateful Eight").
+        Movie("Interstellar").
+    };
+    let actors = #{
+        StarringIn("The Hateful Eight", "Samuel L. Jackson").
+        StarringIn("The Hateful Eight", "Kurt Russel").
+        StarringIn("The Hateful Eight", "Quentin Tarantino").
+        StarringIn("Interstellar", "Matthew McConaughey").
+        StarringIn("Interstellar", "Anne Hathaway").
+    };
+    let directors = #{
+        DirectedBy("The Hateful Eight", "Quentin Tarantino").
+        DirectedBy("Interstellar", "Christopher Nolan").
+    };
+    let rule = #{
+        MovieWithoutDirector(title) :- 
+            Movie(title), 
+            DirectedBy(title, name), 
+            not StarringIn(title, name).
+    };
+    query movies, actors, directors, rule 
+        select title from MovieWithoutDirector(title) |> println
 ```
 
-
-The program defines three local variables that contain information about movies, actors, and
-directors. The local variable `rule` contains a rule that captures all movies where
-the director does not star in the movie. Note the use negation in this rule. The query returns
-an array with the string `"Interstellar"` because Christopher Nolan did not
+The program defines three local variables that
+contain information about movies, actors, and
+directors.
+The local variable `rule` contains a rule that
+captures all movies where the director does not star
+in the movie.
+Note the use negation in this rule.
+The query returns an array with the string
+`"Interstellar"` because Christopher Nolan did not
 star in that movie.
-
 
 #### Design Note
 
-Flix enforces that programs are stratified, i.e. a program must not have recursive dependencies
-that form on which there is use of negation. If there is, the Flix compiler rejects the program.
-
-
-
+Flix enforces that programs are stratified, i.e. a
+program must not have recursive dependencies on which there is use of negation. If there is, the Flix compiler rejects the program.
 
 ## Programming with First-class Constraints
 
-
-A unique feature of Flix is its support for *first-class constraints*. A first-class
-constraint is a value that can be constructed, passed around, composed with other constraints,
-and ultimately solved. The solution to a constraint system is another constraint system which
-can be further composed.
-
-
-
+A unique feature of Flix is its support for
+*first-class constraints*.
+A first-class constraint is a value that can be
+constructed, passed around, composed with other
+constraints, and ultimately solved.
+The solution to a constraint system is another
+constraint system which can be further composed.
 For example:
 
-
 ```flix
-
 def getParents(): #{ ParentOf(String, String) | r } = #{
-ParentOf("Pompey", "Strabo").
-ParentOf("Gnaeus", "Pompey").
-ParentOf("Pompeia", "Pompey").
-ParentOf("Sextus", "Pompey").
+    ParentOf("Pompey", "Strabo").
+    ParentOf("Gnaeus", "Pompey").
+    ParentOf("Pompeia", "Pompey").
+    ParentOf("Sextus", "Pompey").
 }
 
 def getAdoptions(): #{ AdoptedBy(String, String) | r } = #{
-AdoptedBy("Augustus", "Caesar").
-AdoptedBy("Tiberius", "Augustus").
+    AdoptedBy("Augustus", "Caesar").
+    AdoptedBy("Tiberius", "Augustus").
 }
 
-def withAncestors(): #{ ParentOf(String, String), 
-AncestorOf(String, String) | r } = #{
-AncestorOf(x, y) :- ParentOf(x, y).
-AncestorOf(x, z) :- AncestorOf(x, y), AncestorOf(y, z).
+def withAncestors(): #{ ParentOf(String, String),
+                        AncestorOf(String, String) | r } = #{
+        AncestorOf(x, y) :- ParentOf(x, y).
+        AncestorOf(x, z) :- AncestorOf(x, y), AncestorOf(y, z).
 }
 
-def withAdoptions(): #{ AdoptedBy(String, String), 
-AncestorOf(String, String) | r } = #{
-AncestorOf(x, y) :- AdoptedBy(x, y).
+def withAdoptions(): #{ AdoptedBy(String, String),
+                        AncestorOf(String, String) | r } = #{
+    AncestorOf(x, y) :- AdoptedBy(x, y).
 }
 
 def main(): Unit & Impure =
-let c = false;
-if (c) {
-query getParents(), getAdoptions(), withAncestors() 
-select (x, y) from AncestorOf(x, y) |> println
-} else {
-query getParents(), getAdoptions(), withAncestors(), withAdoptions()
-select (x, y) from AncestorOf(x, y) |> println
-}
-
-
+    let c = false;
+    if (c) {
+        query getParents(), getAdoptions(), withAncestors() 
+            select (x, y) from AncestorOf(x, y) |> println
+    } else {
+        query getParents(), getAdoptions(), withAncestors(), withAdoptions()
+            select (x, y) from AncestorOf(x, y) |> println
+    }
 ```
 
+The program uses three predicate symbols: `ParentOf`,
+`AncestorOf`, and `AdoptedBy`.
+The `getParents`function returns a collection of facts
+that represent biological parents, whereas the
+`getAdoptions` function returns a collection of facts
+that represent adoptions.
+The `withAncestors` function returns two constraints 
+that populate the `AncestorOf` relation using the
+`ParentOf` relation.
+The `withAdoptions` function returns a constraint
+that populates the `ParentOf` relation using the
+`AdoptedBy` relation.
 
-The program uses three predicate symbols: `ParentOf`, `AncestorOf`,
-and `AdoptedBy`. The `getParents` function returns a collection of facts
-that represent biological parents, whereas the `getAdoptions` function returns
-a collection of facts that represent adoptions. The `withAncestors` function
-returns two constraints that populate the `AncestorOf` relation using the&nbsp;
-`ParentOf` relation. The `withAdoptions` function returns a constraint
-that populates the `ParentOf` relation using the `AdoptedBy` relation.
+In the `main` function the local variable `c`
+controls whether we query a Datalog program that only
+considers biological parents or if we include
+adoptions.
 
-
-
-In the `main` function the local variable `c` controls whether we query a
-Datalog program that only considers biological parents or if we include adoptions.
-
-
-
-As can be seen, the types the functions are row-polymorphic. For example, the signature
-of `getParents` is `def getParents():
-#{"{ ParentOf | r }"}` where `r` is row polymorphic type variable that
-represent the rest of the predicates that the result of the function can be composed with.
-
+As can be seen, the types the functions are
+row-polymorphic.
+For example, the signature of `getParents` is
+`def getParents(): #{ ParentOf | r }` where `r`
+is row polymorphic type variable that represent the
+rest of the predicates that the result of the
+function can be composed with.
 
 #### Design Note
 
-The row polymorphic types are best understood as an over-approximation of the predicates that
-may occur in a constraint system. For example, if a constraint system has
-type `{"#{ A(String), B(Int32, Int32) }"}` that does necessarily mean that it will
-contain facts or rules that use the predicate symbols `A` or `B`, but it
-does guarantee that it will not contain any fact or rule that refer to a predicate
-symbol `C`.
-
-
-
+The row polymorphic types are best understood as an
+over-approximation of the predicates that may occur
+in a constraint system.
+For example, if a constraint system has type 
+`#{ A(String), B(Int32, Int32) }` that does
+necessarily mean that it will contain facts or rules
+that use the predicate symbols `A` or `B`, but it
+does guarantee that it will not contain any fact or
+rule that refer to a predicate symbol `C`.
 
 ## Polymorphic First-class Constraints
 
-
 Another unique feature of Flix is its support for
-first-class *polymorphic* constraints. That is, constraints where one or more
-constraints are polymorphic in their term types. For example:
-
+first-class *polymorphic* constraints.
+That is, constraints where one or more constraints
+are polymorphic in their term types.
+For example:
 
 ```flix
-
 def edgesWithNumbers(): #{ LabelledEdge(String, Int32 , String) | r } = #{
-LabelledEdge("a", 1, "b").
-LabelledEdge("b", 1, "c").
-LabelledEdge("c", 2, "d").
+    LabelledEdge("a", 1, "b").
+    LabelledEdge("b", 1, "c").
+    LabelledEdge("c", 2, "d").
 }
 
 def edgesWithColor(): #{ LabelledEdge(String, String, String) | r } = #{
-LabelledEdge("a", "red", "b").
-LabelledEdge("b", "red", "c").
-LabelledEdge("c", "blu", "d").
+    LabelledEdge("a", "red", "b").
+    LabelledEdge("b", "red", "c").
+    LabelledEdge("c", "blu", "d").
 }
 
 def closure(): #{ LabelledEdge(String, l, String), 
-LabelledPath(String, l, String) } with Boxable[l] = #{
-LabelledPath(x, l, y) :- LabelledEdge(x, l, y).
-LabelledPath(x, l, z) :- LabelledPath(x, l, y), LabelledPath(y, l, z).
+                  LabelledPath(String, l, String) } with Boxable[l] = #{
+    LabelledPath(x, l, y) :- LabelledEdge(x, l, y).
+    LabelledPath(x, l, z) :- LabelledPath(x, l, y), LabelledPath(y, l, z).
 }
 
 def main(): Unit & Impure =
-query edgesWithNumbers(), closure() 
-select (x, l, z) from LabelledPath(x, l, z) |> println;
-query edgesWithColor(), closure() 
-select (x, l, z) from LabelledPath(x, l, z) |> println
-
-
+    query edgesWithNumbers(), closure() 
+        select (x, l, z) from LabelledPath(x, l, z) |> println;
+    query edgesWithColor(), closure() 
+        select (x, l, z) from LabelledPath(x, l, z) |> println
 ```
 
 
@@ -291,7 +283,7 @@ let p = inject l into Edge
 
 where `l` has type `List[(Int32, Int32)]`.
 The `inject` expression converts `l` into a Datalog constraint
-set `p` of type `{"#{ Edge(Int32, Int32) | ...}"}`.
+set `p` of type `#{ Edge(Int32, Int32) | ...}`.
 
 
 
@@ -312,7 +304,7 @@ let p = inject names, jedis into Name, Jedi
 ```
 
 
-where `p` has type `{"#{ Name(String), Jedi(String) | ...}"}`.
+where `p` has type `#{ Name(String), Jedi(String) | ...}`.
 
 
 

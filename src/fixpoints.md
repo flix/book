@@ -414,14 +414,15 @@ instance LowerBound[Sign] {
 }
 
 instance PartialOrder[Sign] {
-    pub def lessEqual(x: Sign, y: Sign): Bool = match (x, y) {
-        case (Bot, _)   => true
-        case (Neg, Neg) => true
-        case (Zer, Zer) => true
-        case (Pos, Pos) => true
-        case (_, Top)   => true
-        case _          => false
-    }
+    pub def lessEqual(x: Sign, y: Sign): Bool =
+        match (x, y) {
+            case (Bot, _)   => true
+            case (Neg, Neg) => true
+            case (Zer, Zer) => true
+            case (Pos, Pos) => true
+            case (_, Top)   => true
+            case _          => false
+        }
 }
 ```
 
@@ -430,25 +431,27 @@ lower bound:
 
 ```flix
 instance JoinLattice[Sign] {
-    pub def leastUpperBound(x: Sign, y: Sign): Sign = match (x, y) {
-        case (Bot, _)   => y
-        case (_, Bot)   => x
-        case (Neg, Neg) => Neg
-        case (Zer, Zer) => Zer
-        case (Pos, Pos) => Pos
-        case _          => Top
-    }
+    pub def leastUpperBound(x: Sign, y: Sign): Sign =
+        match (x, y) {
+            case (Bot, _)   => y
+            case (_, Bot)   => x
+            case (Neg, Neg) => Neg
+            case (Zer, Zer) => Zer
+            case (Pos, Pos) => Pos
+            case _          => Top
+        }
 }
 
 instance MeetLattice[Sign] {
-    pub def greatestLowerBound(x: Sign, y: Sign): Sign = match (x, y) {
-        case (Top, _)   => y
-        case (_, Top)   => x
-        case (Neg, Neg) => Neg
-        case (Zer, Zer) => Zer
-        case (Pos, Pos) => Pos
-        case _          => Bot
-    }
+    pub def greatestLowerBound(x: Sign, y: Sign): Sign =
+        match (x, y) {
+            case (Top, _)   => y
+            case (_, Top)   => x
+            case (Neg, Neg) => Neg
+            case (Zer, Zer) => Zer
+            case (Pos, Pos) => Pos
+            case _          => Bot
+        }
 }
 ```
 

@@ -60,7 +60,8 @@ $ java -jar path/to/flix.jar init
 ```
 
 This will create a project structure with the
-following layout (running `$ tree .` in the directory will give the result below):
+following layout (running `$ tree .` in the directory
+will give the result below):
 
 ```
 .
@@ -96,7 +97,8 @@ We can check a project for errors by running the
 $ java -jar path/to/flix.jar check
 ```
 
-Checking a project is equivalent to building a project, except no code is generated and the
+Checking a project is equivalent to building a
+project, except no code is generated and the
 process is significantly faster than a complete build.
 
 ## Building a Project

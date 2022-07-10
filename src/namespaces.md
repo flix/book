@@ -1,0 +1,215 @@
+# Namespaces
+
+Flix supports hierarchical namespaces as known from
+many other programming languages.
+
+## Declaring a Namespace
+
+We can declare a namespace to nest definitions and
+types within it.
+For example:
+
+```flix
+namespace Math {
+    def sum(x: Int32, y: Int32): Int32 = x + y
+}
+```
+
+Namespaces are hierarchical, so we can declare a
+deeper namespace:
+
+```flix
+namespace Core/Math {
+    def sum(x: Int32, y32: Int): Int32 = x + y
+}
+```
+
+Note that the fragments of a namespace are separated
+by `/`.
+
+We can freely nest namespaces.
+For example:
+
+```flix
+namespace Core {
+    namespace Math {
+
+        def sum(x: Int32, y: Int32): Int32 = x + y    
+
+        namespace Stats {
+            def median(xs: List[Int32]): Int32 = ???
+        }
+    }
+}
+```
+
+## Using Definitions from a Namespace
+
+We can refer to definitions from a namespace by their
+fully-qualified name.
+For example:
+
+```flix
+namespace Core/Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+}
+
+def main(): Unit & Impure =
+    Core/Math.sum(21, 42) |> println
+```
+
+
+Note that we must declare `sum` as public (`pub`) to
+allow access to it from outside its own namespace.
+
+It can quickly get tedious to refer to definitions by
+their fully-qualified name.
+
+The `use` construct allows us to "import" definitions
+from another namespace:
+
+```flix
+namespace Core/Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+}
+
+def main(): Unit & Impure =
+    use Core/Math.sum;
+    sum(21, 42) |> println
+```
+
+Here the `use` is local to the `main` function.
+A `use` can also appear at the top of a file:
+
+```flix
+use Core/Math.sum;
+
+def main(): Unit & Impure =
+    sum(21, 42) |> println
+
+namespace Core/Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+}
+```
+
+## Using Multiple Definitions from a Namespaces
+
+We can also use multiple definitions from a namespace:
+
+```flix
+use Core/Math.sum;
+use Core/Math.mul;
+
+def main(): Unit & Impure =
+    mul(42, 84) |> sum(21) |> println
+
+namespace Core/Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+    pub def mul(x: Int32, y: Int32): Int32 = x * y
+}
+```
+
+Multiple such uses can be grouped together:
+
+```flix
+use Core/Math.{sum, mul};
+
+def main(): Unit & Impure =
+    mul(42, 84) |> sum(21) |> println
+
+namespace Core/Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+    pub def mul(x: Int32, y: Int32): Int32 = x * y
+}
+```
+
+#### Design Note
+
+Flix does not support *wildcard* uses because they
+are inherently ambiguous and may lead to subtle
+errors during refactoring.
+
+## Avoiding Name Clashes with Renaming
+
+We can use renaming to avoid name clashes between
+identically named definitions.
+For example:
+
+```flix
+use A.{concat => stringConcat};
+use B.{concat => listConcat};
+
+def main(): Unit & Impure =
+    stringConcat("Hello", " World!") |> println
+
+namespace A {
+    pub def concat(x: String, y: String): String = x + y
+}
+
+namespace B {
+    pub def concat(xs: List[Int32], ys: List[Int32]): List[Int32] = xs ::: ys
+}
+```
+
+In many cases a better approach is to use a *local*
+`use` to avoid the problem in the first place.
+
+## Using Types from a Namespace
+
+We can use types from a namespace in the same way as
+definitions.
+For example:
+
+```flix
+use A/B.Color;
+
+def redColor(): Color = Color.Red
+
+namespace A/B {
+    pub enum Color {
+        case Red, Blue
+    }
+}
+```
+
+We can also use *type aliases* in the same way:
+
+```flix
+use A/B.Color;
+use A/B.Hue;
+
+def blueColor(): Hue = Color.Blue
+
+namespace A/B {
+    pub enum Color {
+        case Red, Blue
+    }
+    pub type alias Hue = Color
+}
+```
+
+## Using Enums from a Namespace
+
+We can use enumerated types from a namespace.
+For example:
+
+```flix
+def blueIsRed(): Bool = 
+    use A/B.Color.{Blue, Red};
+    Blue != Red
+
+namespace A/B {
+    pub enum Color with Eq {
+        case Red, Blue
+    }
+}
+```
+
+Note that `A/B.Color` is the fully-qualified name of
+a *type* whereas `{"A/B.Color.Red"}` is the
+fully-qualified name of a *tag* inside an enumerated
+type.
+That is, a fully-qualified definition is of the
+form `A/B/C.d`, a fully-qualified type is of the
+form `A/B/C.D`, and finally a fully-qualified tag is
+of the form `A/B/C.D.T`.

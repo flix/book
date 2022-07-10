@@ -111,7 +111,7 @@ $ java -jar path/to/flix.jar build
 Building a project populates the `build` directory
 with class files.
 
-## Design Note
+#### Design Note
 
 There is no `clean` command, but deleting everything
 inside the `build` directory serves the same purpose.
@@ -134,12 +134,12 @@ $ java -jar myproject.jar
 The JAR-file contains all class files from the
 `build/` directory.
 
-## Warning
+#### Warning
 
 The project must have been built beforehand with the
 `build` command.
 
-## Design Note
+#### Design Note
 
 At the time of writing (July 2021), the built
 JAR-file still depends on the `flix.jar` file.
@@ -168,7 +168,7 @@ by placing it into the `lib/` directory.
 It is recommended to include the semantic version in
 the filename of the package, e.g. `foo-1.2.1.fpkg`.
 
-## Design Note
+#### Design Note
 
 Flix does not compile to an intermediate format, but
 instead relies on packages to contain source code.

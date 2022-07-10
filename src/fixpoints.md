@@ -1,79 +1,78 @@
 # Fixpoints
 
+A unique feature of Flix is its built-in support for
+fixpoint computations on *constraint on relations*
+and *constraint on lattices*.
 
-A unique feature of Flix is its built-in support for fixpoint computations on *constraint on
-relations* and *constraint on lattices*.
-
-
-
-We assume that the reader is already familiar with Datalog and focus on the Flix specific features.
-
+We assume that the reader is already familiar with
+Datalog and focus on the Flix specific features.
 
 ## Using Flix to Solve Constraints on Relations
 
-
-We can use Flix to solve a fixpoint computation inside a function.
-
-
+We can use Flix to solve a fixpoint computation
+inside a function.
 
 For example, given a set of edges `s`, a `src` node,
-and `dst` node, compute if there is a path from `src` to `dst`.
+and `dst` node, compute if there is a path from `src`
+to `dst`.
 We can elegantly solve this problem as follows:
 
-
 ```flix
-
 def isConnected(s: Set[(Int32, Int32)], src: Int32, dst: Int32): Bool =
-let rules = #{
-Path(x, y) :- Edge(x, y).
-Path(x, z) :- Path(x, y), Edge(y, z).
-};
-let edges = inject s into Edge;
-let paths = query edges, rules select true from Path(src, dst);
-not (paths |> Array.isEmpty)
+    let rules = #{
+        Path(x, y) :- Edge(x, y).
+        Path(x, z) :- Path(x, y), Edge(y, z).
+    };
+    let edges = inject s into Edge;
+    let paths = query edges, rules select true from Path(src, dst);
+    not (paths |> Array.isEmpty)
 
 def main(): Unit & Impure =
-let s = Set#{(1, 2), (2, 3), (3, 4), (4, 5)};
-let src = 1;
-let dst = 5;
-if (isConnected(s, src, dst)) {
-println("Found a path between \${src} and \${dst}!")
-} else {
-println("Did not find a path between \${src} and \${dst}!")
-}
-
+    let s = Set#{(1, 2), (2, 3), (3, 4), (4, 5)};
+    let src = 1;
+    let dst = 5;
+    if (isConnected(s, src, dst)) {
+        println("Found a path between \${src} and \${dst}!")
+    } else {
+        println("Did not find a path between \${src} and \${dst}!")
+    }
 ```
 
+The `isConnected` function behaves like any other
+function: We can call it with a set of edges
+(`Int32`-pairs), an `Int32` source node, and
+an `Int32` destination node.
+What is interesting about `isConnected` is that its
+implementation uses a small Datalog program to solve
+the task at hand.
 
-The `isConnected` function behaves like any other function: We can call it with a
-set of edges (`Int32`-pairs), an `Int32` source node, and
-an `Int32` destination node. What is interesting about `isConnected` is
-that its implementation uses a small Datalog program to solve the task at hand.
+In the `isConnected` function, the local variable
+`rules` holds a Datalog program fragment that
+consists of two rules which define the `Path`
+relation.
+Note that the predicate symbols, `Edge` and `Path` do
+not have to be explicitly introduced; they are simply
+used.
+The local variable `edges` holds a collection of edge
+facts that are obtained by taking all the tuples in
+the set `s` and turning them into `Edge` facts.
+Next, the local variable `paths` holds the result of
+computing the fixpoint of the facts and rules
+(`edges` and `rules`) and selecting the Boolean
+`true` *if* there is a `Path(src, dst)` fact.
+Note that here `src` and `dst` are the
+lexically-bound function parameters.
+Thus, `paths` is either an empty array (no paths were
+found) or a one-element array (a path was found), and
+we simply return this fact.
 
-
-
-In the `isConnected` function, the local variable `rules` holds a Datalog
-program fragment that consists of two rules which define the `Path` relation. Note
-that the predicate symbols, `Edge` and `Path` do not have to be
-explicitly introduced; they are simply used. The local variable `edges` holds a
-collection of edge facts that are obtained by taking all the tuples in the set `s`
-&nbsp;and turning them into `Edge` facts. Next, the local variable `paths`
-&nbsp;holds the result of computing the fixpoint of the facts and rules
-(`edges` and `rules`) and selecting the Boolean `true`&nbsp;
-*if* there is a `Path(src, dst)` fact. Note that here `src`&nbsp;
-and `dst` are the lexically-bound function parameters. Thus, `paths`&nbsp;
-is either an empty array (no paths were found) or a one-element array (a path was found),
-and we simply return this fact.
-
-
-
-Flix is strongly typed. Any attempt to use predicate symbol with terms of the wrong type (or
-with the wrong arity) is caught by the type checker. Note also that Flix supports type
-inference, hence we did not have to declare the type of `Edge` nor
-of `Path`.
-
-
-
+Flix is strongly typed.
+Any attempt to use predicate symbol with terms of the
+wrong type (or with the wrong arity) is caught by the
+type checker.
+Note also that Flix supports type inference, hence we
+did not have to declare the type of `Edge` nor of
+`Path`.
 
 ## Stratified Negation
 

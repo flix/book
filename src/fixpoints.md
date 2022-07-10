@@ -241,295 +241,254 @@ def main(): Unit & Impure =
         select (x, l, z) from LabelledPath(x, l, z) |> println
 ```
 
+Here we use two predicate symbols: `LabelledEdge` and
+`LabelledPath`.
+Each predicate has a type parameter named `l` and is
+polymorphic in the "label" type associated with the
+edge/path.
+Note how `edgesWithNumbers` returns a collection of
+edge facts where the labels are integers, whereas
+`edgesWithColor` returns a collection of facts where
+the labels are strings.
+The `closure` function is polymorphic and returns two
+rules that compute the transitive closure of edges
+that have the same label.
 
-Here we use two predicate symbols: `LabelledEdge` and `LabelledPath`.
-Each predicate has a type parameter named `l` and is polymorphic in the "label"
-type associated with the edge/path. Note how `edgesWithNumbers` returns a
-collection of edge facts where the labels are integers,
-whereas `edgesWithColor` returns a collection of facts where the labels are
-strings. The `closure` function is polymorphic and returns two rules that
-compute the transitive closure of edges that have the same label.
-
-
-
-The Flix type system ensures that we cannot accidentally mix edges (or paths) with different
+The Flix type system ensures that we cannot
+accidentally mix edges (or paths) with different
 types of labels.
-
 
 #### Design Note
 
-The `Boxable` type class constraint simply requires that each label type
-has `Eq`, `Order`, and `ToString` instances.
-
-
-
+The `Boxable` type class constraint simply requires
+that each label type has `Eq`, `Order`, and
+`ToString` instances.
 
 ## Injecting Facts into Datalog
 
-
-Flix provides a flexible mechanism that allows functional data structures (such as lists, sets,
+Flix provides a flexible mechanism that allows
+functional data structures (such as lists, sets,
 and maps) to be converted into Datalog facts.
 
-
-
-For example, given a Flix list of pairs we can convert it to a collection of Datalog facts:
-
+For example, given a Flix list of pairs we can
+convert it to a collection of Datalog facts:
 
 ```flix
 let l = (1, 2) :: (2, 3) :: Nil;
-let p = inject l into Edge
+let p = inject l into Edge;
 ```
 
-
 where `l` has type `List[(Int32, Int32)]`.
-The `inject` expression converts `l` into a Datalog constraint
-set `p` of type `#{ Edge(Int32, Int32) | ...}`.
+The `inject` expression converts `l` into a Datalog
+constraint set `p` of type
+`#{ Edge(Int32, Int32) | ... }`.
 
+The `inject` expression works with any type that
+implements the `Foldable` type class.
+Consequently, it can be used with lists, sets, maps,
+and so forth.
 
-
-The `inject` expression works with any type that implements
-the `Foldable` type class. Consequently, it can be used with lists, sets, maps, and
-so forth.
-
-
-
-The `inject` expression can operate on multiple collections simultaneously. For
-example:
-
+The `inject` expression can operate on multiple
+collections simultaneously.
+For example:
 
 ```flix
 let names = "Lucky Luke" :: "Luke Skywalker" :: Nil;
 let jedis = "Luke Skywalker" :: Nil;
-let p = inject names, jedis into Name, Jedi
+let p = inject names, jedis into Name, Jedi;
 ```
 
-
-where `p` has type `#{ Name(String), Jedi(String) | ...}`.
-
-
-
+where `p` has type
+`#{ Name(String), Jedi(String) | ... }`.
 
 ## Pipelines of Fixpoint Computations
 
-
-The solution (i.e. fixpoint) of a constraint system is another constraint system. We can use
-this to construct *pipelines* of fixpoint computations, i.e. to feed the result of one
-fixpoint computation into another fixpoint computation. For example:
-
+The solution (i.e. fixpoint) of a constraint system
+is another constraint system.
+We can use this to construct *pipelines* of fixpoint
+computations, i.e. to feed the result of one fixpoint
+computation into another fixpoint computation.
+For example:
 
 ```flix
-
 def main(): Unit & Impure =
-let f1 = #{
-ColorEdge(1, "blue", 2).
-ColorEdge(2, "blue", 3).
-ColorEdge(3, "red", 4).
-};
-let r1 = #{
-ColorPath(x, c, y) :- ColorEdge(x, c, y).
-ColorPath(x, c, z) :- ColorPath(x, c, y), ColorEdge(y, c, z).
-};
-let r2 = #{
-ColorlessPath(x, y) :- ColorPath(x, _, y).
-};
-let m = solve f1, r1 inject ColorPath;
-query m, r2 select (x, y) from ColorlessPath(x, y) |> println
-
-
+    let f1 = #{
+        ColorEdge(1, "blue", 2).
+        ColorEdge(2, "blue", 3).
+        ColorEdge(3, "red", 4).
+    };
+    let r1 = #{
+    ColorPath(x, c, y) :- ColorEdge(x, c, y).
+    ColorPath(x, c, z) :- ColorPath(x, c, y), ColorEdge(y, c, z).
+    };
+    let r2 = #{
+        ColorlessPath(x, y) :- ColorPath(x, _, y).
+    };
+    let m = solve f1, r1 inject ColorPath;
+    query m, r2 select (x, y) from ColorlessPath(x, y) |> println
 ```
 
+The program uses three predicates: `ColorEdge`,
+`ColorPath`, and `ColorlessPath`.
+Our goal is to compute the transitive closure of the
+colored edges and then afterwards construct a graph
+where the edges have no color.
 
-The program uses three predicates: `ColorEdge`, `ColorPath`,
-and `ColorlessPath`. Our goal is to compute the transitive closure of the
-colored edges and then afterwards construct a graph where the edges have no color.
-
-
-
-The program first computes the fixpoint of `f1` and `r1` and injects out
-the `ColorPath` fact. The result is stored in `m`. Next, the program
-queries `m` and `r2`, and selects all `ColorlessPath` facts.
-
-
-
+The program first computes the fixpoint of `f1` and
+`r1` and injects out the `ColorPath` fact.
+The result is stored in `m`. Next, the program
+queries `m` and `r2`, and selects all `ColorlessPath`
+facts.
 
 ## Using Flix to Solve Constraints on Lattices
 
-
-Flix supports not only *constraints on relations*, but also *constraints on lattices*.
-To create such constraints, we must first define the lattice operations (the partial order,
-the least upper bound, and so on) as functions, associate them with a type, and then declare the
-predicate symbols that have lattice semantics.
-
-
+Flix supports not only *constraints on relations*,
+but also *constraints on lattices*.
+To create such constraints, we must first define the
+lattice operations (the partial order, the least
+upper bound, and so on) as functions, associate them
+with a type, and then declare the predicate symbols
+that have lattice semantics.
 
 We begin with the definition of the `Sign` data type:
 
-
 ```flix
-
 enum Sign {
-case Top,
-
-case Neg, case Zer, case Pos,
-
-case Bot
+    case Top,
+    case Neg, case Zer, case Pos,
+    case Bot
 }
-
 ```
 
-
-We need to define the usual `Eq`, `Order`,
-and `ToString` instances for this new type. (The order instance is unrelated to the
-partial order instance we will later define, and is simply used to sort elements for pretty
-printing etc.)
-
+We need to define the usual `Eq`, `Order`, and
+`ToString` instances for this new type.
+Note that the order instance is unrelated to the
+partial order instance we will later define, and is
+simply used to sort elements for pretty printing etc.
 
 ```flix
-
 instance Boxable[Sign]
 
 instance Eq[Sign] {
-pub def eq(x: Sign, y: Sign): Bool = match (x, y) {
-case (Bot, Bot) => true
-case (Neg, Neg) => true
-case (Zer, Zer) => true
-case (Pos, Pos) => true
-case (Top, Top) => true
-case _          => false
-}
+    pub def eq(x: Sign, y: Sign): Bool = match (x, y) {
+        case (Bot, Bot) => true
+        case (Neg, Neg) => true
+        case (Zer, Zer) => true
+        case (Pos, Pos) => true
+        case (Top, Top) => true
+        case _          => false
+    }
 }
 
 instance Order[Sign] {
-pub def compare(x: Sign, y: Sign): Comparison = 
-let num = w -> match w {
-case Bot => 0
-case Neg => 1
-case Zer => 2
-case Pos => 3
-case Top => 4
-};
-num(x) <=> num(y)
+    pub def compare(x: Sign, y: Sign): Comparison = 
+        let num = w -> match w {
+            case Bot => 0
+            case Neg => 1
+            case Zer => 2
+            case Pos => 3
+            case Top => 4
+        };
+        num(x) <=> num(y)
 }
 
 instance ToString[Sign] {
-pub def toString(x: Sign): String = match x {
-case Bot => "Bot"
-case Neg => "Neg"
-case Zer => "Zer"
-case Pos => "Pos"
-case Top => "Top"
+    pub def toString(x: Sign): String = match x {
+        case Bot => "Bot" 
+        case Neg => "Neg"
+        case Zer => "Zer"
+        case Pos => "Pos"
+        case Top => "Top"
+    }
 }
-}
-
 ```
 
-
-With these type class instances in place, we can now define the lattice operations
-on `Sign`.
-
-
+With these type class instances in place, we can now
+define the lattice operations on `Sign`.
 
 We define the bottom element and the partial order:
 
-
 ```flix
-
 instance LowerBound[Sign] {
-pub def minValue(): Sign = Bot
+    pub def minValue(): Sign = Bot
 }
 
 instance PartialOrder[Sign] {
-pub def lessEqual(x: Sign, y: Sign): Bool =
-match (x, y) {
-case (Bot, _)   => true
-case (Neg, Neg) => true
-case (Zer, Zer) => true
-case (Pos, Pos) => true
-case (_, Top)   => true
-case _          => false
+    pub def lessEqual(x: Sign, y: Sign): Bool = match (x, y) {
+        case (Bot, _)   => true
+        case (Neg, Neg) => true
+        case (Zer, Zer) => true
+        case (Pos, Pos) => true
+        case (_, Top)   => true
+        case _          => false
+    }
 }
-}
-
 ```
 
-
-Next, we define the least upper bound and greatest lower bound:
-
+Next, we define the least upper bound and greatest
+lower bound:
 
 ```flix
-
-
 instance JoinLattice[Sign] {
-pub def leastUpperBound(x: Sign, y: Sign): Sign = 
-match (x, y) {
-case (Bot, _)   => y
-case (_, Bot)   => x
-case (Neg, Neg) => Neg
-case (Zer, Zer) => Zer
-case (Pos, Pos) => Pos
-case _          => Top
-}
+    pub def leastUpperBound(x: Sign, y: Sign): Sign = match (x, y) {
+        case (Bot, _)   => y
+        case (_, Bot)   => x
+        case (Neg, Neg) => Neg
+        case (Zer, Zer) => Zer
+        case (Pos, Pos) => Pos
+        case _          => Top
+    }
 }
 
 instance MeetLattice[Sign] {
-pub def greatestLowerBound(x: Sign, y: Sign): Sign = 
-match (x, y) {
-case (Top, _)   => y
-case (_, Top)   => x
-case (Neg, Neg) => Neg
-case (Zer, Zer) => Zer
-case (Pos, Pos) => Pos
-case _          => Bot
+    pub def greatestLowerBound(x: Sign, y: Sign): Sign = match (x, y) {
+        case (Top, _)   => y
+        case (_, Top)   => x
+        case (Neg, Neg) => Neg
+        case (Zer, Zer) => Zer
+        case (Pos, Pos) => Pos
+        case _          => Bot
+    }
 }
-}
-
-
 ```
 
-
-With all of these definitions we are ready to write Datalog constraints with lattice semantics.
-But before we proceed, let us also write a single monotone function:
-
+With all of these definitions we are ready to write
+Datalog constraints with lattice semantics.
+But before we proceed, let us also write a single
+monotone function:
 
 ```flix
-
 def sum(x: Sign, y: Sign): Sign = match (x, y) {
-case (Bot, _)   => Bot
-case (_, Bot)   => Bot
-case (Neg, Zer) => Neg
-case (Zer, Neg) => Neg
-case (Zer, Zer) => Zer
-case (Zer, Pos) => Pos
-case (Pos, Zer) => Pos
-case (Pos, Pos) => Pos
-case _          => Top
+    case (Bot, _)   => Bot
+    case (_, Bot)   => Bot
+    case (Neg, Zer) => Neg
+    case (Zer, Neg) => Neg
+    case (Zer, Zer) => Zer
+    case (Zer, Pos) => Pos
+    case (Pos, Zer) => Pos
+    case (Pos, Pos) => Pos
+    case _          => Top
 }
-
 ```
-
 
 We can now finally put everything to use:
 
-
 ```flix
-
 pub def main(): Unit & Impure =
-let p = #{
-LocalVar("x"; Pos).
-LocalVar("y"; Zer).
-LocalVar("z"; Neg).
-AddStm("r1", "x", "y").
-AddStm("r2", "x", "y").
-AddStm("r2", "y", "z").
-LocalVar(r; sum(v1, v2)) :- 
-AddStm(r, x, y), LocalVar(x; v1), LocalVar(y; v2).
-};
-query p select (r, v) from LocalVar(r; v) |> println
-
-
+    let p = #{
+        LocalVar("x"; Pos).
+        LocalVar("y"; Zer).
+        LocalVar("z"; Neg).
+        AddStm("r1", "x", "y").
+        AddStm("r2", "x", "y").
+        AddStm("r2", "y", "z").
+        LocalVar(r; sum(v1, v2)) :- 
+            AddStm(r, x, y), LocalVar(x; v1), LocalVar(y; v2).
+    };
+    query p select (r, v) from LocalVar(r; v) |> println
 ```
 
 #### Warning
 
-Note the careful use of `;` to designate lattice semantics.
-
+Note the careful use of `;` to designate lattice
+semantics.

@@ -1,0 +1,18 @@
+# Workflow based on https://rust-lang.github.io/mdBook/continuous-integration.html
+
+name: Build
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v3
+      - name: Install and run mdbook
+        run: |
+          mkdir bin
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.19/mdbook-v0.4.19-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
+          bin/mdbook build

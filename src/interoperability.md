@@ -43,7 +43,7 @@ For example:
 ```flix
 type alias File = ##java.io.File
 
-def openFile(s: String): File & Impure = 
+def openFile(s: String): File & Impure =
     import new java.io.File(String): File & Impure as newFile;
     newFile(s)
 ```

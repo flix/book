@@ -20,7 +20,7 @@ is compact and efficient.
 All operations on arrays are impure.
 As such, all functions that use arrays must be marked
 as `Impure` or be casted to `Pure`.
-However, accessing the length of an array is pure 
+However, accessing the length of an array is pure
 since the size of an array cannot change after it has
 been created.
 

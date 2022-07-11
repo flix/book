@@ -98,12 +98,12 @@ def main(): Unit & Impure =
         DirectedBy("Interstellar", "Christopher Nolan").
     };
     let rule = #{
-        MovieWithoutDirector(title) :- 
-            Movie(title), 
-            DirectedBy(title, name), 
+        MovieWithoutDirector(title) :-
+            Movie(title),
+            DirectedBy(title, name),
             not StarringIn(title, name).
     };
-    query movies, actors, directors, rule 
+    query movies, actors, directors, rule
         select title from MovieWithoutDirector(title) |> println
 ```
 
@@ -163,7 +163,7 @@ def withAdoptions(): #{ AdoptedBy(String, String),
 def main(): Unit & Impure =
     let c = false;
     if (c) {
-        query getParents(), getAdoptions(), withAncestors() 
+        query getParents(), getAdoptions(), withAncestors()
             select (x, y) from AncestorOf(x, y) |> println
     } else {
         query getParents(), getAdoptions(), withAncestors(), withAdoptions()
@@ -177,7 +177,7 @@ The `getParents`function returns a collection of facts
 that represent biological parents, whereas the
 `getAdoptions` function returns a collection of facts
 that represent adoptions.
-The `withAncestors` function returns two constraints 
+The `withAncestors` function returns two constraints
 that populate the `AncestorOf` relation using the
 `ParentOf` relation.
 The `withAdoptions` function returns a constraint
@@ -202,7 +202,7 @@ function can be composed with.
 The row polymorphic types are best understood as an
 over-approximation of the predicates that may occur
 in a constraint system.
-For example, if a constraint system has type 
+For example, if a constraint system has type
 `#{ A(String), B(Int32, Int32) }` that does
 necessarily mean that it will contain facts or rules
 that use the predicate symbols `A` or `B`, but it
@@ -230,16 +230,16 @@ def edgesWithColor(): #{ LabelledEdge(String, String, String) | r } = #{
     LabelledEdge("c", "blu", "d").
 }
 
-def closure(): #{ LabelledEdge(String, l, String), 
+def closure(): #{ LabelledEdge(String, l, String),
                   LabelledPath(String, l, String) } with Boxable[l] = #{
     LabelledPath(x, l, y) :- LabelledEdge(x, l, y).
     LabelledPath(x, l, z) :- LabelledPath(x, l, y), LabelledPath(y, l, z).
 }
 
 def main(): Unit & Impure =
-    query edgesWithNumbers(), closure() 
+    query edgesWithNumbers(), closure()
         select (x, l, z) from LabelledPath(x, l, z) |> println;
-    query edgesWithColor(), closure() 
+    query edgesWithColor(), closure()
         select (x, l, z) from LabelledPath(x, l, z) |> println
 ```
 
@@ -383,7 +383,7 @@ instance Eq[Sign] {
 }
 
 instance Order[Sign] {
-    pub def compare(x: Sign, y: Sign): Comparison = 
+    pub def compare(x: Sign, y: Sign): Comparison =
         let num = w -> match w {
             case Bot => 0
             case Neg => 1
@@ -396,7 +396,7 @@ instance Order[Sign] {
 
 instance ToString[Sign] {
     pub def toString(x: Sign): String = match x {
-        case Bot => "Bot" 
+        case Bot => "Bot"
         case Neg => "Neg"
         case Zer => "Zer"
         case Pos => "Pos"
@@ -487,7 +487,7 @@ pub def main(): Unit & Impure =
         AddStm("r1", "x", "y").
         AddStm("r2", "x", "y").
         AddStm("r2", "y", "z").
-        LocalVar(r; sum(v1, v2)) :- 
+        LocalVar(r; sum(v1, v2)) :-
             AddStm(r, x, y), LocalVar(x; v1), LocalVar(y; v2).
     };
     query p select (r, v) from LocalVar(r; v) |> println

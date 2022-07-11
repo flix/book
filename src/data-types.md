@@ -230,8 +230,8 @@ type.
 For example:
 
 ```flix
-/// 
-/// A type alias for a map from keys of type `k` 
+///
+/// A type alias for a map from keys of type `k`
 /// to values of type `Result[v, String]`
 ///
 type alias M[k, v] = Map[k, Result[v, String]]

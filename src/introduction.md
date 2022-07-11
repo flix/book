@@ -86,4 +86,3 @@ def main(): Unit & Impure =
     spawn wait(c, List.length(l), d);
     println(<- d)
 ```
-

@@ -20,3 +20,4 @@
 
 - [Advanced Features]()
     - [Type Casts](./type-casts.md)
+    - [Effect Casts](./effect-casts.md)

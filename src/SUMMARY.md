@@ -9,7 +9,7 @@
 - [Arrays](./arrays.md)
 - [Namespaces](./namespaces.md)
 - [Concurrency](./concurrency.md)
-- [Effects](./effects.md)
+- [Polymorphic Effects](./effects.md)
 - [Fixpoints](./fixpoints.md)
 - [Type Classes](./type-classes.md)
 - [Interoperability](./interoperability.md)

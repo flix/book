@@ -1,33 +1,35 @@
 # Type Casts
 
-A cast subverts the type system by changing the type
-of an expression.
-Casts are by their nature dangerous and should be used
-with caution.
+A *type cast* instructs the compiler that an expression has a specific type.
 
-The following cast changes the type of an expression
-and triggers a `ClassCastException` at run-time:
+**Warning️️.** *Type casts are by nature dangerous and should be used with caution!*
+
+A Flix programmer should not normally use type casts except for Java interoperability:
+
+- To cast a Java type to a super-type.
+- To cast the `null` value to a nullable type.
+
+### Super-type Cast Example
+
+The following casts a `String` value to the `Object` type:
+
+```flix
+"Hello World" as ##java.lang.Object
+```
+
+### Null Cast Example
+
+The following casts the `null` value to the `String` type:
+
+```flix
+null as ##java.lang.String
+```
+
+### Unsound Cast Example
+
+The following cast triggers a `ClassCastException` at run-time:
 
 ```flix
 (123, 456) as String
 ```
 
-A cast can also change the effect of an expression.
-Such casts are safer, but should still be used with
-caution.
-
-For example, we can cast an impure expression to a
-pure expression:
-
-```flix
-println("Hello World") as Unit & Pure
-```
-
-As a short-hand, we can simply write:
-
-```flix
-println("Hello World") as & Pure
-```
-
-Casting an impure expression to a pure expression is
-safe if the expression respects equational reasoning.

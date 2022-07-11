@@ -43,7 +43,7 @@ For example:
 ```flix
 type alias File = ##java.io.File
 
-def openFile(s: String): File & Impure = 
+def openFile(s: String): File & Impure =
     import new java.io.File(String): File & Impure as newFile;
     newFile(s)
 ```
@@ -203,14 +203,14 @@ features:
 If any of these features are needed, we recommend
 that you write a small Java wrapper.
 
-## Design Note
+#### Design Note
 
 The import mechanism is only supported at the
 expression level: it is not currently possible to
 import Java constructors, methods, and fields at the
 top-level.
 
-## Design Note
+#### Design Note
 
 The Flix type system does not support sub-typing.
 Consequently, a sub-type is type incompatible with a
@@ -222,7 +222,7 @@ type casts.
 For example, `e as ##java.lang.Object` can be used to
 cast the type of `e` to `Object`.
 
-## Warning
+#### Warning
 
 The Flix compiler does not support any kind of
 cross-compilation (e.g. compiling Java sources

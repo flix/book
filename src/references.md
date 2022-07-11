@@ -60,7 +60,7 @@ can be incremented:
 
 ```flix
 enum Counter {
-    case Counter(Ref[Int32])                        
+    case Counter(Ref[Int32])
 }
 
 def newCounter(): Counter & Impure = Counter(ref 0)
@@ -69,11 +69,11 @@ def getCount(c: Counter): Int32 & Impure =
     let Counter(l) = c;
     deref l
 
-def increment(c: Counter): Unit & Impure = 
+def increment(c: Counter): Unit & Impure =
     let Counter(l) = c;
     l := (deref l) + 1
 
-def f(): Unit & Impure = 
+def f(): Unit & Impure =
     let c = newCounter();
     increment(c);
     increment(c);
@@ -142,12 +142,12 @@ Similarly, here is a record that contains two mutable
 references:
 
 ```flix
-let r = { fstName = ref "Lucky", lstName = ref "Luke"};
+let r = { fstName = ref "Lucky", lstName = ref "Luke" };
 r.fstName := "Unlucky"
 ```
 
 The type of the record is
-`{"{ fstName :: Ref[String], lstName :: Ref[String] }"}`.
+`{ fstName :: Ref[String], lstName :: Ref[String] }`.
 Again, the assignment does not change the record
 itself, but rather changes the value of the reference
 cell corresponding to the `fstName` field.

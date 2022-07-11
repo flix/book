@@ -34,7 +34,7 @@ For example:
 namespace Core {
     namespace Math {
 
-        def sum(x: Int32, y: Int32): Int32 = x + y    
+        def sum(x: Int32, y: Int32): Int32 = x + y
 
         namespace Stats {
             def median(xs: List[Int32]): Int32 = ???
@@ -194,7 +194,7 @@ We can use enumerated types from a namespace.
 For example:
 
 ```flix
-def blueIsRed(): Bool = 
+def blueIsRed(): Bool =
     use A/B.Color.{Blue, Red};
     Blue != Red
 
@@ -206,7 +206,7 @@ namespace A/B {
 ```
 
 Note that `A/B.Color` is the fully-qualified name of
-a *type* whereas `{"A/B.Color.Red"}` is the
+a *type* whereas `A/B.Color.Red` is the
 fully-qualified name of a *tag* inside an enumerated
 type.
 That is, a fully-qualified definition is of the

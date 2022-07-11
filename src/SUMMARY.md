@@ -11,6 +11,7 @@
 - [Concurrency](./concurrency.md)
 - [Effects](./effects.md)
 - [Fixpoints](./fixpoints.md)
+- [Type Classes](./type-classes.md)
 - [Interoperability](./interoperability.md)
 - [Build & Packages](./build-and-packages.md)
 - [Tips & Tricks](./tips-and-tricks.md)

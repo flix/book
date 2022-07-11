@@ -15,3 +15,8 @@
 - [Interoperability](./interoperability.md)
 - [Build and Package Management](./build-and-packages.md)
 - [Tips & Tricks](./tips-and-tricks.md)
+
+---
+
+- [Advanced Features]()
+    - [Type Casts](./type-casts.md)

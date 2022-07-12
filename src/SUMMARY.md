@@ -18,6 +18,6 @@
 
 ---
 
-- [Advanced Features]()
+- [Advanced Features](./advanced-features.md)
     - [Type Casts](./type-casts.md)
     - [Effect Casts](./effect-casts.md)

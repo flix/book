@@ -17,7 +17,7 @@ Flix does not (yet) have sub-effecting which means that in certain rare cases it
 can be necessary to manually insert a cast. For example:
 
 ```flix
-pub def findRight(f: a -> Bool & ef, l: List[a]): Option[a] & ef =
+def findRight(f: a -> Bool & ef, l: List[a]): Option[a] & ef =
     def loop(ll, k) = match ll {
         case Nil     => k()
         case x :: xs => loop(xs, () -> if (f(x)) Some(x) else k())
@@ -28,4 +28,4 @@ pub def findRight(f: a -> Bool & ef, l: List[a]): Option[a] & ef =
 Here the cast `() -> None as & ef` is required because otherwise 
 the function `() -> None` would be pure and not effect polymorphic as required.
 
-> **Warning:** Never cast effectful expression to pure. Do so at your own peril. You have been warned.
+> **Warning:** Never cast effectful expression to pure. You have been warned.

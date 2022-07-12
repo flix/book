@@ -1,17 +1,19 @@
 # Type Casts
 
-A *type cast* instructs the compiler that an expression has a specific type. A type cast has no semantic meaning other than subverting the Flix type system, as such, it should rarely be used. 
+A **type cast** instructs the compiler that an expression has a specific type.
 
-> **Warning️️.** *Type casts are by nature dangerous and should be used with caution!*
+> **Warning️️:** *Type casts are by nature dangerous and should be used with caution!*
 
-A Flix programmer should not normally use type casts except for Java interoperability:
+A Flix programmer should not normally use type casts except in two cases:
 
 - To cast a Java type to one of its super-types.
 - To cast the `null` value to a nullable type.
 
+Both use cases are legitimate and safe.
+
 #### Example: Safe Cast to a Super-Type
 
-The following program fragment casts a `String` value to the `Object` type:
+The expression below casts a `String` to an `Object`:
 
 ```flix
 "Hello World" as ##java.lang.Object
@@ -19,7 +21,7 @@ The following program fragment casts a `String` value to the `Object` type:
 
 #### Example: Safe Cast from Null to an Object-Type
 
-The following program fragment casts the `null` value (of type `Null`) to the `String` type:
+The expression below casts the `null` value (of type `Null`) to `String`:
 
 ```flix
 null as ##java.lang.String
@@ -27,8 +29,12 @@ null as ##java.lang.String
 
 #### Example: Unsafe Cast
 
-The following program fragment contains an illegal cast and will trigger a `ClassCastException` at run-time:
+The expression below contains an illegal cast and triggers a `ClassCastException`:
 
 ```flix
 (123, 456) as String
 ```
+
+#### Primitive Values and Boxing
+
+> **Note:** A type cast should *not* be used to box or unbox primitive values. Instead use the designated Java methods. For example, `Integer.valueOf` and `Integer.intValue`.

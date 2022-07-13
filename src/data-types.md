@@ -223,6 +223,48 @@ enum Result[t, e] {
 }
 ```
 
+## Shorthand Syntax
+
+A typical enum may look like:
+
+```flix
+enum Weekday {
+    case Monday,
+    case Tuesday,
+    case Wednesday,
+    case Thursday,
+    case Friday,
+    case Saturday,
+    case Sunday
+}
+```
+The same enum can also be declared as:
+
+```flix
+enum Weekday {
+    case Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+}
+```
+
+This shorthand syntax is always available, but should
+only be used for simple enums.
+
+## Singleton Syntax
+
+An enum with a single case:
+
+```flix
+enum USD {
+  case USD(Int32)
+}
+```
+
+can be shortened to
+
+```flix
+enum USD(Int32)
+```
+
 ## Type Aliases
 
 Type aliases introduces a short-hand name for a
@@ -248,9 +290,6 @@ checking.
 Consequently, type errors are always reported with
 respect to the actual underlying types.
 
-#### Warning
-
-A type alias cannot be recursively defined in terms
-of itself.
-The Flix compiler will detect and report such
-recursive cycles.
+> **Note:** A type alias cannot be recursively defined in terms
+> of itself. The Flix compiler will detect and report such
+> recursive cycles.

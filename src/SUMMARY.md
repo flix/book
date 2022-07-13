@@ -8,12 +8,15 @@
 - [References](./references.md)
 - [Arrays](./arrays.md)
 - [Namespaces](./namespaces.md)
-- [Concurrency with Channels and Processes](./concurrency.md)
+- [Concurrency](./concurrency.md)
 - [Polymorphic Effects](./effects.md)
 - [Fixpoints](./fixpoints.md)
 - [Type Classes](./type-classes.md)
 - [Interoperability](./interoperability.md)
 - [Build and Package Management](./build-and-packages.md)
+- [Everyday Programming](./everyday-programming.md)
+  - [String Interpolation](./string-interpolation.md)
+  - [Anonymous and Named Holes](./holes.md)
 - [Tips & Tricks](./tips-and-tricks.md)
 
 ---

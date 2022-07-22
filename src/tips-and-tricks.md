@@ -5,29 +5,7 @@ code easier to read and write.
 
 
 
-## Pipelines
 
-Flix supports the pipeline operator `|>` which is
-simply a prefix version of function application (i.e.
-the argument appears before the function).
-
-The pipeline operator can often be used to make
-functional code more readable.
-For example:
-
-```flix
-let l = 1 :: 2 :: 3 :: Nil;
-l |>
-List.map(x -> x * 2) |>
-List.filter(x -> x < 4) |>
-List.count(x -> x > 1)
-```
-
-Here is another example:
-
-```flix
-"Hello World" |> String.toUpperCase |> println
-```
 
 ## Let Pattern Match
 
@@ -93,21 +71,7 @@ Here `f` is a function that expects *three* `Int32`
 arguments,whereas `g` is a function that expects *one*
 three tuple `(Int32, Int32, Int32)` argument.
 
-## Infix Application
 
-Flix supports infix function application by enclosing
-the function name in backticks.
-For example:
-
-```flix
-123 `sum` 456
-```
-
-is equivalent to the normal function call:
-
-```flix
-sum(123, 456)
-```
 
 
 ## Let* (Do-notation)
@@ -140,52 +104,5 @@ where each `let*` corresponds to a `flatMap` use.
 
 This feature is experimental and subject to change.
 
-## `bug!` and `unreachable!`
 
-Flix supports two special "functions": `bug!` and
-`unreachable!` that can be used to indicate when an
-internal program invariant is broken and execute
-should abort.
-For example:
 
-```flix
-match o {
-    case Some(x) => ...
-    case None    => bug!("The value of `o` cannot be empty.")
-}
-```
-
-As another example:
-
-```flix
-match k {
-    case n if n == 0 => ...
-    case n if n >= 0 => ...
-    case n if n <= 0 => ...
-    case n           =>  unreachable!()
-}
-```
-
-Use of `bug!` and `unreachable!` should be avoided
-whenever possible.
-
-## Type Ascriptions
-
-While Flix supports local type inference, it can
-sometimes be useful to annotate an expression or a
-let-binding with its type.
-We call such annotations *type ascriptions*.
-A type ascription cannot change the type of an
-expression nor can it be used to violate type safety.
-
-A type ascription can be placed after an expression:
-
-```flix
-("Hello" :: "World" :: Nil) : List[String]
-```
-
-and it can also be placed on a let-binding:
-
-```flix
-let l: List[String] = "Hello" :: "World" :: Nil
-```

@@ -20,6 +20,7 @@
   - [Printing to Standard Out](./printing-to-stdout.md)
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
+  - [Type Ascriptions](./type-ascriptions.md)
 - [Tips & Tricks](./tips-and-tricks.md)
 
 ---
@@ -27,3 +28,4 @@
 - [Advanced Features](./advanced-features.md)
     - [Type Casts](./type-casts.md)
     - [Effect Casts](./effect-casts.md)
+    - [Bugs and Unreachable Code](./bug-and-unreachable.md)

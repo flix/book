@@ -158,6 +158,46 @@ This list argument is then supplied by the pipeline
 operator `|>` which, in this case, expects a list
 and a function that takes a list.
 
+## Infix Application
+
+Flix supports infix function application by enclosing
+the function name in backticks.
+For example:
+
+```flix
+123 `sum` 456
+```
+
+is equivalent to the normal function call:
+
+```flix
+sum(123, 456)
+```
+
+## Pipelines
+
+Flix supports the pipeline operator `|>` which is
+simply a prefix version of function application (i.e.
+the argument appears before the function).
+
+The pipeline operator can often be used to make
+functional code more readable.
+For example:
+
+```flix
+let l = 1 :: 2 :: 3 :: Nil;
+l |>
+List.map(x -> x * 2) |>
+List.filter(x -> x < 4) |>
+List.count(x -> x > 1)
+```
+
+Here is another example:
+
+```flix
+"Hello World" |> String.toUpperCase |> println
+```
+
 ## Pure, Impure, and Effect Polymorphic Functions
 
 In Flix every function is pure, impure, or effect

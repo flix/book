@@ -1,3 +1,5 @@
+# Enums
+
 ## Enumerated Types
 
 Enumerated types are used to define a type that has

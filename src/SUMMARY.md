@@ -2,7 +2,8 @@
 
 - [Introduction to Flix](./introduction.md)
 - [Data Types](./data-types.md)
-  - [Literals](./literals.md)
+  - [Primitives](./primitive-types.md)
+  - [Tuples](./tuples.md)
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
 - [Functions](./functions.md)

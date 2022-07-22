@@ -12,6 +12,7 @@
   - [Arrays](./arrays.md)
 - [Pattern Matching](./pattern-matching.md)
 - [Concurrency](./concurrency.md)
+- [Parallelism](./parallelism.md)
 - [Polymorphic Effects](./effects.md)
 - [Fixpoints](./fixpoints.md)
 - [Type Classes](./type-classes.md)

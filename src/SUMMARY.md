@@ -6,6 +6,7 @@
 - [Functions](./functions.md)
 - [Lists](./lists.md)
 - [Records](./records.md)
+- [Pattern Matching](./pattern-matching.md)
 - [References](./references.md)
 - [Arrays](./arrays.md)
 - [Namespaces](./namespaces.md)
@@ -21,7 +22,6 @@
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
-- [Tips & Tricks](./tips-and-tricks.md)
 
 ---
 

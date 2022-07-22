@@ -1,11 +1,4 @@
-# Tips & Tricks
-
-This page documents a few features that make Flix
-code easier to read and write.
-
-
-
-
+# Pattern Matching
 
 ## Let Pattern Match
 
@@ -71,9 +64,6 @@ Here `f` is a function that expects *three* `Int32`
 arguments,whereas `g` is a function that expects *one*
 three tuple `(Int32, Int32, Int32)` argument.
 
-
-
-
 ## Let* (Do-notation)
 
 Flix supports a feature similar to *do-notation* in
@@ -99,10 +89,3 @@ Some(o1 + o2)
 ```
 
 where each `let*` corresponds to a `flatMap` use.
-
-#### DesignNote
-
-This feature is experimental and subject to change.
-
-
-

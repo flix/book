@@ -1,4 +1,4 @@
-# Polymorphic Effects
+# Effect System
 
 The Flix type and effect system separates pure and
 impure expressions.

@@ -2,6 +2,7 @@
 
 - [Introduction to Flix](./introduction.md)
 - [Data Types](./data-types.md)
+  - [Literals](./literals.md)
 - [Functions](./functions.md)
 - [Lists](./lists.md)
 - [Records](./records.md)
@@ -15,6 +16,8 @@
 - [Interoperability](./interoperability.md)
 - [Build and Package Management](./build-and-packages.md)
 - [Everyday Programming](./everyday-programming.md)
+  - [The Main Function](./main.md)
+  - [Printing to Standard Out](./printing-to-stdout.md)
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
 - [Tips & Tricks](./tips-and-tricks.md)

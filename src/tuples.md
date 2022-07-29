@@ -16,7 +16,7 @@ We can destructure a tuple using pattern matching.
 For example:
 
 ```flix
-let t = ("Lucky", "Luke", 42, true);
+let t = ("Lucky", "Luke", 42, true); // 4-tuple
 let (fstName, lstName, age, male) = t;
 lstName
 ```

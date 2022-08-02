@@ -158,22 +158,6 @@ This list argument is then supplied by the pipeline
 operator `|>` which, in this case, expects a list
 and a function that takes a list.
 
-## Infix Application
-
-Flix supports infix function application by enclosing
-the function name in backticks.
-For example:
-
-```flix
-123 `sum` 456
-```
-
-is equivalent to the normal function call:
-
-```flix
-sum(123, 456)
-```
-
 ## Pipelines
 
 Flix supports the pipeline operator `|>` which is

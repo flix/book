@@ -7,6 +7,7 @@
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
 - [Functions](./functions.md)
+  - [Operators](./operators.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)
   - [Records](./records.md)

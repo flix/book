@@ -8,6 +8,7 @@
   - [Type Aliases](./type-aliases.md)
 - [Identifiers](./identifiers.md)
 - [Functions](./functions.md)
+  - [Operators](./operators.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)
   - [Records](./records.md)

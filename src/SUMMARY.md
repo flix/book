@@ -15,6 +15,7 @@
   - [Arrays](./arrays.md)
 - [Control Structures](./control-structures.md)
   - [Pattern Matching](./pattern-matching.md)
+  - [For-Each and For-Yield](./foreach-foryield.md)
 - [Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)
 - [Effect System](./effects.md)
@@ -29,7 +30,7 @@
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
 - [Tools](./tools.md)
-  - [Package Management](./build-and-packages.md)
+  - [Package Manager](./build-and-packages.md)
   - [Test Framework](./test-framework.md)
 
 ---
@@ -42,5 +43,5 @@
 ---
 
 - [Appendix](./appendix.md)
-  - [Identifiers](./identifiers.md)
-  - [Precedence](./precedence.md)
+  - [Legal Identifiers](./identifiers.md)
+  - [Operator Precedence](./precedence.md)

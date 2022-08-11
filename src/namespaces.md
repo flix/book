@@ -54,10 +54,9 @@ namespace Core/Math {
     pub def sum(x: Int32, y: Int32): Int32 = x + y
 }
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     Core/Math.sum(21, 42) |> println
 ```
-
 
 Note that we must declare `sum` as public (`pub`) to
 allow access to it from outside its own namespace.
@@ -73,7 +72,7 @@ namespace Core/Math {
     pub def sum(x: Int32, y: Int32): Int32 = x + y
 }
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     use Core/Math.sum;
     sum(21, 42) |> println
 ```
@@ -84,7 +83,7 @@ A `use` can also appear at the top of a file:
 ```flix
 use Core/Math.sum;
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     sum(21, 42) |> println
 
 namespace Core/Math {
@@ -100,7 +99,7 @@ We can also use multiple definitions from a namespace:
 use Core/Math.sum;
 use Core/Math.mul;
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     mul(42, 84) |> sum(21) |> println
 
 namespace Core/Math {
@@ -114,7 +113,7 @@ Multiple such uses can be grouped together:
 ```flix
 use Core/Math.{sum, mul};
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     mul(42, 84) |> sum(21) |> println
 
 namespace Core/Math {
@@ -125,7 +124,7 @@ namespace Core/Math {
 
 #### Design Note
 
-Flix does not support *wildcard* uses because they
+Flix does not support _wildcard_ uses because they
 are inherently ambiguous and may lead to subtle
 errors during refactoring.
 
@@ -139,7 +138,7 @@ For example:
 use A.{concat => stringConcat};
 use B.{concat => listConcat};
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     stringConcat("Hello", " World!") |> println
 
 namespace A {
@@ -151,7 +150,7 @@ namespace B {
 }
 ```
 
-In many cases a better approach is to use a *local*
+In many cases a better approach is to use a _local_
 `use` to avoid the problem in the first place.
 
 ## Using Types from a Namespace
@@ -172,7 +171,7 @@ namespace A/B {
 }
 ```
 
-We can also use *type aliases* in the same way:
+We can also use _type aliases_ in the same way:
 
 ```flix
 use A/B.Color;
@@ -206,8 +205,8 @@ namespace A/B {
 ```
 
 Note that `A/B.Color` is the fully-qualified name of
-a *type* whereas `A/B.Color.Red` is the
-fully-qualified name of a *tag* inside an enumerated
+a _type_ whereas `A/B.Color.Red` is the
+fully-qualified name of a _tag_ inside an enumerated
 type.
 That is, a fully-qualified definition is of the
 form `A/B/C.d`, a fully-qualified type is of the

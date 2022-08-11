@@ -18,7 +18,7 @@ For example, the following expression is of type
 whereas the following expression is `Impure`:
 
 ```flix
-println("Hello World") : Unit & Impure
+println("Hello World") : Unit \ IO
 ```
 
 A higher-order function can specify that a function
@@ -120,8 +120,8 @@ pure or impure) are specified by the boolean
 For a specific combination of pure and impure to be
 accepted, there must be an assignment of the boolean
 variables `ef1` and `ef2` to true and false such that
-the boolean expressions for *pure* arguments evaluate
-to `true` and those for *impure* arguments evaluate to
+the boolean expressions for _pure_ arguments evaluate
+to `true` and those for _impure_ arguments evaluate to
 `false`.
 
 If in this example `h` is called with a function
@@ -176,11 +176,8 @@ Consequently, Flix rejects such programs.
 
 In summary, Flix function types are of the form:
 
-
-
-| Function Type                                                                                                                        | Syntax                   | Short Hand |
-|:------------------------------------------------------------------------------------------------------------------------------------:|:------------------------:|:----------:|
-| The type of a *pure* function from `a` to `b`.                                                                                       | `a -> b & Pure`          | `a -> b`   |
-| The type of an *effect polymorphic* function from `a` to `b` with effect `ef`.                                                       | `a -> b & ef`            | n/a        |
-| The type of an *effect polymorphic* function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b & (ef1 and ef2)` | n/a        |
-
+|                                                            Function Type                                                             |          Syntax          | Short Hand |
+| :----------------------------------------------------------------------------------------------------------------------------------: | :----------------------: | :--------: |
+|                                            The type of a _pure_ function from `a` to `b`.                                            |     `a -> b & Pure`      |  `a -> b`  |
+|                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b & ef`       |    n/a     |
+| The type of an _effect polymorphic_ function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b & (ef1 and ef2)` |    n/a     |

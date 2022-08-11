@@ -182,6 +182,33 @@ Here is another example:
 "Hello World" |> String.toUpperCase |> println
 ```
 
+## Operators
+
+Flix has a number of built-in unary and infix operators.
+In addition Flix supports infix function application by enclosing
+the function name in backticks. For example:
+
+```flix
+123 `sum` 456
+```
+is equivalent to the normal function call:
+
+```flix
+sum(123, 456)
+```
+
+In addition, a function named with an operator name (some combination of `+`, `-`, `*`, `<`, `>`, `=`, `!`, `&`, `|`, `^`, and `$`) can also be used infix. For example:
+
+```flix
+def <*>(x: Int32, y: Int32): Int32 = ???
+```
+
+can be used as follows:
+
+```flix
+1 <*> 2
+```
+
 ## Pure, Impure, and Effect Polymorphic Functions
 
 In Flix every function is pure, impure, or effect

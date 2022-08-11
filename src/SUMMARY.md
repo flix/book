@@ -6,9 +6,7 @@
   - [Tuples](./tuples.md)
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
-- [Identifiers](./identifiers.md)
 - [Functions](./functions.md)
-  - [Operators](./operators.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)
   - [Records](./records.md)
@@ -24,13 +22,15 @@
 - [Type Classes](./type-classes.md)
 - [Namespaces](./namespaces.md)
 - [Interoperability](./interoperability.md)
-- [Build and Package Management](./build-and-packages.md)
 - [Everyday Programming](./everyday-programming.md)
   - [The Main Function](./main.md)
   - [Printing to Standard Out](./printing-to-stdout.md)
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
+- [Tools](./tools.md)
+  - [Package Management](./build-and-packages.md)
+  - [Test Framework](./test-framework.md)
 
 ---
 
@@ -38,3 +38,9 @@
     - [Type Casts](./type-casts.md)
     - [Effect Casts](./effect-casts.md)
     - [Bugs and Unreachable Code](./bug-and-unreachable.md)
+
+---
+
+- [Appendix]()
+  - [Identifiers](./identifiers.md)
+  - [Precedence](./precedence.md)

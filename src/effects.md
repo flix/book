@@ -12,7 +12,7 @@ For example, the following expression is of type
 `Int32` and is `Pure`:
 
 ```flix
-1 + 2 : Int32 & Pure
+1 + 2 : Int32 \ {}
 ```
 
 whereas the following expression is `Impure`:
@@ -29,7 +29,7 @@ For example, the definition of `Set.exists` requires
 that its function argument `f` is pure:
 
 ```flix
-// The syntax a -> Bool is short-hand for a -> Bool & Pure
+// The syntax a -> Bool is short-hand for a -> Bool \ {}
 def exists(f: a -> Bool, s: Set[a]): Bool = ???
 ```
 
@@ -63,7 +63,7 @@ For example, the standard library definition of
 `List.map` is effect polymorphic:
 
 ```flix
-def map(f: a -> b & ef, xs: List[a]): List[b] & ef
+def map(f: a -> b \ ef, xs: List[a]): List[b] \ ef
 ```
 
 The `List.map` function takes a function `f` from
@@ -82,7 +82,7 @@ forward function composition `>>` is pure if both its
 function arguments are pure:
 
 ```flix
-def >>(f: a -> b & ef1, g: b -> c & ef2): a -> c & (ef1 and ef2) = x -> g(f(x))
+def >>(f: a -> b \ ef1, g: b -> c \ ef2): a -> c & (ef1 and ef2) = x -> g(f(x))
 ```
 
 The type and effect signature can be understood as
@@ -104,7 +104,7 @@ function `h` that accepts two function arguments `f`
 and `g` of which at most one is impure:
 
 ```flix
-def h(f: a -> b & ef1, g: b -> c & (not ef1 or ef2)): Unit
+def h(f: a -> b \ ef1, g: b -> c & (not ef1 or ef2)): Unit
 ```
 
 Note that here `ef1` and `ef2` are arbitrary boolean
@@ -178,6 +178,6 @@ In summary, Flix function types are of the form:
 
 |                                                            Function Type                                                             |          Syntax          | Short Hand |
 | :----------------------------------------------------------------------------------------------------------------------------------: | :----------------------: | :--------: |
-|                                            The type of a _pure_ function from `a` to `b`.                                            |     `a -> b & Pure`      |  `a -> b`  |
-|                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b & ef`       |    n/a     |
+|                                            The type of a _pure_ function from `a` to `b`.                                            |      `a -> b \ {}`       |  `a -> b`  |
+|                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b \ ef`       |    n/a     |
 | The type of an _effect polymorphic_ function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b & (ef1 and ef2)` |    n/a     |

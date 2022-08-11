@@ -101,7 +101,7 @@ example shows:
 
 ```flix
 def startsWith(prefix: {prefix :: String}, s: String): Bool =
-    import java.lang.String.startsWith(String): Bool & Pure;
+    import java.lang.String.startsWith(String): Bool \ {};
     startsWith(s, prefix.prefix)
 ```
 
@@ -110,7 +110,7 @@ example shows:
 
 ```flix
 def charAt(i: Int32, s: String): Char =
-    import java.lang.String.charAt(Int32): Char & Pure;
+    import java.lang.String.charAt(Int32): Char \ {};
     charAt(s, i)
 ```
 

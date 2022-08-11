@@ -231,7 +231,7 @@ def add(x: Int32, y: Int32): Int32 = x + y
 is actually equivalent to:
 
 ```flix
-def add(x: Int32, y: Int32): Int32 & Pure = x + y
+def add(x: Int32, y: Int32): Int32 \ {} = x + y
 ```
 
 A function that prints to the console is `Impure`
@@ -257,7 +257,7 @@ _effect polymorphism_.
 For example:
 
 ```flix
-def map(f: a -> b & ef, l: List[a]): List[b] & ef = ???
+def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = ???
 ```
 
 Here the signature of `map` captures that if the

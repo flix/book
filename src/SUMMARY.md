@@ -13,7 +13,7 @@
 - [Mutable Data](./mutable-data.md)
   - [References](./references.md)
   - [Arrays](./arrays.md)
-- [Control Structures]()
+- [Control Structures](./control-structures.md)
   - [Pattern Matching](./pattern-matching.md)
 - [Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)
@@ -41,6 +41,6 @@
 
 ---
 
-- [Appendix]()
+- [Appendix](./appendix.md)
   - [Identifiers](./identifiers.md)
   - [Precedence](./precedence.md)

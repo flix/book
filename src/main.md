@@ -10,7 +10,7 @@ def main(): Unit \ IO
 That is, the `main` function
 
 1. must return `Unit`, and
-2. must be `Impure`.
+2. must be `Impure` (annotated with `\ IO`).
 
 The signature of `main` does not specify any
 arguments, but the command line arguments passed to
@@ -18,7 +18,7 @@ the program can be accessed by calling
 `Environment.getArgs()`.
 
 ```flix
-def main(): Unit \ IO=
+def main(): Unit \ IO =
     let args = Environment.getArgs();
     ...
 ```

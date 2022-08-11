@@ -29,7 +29,7 @@ class and give it the local name `newFile`.
 The `newFile` function takes a string argument and
 returns a fresh Java `File` object.
 Constructing a fresh object is impure, hence `main`
-is marked as `Impure`.
+is marked as `Impure` with annotation `\ IO`.
 
 The type of the File object is written as
 `##java.io.File` where the two hashes `##` designate

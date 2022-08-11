@@ -82,7 +82,8 @@ def f(): Unit \ IO =
 ```
 
 Note that the `newCounter`, `getCount`, `increment`
-and `f` functions must all be marked as `Impure`.
+and `f` functions must all be marked as `Impure`
+with the annotation `\ IO`.
 
 ## Aliasing and References to References
 

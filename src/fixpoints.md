@@ -356,11 +356,11 @@ We begin with the definition of the `Sign` data type:
 
 ```flix
 enum Sign {
-              case Top,
-
-    case Neg, case Zer, case Pos,
-
-              case Bot
+    case Top,
+    case Neg,
+    case Zer,
+    case Pos,
+    case Bot
 }
 ```
 

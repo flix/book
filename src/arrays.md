@@ -18,8 +18,8 @@ For example, the representation of an `Array[Int32]`
 is compact and efficient.
 
 All operations on arrays are impure.
-As such, all functions that use arrays must be marked
-as `Impure` or be casted to `Pure`.
+As such, all functions that use arrays must be marked as
+impure (with annotation `\ IO`) or be casted to pure.
 However, accessing the length of an array is pure
 since the size of an array cannot change after it has
 been created.
@@ -129,4 +129,5 @@ The length of an array is accessed as follows:
 let a = [1, 2, 3, 4, 5];
 a.length
 ```
+
 which evaluates to `5`.

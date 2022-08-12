@@ -20,17 +20,17 @@ functions to run in a new process:
 ```flix
 def sum(x: Int32, y: Int32): Int32 = x + y
 
-def main(): Unit & Impure = spawn sum(1, 2)
+def main(): Unit \ IO = spawn sum(1, 2)
 ```
 
 ## Communicating with Channels
 
 To communicate between processes we use channels.
-A *channel* allows two or more processes to exchange
+A _channel_ allows two or more processes to exchange
 data by sending immutable messages to each other.
 
-A channel comes in one of two variants: *buffered* or
-*unbuffered*.
+A channel comes in one of two variants: _buffered_ or
+_unbuffered_.
 
 A buffered channel has a size, set at creation time,
 and can hold that many messages.
@@ -50,9 +50,9 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def send(c: Channel[Int32]): Unit & Impure = c <- 42; ()
+def send(c: Channel[Int32]): Unit \ IO = c <- 42; ()
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let c = chan Int32 0;
     spawn send(c);
     <- c;
@@ -72,11 +72,11 @@ message from a collection of channels.
 For example:
 
 ```flix
-def meow(c: Channel[String]): Unit & Impure = c <- "Meow!"; ()
+def meow(c: Channel[String]): Unit \ IO = c <- "Meow!"; ()
 
-def woof(c: Channel[String]): Unit & Impure = c <- "Woof!"; ()
+def woof(c: Channel[String]): Unit \ IO = c <- "Woof!"; ()
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let c1 = chan String 1;
     let c2 = chan String 1;
     spawn meow(c1);
@@ -98,11 +98,11 @@ In some cases, we do not want to block until a
 message arrives, potentially waiting forever.
 Instead, we want to take some alternative action if
 no message is readily available.
-We can achieve this with a *default case* as shown
+We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let c1 = chan String 1;
     let c2 = chan String 1;
     select {
@@ -122,7 +122,7 @@ expression from blocking forever.
 ### Selecting with Tickers and Timers
 
 As an alternative to a default case, we can use
-*tickers* and *timers* to wait for pre-defined
+_tickers_ and _timers_ to wait for pre-defined
 periods of time inside a `select` expression.
 
 For example, here is a program that has a slow
@@ -132,13 +132,13 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(c: Channel[String]): Unit & Impure =
-    import static java.lang.Thread.sleep(Int64): Unit & Impure;
+def slow(c: Channel[String]): Unit \ IO =
+    import static java.lang.Thread.sleep(Int64): Unit \ IO;
     sleep(Time/Duration.oneMinute() / 1000000i64);
     c <- "I am very slow";
     ()
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     use Concurrent/Channel/Timer.seconds;
     let c = chan String 1;
     spawn slow(c);
@@ -151,13 +151,13 @@ def main(): Unit & Impure =
 This program prints the string `"timeout"` after five
 seconds.
 
-Flix also supports *tickers* which are similar to
+Flix also supports _tickers_ which are similar to
 timers, but instead of sending a message one after a
 pre-defined time they repeatedly send a message every
 tick.
 
 #### Planned Feature
 
-Flix does not currently support *put* operations in
+Flix does not currently support _put_ operations in
 `select` expressions.
 This is something that we might support in the future.

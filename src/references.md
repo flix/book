@@ -14,7 +14,8 @@ can be changed.
 
 All operations on references are impure.
 As such, all functions that use references must be
-marked as `Impure` or be casted to `Pure`.
+marked with annotation `\ IO` for `Impure`
+or be casted to `Pure`.
 
 ## Allocation
 
@@ -63,17 +64,17 @@ enum Counter {
     case Counter(Ref[Int32])
 }
 
-def newCounter(): Counter & Impure = Counter(ref 0)
+def newCounter(): Counter \ IO = Counter(ref 0)
 
-def getCount(c: Counter): Int32 & Impure =
+def getCount(c: Counter): Int32 \ IO =
     let Counter(l) = c;
     deref l
 
-def increment(c: Counter): Unit & Impure =
+def increment(c: Counter): Unit \ IO =
     let Counter(l) = c;
     l := (deref l) + 1
 
-def f(): Unit & Impure =
+def f(): Unit \ IO =
     let c = newCounter();
     increment(c);
     increment(c);
@@ -82,7 +83,8 @@ def f(): Unit & Impure =
 ```
 
 Note that the `newCounter`, `getCount`, `increment`
-and `f` functions must all be marked as `Impure`.
+and `f` functions must all be marked as `Impure`
+with the annotation `\ IO`.
 
 ## Aliasing and References to References
 
@@ -108,6 +110,7 @@ let l1 = ref 42;
 let l2 = ref l1;
 deref (deref l2)
 ```
+
 Evaluates to `42` as expected.
 
 #### Design Note
@@ -121,7 +124,7 @@ the program.
 
 ## Mutable Tuples and Records
 
-Flix tuples and records are *immutable*.
+Flix tuples and records are _immutable_.
 However, tuples and records may contain mutable
 references.
 

@@ -75,6 +75,7 @@ And here are some more exotic functions:
 ```flix
 List.intersperse("X", "a" :: "b" :: "c" :: Nil)
 ```
+
 which inserts `"X"` between every element in the
 list.
 
@@ -98,7 +99,7 @@ function:
 /// Returns the result of applying `f` to every element in `l`.
 /// That is, the result is of the form: `f(x1) :: f(x2) :: ...`.
 ///
-pub def map(f: a -> b & ef, l: List[a]): List[b] & ef = match l {
+pub def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = match l {
     case Nil     => Nil
     case x :: xs => f(x) :: map(f, xs)
 }

@@ -43,7 +43,7 @@ Laws will be further explored below.
 
 ```flix
 pub class Length[a] {
-    pub def length(x: a): Int
+    pub def length(x: a): Int32
 
     law nonnegative: forall(x: a) . Length.length(x) >= 0
 }
@@ -63,7 +63,7 @@ class for the generic type `List[a]`.
 
 ```flix
 instance Length[List[a]] {
-    pub def length(x: List[a]): Int = List.length(x)
+    pub def length(x: List[a]): Int32 = List.length(x)
 }
 ```
 
@@ -85,7 +85,7 @@ override implementation in the instance.
 ```flix
 pub class Length[a] {
 
-    pub def length(x: a): Int
+    pub def length(x: a): Int32
 
     pub def isSingleton(x: a): Bool = length(x) == 1
 
@@ -95,13 +95,14 @@ pub class Length[a] {
 }
 
 instance Length[List[a]] {
-    pub def length(x: List[a]): Int = List.length(x)
+    pub def length(x: List[a]): Int32 = List.length(x)
     override pub def isSingleton(x: List[a]): Bool = match x {
         case _ :: Nil => true
         case _ => false
     }
 }
 ```
+
 We have added the `isSingleton` function to the
 `Length` type class, with a default implementation
 that works in general.
@@ -117,7 +118,7 @@ The function does not have to be implemented.
 
 ```flix
 instance Length[String] {
-    pub def length(x: String): Int = String.length(x)
+    pub def length(x: String): Int32 = String.length(x)
 }
 ```
 
@@ -132,7 +133,7 @@ functions may be implemented.
 
 ```flix
 pub class Length[a] {
-    pub def length(x: a): Int
+    pub def length(x: a): Int32
 
     law nonnegative: forall(x: a) . Length.length(x) >= 0
 }

@@ -20,7 +20,7 @@ construct a new Java object.
 For example:
 
 ```flix
-import new java.io.File(String): ##java.io.File & Impure as newFile;
+import new java.io.File(String): ##java.io.File \ IO as newFile;
 newFile("HelloWorld.txt")
 ```
 
@@ -29,7 +29,7 @@ class and give it the local name `newFile`.
 The `newFile` function takes a string argument and
 returns a fresh Java `File` object.
 Constructing a fresh object is impure, hence `main`
-is marked as `Impure`.
+is marked as `Impure` with annotation `\ IO`.
 
 The type of the File object is written as
 `##java.io.File` where the two hashes `##` designate
@@ -43,8 +43,8 @@ For example:
 ```flix
 type alias File = ##java.io.File
 
-def openFile(s: String): File & Impure =
-    import new java.io.File(String): File & Impure as newFile;
+def openFile(s: String): File \ IO =
+    import new java.io.File(String): File \ IO as newFile;
     newFile(s)
 ```
 
@@ -58,7 +58,7 @@ for the child pathname.
 We can use this constructor as follows:
 
 ```flix
-import new java.io.File(String, String): ##java.io.File & Impure as newFile;
+import new java.io.File(String, String): ##java.io.File \ IO as newFile;
 newFile("foo", "HelloWorld.txt")
 ```
 
@@ -77,8 +77,8 @@ objects.
 For example:
 
 ```flix
-import new java.io.File(String): ##java.io.File & Impure as newFile;
-import java.io.File.exists(): Bool & Impure;
+import new java.io.File(String): ##java.io.File \ IO as newFile;
+import java.io.File.exists(): Bool \ IO;
 let f = newFile("HelloWorld.txt");
 exists(f)
 ```
@@ -101,7 +101,7 @@ example shows:
 
 ```flix
 def startsWith(prefix: {prefix :: String}, s: String): Bool =
-    import java.lang.String.startsWith(String): Bool & Pure;
+    import java.lang.String.startsWith(String): Bool \ {};
     startsWith(s, prefix.prefix)
 ```
 
@@ -110,7 +110,7 @@ example shows:
 
 ```flix
 def charAt(i: Int32, s: String): Char =
-    import java.lang.String.charAt(Int32): Char & Pure;
+    import java.lang.String.charAt(Int32): Char \ {};
     charAt(s, i)
 ```
 
@@ -127,8 +127,8 @@ This goes for return types, too.
 Reading a field of an object is straightforward:
 
 ```flix
-import new flix.test.TestClass(): ##flix.test.TestClass & Impure as newObject;
-import get flix.test.TestClass.boolField: Bool & Impure as getField;
+import new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
+import get flix.test.TestClass.boolField: Bool \ IO as getField;
 let o = newObject();
 getField(o)
 ```
@@ -141,9 +141,9 @@ an instance field named `boolField` of type `Bool`.
 Writing a field of an object is also straightforward:
 
 ```flix
-import new flix.test.TestClass(): ##flix.test.TestClass & Impure as newObject;
-import get flix.test.TestClass.boolField: Bool & Impure as getField;
-import set flix.test.TestClass.boolField: Unit & Impure as setField;
+import new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
+import get flix.test.TestClass.boolField: Bool \ IO as getField;
+import set flix.test.TestClass.boolField: Unit \ IO as setField;
 let o = newObject();
 setField(o, false);
 getField(o)
@@ -151,22 +151,22 @@ getField(o)
 
 ## Invoking Static Methods
 
-We can invoke a *static* method by writing the
+We can invoke a _static_ method by writing the
 `static` keyword after import:
 
 ```flix
-import static java.lang.String.valueOf(Bool): String & Impure;
+import static java.lang.String.valueOf(Bool): String \ IO;
 valueOf(true)
 ```
 
 ## Reading and Writing Static Fields
 
-Reading or writing *static* fields is similar to
+Reading or writing _static_ fields is similar to
 reading or writing object fields.
 For example:
 
 ```flix
-import static get java.lang.Integer.MIN_VALUE: Int32 & Impure as getMinValue;
+import static get java.lang.Integer.MIN_VALUE: Int32 \ IO as getMinValue;
 getMinValue()
 ```
 
@@ -181,13 +181,13 @@ The table below gives an overview of the syntax.
 Note: the return types and effects must always be
 specifed but are omitted for a simpler overview.
 
-| Import           | Syntax                                      |
-|:----------------:|:-------------------------------------------:|
-| Constructor      | `import new Foo.Bar.Baz(...)`               |
-| Object Method    | `import Foo.Bar.baz(...) [as name]`         |
-| Static Method    | `import static Foo.Bar.baz(...) [as name]`  |
-| Get Object Field | `import get Foo.Bar.baz as getValue`        |
-| Set Object Field | `import set Foo.Bar.baz as setValue`        |
+|      Import      |                   Syntax                    |
+| :--------------: | :-----------------------------------------: |
+|   Constructor    |        `import new Foo.Bar.Baz(...)`        |
+|  Object Method   |     `import Foo.Bar.baz(...) [as name]`     |
+|  Static Method   | `import static Foo.Bar.baz(...) [as name]`  |
+| Get Object Field |    `import get Foo.Bar.baz as getValue`     |
+| Set Object Field |    `import set Foo.Bar.baz as setValue`     |
 | Get Static Field | `import static get Foo.Bar.baz as getValue` |
 | Set Static Field | `import static set Foo.Bar.baz as setValue` |
 
@@ -196,9 +196,9 @@ specifed but are omitted for a simpler overview.
 Flix does not currently support any of the following
 features:
 
-- Defining new classes (or interfaces).
-- Defining new anonymous classes (e.g. to implement a
-  Java interface).
+-   Defining new classes (or interfaces).
+-   Defining new anonymous classes (e.g. to implement a
+    Java interface).
 
 If any of these features are needed, we recommend
 that you write a small Java wrapper.

@@ -1,16 +1,16 @@
 # The Main Function
 
 The entry point of any Flix program is the `main`
-function which *must* have the signature:
+function which _must_ have the signature:
 
 ```flix
-def main(): Unit & Impure
+def main(): Unit \ IO
 ```
 
 That is, the `main` function
 
 1. must return `Unit`, and
-2. must be `Impure`.
+2. must be `Impure` (marked with annotation `\ IO`).
 
 The signature of `main` does not specify any
 arguments, but the command line arguments passed to
@@ -18,7 +18,7 @@ the program can be accessed by calling
 `Environment.getArgs()`.
 
 ```flix
-def main(): Unit & Impure=
+def main(): Unit \ IO =
     let args = Environment.getArgs();
     ...
 ```

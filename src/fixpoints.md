@@ -1,8 +1,8 @@
 # Fixpoints
 
 A unique feature of Flix is its built-in support for
-fixpoint computations on *constraint on relations*
-and *constraint on lattices*.
+fixpoint computations on _constraint on relations_
+and _constraint on lattices_.
 
 We assume that the reader is already familiar with
 Datalog and focus on the Flix specific features.
@@ -27,7 +27,7 @@ def isConnected(s: Set[(Int32, Int32)], src: Int32, dst: Int32): Bool =
     let paths = query edges, rules select true from Path(src, dst);
     not (paths |> Array.isEmpty)
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let s = Set#{(1, 2), (2, 3), (3, 4), (4, 5)};
     let src = 1;
     let dst = 5;
@@ -59,7 +59,7 @@ the set `s` and turning them into `Edge` facts.
 Next, the local variable `paths` holds the result of
 computing the fixpoint of the facts and rules
 (`edges` and `rules`) and selecting the Boolean
-`true` *if* there is a `Path(src, dst)` fact.
+`true` _if_ there is a `Path(src, dst)` fact.
 Note that here `src` and `dst` are the
 lexically-bound function parameters.
 Thus, `paths` is either an empty array (no paths were
@@ -76,12 +76,12 @@ did not have to declare the type of `Edge` nor of
 
 ## Stratified Negation
 
-Flix supports *stratified negation* which allow
+Flix supports _stratified negation_ which allow
 restricted use of negation in rule bodies.
 For example:
 
 ```flix
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let movies = #{
         Movie("The Hateful Eight").
         Movie("Interstellar").
@@ -128,7 +128,7 @@ If there is, the Flix compiler rejects the program.
 ## Programming with First-class Constraints
 
 A unique feature of Flix is its support for
-*first-class constraints*.
+_first-class constraints_.
 A first-class constraint is a value that can be
 constructed, passed around, composed with other
 constraints, and ultimately solved.
@@ -160,7 +160,7 @@ def withAdoptions(): #{ AdoptedBy(String, String),
     AncestorOf(x, y) :- AdoptedBy(x, y).
 }
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let c = false;
     if (c) {
         query getParents(), getAdoptions(), withAncestors()
@@ -212,7 +212,7 @@ rule that refer to a predicate symbol `C`.
 ## Polymorphic First-class Constraints
 
 Another unique feature of Flix is its support for
-first-class *polymorphic* constraints.
+first-class _polymorphic_ constraints.
 That is, constraints where one or more constraints
 are polymorphic in their term types.
 For example:
@@ -236,7 +236,7 @@ def closure(): #{ LabelledEdge(String, l, String),
     LabelledPath(x, l, z) :- LabelledPath(x, l, y), LabelledPath(y, l, z).
 }
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     query edgesWithNumbers(), closure()
         select (x, l, z) from LabelledPath(x, l, z) |> println;
     query edgesWithColor(), closure()
@@ -307,13 +307,13 @@ where `p` has type
 
 The solution (i.e. fixpoint) of a constraint system
 is another constraint system.
-We can use this to construct *pipelines* of fixpoint
+We can use this to construct _pipelines_ of fixpoint
 computations, i.e. to feed the result of one fixpoint
 computation into another fixpoint computation.
 For example:
 
 ```flix
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let f1 = #{
         ColorEdge(1, "blue", 2).
         ColorEdge(2, "blue", 3).
@@ -344,8 +344,8 @@ facts.
 
 ## Using Flix to Solve Constraints on Lattices
 
-Flix supports not only *constraints on relations*,
-but also *constraints on lattices*.
+Flix supports not only _constraints on relations_,
+but also _constraints on lattices_.
 To create such constraints, we must first define the
 lattice operations (the partial order, the least
 upper bound, and so on) as functions, associate them
@@ -356,11 +356,11 @@ We begin with the definition of the `Sign` data type:
 
 ```flix
 enum Sign {
-              case Top,
-
-    case Neg, case Zer, case Pos,
-
-              case Bot
+    case Top,
+    case Neg,
+    case Zer,
+    case Pos,
+    case Bot
 }
 ```
 
@@ -481,7 +481,7 @@ def sum(x: Sign, y: Sign): Sign = match (x, y) {
 We can now finally put everything to use:
 
 ```flix
-pub def main(): Unit & Impure =
+pub def main(): Unit \ IO =
     let p = #{
         LocalVar("x"; Pos).
         LocalVar("y"; Zer).

@@ -27,7 +27,7 @@ unused.
 
 ## First-Class and Higher-Order Functions
 
-A *higher-order function* is a function that takes a
+A _higher-order function_ is a function that takes a
 parameter which is itself a function.
 For example:
 
@@ -122,7 +122,7 @@ For example:
 ```flix
 def sum(x: Int32, y: Int32): Int32 = x + y
 
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     let inc = sum(1);
     inc(42) |> println
 ```
@@ -145,14 +145,14 @@ Now, if we combine currying with the pipeline
 operator `|>` we are able to write:
 
 ```flix
-def main(): Unit & Impure =
+def main(): Unit \ IO =
     List.range(1, 100) |>
     List.map(x -> x + 1) |>
     println
 ```
 
 Here the call to `List.map` passes the function
-`x -> x + 1` which *returns* a new function that
+`x -> x + 1` which _returns_ a new function that
 expects a list argument.
 This list argument is then supplied by the pipeline
 operator `|>` which, in this case, expects a list
@@ -191,6 +191,7 @@ the function name in backticks. For example:
 ```flix
 123 `sum` 456
 ```
+
 is equivalent to the normal function call:
 
 ```flix
@@ -219,7 +220,7 @@ function always returns the same result when given
 the same arguments and that it cannot have
 (observable) side effects.
 
-In Flix every function definition is *implicitly*
+In Flix every function definition is _implicitly_
 marked as `Pure`.
 For example, the function definition:
 
@@ -230,14 +231,16 @@ def add(x: Int32, y: Int32): Int32 = x + y
 is actually equivalent to:
 
 ```flix
-def add(x: Int32, y: Int32): Int32 & Pure = x + y
+def add(x: Int32, y: Int32): Int32 \ {} = x + y
 ```
 
+Note the annotation for `Pure` is `\ {}`.
+
 A function that prints to the console is `Impure`
-and must be marked as such:
+and must be marked with `\ IO`:
 
 ```flix
-def addAndPrint(x: Int32, y: Int32): Int32 & Impure =
+def addAndPrint(x: Int32, y: Int32): Int32 \ IO =
     let r = x + y;
     println(r);
     r
@@ -252,11 +255,11 @@ For example, whether `List.map` is pure or impure
 depends on whether function we map is pure or
 impure.
 Fortunately Flix can model such behavior using
-*effect polymorphism*.
+_effect polymorphism_.
 For example:
 
 ```flix
-def map(f: a -> b & ef, l: List[a]): List[b] & ef = ???
+def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = ???
 ```
 
 Here the signature of `map` captures that if the

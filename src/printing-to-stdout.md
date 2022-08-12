@@ -9,7 +9,6 @@ For example:
 println("Hello World")
 ```
 
-
 The `println` function prints with a newline after the
 string.
 The `print` function can be used to print without this
@@ -49,8 +48,8 @@ Here is an example:
 
 ```flix
 def sum(x: Int32, y: Int32): Int32 =
-    let _ = println(x) as & Pure;
-    let _ = println(y) as & Pure;
+    let _ = println(x) as \ {};
+    let _ = println(y) as \ {};
     x + y
 ```
 

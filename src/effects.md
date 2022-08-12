@@ -9,13 +9,13 @@ given the same argument(s) and cannot have any
 (observable) side-effects.
 
 For example, the following expression is of type
-`Int32` and is pure (note annotation `\ {}`):
+`Int32` and is pure (marked with `\ {}`):
 
 ```flix
 1 + 2 : Int32 \ {}
 ```
 
-whereas the following expression is impure (note annotation `\ IO`):
+whereas the following expression is impure (marked with `\ IO`):
 
 ```flix
 println("Hello World") : Unit \ IO

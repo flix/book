@@ -14,7 +14,8 @@ can be changed.
 
 All operations on references are impure.
 As such, all functions that use references must be
-marked as `Impure` or be casted to `Pure`.
+marked with annotation `\ IO` for `Impure`
+or be casted to `Pure`.
 
 ## Allocation
 

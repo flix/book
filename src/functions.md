@@ -234,8 +234,10 @@ is actually equivalent to:
 def add(x: Int32, y: Int32): Int32 \ {} = x + y
 ```
 
+Note the annotation for `Pure` is `\ {}`.
+
 A function that prints to the console is `Impure`
-and must be marked as such:
+and must be marked with `\ IO`:
 
 ```flix
 def addAndPrint(x: Int32, y: Int32): Int32 \ IO =

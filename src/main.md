@@ -10,7 +10,7 @@ def main(): Unit \ IO
 That is, the `main` function
 
 1. must return `Unit`, and
-2. must be `Impure` (annotated with `\ IO`).
+2. must be `Impure` (marked with annotation `\ IO`).
 
 The signature of `main` does not specify any
 arguments, but the command line arguments passed to

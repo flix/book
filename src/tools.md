@@ -1,3 +1,7 @@
 # Tools
 
-Flix comes with a collection of tools, including a test framework, benchmark framework, and a package manager.
+This chapter covers the tooling which Flix ships with, including:
+
+- A fully-featured Visual Studio Code extension.
+- A package manager.
+- A built-in test framework.

@@ -10,8 +10,7 @@ spawn (1 + 2)
 
 This allows us to write both concurrent and parallel programs. 
 The downside is that we must manually coordinate communication between threads using channels. 
-If we are only interested in parallelism (and not in general concurrency), 
-a more light-weight approach is to use the `par` expression.
+If want parallelism, but not concurrency, a more light-weight approach is to use the `par` expression.
 
 The `par` expression:
 
@@ -39,7 +38,7 @@ par f(e1, e2, e3)
 
 evaluates the function expression `f`, and its argument expressions `e1`, `e2`, and `e3` in parallel.
 
-Once all four expressions have been reduced to a value, the function `f` is called with the arguments.
+Once all four expressions have been evaluated, the function `f` is called with the arguments in the current thread.
 
 This allows us to write a parallel `List.map` function:
 
@@ -50,6 +49,7 @@ def parMap(f: a -> b, l: List[a]): List[b] = match l {
 }
 ```
 
-This function will evaluate `f(x)` and `parMap(f, xs)` in parallel. Thus at each recursive call we spawn a new thread.
+This function will evaluate `f(x)` and `parMap(f, xs)` in parallel. Thus each recursive call spawns a new thread.
+Whether this leads to performance improvements depends on how expensive `f` is to compute.
 
-> **Note:** The `par` construct requires its components to be pure. 
+> **Note:** The `par` construct requires the sub-expression(s) to be pure.

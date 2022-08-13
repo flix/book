@@ -40,6 +40,7 @@
   - [Upcasts](./upcast.md)
   - [Type and Effect Casts](./casts.md)
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
+  - [Purity Reflection](./purity-reflection.md)
 
 ---
 

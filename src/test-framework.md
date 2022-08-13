@@ -1,12 +1,14 @@
 # Test Framework
 
-Flix comes with a simple built-in test framework. The framework is used for testing the Flix standard library.
+Flix comes with a simple built-in test framework. 
 
 A test is a Flix function marked with the `@Test` annotation. That's it. 
 
 A test function can return any value. If it returns a Bool then `true` is interpreted as success and `false` as failure. Any non-Boolean value is interpreted as success. 
 
 The `Assert.eq` function can be used to test for equality between two values that implement the `Eq` and `ToString` type classes. The advantage of `Assert.eq` (over `==`) is that it will print the two values if they are unequal. The `Assert.eq` function should not be used outside of unit tests.
+
+Here is an example:
 
 ```flix
 def add(x: Int32, y: Int32): Int32 = x + y

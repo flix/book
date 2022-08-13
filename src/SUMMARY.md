@@ -37,8 +37,7 @@
 ---
 
 - [Advanced Features](./advanced-features.md)
-    - [Type Casts](./type-casts.md)
-    - [Effect Casts](./effect-casts.md)
+    - [Type and Effect Casts](./casts.md)
     - [Bugs and Unreachable Code](./bug-and-unreachable.md)
 
 ---

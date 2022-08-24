@@ -118,12 +118,12 @@ The query returns an array with the string
 `"Interstellar"` because Christopher Nolan did not
 star in that movie.
 
-#### Design Note
-
-Flix enforces that programs are stratified, i.e. a
-program must not have recursive dependencies on
-which there is use of negation.
-If there is, the Flix compiler rejects the program.
+> **Design Note**
+>
+> Flix enforces that programs are stratified, i.e. a
+> program must not have recursive dependencies on
+> which there is use of negation.
+> If there is, the Flix compiler rejects the program.
 
 ## Programming with First-class Constraints
 
@@ -197,17 +197,17 @@ is row polymorphic type variable that represent the
 rest of the predicates that the result of the
 function can be composed with.
 
-#### Design Note
-
-The row polymorphic types are best understood as an
-over-approximation of the predicates that may occur
-in a constraint system.
-For example, if a constraint system has type
-`#{ A(String), B(Int32, Int32) }` that does
-necessarily mean that it will contain facts or rules
-that use the predicate symbols `A` or `B`, but it
-does guarantee that it will not contain any fact or
-rule that refer to a predicate symbol `C`.
+> **Design Note**
+>
+> The row polymorphic types are best understood as an
+> over-approximation of the predicates that may occur
+> in a constraint system.
+> For example, if a constraint system has type
+> `#{ A(String), B(Int32, Int32) }` that does
+> necessarily mean that it will contain facts or rules
+> that use the predicate symbols `A` or `B`, but it
+> does guarantee that it will not contain any fact or
+> rule that refer to a predicate symbol `C`.
 
 ## Polymorphic First-class Constraints
 
@@ -260,11 +260,11 @@ The Flix type system ensures that we cannot
 accidentally mix edges (or paths) with different
 types of labels.
 
-#### Design Note
-
-The `Boxable` type class constraint simply requires
-that each label type has `Eq`, `Order`, and
-`ToString` instances.
+> **Design Note**
+>
+> The `Boxable` type class constraint simply requires
+> that each label type has `Eq`, `Order`, and
+> `ToString` instances.
 
 ## Injecting Facts into Datalog
 

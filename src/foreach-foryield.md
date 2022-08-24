@@ -2,15 +2,34 @@
 
 > **Note:** This feature is experimental and not yet intended for use.
 
-In Flix, as in other functional programming languages, most iteration is expressed either through recursion or with combinators (e.g. `map` or `foldLef`).
+In Flix, as in other functional programming languages, most iteration is expressed either through recursion or with combinators (e.g. `map` or `foldLeft`).
 
-That said, Flix has syntactic sugar for two common types of loops: _for each_ and _for yield_.
+That said, Flix has syntactic sugar for two common types of loops: _for-each_ and _for yield_.
 
 ## For Each
 
+The _for-each_ construct is useful for iterating over a collection
+and apply some transformation to each element and works particularly
+well with mutable collections.
+This is due to the fact that the _for-each_ loop is actually just
+syntactic sugar for a call to `Iterable.foreach` which has return
+type `Unit`.
+Thus, for the loop to be useful the body of the loop should have an effect.
+However, before going any further an example is in order.
+
+To use the _for-each_ loop an instance of `Iterable` on the collection is required.
+For this example we will use a `MutList`.
+
+```flix
+region r {
+    let l = new MutList(r);
+
+}
+```
+
 ## For Yield
 
-Flix supports a _for-yield_ construct which is similar to Scala's for-comprehensions
+Flix also supports a _for-yield_ construct which is similar to Scala's for-comprehensions
 or to Haskell's list comprehension. The _for-yield_ construct is simply syntactic sugar
 for uses of `point` and `flatMap` (which requires an instance of the `Monad` type class).
 The _for-yield_ construct also supports a _guard_-expression which, when used,

@@ -21,9 +21,16 @@ To use the _for-each_ loop an instance of `Iterable` on the collection is requir
 For this example we will use a `MutList`.
 
 ```flix
-region r {
-    let l = new MutList(r);
+def main(): Unit & Impure = region r {
+    use MutList.push!;
 
+    let l = new MutList(r)
+        !> push!(1)
+        !> push!(2)
+        !> push!(3);
+
+    foreach (x <- l)
+        println(x)
 }
 ```
 

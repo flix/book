@@ -113,14 +113,14 @@ deref (deref l2)
 
 Evaluates to `42` as expected.
 
-#### Design Note
-
-Flix does not support any notion of global mutable
-state.
-If you need to maintain a program-wide counter (or
-other mutable state) then you have to allocate it in
-the main function and explicitly thread it through
-the program.
+> **Design Note**
+>
+> Flix does not support any notion of global mutable
+> state.
+> If you need to maintain a program-wide counter (or
+> other mutable state) then you have to allocate it in
+> the main function and explicitly thread it through
+> the program.
 
 ## Mutable Tuples and Records
 

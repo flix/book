@@ -495,7 +495,5 @@ pub def main(): Unit \ IO =
     query p select (r, v) from LocalVar(r; v) |> println
 ```
 
-#### Warning
-
 Note the careful use of `;` to designate lattice
 semantics.

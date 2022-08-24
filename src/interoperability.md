@@ -203,32 +203,32 @@ features:
 If any of these features are needed, we recommend
 that you write a small Java wrapper.
 
-#### Design Note
+> **Design Note**
+>
+> The import mechanism is only supported at the
+> expression level: it is not currently possible to
+> import Java constructors, methods, and fields at the
+> top-level.
 
-The import mechanism is only supported at the
-expression level: it is not currently possible to
-import Java constructors, methods, and fields at the
-top-level.
+> **Design Note**
+>
+> The Flix type system does not support sub-typing.
+> Consequently, a sub-type is type incompatible with a
+> super-type.
+> For example, `##java.lang.String` is not compatible
+> with `##java.lang.Object`.
+> This limitation can be overcome by inserting explicit
+> type casts.
+> For example, `e as ##java.lang.Object` can be used to
+> cast the type of `e` to `Object`.
 
-#### Design Note
-
-The Flix type system does not support sub-typing.
-Consequently, a sub-type is type incompatible with a
-super-type.
-For example, `##java.lang.String` is not compatible
-with `##java.lang.Object`.
-This limitation can be overcome by inserting explicit
-type casts.
-For example, `e as ##java.lang.Object` can be used to
-cast the type of `e` to `Object`.
-
-#### Warning
-
-The Flix compiler does not support any kind of
-cross-compilation (e.g. compiling Java sources
-together with Flix sources).
-Furthermore, the format of the JVM bytecode generated
-by the Flix compiler is not yet stable.
-If you write a library in Flix and use it from Java,
-you should be prepared for breakages with future
-versions of the Flix compiler.
+> **Warning**
+>
+> The Flix compiler does not support any kind of
+> cross-compilation (e.g. compiling Java sources
+> together with Flix sources).
+> Furthermore, the format of the JVM bytecode generated
+> by the Flix compiler is not yet stable.
+> If you write a library in Flix and use it from Java,
+> you should be prepared for breakages with future
+> versions of the Flix compiler.

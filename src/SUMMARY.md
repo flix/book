@@ -1,5 +1,7 @@
 # Summary
 
+# Core Language
+
 - [Introduction to Flix](./introduction.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
@@ -30,14 +32,10 @@
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
-- [Tools](./tools.md)
-  - [Visual Studio Code](./vscode.md)
-  - [Package Manager](./build-and-packages.md)
-  - [Test Framework](./test-framework.md)
 
 ---
 
-- [Advanced Features](./advanced-features.md)
+# Advanced Features
   - [Upcasts](./upcast.md)
   - [Type and Effect Casts](./casts.md)
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
@@ -45,6 +43,13 @@
 
 ---
 
-- [Appendix](./appendix.md)
+# Tools
+  - [Visual Studio Code](./vscode.md)
+  - [Package Manager](./build-and-packages.md)
+  - [Test Framework](./test-framework.md)
+
+---
+
+# Appendix
   - [Legal Identifiers](./identifiers.md)
   - [Operator Precedence](./precedence.md)

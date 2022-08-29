@@ -8,7 +8,9 @@ A better solution is almost always to us a compiler-checked _upcast_.
 
 A **type cast** instructs the compiler that an expression has a specific type.
 
-> **Warning️️:** *Type casts are by nature dangerous and should be used with caution!*
+> **Warning️️**
+>
+> *Type casts are by nature dangerous and should be used with caution!*
 
 A Flix programmer should not normally use type casts except in two cases:
 
@@ -43,13 +45,17 @@ The expression below contains an illegal cast and triggers a `ClassCastException
 
 #### Primitive Values and Boxing
 
-> **Note:** A type cast should *not* be used to box or unbox primitive values. Instead use the designated Java methods. For example, `Integer.valueOf` and `Integer.intValue`.
+A type cast should *not* be used to box or unbox primitive values.
+Instead use the designated Java methods.
+For example, `Integer.valueOf` and `Integer.intValue`.
 
 ## Effect Casts
 
 An **effect cast** instructs the compiler that an expression has a specific effect.
 
-> **Warning️️:** _Effect casts are by nature extremely dangerous and should be used with utmost caution!_
+> **Warning️️**
+>
+> *Effect casts are by nature extremely dangerous and should be used with utmost caution!*
 
 A Flix programmer should not normally use effect casts except in two cases:
 
@@ -75,4 +81,7 @@ def findRight(f: a -> Bool \ ef, l: List[a]): Option[a] \ ef =
 Here the cast `() -> None as \ ef` is required because otherwise
 the function `() -> None` would be pure and not effect polymorphic as required.
 
-> **Warning:** Never cast effectful expression to pure. You have been warned.
+> **Warning**
+>
+> Never cast effectful expression to pure.
+> You have been warned.

@@ -55,11 +55,11 @@ The expression:
 evaluates to an array of length 100 where every entry
 contains the string `"Hello World"`.
 
-#### Design Note
-
-Flix does not allow the allocation of an array
-without assigning a "default value" to each entry in
-the array.
+> **Design Note**
+>
+> Flix does not allow the allocation of an array
+> without assigning a "default value" to each entry in
+> the array.
 
 ## Reading and Writing from Arrays
 
@@ -110,16 +110,16 @@ a[..]
 
 evaluates to the (copied) array `[1, 2, 3, 4, 5]`.
 
-#### Design Note
+> **Design Note**
+>
+> Slicing an array using the same start and end index
+> returns the empty array.
+> For example, `[0, 1, 2, 3][2..2]` evaluates to `[]`.
 
-Slicing an array using the same start and end index
-returns the empty array.
-For example, `[0, 1, 2, 3][2..2]` evaluates to `[]`.
-
-#### Warning
-
-Slicing with negative indices is undefined and
-results in runtime errors.
+> **Warning**
+>
+> Slicing with negative indices is undefined and
+> results in runtime errors.
 
 ## Array Length
 

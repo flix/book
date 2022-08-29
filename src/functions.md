@@ -275,12 +275,12 @@ List.map(x -> x + 123, l)    // pure
 List.map(x -> println(x), l) // impure
 ```
 
-#### Design Note
-
-The Flix standard library enforces several program
-invariants using purity.
-For example, in Flix, the `Eq` and `Order` type
-classes require that their operations are pure.
-This ensures that collections, such as lists, sets,
-and maps, do not leak internal implementation
-details.
+> **Design Note**
+>
+> The Flix standard library enforces several program
+> invariants using purity.
+> For example, in Flix, the `Eq` and `Order` type
+> classes require that their operations are pure.
+> This ensures that collections, such as lists, sets,
+> and maps, do not leak internal implementation
+> details.

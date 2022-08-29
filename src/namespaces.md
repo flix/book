@@ -122,11 +122,11 @@ namespace Core/Math {
 }
 ```
 
-#### Design Note
-
-Flix does not support _wildcard_ uses because they
-are inherently ambiguous and may lead to subtle
-errors during refactoring.
+> **Design Note**
+>
+> Flix does not support _wildcard_ uses because they
+> are inherently ambiguous and may lead to subtle
+> errors during refactoring.
 
 ## Avoiding Name Clashes with Renaming
 

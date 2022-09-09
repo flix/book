@@ -13,7 +13,7 @@ A record literal is written with curly braces:
 ```
 
 which has the record type
-`{ x :: Int32, y :: Int32 }`.
+`{ x = Int32, y = Int32 }`.
 
 The order of fields in a record does not matter,
 hence the above record is equivalent to the
@@ -24,9 +24,9 @@ record:
 ```
 
 which has the record type
-`{ y :: Int32, x :: Int32 }`.
+`{ y = Int32, x = Int32 }`.
 This type is equivalent to the record type
-`{ x :: Int32, y :: Int32 }`.
+`{ x = Int32, y = Int32 }`.
 That is, the order of fields within a record type do
 not matter.
 
@@ -97,7 +97,7 @@ A function may specify that it requires a record
 with two fields:
 
 ```flix
-def f(r: {x :: Int32, y :: Int32}): Int32 = r.x + r.y
+def f(r: {x = Int32, y = Int32}): Int32 = r.x + r.y
 ```
 
 We can call this function with the records
@@ -112,7 +112,7 @@ We can lift this restriction by using row
 polymorphism:
 
 ```flix
-def g(r: {x :: Int32, y :: Int32 | s}): Int32 = r.x + r.y
+def g(r: {x = Int32, y = Int32 | s}): Int32 = r.x + r.y
 ```
 
 We can call this function with *any* record as long
@@ -138,7 +138,7 @@ For example, we can write a function translate to
 translate from one language to another as follows:
 
 ```flix
-def translate(from: {from :: Language}, to: {to :: Language}, text: String): String = ???
+def translate(from: {from = Language}, to: {to = Language}, text: String): String = ???
 ```
 
 We can call this function as follows:

@@ -150,7 +150,7 @@ r.fstName := "Unlucky"
 ```
 
 The type of the record is
-`{ fstName :: Ref[String], lstName :: Ref[String] }`.
+`{ fstName = Ref[String], lstName = Ref[String] }`.
 Again, the assignment does not change the record
 itself, but rather changes the value of the reference
 cell corresponding to the `fstName` field.

@@ -100,7 +100,7 @@ can cast it from impure to pure, as the following
 example shows:
 
 ```flix
-def startsWith(prefix: {prefix :: String}, s: String): Bool =
+def startsWith(prefix: {prefix = String}, s: String): Bool =
     import java.lang.String.startsWith(String): Bool \ {};
     startsWith(s, prefix.prefix)
 ```

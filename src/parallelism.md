@@ -1,7 +1,5 @@
 # Parallelism
 
-> **Note:** This feature is experimental and not yet intended for use.
-
 We have seen how the `spawn` expression allow us to evaluate an expression in another thread:
 
 ```flix

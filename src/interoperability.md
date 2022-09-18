@@ -16,6 +16,24 @@ Flix supports most Java features necessary for interoperability:
 
 Thus Flix programs have access to the entire Java Class Library and to the Java ecosystem.
 
+Flix and Java share the same base types, in particular:
+
+| Flix Type | Java Type |
+|-----------|-----------|
+| Bool      | boolean   |
+| Char      | char      |
+| Float32   | float     |
+| Float64   | double    |
+| Int8      | byte      |
+| Int16     | short     |
+| Int32     | int       |
+| Int64     | long      |
+| String    | String    |
+
+Note that in Flix, primitive types are always unboxed.
+Thus, if you want to call a Java method that expects a `java.lang.Integer`
+and you have a Flix `int32`, you must manually box it, e.g. by calling `java.lang.Integer.valueOf`.
+
 > **Design Note:** Unlike other programming languages that target the JVM,
 > Flix does not aim to embed the Java type system within Flix.
 > Instead, Flix sacrifices some convenience to stay true to its design goals.

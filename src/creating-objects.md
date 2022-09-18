@@ -1,8 +1,8 @@
-## Calling Constructors
+## Creating Objects
 
-We can use imports to retrieve the constructor of a
-Java class and then call its associated function to
-construct a new Java object.
+We can import the constructor of a Java class as a
+Flix function and use it to construct new objects.
+
 For example:
 
 ```flix
@@ -15,16 +15,17 @@ class and give it the local name `newFile`.
 The `newFile` function takes a string argument and
 returns a fresh Java `File` object.
 Constructing a fresh object is impure, hence `main`
-is marked as `Impure` with annotation `\ IO`.
+is marked as having the `IO` effect.
 
-The type of the File object is written as
-`##java.io.File` where the two hashes `##` designate
-that it is a Java type.
-Notice that this is how the return type is specified.
+When we important a constructor, we must specify the
+types of its formal parameters. This is required because
+Java supports constructor overloading (i.e. a class may
+have multiple constructors only distinguished by their
+formal parameters.)
 
-The `java.io.File` class has another constructor that
-takes two arguments: one for parent pathname and one
-for the child pathname.
+For example, the `java.io.File` class has another
+constructor that takes two arguments: one for the parent
+pathname and one for the child pathname.
 We can use this constructor as follows:
 
 ```flix
@@ -32,10 +33,5 @@ import new java.io.File(String, String): ##java.io.File \ IO as newFile;
 newFile("foo", "HelloWorld.txt")
 ```
 
-The import describes the signature of the
-constructor.
-We can use this to import any constructor (or
-method), even if the constructor (or method) is
-overloaded, as in the above example.
-The return type is always part of the constructor (or
-method) signature.
+Here the import describes that the constructor expects two
+`String` arguments.

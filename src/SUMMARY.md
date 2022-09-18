@@ -34,6 +34,7 @@
   - [String Interpolation](./string-interpolation.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
+  - [Redundancy](./redundancy.md)
 - [Tools](./tools.md)
   - [Visual Studio Code](./vscode.md)
   - [Package Manager](./build-and-packages.md)

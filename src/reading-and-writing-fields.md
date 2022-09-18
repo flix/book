@@ -1,6 +1,10 @@
-## Reading Object Fields
+## Reading and Writing Fields
 
-Reading a field of an object is straightforward:
+Reading and writing fields is straightforward. 
+
+We simply `import` functions that serve as "getters" and "setters".
+
+For example, here is how to read a file:
 
 ```flix
 import new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
@@ -11,8 +15,6 @@ getField(o)
 
 Here we assume that `TestClass` is a Java class with
 an instance field named `boolField` of type `Bool`.
-
-## Writing Object Fields
 
 Writing a field of an object is also straightforward:
 
@@ -25,7 +27,7 @@ setField(o, false);
 getField(o)
 ```
 
-## Reading and Writing Static Fields
+### Reading and Writing Static Fields
 
 Reading or writing _static_ fields is similar to
 reading or writing object fields.

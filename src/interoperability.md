@@ -1,8 +1,10 @@
-# Interoperability
+# Interoperability with Java
 
-Flix supports interoperability with Java. 
+Flix programs compile to Java bytecode,
+run on the Java Virtual Machine (JVM), and 
+can interoperate with Java code.
 
-This includes support for:
+In particular, Flix has support for most Java features, including:
 
 - [Calling Constructors](./calling-constructors.md)
 - [Calling Methods](./calling-methods.md)
@@ -10,8 +12,7 @@ This includes support for:
 - [Classes and Interfaces](./extending-classes-and-interfaces.md)
 
 > **Design Note:** The Flix type system does not support sub-typing.
-> Consequently, a sub-type is type incompatible with a
-> super-type.
-> For example, `java.lang.String` is not compatible
-> with `java.lang.Object`.
-> This limitation can be overcome by inserting [upcasts](./upcast.md).
+> Consequently, a type is not compatible with its super-type.
+> For example, `java.lang.String` is incompatible
+> with `java.lang.Object`. 
+> Fortunately, this limitation can be overcome by using [upcasts](./upcast.md).

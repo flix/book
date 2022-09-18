@@ -22,22 +22,6 @@ The type of the File object is written as
 that it is a Java type.
 Notice that this is how the return type is specified.
 
-A common trick is to use a type alias to make it
-easier to work with Java types.
-For example:
-
-```flix
-type alias File = ##java.io.File
-
-def openFile(s: String): File \ IO =
-    import new java.io.File(String): File \ IO as newFile;
-    newFile(s)
-```
-
-The type alias can then be used to specify the return
-type of both `openFile` and
-`new java.io.File(String)`.
-
 The `java.io.File` class has another constructor that
 takes two arguments: one for parent pathname and one
 for the child pathname.

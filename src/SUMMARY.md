@@ -27,7 +27,7 @@
   - [Calling Constructors](./calling-constructors.md)
   - [Calling Methods](./calling-methods.md)
   - [Reading and Writing Fields](./reading-and-writing-fields.md)
-  - [Extending Classes and Interfaces](./extending-classes-and-interfaces.md)
+  - [Classes and Interfaces](./extending-classes-and-interfaces.md)
 - [Everyday Programming](./everyday-programming.md)
   - [The Main Function](./main.md)
   - [Printing to Standard Out](./printing-to-stdout.md)

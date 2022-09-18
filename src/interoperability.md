@@ -1,18 +1,45 @@
 # Interoperability with Java
 
-Flix programs compile to Java bytecode,
-run on the Java Virtual Machine (JVM), and 
-can interoperate with Java code.
+Flix is [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM)-based programming language,
+hence:
 
-In particular, Flix has support for most Java features, including:
+- Flix programs compile to efficient JVM bytecode.
+- Flix programs run on any Java Virtual Machine[^1] .
+- Flix programs can call into Java code.
 
-- [Calling Constructors](./calling-constructors.md)
-- [Calling Methods](./calling-methods.md)
-- [Reading and Writing Fields](./reading-and-writing-fields.md)
-- [Classes and Interfaces](./extending-classes-and-interfaces.md)
+Flix supports most Java features necessary for interoperability:
 
-> **Design Note:** The Flix type system does not support sub-typing.
-> Consequently, a type is not compatible with its super-type.
-> For example, `java.lang.String` is incompatible
-> with `java.lang.Object`. 
+- [Creating objects from existing classes](./creating-objects.md)
+- [Calling methods on classes and objects](./calling-methods.md)
+- [Reading and writing fields on objects](./reading-and-writing-fields.md)
+- [Anonymous extension of classes and interfaces](./extending-classes-and-interfaces.md)
+
+Thus Flix programs have access to the entire Java Class Library and to the Java ecosystem.
+
+Flix and Java share the same base types, in particular:
+
+| Flix Type | Java Type |
+|-----------|-----------|
+| Bool      | boolean   |
+| Char      | char      |
+| Float32   | float     |
+| Float64   | double    |
+| Int8      | byte      |
+| Int16     | short     |
+| Int32     | int       |
+| Int64     | long      |
+| String    | String    |
+
+Note that in Flix, primitive types are always unboxed.
+Thus, if you want to call a Java method that expects a `java.lang.Integer`
+and you have a Flix `int32`, you must manually box it, e.g. by calling `java.lang.Integer.valueOf`.
+
+> **Design Note:** Unlike other programming languages that target the JVM,
+> Flix does not aim to embed the Java type system within Flix.
+> Instead, Flix sacrifices some convenience to stay true to its design goals.
+> In particular, the Flix type system does not support sub-typing.
+> Consequently, unlike in Java, a sub-type cannot be used where its super-type is expected.
+> For example, `java.lang.String` is incompatible with `java.lang.Object`.
 > Fortunately, this limitation can be overcome by using [upcasts](./upcast.md).
+
+[^1]: Flix currently targets Java 11.

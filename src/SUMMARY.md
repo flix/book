@@ -24,7 +24,7 @@
 - [Type Classes](./type-classes.md)
 - [Namespaces](./namespaces.md)
 - [Interoperability](./interoperability.md)
-  - [Calling Constructors](./calling-constructors.md)
+  - [Creating Objects](./creating-objects.md)
   - [Calling Methods](./calling-methods.md)
   - [Reading and Writing Fields](./reading-and-writing-fields.md)
   - [Classes and Interfaces](./extending-classes-and-interfaces.md)

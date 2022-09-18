@@ -174,7 +174,7 @@ As above, the only difference is to write the
 `static` keyword to indicate that the reference is to
 a static field.
 
-## Creating Anonomnous (Extending Classes and Interfaces)
+## Creating Anonymous Objects (Extending Classes and Interfaces)
 
 Flix allows you create objects that extend a class or interface.
 For example, we can create a new object that implements the

@@ -1,9 +1,9 @@
 ## Classes and Interfaces
 
-Flix allows us to create objects that extend a class or implements an interface.
+Flix allows us to create objects that extend a Java class or implements a Java interface.
 
-This feature is conceptually similar to Java [Anonymous Classes](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html). 
-That is, we can define an (unnamed class) which implements an interface or extends a class, and then construct an object of that class. All in one go. 
+This feature is conceptually similar to Java's [Anonymous Classes](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html): 
+We can define an (unnamed class) which implements an interface or extends a class and create an object of that class. All in one expression. 
 
 For example, we can create an object that implements the `java.lang.Runnable` interface:
 
@@ -17,6 +17,8 @@ def newRunnable(): Runnable \ IO = new Runnable {
 ```
 
 Every time we call `newRunnable` we get a *fresh* object that implements `java.lang.Runnable`.
+
+> **Note:** The implicit `this` argument is always passed as the first argument in a new expression.
 
 As another example, we can create an object that implements the `java.io.Closeable` interface:
 
@@ -39,8 +41,5 @@ def newObject(): Object \ IO = new Object {
 }
 ```
 
-The implicit `this` argument is always passed as the first argument in a new expression.
+> **Note:** The Flix compiler ensures that a new expression implemenets all abstract methods of a class or interface.
 
-The Flix compiler ensures that a new expression implemenets all abstract methods of a class or interface.
-
-A new expression always has the `IO` effect. 

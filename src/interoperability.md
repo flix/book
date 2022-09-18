@@ -174,6 +174,31 @@ As above, the only difference is to write the
 `static` keyword to indicate that the reference is to
 a static field.
 
+## Creating Anonomnous (Extending Classes and Interfaces)
+
+Flix allows you create objects that extend a class or interface.
+For example, we can create a new object that implements the
+`java.io.Closeable` interface as follows:
+
+```flix
+import java.io.Closeable
+
+def newClosable(): Closeable \ IO = new Closeable {
+    def close(_this: Closeable): Unit = ()
+}
+```
+
+We can also extend classes. For example, we can create a 
+`java.lang.Object` where we override the `toString` method:
+
+```flix
+import java.lang.Object
+
+def newObject(): Object \ IO = new Object {
+    def toString(_this: Object): String = "Hello World!"
+}
+```
+
 ## Summary
 
 The table below gives an overview of the syntax.
@@ -191,18 +216,6 @@ specifed but are omitted for a simpler overview.
 | Get Static Field | `import static get Foo.Bar.baz as getValue` |
 | Set Static Field | `import static set Foo.Bar.baz as setValue` |
 
-## Limitations
-
-Flix does not currently support any of the following
-features:
-
--   Defining new classes (or interfaces).
--   Defining new anonymous classes (e.g. to implement a
-    Java interface).
-
-If any of these features are needed, we recommend
-that you write a small Java wrapper.
-
 > **Design Note**
 >
 > The import mechanism is only supported at the
@@ -210,9 +223,7 @@ that you write a small Java wrapper.
 > import Java constructors, methods, and fields at the
 > top-level.
 
-> **Design Note**
->
-> The Flix type system does not support sub-typing.
+> **Design Note:** The Flix type system does not support sub-typing.
 > Consequently, a sub-type is type incompatible with a
 > super-type.
 > For example, `##java.lang.String` is not compatible
@@ -221,14 +232,3 @@ that you write a small Java wrapper.
 > type casts.
 > For example, `e as ##java.lang.Object` can be used to
 > cast the type of `e` to `Object`.
-
-> **Warning**
->
-> The Flix compiler does not support any kind of
-> cross-compilation (e.g. compiling Java sources
-> together with Flix sources).
-> Furthermore, the format of the JVM bytecode generated
-> by the Flix compiler is not yet stable.
-> If you write a library in Flix and use it from Java,
-> you should be prepared for breakages with future
-> versions of the Flix compiler.

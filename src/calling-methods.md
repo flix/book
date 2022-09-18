@@ -1,8 +1,20 @@
 ## Invoking Object Methods
 
-We can use the import mechanism to invoke methods on
-objects.
+We can use the import mechanism to invoke methods on objects.
+
 For example:
+
+```flix
+import new java.io.File(String): ##java.io.File \ IO as newFile;
+import java.io.File.exists(): Bool \ IO as fileExists;
+let f = newFile("HelloWorld.txt");
+fileExists(f)
+```
+
+Here we import the `java.io.File.exists` method under the name `fileExists`.
+
+If the Java method name is a legal Flix name and we want to reuse it,
+we can also import the method without an `as` clause. For example:
 
 ```flix
 import new java.io.File(String): ##java.io.File \ IO as newFile;
@@ -11,35 +23,25 @@ let f = newFile("HelloWorld.txt");
 exists(f)
 ```
 
-In this case the method is imported without an `as`
-clause, hence its local name is simply the Java local
-name: `exists`.
-Note that Java methods (and fields) with names that
-are illegal as Flix names must be imported with the
-`as` clause using a legal Flix name.
-For example, a non-idiomatic Java method may start
-with an uppercase letter, whereas a Flix function
-must start with a lowercase letter.
+Here we import the method under the name `exists`.
 
-All Java operations are marked as impure since Java
-is an impure language.
-If you call a function which you know to be pure, you
-can cast it from impure to pure, as the following
-example shows:
+When a Java method is imported, we must annotate it with its effect.
+Most commonly, a Java method has a side-effect (such as deleting a file),
+and hence must be annotated with the `IO` effect.
+
+In rare cases where a method is pure, we can import it as such by
+writing the empty effect set: `{}`. For example:
 
 ```flix
-def startsWith(prefix: {prefix = String}, s: String): Bool =
-    import java.lang.String.startsWith(String): Bool \ {};
-    startsWith(s, prefix.prefix)
+import java.lang.String.startsWith(String): Bool \ {};
+startsWith("Hello World", "Hello")
 ```
 
-We can pass arguments to methods as the following
-example shows:
+And as another example:
 
 ```flix
-def charAt(i: Int32, s: String): Char =
-    import java.lang.String.charAt(Int32): Char \ {};
-    charAt(s, i)
+import java.lang.String.charAt(Int32): Char \ {};
+charAt("Hello World", 2)
 ```
 
 Type signatures should use Flix type names and not
@@ -56,7 +58,7 @@ We can invoke a _static_ method by writing the
 `static` keyword after import:
 
 ```flix
-import static java.lang.String.valueOf(Bool): String \ IO;
+import static java.lang.String.valueOf(Bool): String \ {};
 valueOf(true)
 ```
 

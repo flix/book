@@ -17,7 +17,7 @@ returns a fresh Java `File` object.
 Constructing a fresh object is impure, hence `main`
 is marked as having the `IO` effect.
 
-When we important a constructor, we must specify the
+When we import a constructor, we must specify the
 types of its formal parameters. This is required because
 Java supports constructor overloading (i.e. a class may
 have multiple constructors only distinguished by their

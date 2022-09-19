@@ -40,6 +40,3 @@ def newObject(): Object \ IO = new Object {
     def toString(_this: Object): String = "Hello World!"
 }
 ```
-
-> **Note:** The Flix compiler ensures that a new expression implemenets all abstract methods of a class or interface.
-

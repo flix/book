@@ -1,14 +1,15 @@
 # Redundancy
 
-The Flix compiler is aggressive in rejecting suspiciously looking code with unused elements.
+The Flix compiler aggressively rejects programs that contain unused elements. 
+The idea is to help programmers avoid subtle bugs. While this can take some
+getting use to during development, we believe in the long-run the trade-off
+is worth it. 
 
-In particular, the Flix compiler will reject code with:
+In particular, the Flix compiler ensures that a program does not have:
 
 - Unused local variables.
 - Useless expressions.
 - Unused non-unit values.
-
-Flix rejects such programs to help programmers avoid bugs.
 
 ## Unused Local Variables
 
@@ -21,7 +22,6 @@ def main(): Unit \ IO =
     let x = 123;
     let y = 456;
     println("The sum is ${x + x}")
-
 ```
 
 with the message:
@@ -34,6 +34,16 @@ with the message:
 3 |     let y = 456;
             ^
             unused local variable.
+```
+
+Unused local variables can be prefixed by an underscore `_` to supress the error.
+For example, if we replace `y` by `_y` the above program compiles:
+
+```flix
+def main(): Unit \ IO =
+    let x = 123;
+    let _y = 456; // OK
+    println("The sum is ${x + x}")
 ```
 
 ## Useless Expressions
@@ -62,6 +72,9 @@ with the message:
 The expression has type 'Int32'
 ```
 
+An expression that has no side-effect and whose result is unused is suspicious,
+since it could just be removed from the program without changing its meaning.
+
 ## Unused Non-Unit Values
 
 Flix rejects programs with non-Unit valued expressions whose results are discarded.
@@ -88,7 +101,10 @@ with the message:
 The expression has type 'Result[Int64, String]'
 ```
 
-If the result of an impure expression is truly not needed, the `discard` expression can be used:
+Even though `File.creationTime` has a side-effects, we should probably be using the result `Result[Int64, String]`.
+At least to ensure that the operation was successful. 
+
+If the result of an impure expression is truly not needed, then the `discard` expression can be used:
 
 ```flix
 def main(): Unit \ IO =
@@ -96,4 +112,4 @@ def main(): Unit \ IO =
     println("Hello World!")
 ```
 
-which a non-Unit result to be thrown away as long as the expression itself is non-pure.
+which permits a non-Unit value to be thrown away as long as the expression is non-pure.

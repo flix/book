@@ -4,8 +4,8 @@ Flix is [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machin
 hence:
 
 - Flix programs compile to efficient JVM bytecode.
-- Flix programs run on any Java Virtual Machine[^1] .
-- Flix programs can call into Java code.
+- Flix programs run on any Java Virtual Machine[^1].
+- Flix programs can call Java code.
 
 Flix supports most Java features necessary for interoperability:
 
@@ -14,7 +14,7 @@ Flix supports most Java features necessary for interoperability:
 - [Reading and writing fields on objects](./reading-and-writing-fields.md)
 - [Anonymous extension of classes and interfaces](./extending-classes-and-interfaces.md)
 
-Thus Flix programs have access to the entire Java Class Library and to the Java ecosystem.
+Thus Flix programs can reuse Java Class Library and have access to the Java ecosystem.
 
 Flix and Java share the same base types, in particular:
 
@@ -30,9 +30,9 @@ Flix and Java share the same base types, in particular:
 | Int64     | long      |
 | String    | String    |
 
-Note that in Flix, primitive types are always unboxed.
-Thus, if you want to call a Java method that expects a `java.lang.Integer`
-and you have a Flix `int32`, you must manually box it, e.g. by calling `java.lang.Integer.valueOf`.
+In Flix primitive types are always unboxed.
+Hence, to call a Java method that expects a `java.lang.Integer`,
+if you have a Flix `Int32`, it must be boxed by calling `java.lang.Integer.valueOf`.
 
 > **Design Note:** Unlike other programming languages that target the JVM,
 > Flix does not aim to embed the Java type system within Flix.
@@ -42,4 +42,4 @@ and you have a Flix `int32`, you must manually box it, e.g. by calling `java.lan
 > For example, `java.lang.String` is incompatible with `java.lang.Object`.
 > Fortunately, this limitation can be overcome by using [upcasts](./upcast.md).
 
-[^1]: Flix currently targets Java 11.
+[^1]: Flix currently targets Java 11. Once Project Loom is released, we will target that version.

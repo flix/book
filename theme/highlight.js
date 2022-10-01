@@ -1196,3 +1196,29 @@
     const n=e.replace("grmr_","").replace("_","-");je.registerLanguage(n,Ue[e])}
     return je}()
     ;"object"==typeof exports&&"undefined"!=typeof module&&(module.exports=hljs);
+
+/*! `flix` grammar compiled for Highlight.js 11.6.0 */
+(()=>{var e=(()=>{"use strict";return e=>{const n={className:"subst",variants:[{
+  begin:"\\$[A-Za-z0-9_]+"},{begin:/\$\{/,end:/}/}]},a={className:"string",
+  variants:[{begin:'"""',end:'"""'},{begin:'"',end:'"',illegal:"\\n",
+  contains:[e.BACKSLASH_ESCAPE]},{begin:'[a-z]+"',end:'"',illegal:"\\n",
+  contains:[e.BACKSLASH_ESCAPE,n]},{className:"string",begin:'[a-z]+"""',
+  end:'"""',contains:[n],relevance:10}]},s={className:"type",
+  begin:"\\b[A-Z][A-Za-z0-9_]*",relevance:0},i={className:"title",
+  begin:/[^0-9\n\t "'(),.`{}\[\]:;][^\n\t "'(),.`{}\[\]:;]+|[^0-9\n\t "'(),.`{}\[\]:;=]/,
+  relevance:0},t={className:"class",beginKeywords:"class",end:/[:={\[\n;]/,
+  excludeEnd:!0,contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,{
+  beginKeywords:"with",relevance:10,contains:[s]},{begin:/\[/,end:/]/,
+  excludeBegin:!0,excludeEnd:!0,relevance:0,contains:[s]},i]},c={
+  className:"function",beginKeywords:"def",end:/[(\[]/,contains:[{
+  beginKeywords:"with",relevance:10,contains:[s]},{begin:/[&\\]/,end:/[}=]/,
+  relevance:9,contains:[s]},i]};return{name:"Flix",keywords:{
+  literal:"true false null",
+  keyword:"instance lawful law type alias yield lazy force override def with let sealed pub object if then else for foreach import use new catch class case default try match enum and or not ref deref as eff upcast static spawn solve select region par namespace without do resume chan select inject project into from where query inline discard"
+  },
+  contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,a,s,c,t,e.C_NUMBER_MODE,{
+  begin:[/^\s*/,"extension",/\s+(?=[[(])/],beginScope:{2:"keyword"}},{
+  begin:[/^\s*/,/end/,/\s+/,/(extension\b)?/],beginScope:{2:"keyword",4:"keyword"}
+  },{className:"meta",begin:"@[A-Za-z]+"}],disableAutodetect:!0}}})()
+  ;hljs.registerLanguage("flix",e)})();
+  

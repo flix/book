@@ -13,6 +13,7 @@ Flix supports most Java features necessary for interoperability:
 - [Calling methods on classes and objects](./calling-methods.md)
 - [Reading and writing fields on objects](./reading-and-writing-fields.md)
 - [Anonymous extension of classes and interfaces](./extending-classes-and-interfaces.md)
+- [Nested and inner classes](./nested-and-inner-classes.md)
 
 Thus Flix programs can reuse Java Class Library and have access to the Java ecosystem.
 

@@ -1,3 +1,6 @@
+/* Licensed under the MIT license */
+/* See https://github.com/chriskempson/tomorrow-theme/blob/master/LICENSE.md */
+
 /* Tomorrow Night Theme */
 /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
 /* Original theme - https://github.com/chriskempson/tomorrow-theme */
@@ -104,4 +107,8 @@
 
 .hljs-subst {
     color: var(--fg);
+}
+
+.hljs-meta {
+    color: #e8d17f;
 }

@@ -1,4 +1,6 @@
 /*
+Licensed under the MIT license.
+See https://github.com/dempfi/ayu/blob/master/LICENSE
 Based off of the Ayu theme
 Original by Dempfi (https://github.com/dempfi/ayu)
 */
@@ -79,4 +81,8 @@ Original by Dempfi (https://github.com/dempfi/ayu)
 
 .hljs-subst {
     color: var(--fg);
+}
+
+.hljs-meta {
+    color: #ffee99;
 }

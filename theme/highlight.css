@@ -1,3 +1,5 @@
+/* Licensed under the MIT license */
+/* See https://github.com/chriskempson/base16/blob/main/LICENSE.md */
 /*
  * An increased contrast highlighting scheme loosely based on the
  * "Base16 Atelier Dune Light" theme by Bram de Haan
@@ -83,4 +85,8 @@
 
 .hljs-subst {
     color: var(--fg);
+}
+
+.hljs-meta {
+    color: #b21e00;
 }

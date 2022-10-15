@@ -34,7 +34,8 @@
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
-.hljs-constant {
+.hljs-constant,
+.hljs-type {
     color: #de935f;
 }
 

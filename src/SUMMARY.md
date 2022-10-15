@@ -20,6 +20,7 @@
 - [Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)
 - [Effect System](./effects.md)
+- [Laziness](./laziness.md)
 - [Fixpoints with Datalog](./fixpoints.md)
 - [Type Classes](./type-classes.md)
 - [Namespaces](./namespaces.md)

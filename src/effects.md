@@ -148,7 +148,7 @@ List.map(x -> x + 1, 1 :: 2 :: Nil);
 
 causes a compiler error:
 
-```flix
+```
 -- Redundancy Error -------------------------------------------------- ???
 
 >> Useless expression: It has no side-effect(s) and its result is discarded.

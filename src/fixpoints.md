@@ -32,9 +32,9 @@ def main(): Unit \ IO =
     let src = 1;
     let dst = 5;
     if (isConnected(s, src, dst)) {
-        println("Found a path between \${src} and \${dst}!")
+        println("Found a path between ${src} and ${dst}!")
     } else {
-        println("Did not find a path between \${src} and \${dst}!")
+        println("Did not find a path between ${src} and ${dst}!")
     }
 ```
 

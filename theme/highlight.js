@@ -1,5 +1,5 @@
 /*!
-  Highlight.js v11.6.0 (git: 1b6a4051bc)
+  Highlight.js v11.6.0 (git: 01e096544b)
   (c) 2006-2022 undefined and other contributors
   License: BSD-3-Clause
  */
@@ -310,13 +310,14 @@ begin:/[^0-9\n\t "'(),.`{}\[\]:;][^\n\t "'(),.`{}\[\]:;]+|[^0-9\n\t "'(),.`{}\[\
 relevance:0},r={scope:"title.class",beginKeywords:"class enum",end:/[:={\[\n;]/,
 excludeEnd:!0,contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,i]},s={
 scope:"title.function",beginKeywords:"def",end:/[(\[]/,excludeEnd:!0,
-contains:[i]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
+contains:[i]},o={scope:"literal",variants:[{begin:/\?\?\?/},{begin:/\?/,
+contains:[i]}]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
 keyword:["instance","lawful","law","type","alias","yield","lazy","force","override","def","with","let","sealed","pub","object","if","then","else","for","foreach","import","use","new","catch","class","case","default","try","match","enum","and","or","not","ref","deref","as","eff","upcast","static","spawn","solve","select","region","par","namespace","without","do","resume","chan","select","inject","project","into","from","where","query","inline","discard"],
 literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err"],
 type:["Unit","Bool","Char","Float32","Float64","Int8","Int16","Int32","Int64","String","BigInt"],
 built_in:["IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!"]
 },contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,n,t,s,r,{scope:"meta",
-begin:"@[A-Za-z]+"}]}}});const ie=te;for(const e of Object.keys(ne)){
+begin:"@[A-Za-z]+"},o]}}});const ie=te;for(const e of Object.keys(ne)){
 const t=e.replace("grmr_","").replace("_","-");ie.registerLanguage(t,ne[e])}
 return ie}()
 ;"object"==typeof exports&&"undefined"!=typeof module&&(module.exports=hljs);

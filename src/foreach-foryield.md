@@ -53,7 +53,7 @@ for (x <- l1; y <- l2)
 
 evaluates to the list:
 
-```
+```flix
 (1, 1) :: (1, 2) :: (2, 1) :: (2, 2) :: Nil
 ```
 
@@ -68,7 +68,7 @@ for (x <- l1; y <- l2; if x < y)
 
 evaluates to the list:
 
-```
+```flix
 (1, 2) :: Nil
 ```
 
@@ -83,7 +83,7 @@ for (x <- l1; y <- l2)
 
 which evaluates to the non-empty list:
 
-```
+```flix
 Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 ```
 

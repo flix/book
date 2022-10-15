@@ -91,7 +91,7 @@ pub class Length[a] {
 
     law nonnegative: forall(x: a) . Length.length(x) >= 0
 
-    law singletonMeansOne(x: a): forall(x: a) . Length.length(x) == 1 <==> Length.isSingleton(x)
+    law singletonMeansOne: forall(x: a) . Length.length(x) == 1 <==> Length.isSingleton(x)
 }
 
 instance Length[List[a]] {

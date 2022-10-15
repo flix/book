@@ -26,7 +26,7 @@ namespace IntStream {
 
     enum IntStream { case SCons(Int32, Lazy[IntStream]) }
 
-    pub def from(x: Int32): IntStream = 
+    pub def from(x: Int32): IntStream =
         IntStream.SCons(x, lazy from(x + 1))
 }
 ```
@@ -56,8 +56,8 @@ IntStream.from(42) |> IntStream.map(x -> x + 10) |> IntStream.take(10)
 
 Will return:
 
-```
-52 :: 53 :: 54 :: 55 :: 56 :: 57 :: 58 :: 59 :: 60 :: 61 :: Nil  
+```flix
+52 :: 53 :: 54 :: 55 :: 56 :: 57 :: 58 :: 59 :: 60 :: 61 :: Nil
 ```
 
 Flix provides `DelayList` and `DelayMap` data structures which already implement this functionality and more:

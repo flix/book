@@ -56,8 +56,8 @@ DelayList.from(42) |> DelayList.map(x -> x + 10) |> debug |> DelayList.take(10)
 
 Debug output is not generated with `toString`. Instead `debug` prints the internal Flix datastructure. For example `debug(1 :: 2 :: Nil)` outputs:
 
-```
-Cons(1, Cons(2, Nil)) 
+```flix
+Cons(1, Cons(2, Nil))
 ```
 
 This means that `debug` can output any Flix datastructure, whether or not it implements the `ToString` class.

@@ -34,7 +34,8 @@
 .hljs-built_in,
 .hljs-literal,
 .hljs-params,
-.hljs-constant {
+.hljs-constant,
+.hljs-type {
     color: #de935f;
 }
 
@@ -106,7 +107,7 @@
 
 
 .hljs-subst {
-    color: var(--fg);
+    color: #c5c8c6;
 }
 
 .hljs-meta {

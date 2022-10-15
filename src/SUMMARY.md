@@ -37,6 +37,7 @@
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
   - [Redundancy](./redundancy.md)
+  - [Debugging](./debugging.md)
 - [Tools](./tools.md)
   - [Visual Studio Code](./vscode.md)
   - [Package Manager](./build-and-packages.md)

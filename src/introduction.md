@@ -58,31 +58,31 @@ and here is one using processes and channels:
 
 ```flix
 /// A function that sends every element of a list
-def send(o: Channel[Int32], l: List[Int32]): Unit \ IO =
+def sendAll(l: List[Int32], o: Sender[Int32]): Unit \ IO =
     match l {
         case Nil     => ()
-        case x :: xs => o <- x; send(o, xs)
+        case x :: xs => Channel.send(x, o); sendAll(xs, o)
     }
 
 /// A function that receives n elements
 /// and collects them into a list.
-def recv(i: Channel[Int32], n: Int32): List[Int32] \ IO =
+def recvN(n: Int32, i: Receiver[Int32]): List[Int32] \ IO =
     match n {
         case 0 => Nil
-        case _ => (<- i) :: recv(i, n - 1)
+        case _ => Channel.recv(i) :: recvN(n - 1, i)
     }
 
 /// A function that calls receive and sends the result on d.
-def wait(i: Channel[Int32], n: Int32, d: Channel[List[Int32]]): Unit \ IO =
-    d <- recv(i, n);
+def wait(i: Receiver[Int32], n: Int32, d: Sender[List[Int32]]): Unit \ IO =
+    Channel.send(recvN(n, i), d);
     ()
 
 /// Spawn a process for send and wait, and print the result.
 def main(): Unit \ IO =
     let l = 1 :: 2 :: 3 :: Nil;
-    let c = chan Int32 100;
-    let d = chan List[Int32] 100;
-    spawn send(c, l);
-    spawn wait(c, List.length(l), d);
-    println(<- d)
+    let (s1, r1) = Channel.buffered(100);
+    let (s2, r2) = Channel.buffered(100);
+    spawn sendAll(l, s1);
+    spawn wait(r1, List.length(l), s2);
+    println(Channel.recv(r2))
 ```

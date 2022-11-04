@@ -50,20 +50,16 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def send(c: Channel[Int32]): Unit \ IO = c <- 42; ()
-
-def main(): Unit \ IO =
-    let c = chan Int32 0;
-    spawn send(c);
-    <- c;
-    ()
+def main(): Int32 \ IO =
+    let (s, r) = Channel.unbuffered();
+    spawn Channel.send(42, s);
+    Channel.recv(r)
 ```
 
 Here the `main` function creates an unbuffered
-channel `c`, spawns the `send` function, and waits
-for a message from `c`.
-The `send` function simply puts the value `42` into
-the channel.
+channel which returns a `Sender` `s` and a `Receiver` `r`,
+spawns the `send` function, and waits
+for a message from the channel.
 
 ## Selecting on Channels
 
@@ -72,20 +68,19 @@ message from a collection of channels.
 For example:
 
 ```flix
-def meow(c: Channel[String]): Unit \ IO = c <- "Meow!"; ()
+def meow(s: Sender[String]): Unit \ IO = Channel.send("Meow!", s)
 
-def woof(c: Channel[String]): Unit \ IO = c <- "Woof!"; ()
+def woof(s: Sender[String]): Unit \ IO = Channel.send("Woof!", s)
 
 def main(): Unit \ IO =
-    let c1 = chan String 1;
-    let c2 = chan String 1;
-    spawn meow(c1);
-    spawn woof(c2);
+    let (s1, r1) = Channel.buffered(1);
+    let (s2, r2) = Channel.buffered(1);
+    spawn meow(s1);
+    spawn woof(s2);
     select {
-        case m <- c1 => m
-        case m <- c2 => m
+        case m <- recv(r1) => m
+        case m <- recv(r2) => m
     } |> println
-
 ```
 
 Many important concurrency patterns such as
@@ -102,17 +97,17 @@ We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): Unit \ IO =
-    let c1 = chan String 1;
-    let c2 = chan String 1;
+def main(): String \ IO =
+    let (_, r1) = Channel.buffered(1);
+    let (_, r2) = Channel.buffered(1);
     select {
-        case m <- c1 => "one"
-        case m <- c2 => "two"
-        case _       => "default"
+        case _ <- recv(r1) => "one"
+        case _ <- recv(r2) => "two"
+        case _             => "default"
     }
 ```
 
-Here a message is never sent to `c1` nor `c2`.
+Here a message is never sent to `r1` nor `r2`.
 The `select` expression tries all cases, and if no
 channel is ready, it immediately selects the default
 case.
@@ -128,23 +123,21 @@ periods of time inside a `select` expression.
 For example, here is a program that has a slow
 function that takes a minute to send a message on
 a channel, but the `select` expression relies on
-`Timer.seconds` to only wait `5` seconds before
+`Channel.timeout` to only wait `5` seconds before
 giving up:
 
 ```flix
-def slow(c: Channel[String]): Unit \ IO =
-    import static java.lang.Thread.sleep(Int64): Unit \ IO;
-    sleep(Time/Duration.oneMinute() / 1000000i64);
-    c <- "I am very slow";
-    ()
+def slow(s: Sender[String]): Unit \ IO =
+    Thread.sleep(Time/Duration.fromSeconds(60));
+    Channel.send("I am very slow", s)
 
 def main(): Unit \ IO =
-    use Concurrent/Channel/Timer.seconds;
-    let c = chan String 1;
-    spawn slow(c);
+    let (s, r) = Channel.buffered(1);
+    spawn slow(s);
+    let timeout = Channel.timeout(Time/Duration.fromSeconds(5));
     select {
-        case m <- c              => m
-        case _ <- seconds(5i64)  => "timeout"
+        case m <- recv(r)        => m
+        case _ <- recv(timeout)  => "timeout"
     } |> println
 ```
 
@@ -158,6 +151,6 @@ tick.
 
 #### Planned Feature
 
-Flix does not currently support _put_ operations in
+Flix does not currently support _send_ operations in
 `select` expressions.
 This is something that we might support in the future.

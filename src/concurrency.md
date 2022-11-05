@@ -1,7 +1,7 @@
 # Concurrency with Channels and Processes
 
 Flix supports CSP-style concurrency with channels and
-processes inspired by Go.
+processes inspired by Go and Rust.
 
 ## Spawning Processes
 
@@ -57,9 +57,14 @@ def main(): Int32 \ IO =
 ```
 
 Here the `main` function creates an unbuffered
-channel which returns a `Sender` `s` and a `Receiver` `r`,
+channel which returns `Sender` `s` and a `Receiver` `r` channels,
 spawns the `send` function, and waits
 for a message from the channel.
+
+As the example shows, a channel consists of two end points:
+the _Sender_ and the _Receiver_. As one would expect, 
+messages can only be send using the `Sender`, and only 
+received using the `Receiver`.
 
 ## Selecting on Channels
 
@@ -143,14 +148,3 @@ def main(): Unit \ IO =
 
 This program prints the string `"timeout"` after five
 seconds.
-
-Flix also supports _tickers_ which are similar to
-timers, but instead of sending a message one after a
-pre-defined time they repeatedly send a message every
-tick.
-
-#### Planned Feature
-
-Flix does not currently support _send_ operations in
-`select` expressions.
-This is something that we might support in the future.

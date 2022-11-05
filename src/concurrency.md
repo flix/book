@@ -119,7 +119,7 @@ case.
 Hence using a default case prevents the `select`
 expression from blocking forever.
 
-### Selecting with Tickers and Timers
+### Selecting with Timeouts
 
 As an alternative to a default case, we can use
 _tickers_ and _timers_ to wait for pre-defined

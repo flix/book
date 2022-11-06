@@ -35,7 +35,7 @@ This is the structure that the above creates:
 
 Flix treats any directory containing a file called `FlixProject.toml` as a Flix project. As a minimum, this needs to specify the name of our application and the version of Flix it's expecting to be used to compile it:
 
-```toml
+```ini
 [package]
 name = "hello-world"
 flix = "0.32.1"

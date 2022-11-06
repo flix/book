@@ -5,6 +5,7 @@
   - [Installing Flix](./installing.md)
   - [Editor Support](./editor-support.md)
 - [Projects](./projects.md)
+  - [Building](./building.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
   - [Tuples](./tuples.md)

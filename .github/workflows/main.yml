@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Check out branch
         uses: actions/checkout@v3
+      - uses: Swatinem/rust-cache@v2
       - name: Install and run mdbook
-        uses: Swatinem/rust-cache@v2
         run: |
           mkdir bin
           cargo install mdbook --no-default-features --features search --vers "^0.4" --locked

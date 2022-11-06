@@ -5,6 +5,8 @@ multilingual = false
 src = "src"
 title = "Programming Flix"
 
+[preprocessor.svgbob2]
+
 [output.html]
 git-repository-url = "https://github.com/flix/book/"
 edit-url-template = "https://github.com/flix/book/edit/master/{path}"

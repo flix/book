@@ -1,6 +1,10 @@
 # Summary
 
 - [Introduction to Flix](./introduction.md)
+- [Getting Started](./getting-started.md)
+  - [Installing Flix](./installing.md)
+  - [Editor Support](./editor-support.md)
+- [Projects](./projects.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
   - [Tuples](./tuples.md)

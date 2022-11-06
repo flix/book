@@ -33,7 +33,15 @@ This is the structure that the above creates:
  '- README.md
 ```
 
-Flix treats any directory containing a file called `FlixProject.toml` as a Flix project. There are two different basic types of Flix project:
+Flix treats any directory containing a file called `FlixProject.toml` as a Flix project. As a minimum, this needs to specify the name of our application and the version of Flix it's expecting to be used to compile it:
+
+```toml
+[package]
+name = "hello-world"
+flix = "0.32.1"
+```
+
+There are two different basic types of Flix project:
 
 * **Applications:** Collections of source files and other resources (e.g. HTML files, images, ...) which are built into an executable project.
 
@@ -41,5 +49,5 @@ Flix treats any directory containing a file called `FlixProject.toml` as a Flix 
 
 By default `flix new` creates an application project, but it can be used to create a library by specifying the `lib` template: `flix new --template lib my-new-library`.
 
-> 🤔 Note: Perhaps not at first release, but eventually we should allow the creation of user defined templates to automate the creation of more complex projects, e.g. web apps (which in addition to the above would have a `resources` directory, `index.html`, default routes, etc.).
+> 🤔 Note: We should allow the creation of user defined templates to automate the creation of more complex projects, e.g. web apps (which in addition to the above would have a `resources` directory, `index.html`, default routes, etc.).
 

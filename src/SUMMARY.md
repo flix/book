@@ -7,6 +7,7 @@
 - [Projects](./projects.md)
   - [Building](./building.md)
   - [Dependencies](./dependencies.md)
+  - [Reference](./project-reference.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
   - [Tuples](./tuples.md)

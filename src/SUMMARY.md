@@ -6,6 +6,7 @@
   - [Editor Support](./editor-support.md)
 - [Projects](./projects.md)
   - [Building](./building.md)
+  - [Dependencies](./dependencies.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
   - [Tuples](./tuples.md)

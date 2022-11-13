@@ -26,28 +26,24 @@ let (x, y, z) = par (e1, e2, e3)
 
 which will spawn a thread for each of `e1`, `e2`, and `e3` and bind the result to the local variables `x`, `y`, and `z`.
 
-For convenience, Flix also supports a parallel function application expression.
-
-The `par` expression:
+For convenience, Flix also offers the `par-yield` construct:
 
 ```flix
-par f(e1, e2, e3)
+par (x <- e1; y <- e2; z <- e3) 
+    yield x + y + z
 ```
 
-evaluates the function expression `f`, and its argument expressions `e1`, `e2`, and `e3` in parallel.
+which evaluates `e1`, `e2`, and `e3` in parallel, binds their results to `x`, `y`, and `z`, and returns their sum.
 
-Once all four expressions have been evaluated, the function `f` is called with the arguments in the current thread.
-
-This allows us to write a parallel `List.map` function:
+We can use `par-yield` to write a parallel `List.map` function:
 
 ```flix
 def parMap(f: a -> b, l: List[a]): List[b] = match l {
     case Nil     => Nil
-    case x :: xs => par (f(x) :: parMap(f, xs))
+    case x :: xs => 
+        par (r <- f(x); rs <- parMap(f, xs))
+            yield r :: rs
 }
 ```
 
 This function will evaluate `f(x)` and `parMap(f, xs)` in parallel. Thus each recursive call spawns a new thread.
-Whether this leads to performance improvements depends on how expensive `f` is to compute.
-
-> **Note:** The `par` construct requires the sub-expression(s) to be pure.

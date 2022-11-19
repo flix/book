@@ -4,7 +4,7 @@ Flix supports two different types of dependency: Flix libraries (Fpkgs) and Jar 
 
 # Specifying Dependencies
 
-Dependencies shared by all build flavours are specified within the `[package.dependencies]` section of `FlixProject.toml`. Dependencies specific to a particular build flavour are specified in `[build.<flavour>.dependencies]`, for example:
+Dependencies shared by all build flavours are specified within the `[package.dependencies]` section of `flix.toml`. Dependencies specific to a particular build flavour are specified in `[build.<flavour>.dependencies]`, for example:
 
 ```ini
 [package]
@@ -53,7 +53,7 @@ Flix library dependencies reference a GitHub release specified in the form `com.
 An Fpkg release comprises two files:
 
 * An `.fpkg` file containing the compressed source code for the library.
-* The library's `FlixProject.toml` file which is used to determine metadata for the library.
+* The library's `flix.toml` file which is used to determine metadata for the library.
 
 Flix requires that a library specifies at least the following minimum set of metadata:
 
@@ -90,12 +90,12 @@ Imagine that we have a Flix library project with the following structure:
  |   |
  |   '- DebuggingData.json
  |
- +- FlixProject.toml
+ +- flix.toml
  +- LICENSE.txt
  '- README.md
 ```
 
-Here are the contents of its `FlixProject.toml`:
+Here are the contents of its `flix.toml`:
 
 ```ini
 [package]
@@ -135,7 +135,7 @@ Because the `fpkg` command uses the `prod` build flavour by default, the resulti
  |   |
  |   '- ProductionData.json
  |
- +- FlixProject.toml
+ +- flix.toml
  +- LICENSE.txt
  '- README.md
 ```
@@ -156,11 +156,11 @@ A future version of the compiler will automatically detect and forbid changes to
 
 # Dependency Resolution
 
-Unlike (for example) [npm](https://docs.npmjs.com/cli) or [Cargo](https://doc.rust-lang.org/stable/cargo/index.html) version numbers in `FlixProject.html` are specified exactly: you get precisely the version of the library referenced. There are no [version ranges, tildes, carets, or wildcards](https://doc.rust-lang.org/stable/cargo/reference/specifying-dependencies.html).
+Unlike (for example) [npm](https://docs.npmjs.com/cli) or [Cargo](https://doc.rust-lang.org/stable/cargo/index.html) version numbers in `flix.html` are specified exactly: you get precisely the version of the library referenced. There are no [version ranges, tildes, carets, or wildcards](https://doc.rust-lang.org/stable/cargo/reference/specifying-dependencies.html).
 
 In the event that two dependencies both depend on the same sub-dependency, the most recent version specified will be used, as long as the versions they use are compatible according to semantic versioning.
 
-For example, imagine that this is the `[package.dependencies]` section of our `FlixProject.toml`:
+For example, imagine that this is the `[package.dependencies]` section of our `flix.toml`:
 
 ```ini
 [package.dependencies]
@@ -202,7 +202,7 @@ com.example.frobnicate:
   More recent minor version available: 1.3.0
 ```
 
-And you can automatically update `FlixProject.toml` with `flix upgrade`:
+And you can automatically update `flix.toml` with `flix upgrade`:
 
 ```
 % flix upgrade --help

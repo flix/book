@@ -28,12 +28,12 @@ This is the structure that the above creates:
  |   |
  |   '- TestMain.flix
  |
- +- FlixProject.toml
+ +- flix.toml
  +- LICENSE.txt
  '- README.md
 ```
 
-Flix treats any directory containing a file called `FlixProject.toml` as a Flix project. As a minimum, this needs to specify the name of our application and the version of Flix it's expecting to be used to compile it:
+Flix treats any directory containing a file called `flix.toml` as a Flix project. As a minimum, this needs to specify the name of our application and the version of Flix it's expecting to be used to compile it:
 
 ```ini
 [package]

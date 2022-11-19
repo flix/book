@@ -14,7 +14,7 @@ A project is built from the following components:
   * **JAR Files:** Java libraries packaged as JAR files.
 * **Configuration:** Settings which modify the behaviour of the compiler.
 
-The primary job of `FlixProject.toml` is, therefore, to specify how we should find the source code, resources, and dependencies that should be used to build our project.
+The primary job of `flix.toml` is, therefore, to specify how we should find the source code, resources, and dependencies that should be used to build our project.
 
 ## Build Flavours
 

@@ -11,15 +11,16 @@ For example, here is the implementation of `Set.count`:
 ```flix
 @ParallelWhenPure
 pub def count(f: a -> Bool \ ef, s: Set[a]): Int32 \ ef =
-    reifyEff(f) {
-        case Pure(g) =>
+    typematch f {
+        case g: a -> Bool \ {} =>
             if (useParallelEvaluation(s))
                 let h = (k, _) -> g(k);
                 let Set(t) = s;
                 RedBlackTree.parCount(threads() - 1, h, t) as \ {}
             else
                 foldLeft((b, k) -> if (f(k)) b + 1 else b, 0, s)
-        case _  => foldLeft((b, k) -> if (f(k)) b + 1 else b, 0, s)
+        case g: a -> Bool \ ef => foldLeft((b, k) -> if (g(k)) b + 1 else b, 0, s)
+        case _: _ => unreachable!()
     }
 ```
 

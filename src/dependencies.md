@@ -13,25 +13,27 @@ version = "1.2.3"
 flix = "0.31.0"
 
 [package.dependencies]
-mvn."org.postgresql/postgresql" = "42.3.3"
-mvn."org.eclipse.jetty/jetty-server" = "11.0.11"
+mvn."org.postgresql:postgresql" = "42.3.3"
+mvn."org.eclipse.jetty:jetty-server" = "11.0.11"
 fpkg."com.github.paulbutcher/my-flix-library" = "0.3.1"
 
 [build.dev.dependencies]
 fpkg."com.github.example/debugging-helper" = "2.3.4"
 ```
 
-This defines an application which depends upon two different Maven dependencies: `org.postgresql/postgresql` and `org.eclipse.jetty/jetty-server`, plus a single Fpgk: `com.github.paulbutcher/my-flix-library`. The development build also depends upon an additional Fpkg: `com.github.example/debugging-helper`.
+This defines an application which depends upon two different Maven dependencies: `org.postgresql:postgresql` and `org.eclipse.jetty:jetty-server`, plus a single Fpgk: `com.github.paulbutcher/my-flix-library`. The development build also depends upon an additional Fpkg: `com.github.example/debugging-helper`.
 
 > 🤔 Note: In [#4380](https://github.com/flix/flix/issues/4380) I proposed that we had "group-id/artifact".mvn, but I think I've convinced myself that the other way around works slightly better. Ultimately it doesn't really make much difference and we can pick whichever way round we think is best.
 
+> 🤔 Note: I'm suggesting that we specify dependencies with the most natural separator for the type of dependency, so `:` for Maven and `/` for fpkg. We could alternatively use a common separator for both (probably `/`).
+
 # Maven Dependencies
 
-Maven dependencies are specified as a [_maven coordinate_](https://maven.apache.org/pom.html#Maven_Coordinates) of the form `groupId/artifactId`. In the simple case this maps onto a simple version number, but in the event that you need to deal with subdependency conflicts or reduce the size of the build, you can exclude subdependencies as follows:
+Maven dependencies are specified as a [_maven coordinate_](https://maven.apache.org/pom.html#Maven_Coordinates) of the form `groupId:artifactId`. In the simple case this maps onto a simple version number, but in the event that you need to deal with subdependency conflicts or reduce the size of the build, you can exclude subdependencies as follows:
 
 ```ini
 [package.dependencies]
-mvn."org.eclipse.jetty/jetty-server" = { version = "11.0.11", exclusions = ["org.slf4j/slf4j-api"] }
+mvn."org.eclipse.jetty:jetty-server" = { version = "11.0.11", exclusions = ["org.slf4j:slf4j-api"] }
 ```
 
 Maven dependencies are downloaded to your `~/.m2` directory and referenced directly on the classpath (i.e. if two different projects reference the same dependency, it is only downloaded once).
@@ -109,7 +111,7 @@ An example of a Flix library, distributed as an fpkg
 homepage = "https://github.com/org-name/example-flix-library"
 
 [package.dependencies]
-mvn."com.example/some-lib" = "1.2.3"
+mvn."com.example:some-lib" = "1.2.3"
 fpkg."com.example/another-flix-library" = "2.3.4"
 
 [build.dev.dependencies]

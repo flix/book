@@ -8,10 +8,10 @@ processes inspired by Go and Rust.
 We can spawn a process with the `spawn` keyword:
 
 ```flix
-spawn (1 + 2)
+spawn (1 + 2) @ Static
 ```
 
-This spawns a process that computes `1 + 2` and
+This spawns a process in the `Static` region that computes `1 + 2` and
 throws the result away.
 The `spawn` expression always returns `Unit`.
 We can spawn any expression, but we typically spawn
@@ -20,7 +20,9 @@ functions to run in a new process:
 ```flix
 def sum(x: Int32, y: Int32): Int32 = x + y
 
-def main(): Unit \ IO = spawn sum(1, 2)
+def main(): Unit \ IO = region r {
+    spawn sum(1, 2) @ r
+}
 ```
 
 ## Communicating with Channels
@@ -30,7 +32,7 @@ A _channel_ allows two or more processes to exchange
 data by sending immutable messages to each other.
 
 A channel comes in one of two variants: _buffered_ or
-_unbuffered_.
+_unbuffered_. Channels are always associated with a region.
 
 A buffered channel has a size, set at creation time,
 and can hold that many messages.
@@ -50,14 +52,15 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def main(): Int32 \ IO =
-    let (s, r) = Channel.unbuffered();
-    spawn Channel.send(42, s);
-    Channel.recv(r)
+def main(): Int32 \ IO = region r {
+    let (tx, rx) = Channel.unbuffered(r);
+    spawn Channel.send(42, tx) @ r;
+    Channel.recv(rx)
+}
 ```
 
 Here the `main` function creates an unbuffered
-channel which returns `Sender` `s` and a `Receiver` `r` channels,
+channel which returns `Sender` `tx` and a `Receiver` `rx` channels,
 spawns the `send` function, and waits
 for a message from the channel.
 
@@ -73,19 +76,22 @@ message from a collection of channels.
 For example:
 
 ```flix
-def meow(s: Sender[String]): Unit \ IO = Channel.send("Meow!", s)
+def meow(tx: Sender[String, r]): Unit \ { Write(r) } = 
+    Channel.send("Meow!", tx)
 
-def woof(s: Sender[String]): Unit \ IO = Channel.send("Woof!", s)
+def woof(tx: Sender[String, r]): Unit \ { Read(r), Write(r) } = 
+    Channel.send("Woof!", tx)
 
-def main(): Unit \ IO =
-    let (s1, r1) = Channel.buffered(1);
-    let (s2, r2) = Channel.buffered(1);
-    spawn meow(s1);
-    spawn woof(s2);
+def main(): Unit \ IO = region r {
+    let (tx1, rx1) = Channel.buffered(r, 1);
+    let (tx2, rx2) = Channel.buffered(r, 1);
+    spawn meow(tx1) @ r;
+    spawn woof(tx2) @ r;
     select {
-        case m <- recv(r1) => m
-        case m <- recv(r2) => m
+        case m <- recv(rx1) => m
+        case m <- recv(rx2) => m
     } |> println
+}
 ```
 
 Many important concurrency patterns such as
@@ -102,14 +108,15 @@ We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): String \ IO =
-    let (_, r1) = Channel.buffered(1);
-    let (_, r2) = Channel.buffered(1);
+def main(): String = region r {
+    let (_, rx1) = Channel.buffered(r, 1);
+    let (_, rx2) = Channel.buffered(r, 1);
     select {
-        case _ <- recv(r1) => "one"
-        case _ <- recv(r2) => "two"
+        case _ <- recv(rx1) => "one"
+        case _ <- recv(rx2) => "two"
         case _             => "default"
     }
+}
 ```
 
 Here a message is never sent to `r1` nor `r2`.
@@ -132,18 +139,19 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(s: Sender[String]): Unit \ IO =
+def slow(tx: Sender[String, r]): Unit \ { Write(r), IO} =
     Thread.sleep(Time/Duration.fromSeconds(60));
-    Channel.send("I am very slow", s)
+    Channel.send("I am very slow", tx)
 
-def main(): Unit \ IO =
-    let (s, r) = Channel.buffered(1);
-    spawn slow(s);
-    let timeout = Channel.timeout(Time/Duration.fromSeconds(5));
+def main(): Unit \ IO = region r {
+    let (tx, rx) = Channel.buffered(r, 1);
+    spawn slow(tx) @ r;
+    let timeout = Channel.timeout(r, Time/Duration.fromSeconds(5));
     select {
-        case m <- recv(r)        => m
+        case m <- recv(rx)       => m
         case _ <- recv(timeout)  => "timeout"
     } |> println
+}
 ```
 
 This program prints the string `"timeout"` after five

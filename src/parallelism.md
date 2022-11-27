@@ -3,7 +3,7 @@
 We have seen how the `spawn` expression allow us to evaluate an expression in another thread:
 
 ```flix
-spawn (1 + 2)
+spawn (1 + 2) @ Static
 ```
 
 This allows us to write both concurrent and parallel programs. 

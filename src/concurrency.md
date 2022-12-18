@@ -1,4 +1,4 @@
-# Concurrency with Channels and Processes
+# Structured Concurrency
 
 Flix supports CSP-style concurrency with channels and
 processes inspired by Go and Rust.
@@ -8,22 +8,33 @@ processes inspired by Go and Rust.
 We can spawn a process with the `spawn` keyword:
 
 ```flix
-spawn (1 + 2) @ Static
-```
-
-This spawns a process in the `Static` region that computes `1 + 2` and
-throws the result away.
-The `spawn` expression always returns `Unit`.
-We can spawn any expression, but we typically spawn
-functions to run in a new process:
-
-```flix
-def sum(x: Int32, y: Int32): Int32 = x + y
-
 def main(): Unit \ IO = region r {
-    spawn sum(1, 2) @ r
+    spawn println("Hello from thread") @ r;
+    println("Hello from main")
 }
 ```
+
+Spawned processes are always associated with a region; the region will
+will not exit until all the processes associated with it have completed:
+
+```flix
+def slowPrint(delay: Int32, message: String): Unit \ IO =
+    Thread.sleep(Time/Duration.fromSeconds(delay));
+    println(message)
+
+def main(): Unit \ IO = 
+    region r1 {
+        region r2 {
+            spawn slowPrint(2, "Hello from r1") @ r1;
+            spawn slowPrint(1, "Hello from r2") @ r2
+        };
+        println("r2 is now complete")
+    };
+    println("r1 is now complete")
+```
+
+This means that Flix supports _structured concurrency_; spawned 
+processes have clearly defined entry and exit points.
 
 ## Communicating with Channels
 

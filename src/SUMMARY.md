@@ -11,6 +11,7 @@
   - [Lists](./lists.md)
   - [Records](./records.md)
 - [Mutable Data](./mutable-data.md)
+  - [Regions](./regions.md)
   - [References](./references.md)
   - [Arrays](./arrays.md)
 - [Control Structures](./control-structures.md)

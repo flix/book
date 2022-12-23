@@ -1,8 +1,10 @@
 # Mutable Data
 
-We now turn our attention to mutable data.
+In Flix, the primitive mutable data types are:
 
-All mutable data is built from two the basic mutable data types:
+- [References](./references.md)
+- [Arrays](./arrays.md)
 
-- References
-- Arrays
+from which we can build higher-level data structures, such as mutable lists, deques, sets, and maps.
+
+But before we can use these, we have to understand the concept of [Regions](./regions.md).

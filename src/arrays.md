@@ -64,7 +64,8 @@ region rh {
 
 Here we create an array `arr` of length `1_000` where each array element has the
 value `42`. Note that we must pass the region `rh` as an argument to
-`Array.repeat` because the function must know to which region the array belongs.
+`Array.repeat` because the function must know to which region the returned array
+belongs.
 
 We can also create an array filled with all integers from zero to ninety-nine:
 
@@ -74,6 +75,20 @@ region rh {
     println(arr)
 }
 ```
+
+And finally, we can often convert other data structures into mutable arrays.
+Most immutable data structures, including `List`, `Chain`, `Nec`, have a
+`toArray` function. Here is an example:
+
+```flix
+region rh {
+    let fruitList = List#{"Apple", "Pear", "Mango"};
+    let fruitArray = List.toArray(rh, fruitList);
+}
+```
+
+Note that we must pass the region `rh` as an argument to `List.toArray` because
+the function must know to which region the returned array belongs.
 
 ## Allocating Arrays with Uninitialized Values
 
@@ -93,7 +108,7 @@ program to inform Flix of the array type.
 
 > **Warning:** It is dangerous to use arrays that have uninitialized values. 
 
-But what are the values of an uninitialized array? Here Flix follows Java which
+But what are the elements of an uninitialized array? Here Flix follows Java which
 defines a _default value_ for every primitive type and reference type. So, for
 example, the default values for `Bool` and `Int32` are `false` and `0`,
 respectively. The default value for reference types are `null`. So be careful!
@@ -172,5 +187,13 @@ a.length
 ```
 
 which evaluates to `5`.
-
 -->
+
+
+
+## Other Array Operations
+
+The `Array` module offers an extensive collection of functions for working with
+arrays. For example, `Array.append`, `Array.copyOfRange`, `Array.findLeft`,
+`Array.findRight`, `Array.sortWith!`, and `Array.sortBy!` to name a few of the
+more than 100 functions. 

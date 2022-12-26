@@ -1,6 +1,6 @@
 # Regions
 
-> Note: Work in progress.
+> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
 In Flix, all mutable data belongs to a *region*. 
 A region can be thought of a lexical scope. 

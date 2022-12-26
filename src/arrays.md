@@ -1,6 +1,6 @@
 # Arrays
 
-> **Note:** This feature requires Flix version 0.35.0 or higher.
+> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
 Flix supports mutable _scoped_ arrays. An array is a fixed-length mutable
 sequence of elements that share the same type. Arrays are laid out consecutively

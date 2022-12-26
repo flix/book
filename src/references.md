@@ -1,5 +1,7 @@
 # References
 
+> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
+
 Flix supports references in the ML-tradition.
 The three key operations are `ref e`, `deref e`, and
 `e := e`.

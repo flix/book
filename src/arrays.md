@@ -115,24 +115,37 @@ respectively. The default value for reference types are `null`. So be careful!
 Even though Flix does not have a `null` value, one can indirectly be introduced
 via uninitialized arrays leading to `NullPointerException`s. 
 
-<!---
-
 ## Reading and Writing from Arrays
 
-Arrays can be accessed and updated using standard
-syntax.
-For example:
+We can retrieve the element at a specific position in an array using
+`Array.get`. Likewise, we can update an element at a specific position using
+`Array.put`. For example: 
 
 ```flix
-let a = [0; 10];
-a[0] = 21;
-a[1] = 42;
-a[0] + a[1]
+region rh {
+    let strings = Array.new(rh, 2);
+    Array.put("Hello", 1, strings);
+    Array.put("World", 0, strings);
+    let s1 = Array.get(1, strings);
+    let s2 = Array.get(0, strings);
+    println("${s1} ${s2}")
+}
 ```
 
-evaluates to `63`, as expected.
+Here we create a new empty uninitialized array of length two. We then store the
+string `"Hello"` at position one and the string `"World"` at position zero.
+Next, we retrieve the two strings again, and print them. Thus the program, when
+compiled and run prints `Hello World`. 
 
--->
+Part of the program can also be written in a more _fluent-style_ using the `!>`
+pipeline operator: 
+
+```flix
+let strings = 
+    Array.new(rh, 2) !>
+    Array.put("Hello", 1) !>
+    Array.put("World", 0);
+```
 
 ## Array Slicing
 

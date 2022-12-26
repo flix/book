@@ -132,53 +132,21 @@ a[0] + a[1]
 
 evaluates to `63`, as expected.
 
+-->
+
 ## Array Slicing
 
-Arrays can be sliced.
-Slicing an array (shallowly) copies a subrange of the
-array.
-For example:
+We can slice arrays using `Array.slice`. A slice of an array is a new (shallow)
+copy of a sub-range of the original array. For example:
 
 ```flix
-let a = [1, 2, 3, 4, 5];
-a[2..4]
+region rh {
+    let fruits = Array#{"Apple", "Pear", "Mango"} @ rh;
+    println(Array.slice(rh, 1, 2, fruits))
+}
 ```
 
-evaluates to the array `[3, 4]`.
-
-The start or end index may be omitted.
-For example:
-
-```flix
-let a = [1, 2, 3, 4, 5];
-let a1 = a[2..]; // evaluates to [3, 4, 5]
-let a2 = a[..4]  // evaluates to [1, 2, 3, 4]
-```
-
-If both the start and end index are omitted the
-entire array is copied.
-For example:
-
-```flix
-let a = [1, 2, 3, 4, 5];
-a[..]
-```
-
-evaluates to the (copied) array `[1, 2, 3, 4, 5]`.
-
-> **Design Note**
->
-> Slicing an array using the same start and end index
-> returns the empty array.
-> For example, `[0, 1, 2, 3][2..2]` evaluates to `[]`.
-
-> **Warning**
->
-> Slicing with negative indices is undefined and
-> results in runtime errors.
-
-
--->
+Here the program prints `Array#{"Pear"}` when compiled and run.
 
 ## Array Length
 
@@ -194,9 +162,9 @@ region rh {
 
 This program prints `3` when compiled and run. 
 
-> **Note**: We recommend that you avoid manual iteration through arrays.
-> Instead, we recommend the use of functions such as `Array.count`,
-> `Array.forEach`, and `Array.transform!`.
+> **Note**: We advise against indexed-based iteration through arrays. Instead,
+> we recommend to use functions such as `Array.count`, `Array.forEach`, and
+> `Array.transform!`.
 
 ## Other Array Operations
 

@@ -8,7 +8,7 @@ should be the default, Flix has rich support for imperative programming with
 destructive updates to mutable data. Notably, in Flix, all mutable memory _must_
 belong to a region. 
 
-Flix has two types of mutable data types:
+Flix has two types of "primitive" mutable data:
 
 - [References](./references.md)
 - [Arrays](./arrays.md)
@@ -18,4 +18,5 @@ which are used to build higher-level mutable data structures, such as `MutList`,
 structures should be used instead of working directly with references and
 arrays. 
 
-We begin with a discussion of [Regions](./regions.md).
+Before we dive into references and arrays, we begin with a discussion of
+[regions](./regions.md).

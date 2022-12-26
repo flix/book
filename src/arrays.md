@@ -2,38 +2,36 @@
 
 > **Note:** This feature requires Flix version 0.35.0 or higher.
 
-Flix supports _mutable_ arrays. In Flix, like in most languages, an array is a
-sequence of elements that share the same type and are laid out consecutively in
-memory. Arrays are mutable; hence you can change the elements of an array during
-its lifetime. However, the length of an array is fixed at its creation. 
+Flix supports mutable _scoped_ arrays. An array is a fixed-length mutable
+sequence of elements that share the same type. Arrays are laid out consecutively
+in memory. Arrays are mutable; hence their elements can change over time.
+However, once created, the length of an array cannot be changed.
 
 In Flix, the type of an array is `Array[t, r]` where `t` is the type of its
-elements and `r` is its region. In other words, like all mutable memory, every
-array belongs to some region. Reading from and writing to arrays are _effectful_
+elements and `r` is its region. Like all mutable memory in Flix, every array
+must belong to some region. Reading from and writing to arrays are _effectful_
 operations. For example, reading an element from an array of type `Array[t, r]`
 has the effect `r`. Likewise, creating an array in a region is also an effectful
 operation. 
 
-Arrays are _always_ unboxed. For example, at run-time an array of type
-`Array[Int32, r]` is represented as a sequence of primitive 32-bit integers. On
-the JVM, this array is represented as the Java type `int[]`. Moreover, these
-integers are never converted to `java.lang.Integer` objects. The same is true
-for other types of primitive arrays. 
+Arrays are _always_ unboxed. For example, an array of type `Array[Int32, r]` is
+represented as a sequence of primitive 32-bit integers, i.e., in JVM
+terminology, the array is represented as `int[]`. Flix will never box primitive
+integers as `java.lang.Integer` objects. The same is true for other types of
+primitives and arrays of primitives. 
 
-Arrays are a low-level mutable data structure typically used to implement
-higher-level data structures. Therefore, we recommend you not use arrays
-directly in your code. Instead, we recommend using immutable data structures or
-high-level mutable data structures such as `MutList`, `MutDeque`, `MutSet`, or
-`MutMap`. 
+Arrays are low-level data structures typically used to implement higher-level
+data structures. Therefore, unless implementing such data structures, we
+recommend that arrays are used sparingly. Instead, we recommend using the
+`MutList`, `MutDeque`, `MutSet`, and `MutMap` data structures.
 
-While Flix has special syntax for array literals, all other operations on arrays
-are available as ordinary functions in the `Array` module. 
+> **Hint:** Use `MutList` if you need a _growable_ mutable sequence of elements.
 
 ## Array Literals
 
 The syntax of an array literal is of the form `Array#{e1, e2, e3, ...} @ r`
-where `e1`, `e2`, and so forth are _element_ expressions, and `r` is the region
-expression. For example:
+where `e1`, `e2`, and so forth are _element expressions_, and `r` is the _region
+expression_. For example:
 
 ```flix
 region rh {
@@ -42,13 +40,12 @@ region rh {
 }
 ```
 
-Here we introduce a region named `rh` inside of which we create an array of
+Here we introduce a region named `rh`. Inside the region, we create an array of
 `fruits` that contain the three strings `"Apple"`, `"Pear"`, and `"Mango"`. The
-local variable `fruits` has type `Array[String, rh]` and belong to the region
-`rh`. For more information about regions, we refer to the chapter on
-[Regions](regions.md).
+type of `fruits` is `Array[String, rh]`. For more information about regions, we
+refer to the chapter on [Regions](regions.md).
 
-If we compile and run the program, it prints `Array#{"Apple", "Pear", "Mango"}`.
+Running the program prints `Array#{"Apple", "Pear", "Mango"}`.
 
 ## Allocating Arrays
 
@@ -65,7 +62,7 @@ region rh {
 Here we create an array `arr` of length `1_000` where each array element has the
 value `42`. Note that we must pass the region `rh` as an argument to
 `Array.repeat` because the function must know to which region the returned array
-belongs.
+should belong.
 
 We can also create an array filled with all integers from zero to ninety-nine:
 
@@ -76,9 +73,7 @@ region rh {
 }
 ```
 
-And finally, we can often convert other data structures into mutable arrays.
-Most immutable data structures, including `List`, `Chain`, `Nec`, have a
-`toArray` function. Here is an example:
+Moreover, we can convert most data structures to arrays. For example:
 
 ```flix
 region rh {
@@ -87,13 +82,13 @@ region rh {
 }
 ```
 
-Note that we must pass the region `rh` as an argument to `List.toArray` because
-the function must know to which region the returned array belongs.
+Note that we must pass the region `rh` as an argument to `List.toArray` since
+the function must know to which region the returned array should belong.
 
-## Allocating Arrays with Uninitialized Values
+## Allocating Arrays with Uninitialized Elements
 
-We can use the `Array.new` function when we want to create an array of a
-specific length where its elements are uninitialized. For example:
+We can use the `Array.new` function to create an array of a given length where
+the content of the array is uninitialized. For example:
 
 ```flix
 region rh {
@@ -102,55 +97,55 @@ region rh {
 }
 ```
 
-Here we create a new array of length `100` of type `Array[String, rh]`. Note
-that we have used an explicit type annotation since there is nothing in the
-program to inform Flix of the array type. 
+Here we create an array of length `100` of type `Array[String, rh]`. We use an
+explicit type annotation `: Array[String, rh]` to inform Flix of the expected
+type of the array.
 
-> **Warning:** It is dangerous to use arrays that have uninitialized values. 
+> **Warning:** It is dangerous to use arrays that have uninitialized elements. 
 
-But what are the elements of an uninitialized array? Here Flix follows Java which
-defines a _default value_ for every primitive type and reference type. So, for
-example, the default values for `Bool` and `Int32` are `false` and `0`,
+What are the elements of an uninitialized array? Flix follows Java (and the JVM)
+which defines a _default value_ for every primitive-- and reference type. So,
+for example, the default values for `Bool` and `Int32` are `false` and `0`,
 respectively. The default value for reference types are `null`. So be careful!
-Even though Flix does not have a `null` value, one can indirectly be introduced
-via uninitialized arrays leading to `NullPointerException`s. 
+Flix does not have a `null` value, but one can be indirectly introduced by
+reading from improperly initialized arrays which can lead to
+`NullPointerException`s. 
 
-## Reading and Writing from Arrays
+## Reading from and Writing to Arrays
 
-We can retrieve the element at a specific position in an array using
-`Array.get`. Likewise, we can update an element at a specific position using
-`Array.put`. For example: 
+We can retrieve or update the element at a specific position in an array using
+`Array.get` and `Array.put`, respectively. For example: 
 
 ```flix
 region rh {
     let strings = Array.new(rh, 2);
-    Array.put("Hello", 1, strings);
-    Array.put("World", 0, strings);
-    let s1 = Array.get(1, strings);
-    let s2 = Array.get(0, strings);
+    Array.put("Hello", 0, strings);
+    Array.put("World", 1, strings);
+    let s1 = Array.get(0, strings);
+    let s2 = Array.get(1, strings);
     println("${s1} ${s2}")
 }
 ```
 
-Here we create a new empty uninitialized array of length two. We then store the
-string `"Hello"` at position one and the string `"World"` at position zero.
-Next, we retrieve the two strings again, and print them. Thus the program, when
-compiled and run prints `Hello World`. 
+Here we create an empty array of length of two. We then store the string
+`"Hello"` at position zero and the string `"World"` at position one. Next, we
+retrieve the two strings, and print them. Thus the program, when compiled and
+run, prints `Hello World`. 
 
-Part of the program can also be written in a more _fluent-style_ using the `!>`
+We can also write part of the program in a more _fluent-style_ using the `!>`
 pipeline operator: 
 
 ```flix
 let strings = 
     Array.new(rh, 2) !>
-    Array.put("Hello", 1) !>
-    Array.put("World", 0);
+    Array.put("Hello", 0) !>
+    Array.put("World", 1);
 ```
 
-## Array Slicing
+## Slicing Arrays
 
 We can slice arrays using `Array.slice`. A slice of an array is a new (shallow)
-copy of a sub-range of the original array. For example:
+copy of a sub-range of the original array. For example
 
 ```flix
 region rh {
@@ -159,12 +154,12 @@ region rh {
 }
 ```
 
-Here the program prints `Array#{"Pear"}` when compiled and run.
+which prints `Array#{"Pear"}` when run.
 
-## Array Length
+## Taking the Length of an Array
 
 We can compute the length of an array using the `Array.length` function. For
-example: 
+example
 
 ```flix
 region rh {
@@ -173,15 +168,15 @@ region rh {
 }
 ```
 
-This program prints `3` when compiled and run. 
+which prints `3` when run.
 
 > **Note**: We advise against indexed-based iteration through arrays. Instead,
 > we recommend to use functions such as `Array.count`, `Array.forEach`, and
 > `Array.transform!`.
 
-## Other Array Operations
+## Additional Array Operations
 
 The `Array` module offers an extensive collection of functions for working with
 arrays. For example, `Array.append`, `Array.copyOfRange`, `Array.findLeft`,
-`Array.findRight`, `Array.sortWith!`, and `Array.sortBy!` to name a few of the
-more than 100 functions. 
+`Array.findRight`, `Array.sortWith!`, and `Array.sortBy!` to name a few. In
+total, the module offers more than 100 functions ready for use.

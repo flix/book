@@ -177,19 +177,26 @@ evaluates to the (copied) array `[1, 2, 3, 4, 5]`.
 > Slicing with negative indices is undefined and
 > results in runtime errors.
 
-## Array Length
 
-The length of an array is accessed as follows
-
-```flix
-let a = [1, 2, 3, 4, 5];
-a.length
-```
-
-which evaluates to `5`.
 -->
 
+## Array Length
 
+We can compute the length of an array using the `Array.length` function. For
+example: 
+
+```flix
+region rh {
+    let fruits = Array#{"Apple", "Pear", "Mango"} @ rh;
+    println(Array.length(fruits))
+}
+```
+
+This program prints `3` when compiled and run. 
+
+> **Note**: We recommend that you avoid manual iteration through arrays.
+> Instead, we recommend the use of functions such as `Array.count`,
+> `Array.forEach`, and `Array.transform!`.
 
 ## Other Array Operations
 

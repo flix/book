@@ -5,7 +5,7 @@
 Flix supports _mutable_ arrays. In Flix, like in most languages, an array is a
 sequence of elements that share the same type and are laid out consecutively in
 memory. Arrays are mutable; hence you can change the elements of an array during
-its lifetime. 
+its lifetime. However, the length of an array is fixed at its creation. 
 
 In Flix, the type of an array is `Array[t, r]` where `t` is the type of its
 elements and `r` is its region. In other words, like all mutable memory, every
@@ -75,6 +75,32 @@ region rh {
 }
 ```
 
+## Allocating Arrays with Uninitialized Values
+
+We can use the `Array.new` function when we want to create an array of a
+specific length where its elements are uninitialized. For example:
+
+```flix
+region rh {
+    let arr: Array[String, rh] = Array.new(rh, 100);
+    // ... initialize `arr` here ...
+}
+```
+
+Here we create a new array of length `100` of type `Array[String, rh]`. Note
+that we have used an explicit type annotation since there is nothing in the
+program to inform Flix of the array type. 
+
+> **Warning:** It is dangerous to use arrays that have uninitialized values. 
+
+But what are the values of an uninitialized array? Here Flix follows Java which
+defines a _default value_ for every primitive type and reference type. So, for
+example, the default values for `Bool` and `Int32` are `false` and `0`,
+respectively. The default value for reference types are `null`. So be careful!
+Even though Flix does not have a `null` value, one can indirectly be introduced
+via uninitialized arrays leading to `NullPointerException`s. 
+
+<!---
 
 ## Reading and Writing from Arrays
 
@@ -146,5 +172,5 @@ a.length
 ```
 
 which evaluates to `5`.
-<!---
+
 -->

@@ -1,41 +1,37 @@
 # Arrays
 
-While Flix recommends the use of immutable data
-structures (such as immutable lists, sets, and maps),
-mutable arrays may be useful for performance critical
-code.
+> **Note:** This feature requires Flix version 0.35.0 or higher.
 
-We recommend that arrays are used sparingly and that
-when possible their use is hidden as an
-implementation detail.
-For example, the Flix Datalog engine uses arrays
-internally but exposes a functional (immutable)
-interface.
+Flix supports _mutable_ arrays. In Flix, like in most languages, an array is a
+sequence of elements that share the same type and are laid out consecutively in
+memory. Flix arrays are mutable; hence you can change the elements of an array
+during its lifetime. 
 
-Flix uses monomorphization and consequently primitive
-arrays are not boxed.
-For example, the representation of an `Array[Int32]`
-is compact and efficient.
+In Flix, the type of an array is `Array[t, r]` where `t` is the type of its
+elements and `r` is its regions. In other words, like all mutable memory, every
+array belongs to some region.
 
-All operations on arrays are impure.
-As such, all functions that use arrays must be marked as
-impure (with annotation `\ IO`) or be casted to pure.
-However, accessing the length of an array is pure
-since the size of an array cannot change after it has
-been created.
+Reading and writing from/to arrays are _effectful_ operations. For example,
+reading an element from an array of type `Array[t, r]` has the `r` effect.
+Likewise, creating an array in a region is also an effectful operation. 
 
-Arrays should only be used for low-level code.
-The `MutList` data structure, available in the
-standard library, provides a mutable
-dynamically-expanding data structure similar to
-`java.util.ArrayList`. Its implementation is backed
-by an array that is dynamically resized and it
-provides amortized O(1) push operations.
+Arrays are _always_ unboxed. For example, at run-time an array of type
+`Array[Int32, r]` is represented as a sequence of primitive 32-bit integers. The
+integers are _not_ converted to `java.lang.Integer` objects. The same is true
+for other types of primitive arrays. 
+
+Arrays are a low-level mutable data structure typically used to implement
+higher-level data structures. Therefore, we recommend you not use arrays
+directly in your code. Instead, we recommend using immutable data structures or
+high-level mutable data structures such as `MutList`, `MutDeque`, `MutSet`, or
+`MutMap`. 
+
+
 
 ## Array Literals
 
-An array literal is of the form `[e1, e2, ... en]`.
-For example, the expression:
+Flix supports  `Array#{e1, e2, e3, ...} @ r` where `e1`, `e2`, and so
+forth are expressions. 
 
 ```flix
 [1, 2, 3, 4]
@@ -120,10 +116,10 @@ evaluates to the (copied) array `[1, 2, 3, 4, 5]`.
 >
 > Slicing with negative indices is undefined and
 > results in runtime errors.
-
+<!---
 ## Array Length
 
-The length of an array is accessed as follows:
+The length of an array is accessed as follows
 
 ```flix
 let a = [1, 2, 3, 4, 5];
@@ -131,3 +127,5 @@ a.length
 ```
 
 which evaluates to `5`.
+
+-->

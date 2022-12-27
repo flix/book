@@ -1,5 +1,32 @@
 # Pattern Matching
 
+## Matching on Enums
+
+As discussed in the chapter on [Enums](enums.md), Flix supports pattern matching
+on algebraic data types. 
+
+For example, if we have an algebraic data type that models shapes:
+
+```flix
+enum Shape {
+    case Circle(Int32)
+    case Square(Int32)
+    case Rectangle(Int32, Int32)
+}
+```
+
+Then we can write a function to compute the area of a `Shape` using pattern
+matching:
+
+```flix
+def area(s: Shape): Int32 = match s {
+    case Circle(r)       => 3 * (r * r)
+    case Square(w)       => w * w
+    case Rectangle(h, w) => h * w
+}
+```
+
+
 ## Let Pattern Match
 
 In addition to the pattern `match` construct, a

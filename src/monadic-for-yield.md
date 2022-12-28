@@ -21,9 +21,9 @@ evaluates to the list:
 (1, 1) :: (1, 2) :: (2, 1) :: (2, 2) :: Nil
 ```
 
-## Guards
+## Using Guard Expressions
 
-We can write `for-yield` expressions with a guard expression. For example, the
+We can use _guard expressions_ in `for-yield` expressions. For example, the
 program
 
 ```flix
@@ -39,12 +39,9 @@ evaluates to the list:
 (1, 2) :: Nil
 ```
 
-The data type must implement the `MonadZero` type class if we use a guard
-expression. This is the case for `List` since it has the empty element `Nil`.
-
 ## Working with Options and Results
 
-We can use `for-yield` to work with the `Option` data type. For example:
+We can also use `for-yield` to work with the `Option` data type. For example:
 
 ```flix
 def divide(x: Int32, y: Int32): Option[Int32] = 
@@ -61,11 +58,12 @@ def f(): Option[Int32] =
 Here the function `f` returns `None` since `x = 5 / 2 = 2` and `2 / 8 = 0` hence
 the last division fails. 
 
-We can also use `for-yield` to work with the `Result[e, t]` data type. For example:
+Similarly, we can use `for-yield` to work with the `Result[e, t]` data type. For
+example:
 
 ```flix
 def main(): Result[String, Unit] \ IO = 
-    println("Please first name, last name, and age:");
+    println("Please enter your first name, last name, and age:");
     for (
         fstName <- Console.readLine();
         lstName <- Console.readLine();
@@ -77,15 +75,15 @@ def main(): Result[String, Unit] \ IO =
     }
 ```
 
-Here the `main` function prompts the user to enter their first name, last name,
-and age. Each call to `Console.readLine` returns a `Result[String, String]`
-value which is either an error or the read string. Thus the local variables
-`fstName`, `lstName`, and `ageLine` are `String`s. We parse `ageLine` into an
-`Int32` using `Int32.parse`, which returns a `Result[String, Int32]`. If every
-operation is successful then we print a greeting and return `Ok(())` (i.e., `Ok`
-of `Unit`). Otherwise, we return an `Err(msg)` value.
+Here `main` prompts the user to enter their first name, last name, and age. Each
+call to `Console.readLine` returns a `Result[String, String]` value which is
+either an error or the input string. Thus the local variables `fstName`,
+`lstName`, and `ageLine` are `String`s. We parse `ageLine` into an `Int32` using
+`Int32.parse`, which returns a `Result[String, Int32]` value. If every operation
+is successful then we print a greeting and return `Ok(())` (i.e., `Ok` of
+`Unit`). Otherwise, we return an `Err(msg)` value.
 
-## Other Monads
+## Working with Other Monads
 
 We can use `for-yield` with other types of `Monad`s, including `Chain` and
 `Nel`s (non-empty lists). For example, we can write:
@@ -105,4 +103,4 @@ Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 
 > **Note:** We cannot use an `if`-guard with non-empty lists because such an
 > `if`-guard requires an instance of the `MonadZero` type class which is not
-> implemented by non-empty list. 
+> implemented by non-empty list (since such a list cannot be empty). 

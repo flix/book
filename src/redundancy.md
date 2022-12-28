@@ -98,10 +98,10 @@ with the message:
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         discarded value.
 
-The expression has type 'Result[Int64, String]'
+The expression has type 'Result[String, Int64]'
 ```
 
-Even though `File.creationTime` has a side-effects, we should probably be using the result `Result[Int64, String]`.
+Even though `File.creationTime` has a side-effects, we should probably be using the result `Result[String, Int64]`.
 At least to ensure that the operation was successful. 
 
 If the result of an impure expression is truly not needed, then the `discard` expression can be used:

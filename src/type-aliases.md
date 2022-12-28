@@ -7,9 +7,9 @@ For example:
 ```flix
 ///
 /// A type alias for a map from keys of type `k`
-/// to values of type `Result[v, String]`
+/// to values of type `Result[String, v]`
 ///
-type alias M[k, v] = Map[k, Result[v, String]]
+type alias M[k, v] = Map[k, Result[String, v]]
 
 def foo(): M[Bool, Int32] = Map#{true => Ok(123)}
 ```

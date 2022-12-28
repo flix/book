@@ -1,14 +1,14 @@
 # Essential Classes
 
-As a Flix programmer, there are three important type classes you are likely to
-run into quickly: `Eq`, `Order`, and `ToString`. 
+Programming in Flix invariable requires knowledge of three type classes: `Eq`,
+`Order`, and `ToString`. 
 
-### Eq
+### The Eq Class
 
-The `Eq` type class captures when two values of a type are equal:
+The `Eq` class captures when two values of a specific type are equal:
 
 ```flix
-pub lawful class Eq[a] {
+class Eq[a] {
 
     pub def eq(x: a, y: a): Bool
 
@@ -16,12 +16,15 @@ pub lawful class Eq[a] {
 }
 ```
 
-### Order
+To implement `Eq`, we only have to implement the `eq` function.
 
-The `Order` type class captures when one value is smaller or equal to another value:
+### The Order Class
+
+The `Order` class captures when one value is smaller or equal to another value
+of the same type:
 
 ```flix
-pub lawful class Order[a] with Eq[a] {
+class Order[a] with Eq[a] {
 
     ///
     /// Returns `Comparison.LessThan` if `x` < `y`, 
@@ -34,23 +37,24 @@ pub lawful class Order[a] with Eq[a] {
 }
 ```
 
-Here the `Comparison` data type is defined as:
+To implement `Order`, we only have to implement the `compare` function that
+returns value of type `Comparison` which is defined as:
 
 ```flix
-pub enum Comparison {
+enum Comparison {
     case LessThan
     case EqualTo
     case GreaterThan
 }
 ```
 
-### ToString
+### The ToString Class
 
-The `ToString` type class allows us to obtain a human-readable string
-representation of a value:
+The `ToString` class enables us to obtain a human-readable string representation
+of a value:
 
 ```flix
-pub class ToString[a] {
+class ToString[a] {
     ///
     /// Returns a string representation of the given x.
     ///

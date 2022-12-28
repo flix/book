@@ -136,7 +136,7 @@ For example, the standard library implement of the
 `Result` has two type parameters:
 
 ```flix
-enum Result[t, e] {
+enum Result[e, t] {
     case Ok(t),
     case Err(e)
 }

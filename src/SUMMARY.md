@@ -9,6 +9,7 @@
 - [Functions](./functions.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)
+  - [Sets and Maps](./sets-and-maps.md)
   - [Records](./records.md)
 - [Mutable Data](./mutable-data.md)
   - [Regions](./regions.md)

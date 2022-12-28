@@ -25,6 +25,7 @@
 - [Laziness](./laziness.md)
 - [Fixpoints with Datalog](./fixpoints.md)
 - [Type Classes](./type-classes.md)
+  - [Automatic Derivation](./automatic-derivation.md)
 - [Namespaces](./namespaces.md)
 - [Interoperability](./interoperability.md)
   - [Creating Objects](./creating-objects.md)

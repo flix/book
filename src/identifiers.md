@@ -30,7 +30,7 @@ The following are reserved by Flix and cannot be redefined within user code:
 `>`, `@`, `Absent`, `Bool`, `Impure`, `Nil`, `Predicate`, `Present`, `Pure`,
 `Read`, `RecordRow`, `Region`, `SchemaRow`, `Type`, `Write`, `alias`, `case`, `catch`, `chan`,
 `class`, `def`, `deref`, `else`, `enum`, `false`, `fix`, `force`,
-`if`, `import`, `inline`, `instance`, `into`, `lat`, `law`, `lawful`, `lazy`, `let`, `let*`, `match`,
+`if`, `import`, `inline`, `instance`, `into`, `lat`, `law`, `lawful`, `lazy`, `let`, `match`,
 `namespace`, `null`, `opaque`, `override`, `pub`, `ref`, `region`, `reify`,
 `reifyBool`, `reifyEff`, `reifyType`, `rel`, `sealed`, `set`, `spawn`, `Static`, `true`,
 `type`, `use`, `where`, `with`, `discard`, `object`

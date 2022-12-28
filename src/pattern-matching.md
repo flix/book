@@ -91,28 +91,3 @@ Here `f` is a function that expects *three* `Int32`
 arguments,whereas `g` is a function that expects *one*
 three tuple `(Int32, Int32, Int32)` argument.
 
-## Let* (Do-notation)
-
-Flix supports a feature similar to *do-notation* in
-Haskelland *for-comprehensions* in Scala.
-
-The following monadic code:
-
-```flix
-use Option.flatMap;
-let o1 = Some(21);
-let o2 = Some(42);
-flatMap(x -> flatMap(y -> Some(x + y), o2), o1)
-```
-
-May be expressed more concisely as:
-
-
-```flix
-use Option.flatMap;
-let* o1 = Some(21);
-let* o2 = Some(42);
-Some(o1 + o2)
-```
-
-where each `let*` corresponds to a `flatMap` use.

@@ -59,6 +59,11 @@
 
 ---
 
+- [Additional Documentation]()
+  - [Research Literature](./research-literature.md)
+
+---
+
 - [Appendix](./appendix.md)
   - [Legal Identifiers](./identifiers.md)
   - [Operator Precedence](./precedence.md)

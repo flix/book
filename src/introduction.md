@@ -1,19 +1,36 @@
 # Introduction to Flix
 
 Flix is a principled functional, logic, and imperative programming language
-developed at [Aarhus University](https://cs.au.dk/), at the [University of
-Waterloo](https://uwaterloo.ca/), and by a community of [open source
-contributors](https://github.com/flix/flix).
+developed at [Aarhus University](https://cs.au.dk/) and by a community of [open
+source contributors](https://github.com/flix/flix) in collaboration with
+researchers from the [University of Waterloo](https://uwaterloo.ca/) and from
+the [University of Tubingen](https://uni-tuebingen.de/).
 
 Flix is inspired by OCaml and Haskell with ideas from Rust and Scala. Flix looks
-like Scala, but its type system is based on Hindley-Milner. Two unique features
-of Flix are its polymorphic effect system and its support for first-class
-Datalog constraints. Flix compiles to efficient JVM bytecode, runs on the Java
-Virtual Machine, and supports full tail call elimination.
+like Scala, but its type system is based on Hindley-Milner. Flix aims to offer a
+unique combination of features that no other programming language offers,
+including:
+
+- algebraic data types and pattern matching.
+- type classes with higher-kinded types.
+- structured concurrency based on channels and light-weight processes.
+
+In addtion, Flix has several unique features:
+
+- A polymorphic type and effect system with region-based local mutation.
+- Datalog constraints as first-class program values.
+- Function overloading based on purity reflection. 
+
+Flix compiles to efficient JVM bytecode, runs on the Java Virtual Machine, and
+supports full tail call elimination. Flix has interoperability with Java and can
+use JVM classes and methods. Thus the whole Java ecosystem is available from
+within Flix. 
+
+## Look'n Feel
 
 Here are a few Flix programs to illustrate the look and feel of the language:
 
-This program illustrates the use of algebraic data types and pattern matching:
+This program illustrates the use of _algebraic data types and pattern matching_:
 
 ```flix
 /// An algebraic data type for shapes.
@@ -36,7 +53,7 @@ def main(): Unit \ IO =
     area(Rectangle(2, 4)) |> println
 ```
 
-Here is a Flix program using polymorphic records:
+Here is one that uses _polymorphic records_:
 
 ```flix
 /// Returns the area of the polymorphic record `r`.
@@ -54,7 +71,51 @@ def main(): Unit \ IO =
     polyAreas() |> println
 ```
 
-and here is one using processes and channels:
+Here is one using _region-based local mutation_:
+
+```flix
+///
+/// We can define pure functions that use
+/// internal mutability (impurity) with regions.
+/// Regions encapsulate mutability to its declared scope.
+///
+def deduplicate(l: List[a]): List[a] with Order[a] =
+    /// Declare a new region `r`.
+    region r {
+
+        /// Create a new `MutSet` at region `r`.
+        /// This will be used to keep track of
+        /// unique elements in `l`.
+        let s = new MutSet(r);
+
+        /// The lambda used in the call to `filter`
+        /// would be impure without a region.
+        List.filter(x -> {
+            if (MutSet.memberOf(x, s))
+                false // `x` has already been seen.
+            else {
+                MutSet.add!(x, s);
+                true
+            }
+        }, l)
+    }
+```
+
+Here is one using _first-class Datalog constraints_:
+
+```flix
+def reachable(edges: List[(Int32, Int32)], src: Int32, dst: Int32): Bool =
+    let db = inject edges into Edge;
+    let pr = #{
+        Path(x, y) :- Edge(x, y).
+        Path(x, z) :- Path(x, y), Edge(y, z).
+        Reachable() :- Path(src, dst).
+    };
+    let result = query db, pr select () from Reachable();
+    not List.isEmpty(result)
+```
+
+And finally here is one using _structured concurrency with channels and processes_:
 
 ```flix
 /// A function that sends every element of a list

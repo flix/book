@@ -61,6 +61,7 @@
 
 - [Additional Documentation]()
   - [Research Literature](./research-literature.md)
+  - [Blog Posts](./blog-posts.md)
 
 ---
 

@@ -59,7 +59,7 @@
 
 ---
 
-- [Additional Documentation](./additional-documentation.md)
+- [Additional Information](./additional-information.md)
   - [Research Literature](./research-literature.md)
   - [Blog Posts](./blog-posts.md)
 

@@ -53,7 +53,7 @@ which is not the case in several other programming languages.
 While the Flix compiler _guarantees_ that tail calls cannot overflow the stack,
 the same is not true for function calls in non-tail positions.
 
-For example, the following naive implementation of the [factorial
+For example, the following implementation of the [factorial
 function](https://en.wikipedia.org/wiki/Factorial) overflows the call stack: 
 
 ```flix

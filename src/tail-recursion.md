@@ -1,10 +1,7 @@
 # Tail Recursion
 
-In Flix, and functional programming in general, iteration is expressed through
-[recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)).
-
-Flix has support full [tail call](https://en.wikipedia.org/wiki/Tail_call)
-elimination which means that tail calls never increases the stack height. 
+In Flix, and in functional programming in general, iteration is expressed
+through [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)).
 
 For example, if we want to determine if a list contains an element, we can write
 a recursive function:
@@ -29,10 +26,32 @@ more efficient than a function call) and more importantly (b) a call to
 `memberOf` _cannot_ overflow the stack, because the call stack never increases
 in height.
 
+> **Tip**: Flix has support for [full tail
+call](https://en.wikipedia.org/wiki/Tail_call) elimination which means that
+recursive calls in tail position never increase the stack height and hence
+cannot cause the stack to overflow!
+
+We _remark_ that Flix has ___full___ tail call elimination, not just tail call
+optimization. This means that the following program compiles and runs successful: 
+
+```flix
+def isOdd(n: Int32): Bool =
+    if (n == 0) false else isEvn(n - 1)
+
+def isEvn(n: Int32): Bool =
+    if (n == 0) true else isOdd(n - 1)
+
+def main(): Unit \ IO =
+    isOdd(12345) |> println
+```
+
+which is not the case in several other programming languages.
+
+
 ### Non-Tail Calls and StackOverflows
 
-While the Flix compiler __guarantees_ that tail calls cannot overflow the stack,
-the same is not true for non-tail calls. 
+While the Flix compiler _guarantees_ that tail calls cannot overflow the stack,
+the same is not true for function calls in non-tail positions.
 
 For example, the following naive implementation of the [factorial
 function](https://en.wikipedia.org/wiki/Factorial) overflows the call stack: 
@@ -74,5 +93,4 @@ def factorial(n: Int32): Int32 =
     visit(n, 1)
 ```
 
-Here the `visit` function is tail recursive, hence Flix guarantees that it
-cannot overflow the stack. 
+Here the `visit` function is tail recursive, hence it cannot overflow the stack.

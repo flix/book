@@ -29,3 +29,50 @@ more efficient than a function call) and more importantly (b) a call to
 `memberOf` _cannot_ overflow the stack, because the call stack never increases
 in height.
 
+### Non-Tail Calls and StackOverflows
+
+While the Flix compiler __guarantees_ that tail calls cannot overflow the stack,
+the same is not true for non-tail calls. 
+
+For example, the following naive implementation of the [factorial
+function](https://en.wikipedia.org/wiki/Factorial) overflows the call stack: 
+
+```flix
+def factorial(n: Int32): Int32 = match n {
+    case 0 => 1
+    case _ => n * factorial(n - 1)
+}
+```
+
+as this program shows:
+
+```flix
+def main(): Unit \ IO = 
+    println(factorial(1_000_000))
+```
+
+which when compiled and run produces:
+
+```
+java : Exception in thread "main" java.lang.StackOverflowError
+	at Cont%Int32.unwind(Cont%Int32)
+	at Def%factorial.invoke(Unknown Source)
+	at Cont%Int32.unwind(Cont%Int32)
+	at Def%factorial.invoke(Unknown Source)
+	at Cont%Int32.unwind(Cont%Int32)
+    ... many more frames ...
+```
+
+A well-known technique is to rewrite `factorial` to use an accumulator:
+
+```flix
+def factorial(n: Int32): Int32 = 
+    def visit(x, acc) = match x {
+        case 0 => acc
+        case _ => visit(x - 1, x * acc)
+    };
+    visit(n, 1)
+```
+
+Here the `visit` function is tail recursive, hence Flix guarantees that it
+cannot overflow the stack. 

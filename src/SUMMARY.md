@@ -41,6 +41,7 @@
   - [The Main Function](./main.md)
   - [Printing to Standard Out](./printing-to-stdout.md)
   - [String Interpolation](./string-interpolation.md)
+  - [Tail Recursion](./tail-recursion.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
   - [Redundancy](./redundancy.md)

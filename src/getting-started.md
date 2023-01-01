@@ -34,6 +34,10 @@ started:
 > 3. Create a file called `Main.flix`. 
 > 4. VSCode will ask you want to search the marketplace. Say Yes.
 
+A screenshot of the VSCode extension in action:
+
+![Visual Studio Code1](images/vscode1.png)
+
 ### Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:
@@ -42,3 +46,14 @@ Flix can also be used from the command line. Follow these steps:
 > 2. Download `flix.jar` from [https://github.com/flix/flix/releases](https://github.com/flix/flix/releases)
 > 3. Create a file called `Main.flix` with some source code.
 > 4. Run `java -jar flix.jar Main.flix`.
+
+### Troubleshooting Java Issues
+
+The most common reason for Flix not working is (a) `java` not being on your
+`PATH` or (b) having the wrong version of Java on your path. To debug these
+issues, ensure that:
+
+- The command `java -version` prints the right Java version.
+- The `JAVA_HOME` environmental variable is correctly set. 
+    - On Windows, you print the variable by typing `echo %JAVA_HOME%`.
+    - On Mac and Linux, you print the variable by typing `echo $JAVA_HOME`.

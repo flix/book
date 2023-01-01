@@ -72,3 +72,43 @@ In the above case, the solution is to change the signature of `connected` to:
 def connected(l: List[(t, t)]): List[(t, t)] with Boxable[t] = 
 ```
 
+## Records and Complex Instances
+
+Given a program like:
+
+```flix
+instance Eq[{fstName = String, lstName = String}]
+```
+
+Flix reports:
+
+```
+❌ -- Instance Error --------------------------------------------------
+
+>> Complex instance type '{ fstName = String, lstName = String }' in 'Eq'.
+
+1 | instance Eq[{fstName = String, lstName = String}]
+             ^^
+             complex instance type
+```
+
+This is because, at least for the moment, it is not possible type define type
+class instances on records (or Datalog schema rows). This may change in the
+future. Until then, it is necessary to wrap the record in an algebraic data
+type. For example:
+
+```flix
+enum Person({fstName = String, lstName = String})
+```
+
+and then we can define an implementation of `Eq` for the `Person` type:
+
+```flix
+instance Eq[Person] {
+    pub def eq(x: Person, y: Person): Bool = 
+        let Person(r1) = x;
+        let Person(r2) = y;
+        r1.fstName == r2.fstName and r1.lstName == r2.lstName
+}
+```
+

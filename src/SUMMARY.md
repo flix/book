@@ -2,7 +2,7 @@
 
 - [Introduction to Flix](./introduction.md)
 - [Getting Started](./getting-started.md)
-  - [Hello World](./hello-world.md)
+  - [Hello World!](./hello-world.md)
 - [Data Types](./data-types.md)
   - [Primitives](./primitive-types.md)
   - [Tuples](./tuples.md)

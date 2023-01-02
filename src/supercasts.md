@@ -1,12 +1,10 @@
-# Upcast
+# Super Casts
 
-> **Note:** This feature is experimental and not yet intended for use.
+The Flix type system does not natively support sub-typing. 
 
-Flix does not support sub-typing nor sub-effecting.
+But, for interoperability with Java, Flix has a safe _supercast_ expression.
 
-Nevertheless, there is way to use both in a safe manner.
-
-For example, the following program does not compile:
+Consider, for example, the following program:
 
 ```flix
 def main(): Unit =
@@ -15,7 +13,7 @@ def main(): Unit =
     ()
 ```
 
-because:
+which does not compile:
 
 ```
 ❌ -- Type Error --------------------------------------------------
@@ -27,35 +25,45 @@ because:
                                     expression has unexpected type.
 ```
 
-i.e. the `String` type is not the same as the `Object` type.
+since in the Flix type system the `String` type is _not_ unifiable with the
+`Object` type.
 
-We can, however, safely _upcast_ from `String` to `Object`:
+We can, however, safely _supercast_ from `String` to `Object`:
 
 ```flix
 def main(): Unit =
     let s = "Hello World";
-    let o: ##java.lang.Object = upcast s;
+    let o: ##java.lang.Object = super_cast s;
     ()
 ```
 
-As another example, if we have a higher-order function which expects an effectful function:
+We can use the the `super_cast` construct to safely upcast any Java type to one
+of its super types:
 
 ```flix
-def hof(f: a -> b \ IO): Unit = ???
-
-def main(): Unit =
-    hof(x -> x + 1) // Does not compile
+let _: ##java.lang.Object       = super_cast "Hello World";
+let _: ##java.lang.CharSequence = super_cast "Hello World";
+let _: ##java.io.Serializable   = super_cast "Hello World";
+let _: ##java.lang.Object       = super_cast null;
+let _: ##java.lang.String       = super_cast null;
 ```
+## Function Types
 
-We cannot pass the pure function `x -> x + 1` because `hof` expects a function with effect `IO`.
+The `super_cast` construct does _not_ work on function types.
 
-We can, however, safely upcast the pure function type `Int32 -> Int32` to `Int32 -> Int32 \ IO`:
+For example, the following will not work:
 
 ```flix
-def hof(f: a -> b \ IO): Unit = ???
-
-def main(): Unit =
-    hof(upcast (x -> x + 1))
+let f: Unit -> ##java.lang.Object = super_cast (() -> "Hello World")
 ```
 
-which permits the program to compile.
+because it tries to cast the function type `Unit -> String` to `String ->
+Object`.
+
+Instead, one should write:
+
+```flix
+let f: Unit -> ##java.lang.Object = (() -> super_cast "Hello World")
+```
+
+which works because it directly casts `String` to `Object`.

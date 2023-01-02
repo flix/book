@@ -1,53 +1,54 @@
 # Type and Effect Casts
 
-Flix supports both type and effects casts, but they should be used with extreme care.
+Flix supports both type and effects casts but they should be used with extreme
+care.
 
-A better solution is almost always to us a compiler-checked _upcast_.
+A better solution is to use a compiler-checked _supercast_ or effect _upcast_
+(if possible).
 
 ## Type Casts
 
 A **type cast** instructs the compiler that an expression has a specific type.
 
-> **Warning️️**
->
-> *Type casts are by nature dangerous and should be used with caution!*
+> **Warning️️:** Type casts are by nature very dangerous and should be used with
+> extreme caution!
 
-A Flix programmer should not normally use type casts except in two cases:
-
-- To cast a Java type to one of its super-types.
-- To cast the `null` value to a nullable type.
-
-Both use cases are legitimate and safe.
+A Flix programmer should, under normal circumstances, never need to use a type
+cast. 
 
 #### Example: Safe Cast to a Super-Type
 
 The expression below casts a `String` to an `Object`:
 
 ```flix
-"Hello World" as ##java.lang.Object
+unsafe_cast "Hello World" as ##java.lang.Object
 ```
+
+(Note: It is safer to use the `supercast` expression.)
 
 #### Example: Safe Cast from Null to an Object-Type
 
 The expression below casts the `null` value (of type `Null`) to `String`:
 
 ```flix
-null as ##java.lang.String
+unsafe_cast null as ##java.lang.String
 ```
+
+(Note: It is safer to use the `supercast` expression.)
 
 #### Example: Unsafe Cast
 
 The expression below contains an illegal cast and triggers a `ClassCastException`:
 
 ```flix
-(123, 456) as String
+unsafe_cast (123, 456) as ##java.lang.Integer
 ```
 
 #### Primitive Values and Boxing
 
-A type cast should *not* be used to box or unbox primitive values.
-Instead use the designated Java methods.
-For example, `Integer.valueOf` and `Integer.intValue`.
+A type cast should *not* be used to box or unbox primitive values. Instead use
+the designated Java methods. For example, `Integer.valueOf` and
+`Integer.intValue`.
 
 ## Effect Casts
 

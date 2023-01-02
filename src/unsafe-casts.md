@@ -1,4 +1,4 @@
-# Type and Effect Casts
+# Unsafe Type and Effect Casts
 
 Flix supports both type and effects casts but they should be used with extreme
 care.

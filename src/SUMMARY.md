@@ -58,8 +58,8 @@
 ---
 
 - [Advanced Features](./advanced-features.md)
-  - [Upcasts](./upcast.md)
-  - [Type and Effect Casts](./casts.md)
+  - [Super Casts](./supercasts.md)
+  - [Unsafe Casts](./unsafe-casts.md)
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
   - [Type Match](./type-match.md)
   - [Purity Reflection](./purity-reflection.md)

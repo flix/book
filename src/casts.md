@@ -10,8 +10,8 @@ A better solution is to use a compiler-checked _supercast_ or effect _upcast_
 
 A **type cast** instructs the compiler that an expression has a specific type.
 
-> **Warning️️:** Type casts are by nature very dangerous and should be used with
-> extreme caution!
+> **Warning️️:** Type casts are very dangerous and should be used with utmost
+> caution!
 
 A Flix programmer should, under normal circumstances, never need to use a type
 cast. 
@@ -54,16 +54,13 @@ the designated Java methods. For example, `Integer.valueOf` and
 
 An **effect cast** instructs the compiler that an expression has a specific effect.
 
-> **Warning️️**
->
-> *Effect casts are by nature extremely dangerous and should be used with utmost caution!*
+> **Warning️️:** Effect casts are extremely dangerous and should be used with
+> extreme caution!
 
-A Flix programmer should not normally use effect casts except in two cases:
-
--   To cast an pure function to an effect polymorphic function.
--   To cast a pure function to an impure function.
-
-Both cases are legitimate and safe.
+A Flix programmer should, under normal circumstances, never need to use an
+effect cast. In a few rare cases, which involve sub-effecting, an effect cast
+may be necessary. Most of these cases can be handled by the safer `upcast`
+expression.
 
 #### Example: Safe Cast of Pure Function to Effect Polymorphic
 
@@ -76,13 +73,10 @@ def findRight(f: a -> Bool \ ef, l: List[a]): Option[a] \ ef =
         case Nil     => k()
         case x :: xs => loop(xs, () -> if (f(x)) Some(x) else k())
     };
-    loop(l, () -> None as \ ef)
+    loop(l, () -> (unsafe_cast None as _ \ ef))
 ```
 
-Here the cast `() -> None as \ ef` is required because otherwise
-the function `() -> None` would be pure and not effect polymorphic as required.
+Here the cast `unsafe_cast None as _ \ ef` is required because otherwise the
+function `() -> None` would be pure and not effect polymorphic as required.
 
-> **Warning**
->
-> Never cast effectful expression to pure.
-> You have been warned.
+> **Warning:** Never cast effectful expressions to pure. You have been warned.

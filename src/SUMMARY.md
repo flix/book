@@ -28,6 +28,7 @@
 - [Laziness](./laziness.md)
 - [Fixpoints](./fixpoints.md)
   - [Stratified Negation](./stratified-negation.md)
+  - [Local Predicates](./local-predicates.md)
   - [Lattice Semantics](./lattice-semantics.md)
 - [Type Classes](./type-classes.md)
   - [Essential Classes](./essential-classes.md)

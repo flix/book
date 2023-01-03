@@ -1,4 +1,4 @@
-# Append
+# Appendix
 
 The appendix covers technical details such as:
 

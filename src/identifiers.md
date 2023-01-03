@@ -1,6 +1,6 @@
 # Identifiers
 
-Flix supports several different kinds of identifier:
+Flix has several types of identifiers:
 
 * **Uppercase name:** An identifier that starts with an uppercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `String`, `ALL_UPPER`, `Shriek!`

@@ -26,7 +26,7 @@ def sort(l: List[a]): List[a] with Order[a] =
         let arr = List.toArray(r, l);
         Array.sort!(arr);
         Array.toList(arr)
-    } // scope of rh ends, the entire expression is pure.
+    }
 ```
 
 Here we introduce a region named `rh`. We use the function `Array.toArray` to

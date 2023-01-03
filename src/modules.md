@@ -155,30 +155,38 @@ namespace Core/Math {
 > are inherently ambiguous and may lead to subtle
 > errors during refactoring.
 
+-->
+
 ## Avoiding Name Clashes with Renaming
 
-We can use renaming to avoid name clashes between
-identically named definitions.
-For example:
+We can use renaming to avoid name clashes between identically named definitions.
+
+For example, if we have two modules:
 
 ```flix
-use A.{concat => stringConcat};
-use B.{concat => listConcat};
-
-def main(): Unit \ IO =
-    stringConcat("Hello", " World!") |> println
-
-namespace A {
+mod A {
     pub def concat(x: String, y: String): String = x + y
 }
 
-namespace B {
+mod B {
     pub def concat(xs: List[Int32], ys: List[Int32]): List[Int32] = xs ::: ys
 }
 ```
 
-In many cases a better approach is to use a _local_
-`use` to avoid the problem in the first place.
+We can then `use` each `concat` function under a unique name. For example:
+
+```flix
+use A.{concat => concatStrings}
+use B.{concat => concatLists}
+
+def main(): Unit \ IO =
+    concatStrings("Hello", " World!") |> println
+```
+
+While this feature is powerful, in many cases using a fully-qualified might be
+more appropriate.
+
+<!--
 
 ## Using Types from a Namespace
 

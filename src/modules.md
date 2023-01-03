@@ -37,89 +37,6 @@ def main(): Unit \ IO =
     println(result)
 ```
 
-## Declaring Modules
-
-
-
-<!--
-Namespaces are hierarchical, so we can declare a
-deeper namespace:
-
-```flix
-namespace Core/Math {
-    def sum(x: Int32, y32: Int): Int32 = x + y
-}
-```
-
-Note that the fragments of a namespace are separated
-by `/`.
-
-We can freely nest namespaces.
-For example:
-
-```flix
-namespace Core {
-    namespace Math {
-
-        def sum(x: Int32, y: Int32): Int32 = x + y
-
-        namespace Stats {
-            def median(xs: List[Int32]): Int32 = ???
-        }
-    }
-}
-```
-
-## Using Definitions from a Namespace
-
-We can refer to definitions from a namespace by their
-fully-qualified name.
-For example:
-
-```flix
-namespace Core/Math {
-    pub def sum(x: Int32, y: Int32): Int32 = x + y
-}
-
-def main(): Unit \ IO =
-    Core/Math.sum(21, 42) |> println
-```
-
-Note that we must declare `sum` as public (`pub`) to
-allow access to it from outside its own namespace.
-
-It can quickly get tedious to refer to definitions by
-their fully-qualified name.
-
-The `use` construct allows us to "import" definitions
-from another namespace:
-
-```flix
-namespace Core/Math {
-    pub def sum(x: Int32, y: Int32): Int32 = x + y
-}
-
-def main(): Unit \ IO =
-    use Core/Math.sum;
-    sum(21, 42) |> println
-```
-
-Here the `use` is local to the `main` function.
-A `use` can also appear at the top of a file:
-
-```flix
-use Core/Math.sum;
-
-def main(): Unit \ IO =
-    sum(21, 42) |> println
-
-namespace Core/Math {
-    pub def sum(x: Int32, y: Int32): Int32 = x + y
-}
-```
-
--->
-
 ## Using Multiple Declarations from a Module
 
 If we have multiple declarations in a module:
@@ -182,66 +99,53 @@ def main(): Unit \ IO =
 While this feature is powerful, in many cases using a fully-qualified might be
 more appropriate.
 
-<!--
+## Modules and Enums
 
-## Using Types from a Namespace
-
-We can use types from a namespace in the same way as
-definitions.
-For example:
+We can define an enum inside a module. For example:
 
 ```flix
-use A/B.Color;
-
-def redColor(): Color = Color.Red
-
-namespace A/B {
-    pub enum Color {
-        case Red, Blue
+mod Zoo {
+    pub enum Animal {
+        case Cat,
+        case Dog,
+        case Fox
     }
 }
 ```
 
-We can also use _type aliases_ in the same way:
+Here the `Zoo` module contains an enum type named `Animal` which has three
+cases: `Cat`, `Dog`, and `Fox`. 
+
+We can access the type and the cases using their fully-qualified names:
 
 ```flix
-use A/B.Color;
-use A/B.Hue;
-
-def blueColor(): Hue = Color.Blue
-
-namespace A/B {
-    pub enum Color {
-        case Red, Blue
-    }
-    pub type alias Hue = Color
+def says(a: Zoo.Animal): String = match a {
+    case Zoo.Animal.Cat => "Meow"
+    case Zoo.Animal.Dog => "Woof"
+    case Zoo.Animal.Fox => "Roar"
 }
+
+def main(): Unit \ IO = 
+    println("A cat says ${says(Zoo.Animal.Cat)}!")
 ```
 
-## Using Enums from a Namespace
-
-We can use enumerated types from a namespace.
-For example:
+Alternatively, we can `use` both the `Animal` type and its cases:
 
 ```flix
-def blueIsRed(): Bool =
-    use A/B.Color.{Blue, Red};
-    Blue != Red
+use Zoo.Animal
+use Zoo.Animal.Cat
+use Zoo.Animal.Dog
+use Zoo.Animal.Fox
 
-namespace A/B {
-    pub enum Color with Eq {
-        case Red, Blue
-    }
+def says(a: Animal): String = match a {
+    case Cat => "Meow"
+    case Dog => "Woof"
+    case Fox => "Roar"
 }
+
+def main(): Unit \ IO = 
+    println("A cat says ${says(Cat)}!")
 ```
 
-Note that `A/B.Color` is the fully-qualified name of
-a _type_ whereas `A/B.Color.Red` is the
-fully-qualified name of a _tag_ inside an enumerated
-type.
-That is, a fully-qualified definition is of the
-form `A/B/C.d`, a fully-qualified type is of the
-form `A/B/C.D`, and finally a fully-qualified tag is
-of the form `A/B/C.D.T`.
-
--->
+Note that `use Zoo.Animal` brings the `Animal` _type_ into scope, whereas `use
+Zoo.Animal.Cat` brings the `Cat` _case_ into scope.

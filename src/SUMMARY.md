@@ -34,7 +34,7 @@
 - [Type Classes](./type-classes.md)
   - [Essential Classes](./essential-classes.md)
   - [Automatic Derivation](./automatic-derivation.md)
-- [Namespaces](./namespaces.md)
+- [Modules](./modules.md)
 - [Interoperability](./interoperability.md)
   - [Creating Objects](./creating-objects.md)
   - [Calling Methods](./calling-methods.md)

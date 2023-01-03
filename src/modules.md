@@ -1,5 +1,8 @@
-# Namespaces
+# Modules
 
+> This section is work in progress.
+
+<!--
 Flix supports hierarchical namespaces as known from
 many other programming languages.
 
@@ -212,3 +215,5 @@ That is, a fully-qualified definition is of the
 form `A/B/C.d`, a fully-qualified type is of the
 form `A/B/C.D`, and finally a fully-qualified tag is
 of the form `A/B/C.D.T`.
+
+-->

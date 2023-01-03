@@ -72,7 +72,7 @@ the cell and increment its value three times. Hence the program prints `3`.
 We can use references to implement a simple counter:
 
 ```flix
-enum Counter[r: Region] {
+enum Counter[r: Region] { // The Region here is a type-kind
     case Counter(Ref[Int32, r])
 }
 

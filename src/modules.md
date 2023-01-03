@@ -2,22 +2,46 @@
 
 > This section is work in progress.
 
-<!--
-Flix supports hierarchical namespaces as known from
-many other programming languages.
+Flix supports hierarchical modules as known from many other programming
+languages.
 
-## Declaring a Namespace
+## Declaring and Using Modules
 
-We can declare a namespace to nest definitions and
-types within it.
-For example:
+We declare modules using the `mod` keyword followed by the namespace and name of
+the module. 
+
+For example, we can declare a module:
 
 ```flix
-namespace Math {
-    def sum(x: Int32, y: Int32): Int32 = x + y
+mod Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
 }
 ```
 
+Here we have declared a module called `Math` with a function called `sum` inside
+it. We can refer to the `sum` function, from outside of its module, using its
+fully-qualified name:
+
+```flix
+def main(): Unit \ IO = 
+    let result = Math.sum(123, 456);
+    println(result)
+```
+
+Alternatively, we can bring the `sum` function into local scope with `use`:
+
+```flix
+def main(): Unit \ IO = 
+    use Math.sum;
+    let result = sum(123, 456);
+    println(result)
+```
+
+## Declaring Modules
+
+
+
+<!--
 Namespaces are hierarchical, so we can declare a
 deeper namespace:
 

@@ -1,7 +1,5 @@
 # Modules
 
-> This section is work in progress.
-
 Flix supports hierarchical modules as known from many other programming
 languages.
 

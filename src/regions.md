@@ -23,10 +23,10 @@ We can use regions to implement a pure `sort` function that internally uses muta
 ```flix
 def sort(l: List[a]): List[a] with Order[a] =
     region rh {
-        let arr = List.toArray(r, l);  // effectful, has effect 'rh'.
-        Array.sort!(arr);              // effectful, has effect 'rh'.
-        Array.toList(arr)              // effectful, has effect 'rh'.
-    } // scope of rh ends, the entire expression is pure.
+        let arr = List.toArray(r, l);
+        Array.sort!(arr);
+        Array.toList(arr)
+    }
 ```
 
 Here we introduce a region named `rh`. We use the function `Array.toArray` to

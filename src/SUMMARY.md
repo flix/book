@@ -35,6 +35,7 @@
   - [Essential Classes](./essential-classes.md)
   - [Automatic Derivation](./automatic-derivation.md)
 - [Modules](./modules.md)
+  - [Companion Modules](./companion-modules.md)
 - [Interoperability](./interoperability.md)
   - [Creating Objects](./creating-objects.md)
   - [Calling Methods](./calling-methods.md)

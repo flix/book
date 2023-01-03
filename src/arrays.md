@@ -17,8 +17,9 @@ operation.
 Arrays are _always_ unboxed. For example, an array of type `Array[Int32, r]` is
 represented as a sequence of primitive 32-bit integers, i.e., in JVM
 terminology, the array is represented as `int[]`. Flix will never box primitive
-integers as `java.lang.Integer` objects. The same is true for other types of
-primitives and arrays of primitives. 
+integers as `java.lang.Integer` objects but still permits primitives in generic
+collections and functions. The same is true for other types of primitives and
+arrays of primitives. 
 
 Arrays are low-level data structures typically used to implement higher-level
 data structures. Therefore, unless implementing such data structures, we

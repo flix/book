@@ -118,48 +118,44 @@ namespace Core/Math {
 }
 ```
 
-## Using Multiple Definitions from a Namespaces
-
-We can also use multiple definitions from a namespace:
-
-```flix
-use Core/Math.sum;
-use Core/Math.mul;
-
-def main(): Unit \ IO =
-    mul(42, 84) |> sum(21) |> println
-
-namespace Core/Math {
-    pub def sum(x: Int32, y: Int32): Int32 = x + y
-    pub def mul(x: Int32, y: Int32): Int32 = x * y
-}
-```
-
-Multiple such uses can be grouped together:
-
-```flix
-use Core/Math.{sum, mul};
-
-def main(): Unit \ IO =
-    mul(42, 84) |> sum(21) |> println
-
-namespace Core/Math {
-    pub def sum(x: Int32, y: Int32): Int32 = x + y
-    pub def mul(x: Int32, y: Int32): Int32 = x * y
-}
-```
-
-> **Design Note**
->
-> Flix does not support _wildcard_ uses because they
-> are inherently ambiguous and may lead to subtle
-> errors during refactoring.
-
 -->
+
+## Using Multiple Declarations from a Module
+
+If we have multiple declarations in a module:
+
+```flix
+mod Math {
+    pub def sum(x: Int32, y: Int32): Int32 = x + y
+    pub def mul(x: Int32, y: Int32): Int32 = x * y
+}
+```
+
+We can, of course, `use` each declaration:
+
+```flix
+use Math.sum;
+use Math.mul;
+
+def main(): Unit \ IO =
+    mul(42, 84) |> sum(21) |> println
+```
+
+but a shorter way is to group the `use`s together into one:
+
+```flix
+use Math.{sum, mul};
+
+def main(): Unit \ IO =
+    mul(42, 84) |> sum(21) |> println
+```
+
+> **Note:** Flix does not support wildcard uses since they can lead to subtle
+> bugs.
 
 ## Avoiding Name Clashes with Renaming
 
-We can use renaming to avoid name clashes between identically named definitions.
+We can use renaming to avoid name clashes between identically named declarations.
 
 For example, if we have two modules:
 

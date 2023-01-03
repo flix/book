@@ -15,11 +15,11 @@ must belong to some region. Reading from and writing to a reference are
 _effectful_ operations. For example, reading the value of a reference `Ref[t,
 r]` has effect `r`.
 
-The `ref e` operation allocates a reference cell in the heap and returns its
-location, the `deref` operation dereferences a location and returns the content
-of a reference cell, and the assigment `:=` operation changes the value of a
-reference cell. Informally, a reference cell can be thought of as an "object"
-with a single field that can be changed.
+The `ref e @ rh` operation allocates a reference cell in a region of the heap
+and returns its location, the `deref` operation dereferences a location and
+returns the content of a reference cell, and the assigment `:=` operation
+changes the value of a reference cell. Informally, a reference cell can be
+thought of as an "object" with a single field that can be changed.
 
 ## Allocating References
 

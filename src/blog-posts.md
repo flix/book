@@ -1,7 +1,6 @@
 # Blog Posts
 
-A few people are covering various aspects of the Flix programming language on their blogs:
-
+A few people are writing about various aspects of Flix on their blogs:
 
 __Paul Butcher__ is writing a blog post series on Flix:
 
@@ -22,6 +21,6 @@ __Magnus Madsen__ wrote a few blog posts on Flix during COVID:
 - [Redundancies as Compile-Time Errors](https://flix.dev/blog/redundancies-as-compile-time-errors/)
 - [Design Flaws in Flix](https://flix.dev/blog/design-flaws-in-flix/)
 
-__Magnus Madsen__ has also appeared on the Happy Path Programming podcast:
+__Magnus Madsen__ did an interview about Flix on the Happy Path Programming podcast:
 
 - [Episode 54 Flix: Designing a principled programming language with Magnus Madsen](https://anchor.fm/happypathprogramming/episodes/54-Flix-Designing-a-principled-programming-language-with-Magnus-Madsen-e1dueb2)

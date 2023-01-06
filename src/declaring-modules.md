@@ -52,10 +52,11 @@ def main(): Unit \ IO =
 
 ## Accessibility
 
-A module member is accessible from another module if it:
+A module member `m` declared in module `A` is accessible from another module `B`
+if:
 
-- is declared public (`pub`)
-- is in a parent module from where the access is made.
+- the member `m` is declared as public (`pub`).
+- the module `B` is a sub-module of `A`.
 
 For example, the following is allowed:
 
@@ -79,7 +80,7 @@ mod A {
        def g(): Unit \ IO = println("A.B.g() was called.")
     }
 
-    pub def f(): Unit \ IO = A.B.g()
+    pub def f(): Unit \ IO = A.B.g() // NOT OK
 }
 ```
 

@@ -28,6 +28,7 @@
 - [Effect System](./effects.md)
 - [Modules](./modules.md)
   - [Declaring Modules](./declaring-modules.md)
+  - [Using Modules](./using-modules.md)
   - [Companion Modules](./companion-modules.md)
 - [Type Classes](./type-classes.md)
   - [Essential Classes](./essential-classes.md)

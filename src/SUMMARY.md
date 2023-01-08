@@ -33,6 +33,7 @@
 - [Type Classes](./type-classes.md)
   - [Essential Classes](./essential-classes.md)
   - [Automatic Derivation](./automatic-derivation.md)
+  - [Higher-Kinded Types](./higher-kinded-types.md)
 - [Laziness](./laziness.md)
 - [Fixpoints](./fixpoints.md)
   - [Stratified Negation](./stratified-negation.md)

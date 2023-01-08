@@ -1,0 +1,62 @@
+# Higher-Kinded Types
+
+Flix supports [higher-kinded
+types](https://en.wikipedia.org/wiki/Kind_(type_theory)), hence type class can
+abstract over _type constructors_. 
+
+For example, we can write a type class that capture iteration over any
+collection of the shape `t[a]` where `t` is a type constructor of kind
+ `Type ->Type` and `a` is the element type of kind `Type`:
+
+```flix
+class ForEach[t: Type -> Type] {
+    pub def forEach(f: a -> Unit \ ef, x: t[a]): Unit \ ef
+}
+```
+
+Note that to use higher-kinded types Flix _requires_ us to provide the kind
+annotation (i.e. we had to write `t: Type -> Type` to inform Flix that `ForEach`
+abstracts over type constructors.)
+
+We can implement instances of the `ForEach` type class for type constructors
+such as `Option`, and `List`, `Set`. For example:
+
+```flix
+instance ForEach[List] {
+    pub def forEach(f: a -> Unit \ ef, l: List[a]): Unit \ ef = match l {
+        case Nil     => ()
+        case x :: xs => f(x); ForEach.forEach(f, xs)
+    }
+}
+```
+
+> **Note**: Flix does not have a `ForEach` type class, but instead has the much
+> more powerful and versatile `Foldable` type class. 
+
+## The Flix Kinds
+
+Flix supports the following kinds:
+
+- `Type`: The kind of Flix types.
+    - e.g. `Int32`, `String`, and `List[Int32]`.
+- `RecordRow`: The kind of rows used in records 
+    - e.g. in `{x = Int32, y = Int32 | r}` the type variable `r` has kind `RecordRow`.
+- `SchemaRow`: The kind of rows used in first-class Datalog constraints
+    - e.g. in `#{P(Int32, Int32) | r}` the type variable `r` has kind `RecordRow`.
+
+Flix can usually infer kinds. For example, we can write:
+
+```flix
+def sum(r: {x = t, y = t | r}): t with Add[t] = r.x + r.y
+```
+
+and have the kinds of `t: Type` and `r: RecordRow` automatically inferred.
+
+We can also explicitly specify them as follows:
+
+```flix
+def sum[t: Type, r: RecordRow](r: {x = t, y = t | r}): t with Add[t] = r.x + r.y
+```
+
+but this is not considered idiomatic.
+

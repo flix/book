@@ -58,5 +58,13 @@ We can also explicitly specify them as follows:
 def sum[t: Type, r: RecordRow](r: {x = t, y = t | r}): t with Add[t] = r.x + r.y
 ```
 
-but this is not considered idiomatic.
+but this style is not considered idiomatic.
 
+Flix requires explicit kind annotations in two situations:
+
+- For non-Type kinds on enum type parameters.
+- For non-Type kinds on type classes.
+
+In other words, if you are only using types of kind `Type`, no annotations are
+necessary. But if you want an enum declaration or type class to abstract over a
+non-Type kind then you must explicitly write its kind. 

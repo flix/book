@@ -21,7 +21,7 @@
 - [Control Structures](./control-structures.md)
   - [If-Then-Else](./if-then-else.md)
   - [Pattern Matching](./pattern-matching.md)
-  - [For-Each](./foreach.md)
+  - [Foreach](./foreach.md)
   - [Monadic For-Yield](./monadic-for-yield.md)
 - [Structured Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)

@@ -5,8 +5,8 @@
 Flix supports a traditional _foreach_ construct that enables imperative
 iteration through collections. 
 
-We typically use the _foreach_ construct when we want to iterate through a
-collection and execute an effectful operation for each element.
+We typically use the _foreach_ construct when we want to iterate through one or
+more collections and execute an effectful operation for each of their elements.
 
 For example, the program:
 
@@ -17,7 +17,7 @@ def main(): Unit \ IO =
         println(fruit)
 ```
 
-Prints the fruits `Apple`, `Pear`, and `Mango`.
+Prints the strings `Apple`, `Pear`, and `Mango`.
 
 We can also iterate through multiple collections:
 
@@ -55,10 +55,10 @@ def isExcotic(fruit: String): Bool = match fruit {
 }
 ```
 
-## Extra Braces
+## Adding Optional Braces for Visual Clarity
 
 We can sometimes improve the visual clarity of a `foreach` expression by adding
-extra braces:
+braces:
 
 ```flix
 foreach(fruit <- fruits) {
@@ -68,11 +68,14 @@ foreach(fruit <- fruits) {
 }
 ```
 
+The braces have no impact on the meaning of the `foreach` loop; they are purely
+stylistic. 
+
 ## The Iterable Type Class
 
 We can use the `foreach` syntax to iterate through any collection type that
-implements the `Iterable` type class. The `Iterable` class defines a single
-signature: 
+implements the `Iterable` type class. In particular, the `Iterable` class
+defines a single signature: 
 
 ```flix
 ///
@@ -86,8 +89,7 @@ pub class Iterable[t: Type -> Type] {
 }
 ```
 
-
-
-> **Note:** Flix expects the loop body expression of a `foreach` to have type
-> `Unit`. If you want to return a value from the loop body, you should use the
+> **Note:** Flix expects the expression body of a `foreach` to have type `Unit`.
+> If you want to return a value from the loop body, you should use the
 > `foreach-yield` construct. 
+

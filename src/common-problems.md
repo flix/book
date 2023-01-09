@@ -1,5 +1,10 @@
 # Common Problems
 
+- [ToString is not defined on 'a'](#tostring-is-not-defined-on-a)
+- [No instance of the 'Boxable' class for the type 't'](#no-instance-of-the-boxable-class-for-the-type-t)
+- [Records and Complex Instances](#records-and-complex-instances)
+- [Expected kind 'Bool or Effect' here, but kind 'Type' is used](#expected-kind-bool-or-effect-here-but-kind-type-is-used)
+
 ## ToString is not defined on 'a'
 
 Given a program like:
@@ -109,6 +114,44 @@ instance Eq[Person] {
         let Person(r1) = x;
         let Person(r2) = y;
         r1.fstName == r2.fstName and r1.lstName == r2.lstName
+}
+```
+
+## Expected kind 'Bool or Effect' here, but kind 'Type' is used
+
+In Flix the kind of every type variable is either inferred or assumed to be
+`Type`. In some cases, this can lead to kind errors. 
+
+For example, if we want to have an enum that wraps an effectful function we
+might write: 
+
+```flix
+enum A[a, b, ef] {
+    case A(a -> b \ ef)
+}
+```
+
+but this gives the error:
+
+```
+❌ -- Kind Error -----------------------------------------------
+
+>> Expected kind 'Bool or Effect' here, but kind 'Type' is used.
+
+2 |     case A(a -> b \ ef)
+                        ^^
+                        unexpected kind.
+
+Expected kind: Bool or Effect
+Actual kind:   Type
+```
+
+The solution is to explicitly annotate the type variables `a`, `b`, and `ef`
+with their kinds: 
+
+```
+enum A[a: Type, b: Type, ef: Bool] {
+    case A(a -> b \ ef)
 }
 ```
 

@@ -1,33 +1,51 @@
-# For-Each
+# ForEach
 
-> **Note:** This feature is under development.
+> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
-In Flix, as in other functional programming languages, most iteration is
-expressed with recursion or combinators (e.g., `map` or `foldLeft`).
+Flix supports a traditional _foreach_ construct that enables imperative
+iteration through collections. 
 
-## For Each
+We typically use the _foreach_ construct when we want to iterate through a
+collection and execute an effectful operation for each element.
 
-The _for-each_ construct is useful for iterating over a collection
-and apply some transformation to each element and works particularly
-well with mutable collections.
-This is due to the fact that the _for-each_ loop is actually just
-syntactic sugar for a call to `Iterable.forEach` which has return
-type `Unit`.
-Thus, for the loop to be useful the body of the loop should have an effect.
-However, before going any further an example is in order.
-
-To use the _for-each_ loop an instance of `Iterable` on the collection is
-required. For this example we will use a `MutList`.
+For example, the program:
 
 ```flix
 def main(): Unit \ IO = 
-    region rh {
-        let l = new MutList(rh)
-            !> MutList.push!(1)
-            !> MutList.push!(2)
-            !> MutList.push!(3);
-
-        foreach (x <- l)
-            println(x)
-    }
+    let fruits = List#{"Apple", "Pear", "Mango"};
+    foreach(fruit <- fruits) 
+        println(fruit)
 ```
+
+Prints the fruits `Apple`, `Pear`, and `Mango`.
+
+We can also iterate through multiple collections:
+
+```flix
+def main(): Unit \ IO = 
+    let fruits = List#{"Apple", "Pear", "Mango"};
+    let creams = List#{"Vanilla", "Stracciatella"};
+    foreach(fruit <- fruits) 
+        foreach(cream <- creams)
+            println("Would you like some ${fruit} with ${cream} icecream?")
+```
+
+The same loop can also be written:
+
+```flix
+def main(): Unit \ IO = 
+    let fruits = List#{"Apple", "Pear", "Mango"};
+    let creams = List#{"Vanilla", "Stracciatella"};
+    foreach(fruit <- fruits; cream <- creams) 
+        println("Would you like some ${fruit} with ${cream} icecream?")
+```
+
+
+
+<!--
+- Filtering
+- Iterable/Foldable construct?
+- Braces
+- Return type
+-->
+

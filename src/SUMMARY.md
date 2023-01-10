@@ -22,6 +22,7 @@
   - [If-Then-Else](./if-then-else.md)
   - [Pattern Matching](./pattern-matching.md)
   - [Foreach](./foreach.md)
+  - [Foreach-Yield](./foreach-yield.md)
   - [Monadic For-Yield](./monadic-for-yield.md)
 - [Structured Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)

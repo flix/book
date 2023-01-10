@@ -1,4 +1,4 @@
-# ForEach
+# Foreach
 
 > **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 

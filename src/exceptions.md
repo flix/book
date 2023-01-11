@@ -29,16 +29,19 @@ as `exists`. We then call the methods and catch the `IOException`.
 > we should guard all call to Java code that might throw exceptions close to
 > their call site and turn these exceptions into `Result`s.
 
-### Structured Concurrency
+### Structured Concurrency and Exceptions
 
-As described earlier, Flix supports structured concurrency. This means that
-given a program like: 
+Flix supports [structured concurrency](./concurrency.md). This means that (1)
+threads cannot outlive the lifetime of their region and (2) that exceptions
+thrown in sub-threads are propagated to the thread of the region.
+
+For example, given the program:
 
 ```flix
 def main(): Unit \ IO = 
     region rc {
-        spawn f();
-        spawn g()
+        spawn f() @ rc;
+        spawn g() @ rc
     };
     println("Done")
 ```

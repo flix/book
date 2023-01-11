@@ -62,3 +62,8 @@ includes the `List`, `Chain`, and `Set` data types.
 
 > **Note:** We cannot collect into a non-empty chain (`Nec`) or non-empty list
 > (`Nel`) since we cannot guarantee that an `Iterator` is non-empty.
+
+> **Note:** The `foreach-yield` construct can only collect into immutable
+> collections. If we want to build a mutable collection, we should explicitly
+> introduce its region, allocate the mutable collection, and add each element
+> using a regular `foreach`-loop.

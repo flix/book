@@ -1,4 +1,4 @@
-# Unsafe Type and Effect Casts
+## Unsafe Type and Effect Casts
 
 Flix supports both type and effects casts but they should be used with extreme
 care.
@@ -6,7 +6,7 @@ care.
 A better solution is to use a compiler-checked _supercast_ or effect _upcast_
 (if possible).
 
-## Type Casts
+### Type Casts
 
 A **type cast** instructs the compiler that an expression has a specific type.
 
@@ -50,7 +50,7 @@ A type cast should *not* be used to box or unbox primitive values. Instead use
 the designated Java methods. For example, `Integer.valueOf` and
 `Integer.intValue`.
 
-## Effect Casts
+### Effect Casts
 
 An **effect cast** instructs the compiler that an expression has a specific effect.
 

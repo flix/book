@@ -1,4 +1,4 @@
-# Test Framework
+## Test Framework
 
 Flix comes with a simple built-in test framework. 
 

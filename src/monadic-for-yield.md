@@ -1,4 +1,4 @@
-# Monadic For-Yield
+## Monadic For-Yield
 
 Flix supports a _for-yield_ construct similar to Scala's for-comprehensions and
 Haskell's do notation. The _for-yield_ construct is syntactic sugar for uses of
@@ -21,7 +21,7 @@ evaluates to the list:
 (1, 1) :: (1, 2) :: (2, 1) :: (2, 2) :: Nil
 ```
 
-## Using Guard Expressions
+### Using Guard Expressions
 
 We can use _guard expressions_ in `for-yield` expressions. For example, the
 program
@@ -39,7 +39,7 @@ evaluates to the list:
 (1, 2) :: Nil
 ```
 
-## Working with Options and Results
+### Working with Options and Results
 
 We can also use `for-yield` to work with the `Option` data type. For example:
 
@@ -83,7 +83,7 @@ either an error or the input string. Thus the local variables `fstName`,
 is successful then we print a greeting and return `Ok(())` (i.e., `Ok` of
 `Unit`). Otherwise, we return an `Err(msg)` value.
 
-## Working with Other Monads
+### Working with Other Monads
 
 We can use `for-yield` with other types of `Monad`s, including `Chain` and
 `Nel`s (non-empty lists). For example, we can write:

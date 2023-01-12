@@ -1,4 +1,4 @@
-# Using Flix to Solve Constraints on Lattices
+## Using Flix to Solve Constraints on Lattices
 
 Flix supports not only _constraints on relations_,
 but also _constraints on lattices_.

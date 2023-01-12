@@ -1,4 +1,4 @@
-# Foreach-Yield
+## Foreach-Yield
 
 > **Note:** This feature is not yet available.
 
@@ -42,7 +42,7 @@ def main(): Unit \ IO =
 Here we iterate through three collections `c1`, `c2`, and `c3` and return a set
 of the sums of their pairwise combinations. 
 
-## The Collectable Type Class 
+### The Collectable Type Class 
 
 The workhorse behind the `foreach-yield` construct is the `Iterable` type class
 (discussed in the previous section) and the `Collectable` type class. 

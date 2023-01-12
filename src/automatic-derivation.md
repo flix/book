@@ -1,4 +1,4 @@
-# Automatic Derivation
+## Automatic Derivation
 
 Flix supports automatic derivation of several type classes. For example:
 
@@ -7,7 +7,7 @@ Flix supports automatic derivation of several type classes. For example:
 - `ToString` — to derive a human-readable string representation on a type.
 - `Sendable` — to enable a type to be sent over a channel.
 
-## Derivation of Eq and Order
+### Derivation of Eq and Order
 
 We can automatically derive instances of the `Eq` and `Order` type classes using
 a `with` clause in the `enum` declaration. For example: 
@@ -34,7 +34,7 @@ def main(): Unit \ IO =
 > **Note**: Automatic derivation of `Eq` and `Order` requires that the types
 > used inside the `enum` themselves implement `Eq` and `Order`.
 
-## Derivation of ToString
+### Derivation of ToString
 
 We can also automatically derive `ToString` instances:
 
@@ -62,7 +62,7 @@ Which prints:
 A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
 ```
 
-## Derivation of Sendable
+### Derivation of Sendable
 
 We can also automatically derive implementations of the `Sendable` type class
 (which allows values of a specific type to be sent over a channel). For example:

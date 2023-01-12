@@ -1,4 +1,4 @@
-# Stratified Negation
+## Stratified Negation
 
 Flix supports _stratified negation_ which allow
 restricted use of negation in rule bodies.

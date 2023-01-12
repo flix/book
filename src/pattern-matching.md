@@ -1,6 +1,6 @@
-# Pattern Matching
+## Pattern Matching
 
-## Matching on Enums
+### Matching on Enums
 
 As discussed in the chapter on [Enums](enums.md), Flix supports pattern matching
 on algebraic data types. 
@@ -26,8 +26,7 @@ def area(s: Shape): Int32 = match s {
 }
 ```
 
-
-## Let Pattern Match
+### Let Pattern Match
 
 In addition to the pattern `match` construct, a
 let-binding can be used to destruct a value.
@@ -61,7 +60,7 @@ let Some(x) = ...
 The Flix compiler will reject such non-exhaustive
 patterns.
 
-## Match Lambdas
+### Match Lambdas
 
 Pattern matches can also be used with lambda
 expressions.
@@ -90,4 +89,3 @@ let g = match (x, y, z) -> x + y + z + 42i32
 Here `f` is a function that expects *three* `Int32`
 arguments,whereas `g` is a function that expects *one*
 three tuple `(Int32, Int32, Int32)` argument.
-

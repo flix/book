@@ -1,4 +1,4 @@
-# Type Ascriptions
+## Type Ascriptions
 
 While Flix supports local type inference, it can
 sometimes be useful to annotate an expression or a

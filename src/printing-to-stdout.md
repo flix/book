@@ -1,4 +1,4 @@
-# Printing to Standard Out
+## Printing to Standard Out
 
 The Flix prelude defines two impure functions:
 `print` and `println` that can be used to print a

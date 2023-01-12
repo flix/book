@@ -1,4 +1,4 @@
-# The Main Function
+## The Main Function
 
 The entry point of any Flix program is the `main`
 function which _must_ have the signature:

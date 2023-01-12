@@ -1,4 +1,4 @@
-# Primitive Types
+## Primitive Types
 
 Flix supports the usual primitive types:
 
@@ -21,12 +21,12 @@ Flix supports the usual primitive types:
 written without suffix, i.e. `123.0f64` can simply be written
 as `123.0` and `123i32` can be written as `123`.
 
-## Built-in Literals
+### Built-in Literals
 
 Flix has built-in syntactic sugar for lists, sets, and
 maps.
 
-### List Literals
+#### List Literals
 
 A list literal is written using the infix `::`
 constructor.
@@ -42,7 +42,7 @@ which is syntactic sugar for:
 Cons(1, Cons(2, Cons(3, Nil)))
 ```
 
-### Set Literals
+#### Set Literals
 
 A set literal is written using the notation
 `Set#{v1, v2, ...}`.
@@ -58,7 +58,7 @@ which is syntactic sugar for:
 Set.insert(1, Set.insert(2, Set.insert(3, Set.empty())))
 ```
 
-### Map Literals
+#### Map Literals
 
 A map literal is written using the notion
 `Map#{k1 => v1, k2 => v2, ...}`.

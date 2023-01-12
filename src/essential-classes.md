@@ -1,4 +1,4 @@
-# Essential Classes
+## Essential Classes
 
 Programming in Flix invariable requires knowledge of three type classes: `Eq`,
 `Order`, and `ToString`. 

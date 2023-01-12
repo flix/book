@@ -1,4 +1,4 @@
-# Tail Recursion
+## Tail Recursion
 
 In Flix, and in functional programming in general, iteration is expressed
 through [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)).

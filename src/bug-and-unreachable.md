@@ -1,4 +1,4 @@
-# `bug!` and `unreachable!`
+## `bug!` and `unreachable!`
 
 Flix supports two special "functions": `bug!` and
 `unreachable!` that can be used to indicate when an

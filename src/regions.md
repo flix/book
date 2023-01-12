@@ -1,4 +1,4 @@
-# Regions
+## Regions
 
 > **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
@@ -64,7 +64,7 @@ def flatMap(f: a -> List[b] \ ef, l: List[a]): List[b] \ ef =
     }
 ```
 
-## Regions are Values
+### Regions are Values
 
 A region (or region handle) is a _value_ that can be passed as a function
 argument. This is useful, for example, when we want to write a reusable function
@@ -83,7 +83,7 @@ The function takes a region handle `rh`, allocates a new mutable deque
 (`MutDeq`) in the given region, inserts all elements of the list `l` in the
 deque, and returns it. 
 
-## Regions are Scoped
+### Regions are Scoped
 
 Regions and all memory associated with them cannot outline their lexical scope. 
 

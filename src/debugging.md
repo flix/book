@@ -1,4 +1,4 @@
-# Debugging
+## Debugging
 
 When debugging, it is often helpful to output the values of expressions and variables. This can be challenging in a functional language like Flix because `print` is impure, so:
 
@@ -14,7 +14,7 @@ Results in an error:
 Impure function declared as pure.
 ```
 
-## `debug`
+### `debug`
 
 Flix provides a special-case `debug` function which has the same signature as the `identity` fuction:
 
@@ -52,7 +52,7 @@ Or pipelines:
 DelayList.from(42) |> DelayList.map(x -> x + 10) |> debug |> DelayList.take(10)
 ```
 
-## Output format
+### Output format
 
 Debug output is not generated with `toString`. Instead `debug` prints the internal Flix datastructure. For example `debug(1 :: 2 :: Nil)` outputs:
 
@@ -74,11 +74,11 @@ The debug format is available within string interploation by using `%{...}`:
 println("Internally, lists look like this: %{1 :: 2 :: Nil}")
 ```
 
-## Source location and expression
+### Source location and expression
 
 Flix provides two additional variants of `debug`: `debug!` and `debug!!`. The first displays the source location from which `debug` was called, and the second both the source location and the source code of the expression passed to `debug!!`
 
-## Limitations
+### Limitations
 
 * Although `debug` *appears* to be pure, it is not, and should not be used in production code. Future versions of Flix will enforce this requirement by raising an error if `debug` appears in production builds.
 * The location and expression output by `debug!` and `debug!!` are not guaranteed to be correct if they're used as values (e.g. within a pipeline).

@@ -1,4 +1,4 @@
-# Redundancy
+## Redundancy
 
 The Flix compiler aggressively rejects programs that contain unused elements. 
 The idea is to help programmers avoid subtle bugs. While this can take some
@@ -11,7 +11,7 @@ In particular, the Flix compiler ensures that a program does not have:
 - Useless expressions.
 - Unused non-unit values.
 
-## Unused Local Variables
+### Unused Local Variables
 
 Flix rejects programs with unused variables.
 
@@ -46,7 +46,7 @@ def main(): Unit \ IO =
     println("The sum is ${x + x}")
 ```
 
-## Useless Expressions
+### Useless Expressions
 
 Flix rejects programs with _pure_ expressions whose results are discarded.
 
@@ -75,7 +75,7 @@ The expression has type 'Int32'
 An expression that has no side-effect and whose result is unused is suspicious,
 since it could just be removed from the program without changing its meaning.
 
-## Unused Non-Unit Values
+### Unused Non-Unit Values
 
 Flix rejects programs with non-Unit valued expressions whose results are discarded.
 

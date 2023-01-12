@@ -1,4 +1,4 @@
-# Super Casts
+## Super Casts
 
 The Flix type system does not natively support sub-typing. 
 
@@ -47,7 +47,7 @@ let _: ##java.io.Serializable   = super_cast "Hello World";
 let _: ##java.lang.Object       = super_cast null;
 let _: ##java.lang.String       = super_cast null;
 ```
-## Function Types
+### Function Types
 
 The `super_cast` construct does _not_ work on function types.
 

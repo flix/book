@@ -1,4 +1,4 @@
-# Anonymous and Named Holes
+## Anonymous and Named Holes
 
 During development, Flix encourages the use of holes
 for incomplete code.

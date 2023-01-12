@@ -1,4 +1,4 @@
-# Lists
+## Lists
 
 The bread and butter of functional programming is
 list processing.

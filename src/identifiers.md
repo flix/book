@@ -1,4 +1,4 @@
-# Identifiers
+## Identifiers
 
 Flix has several types of identifiers:
 

@@ -1,4 +1,4 @@
-# Visual Studio Code Extension
+## Visual Studio Code Extension
 
 Flix comes with [a fully-featured Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=flix.flix):
 
@@ -9,7 +9,7 @@ messages) are always 1:1 with the real Flix programming language.
 
 Flix also comes with an (optional) Visual Studio Code color theme called "Flixify Dark".
 
-## Features
+### Features
 
 * __Semantic Syntax Highlighting__
     - Code highlighting for *.flix files. This work best with the [official vscode theme](https://marketplace.visualstudio.com/items?itemName=flix.flixify-dark).
@@ -62,7 +62,7 @@ Flix also comes with an (optional) Visual Studio Code color theme called "Flixif
 * __Semantic Tokens__
     - Additional code highlighting hints provided by the compiler.
 
-## Known Limitations
+### Known Limitations
 
 - Most functionality is only available while the program parses and type checks. 
     - Thus before e.g. renaming a local variable it is best to ensure that no

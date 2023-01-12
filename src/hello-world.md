@@ -1,4 +1,4 @@
-# Hello World
+## Hello World
 
 We are now ready to write the famous _Hello World_ program in Flix:
 

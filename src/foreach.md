@@ -1,4 +1,4 @@
-# Foreach
+## Foreach
 
 > **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
@@ -55,7 +55,7 @@ def isExcotic(fruit: String): Bool = match fruit {
 }
 ```
 
-## Adding Optional Braces for Visual Clarity
+### Adding Optional Braces for Visual Clarity
 
 We can sometimes improve the visual clarity of a `foreach` expression by adding
 braces:
@@ -71,7 +71,7 @@ foreach(fruit <- fruits) {
 The braces have no impact on the meaning of the `foreach` loop; they are purely
 stylistic. 
 
-## The Iterable Type Class
+### The Iterable Type Class
 
 We can use the `foreach` syntax to iterate through any collection type that
 implements the `Iterable` type class. In particular, the `Iterable` class
@@ -92,4 +92,3 @@ pub class Iterable[t: Type -> Type] {
 > **Note:** Flix expects the expression body of a `foreach` to have type `Unit`.
 > If you want to return a value from the loop body, you should use the
 > `foreach-yield` construct. 
-

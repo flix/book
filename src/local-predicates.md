@@ -1,4 +1,4 @@
-# Local Predicates
+## Local Predicates
 
 Flix supports an abstract mechanism called _local predicates_. A local
 predicate, like a local variable, is not visible to the outside. 

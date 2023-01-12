@@ -1,4 +1,4 @@
-# Higher-Kinded Types
+## Higher-Kinded Types
 
 Flix supports [higher-kinded
 types](https://en.wikipedia.org/wiki/Kind_(type_theory)), hence type class can
@@ -33,7 +33,7 @@ instance ForEach[List] {
 > **Note**: Flix does not have a `ForEach` type class, but instead has the much
 > more powerful and versatile `Foldable` type class. 
 
-## The Flix Kinds
+### The Flix Kinds
 
 Flix supports the following kinds:
 

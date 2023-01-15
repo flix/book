@@ -27,6 +27,12 @@ supports full tail call elimination. Flix has interoperability with Java and can
 use JVM classes and methods. Hence the entire Java ecosystem is available from
 within Flix. 
 
+Flix aims to have world-class Visual Studio Code support. The [Flix Visual
+Studio Code extension](./vscode.md) uses the real Flix compiler hence there is
+always a 1:1 correspondence between the Flix language and what is reported in
+the editor. The advantages are many: (a) diagnostics are always exact, (b) code
+navigation "just works", and (c) refactorings are always correct.
+
 ## Look'n Feel
 
 Here are a few programs to illustrate the look and feel of Flix:

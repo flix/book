@@ -1,15 +1,11 @@
 ## Lists
 
-The bread and butter of functional programming is
-list processing.
 A list is either the empty list, written as `Nil`,
 or a cons cell, written as `x :: xs` where `x` is
 the head element and `xs` is the tail of the list.
 The `List` type is polymorphic so you can have a
 list of integers, written as `List[Int32]`, or a
 list of strings written as `List[String]`.
-The `List` type and list operations are part of the
-Flix standard library.
 
 We write the empty list as follows:
 

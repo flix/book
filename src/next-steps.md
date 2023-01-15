@@ -1,11 +1,12 @@
 ## Next Steps
 
-We are now ready write our first real program: A simple variant of the venerable
-wordcount (`wc`) program from UNIX. We shall not be concerned with efficiency,
-but we will carefully handle input, output, and the errors that may occur at
-runtime.
+We are now ready write our first real program! 
 
-Create a new folder and put the following into `Main.flix`:
+We will write a simple variant of the venerable wordcount (`wc`) program from
+UNIX. We shall not be concerned with efficiency, but we will carefully all error
+cases. 
+
+Create a new folder (e.g. `wc`) and put the following code into `Main.flix`:
 
 ```flix
 def main(): Unit \ IO = 
@@ -27,14 +28,19 @@ def numberOfWords(s: String): Int32 =
     s |> String.words |> List.length
 ```
 
-The program works as follows: First, we retrieve the program arguments (using
-`Environment.getArgs()`). We expect this to be a list with one element: the name
-of the file to count words in. We use pattern matching to extract the filename
-and to print an error if no arguments were specific. Second, we read all lines
-in the file (using `File.readLines`). Third, and finally, we compute the total
-number of lines and total words in the list of strings we have read. 
+The program works as follows:
 
-We can compile and run this program as follows:
+1. We use `Environment.getArgs()` to get the program arguments. We expect a list
+   with at least one element; the name of the file to count lines and words in.
+   We use pattern matching on `args` to extract the file name and report an
+   error if the list is empty.
+2. We use `File.readLines` to read all lines of the file. This operation may
+   fail (e.g. if the file does not exist) and hence it returns a `Result`. We use pattern matching on the result an print an error message if we could not read the file.
+3. Otherwise we have a `List[String]` from which we can easily compute the
+   number of lines and using the helper function `numberOfWords`, we can also
+   easily compute the total number of words. Finally, we print these two numbers.
+
+We can compile and run the program as follows:
 
 ```shell
 $ java -jar flix.jar build    
@@ -43,9 +49,8 @@ $ java -jar wc.jar Main.flix
 Lines: 17, Words: 62
 ```
 
-The above program gets the job done, but it is a bit verbose. 
-
-A slightly more idiomatic Flix program could be:
+The above program gets the job done, but it is a bit verbose. A more readable
+version is:
 
 ```flix
 def main(): Unit \ IO = 
@@ -62,4 +67,4 @@ def main(): Unit \ IO =
     }
 ```
 
-which uses a few more combinators and the monadic for-yield construct.
+which takes advantages of the [monadic for-yield construct](./monadic-for-yield.md).

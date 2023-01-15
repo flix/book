@@ -7,7 +7,7 @@
 
 ## ToString is not defined on 'a'
 
-Given a program like:
+Given the program:
 
 ```flix
 def main(): Unit \ IO = 
@@ -15,7 +15,7 @@ def main(): Unit \ IO =
     println(l)
 ```
 
-Flix may report:
+The Flix compiler reports:
 
 ```
 ❌ -- Type Error ---------------------
@@ -29,7 +29,7 @@ Flix may report:
 
 The issue is that the empty list has the polymorphic type: `List[a]` for any
 `a`. This means that Flix cannot select the appropriate `ToString` type class
-instance (even though any would work). 
+instance. 
 
 The solution is to specify the type of the empty list. For example, we can write:
 
@@ -39,12 +39,12 @@ def main(): Unit \ IO =
     println(l)
 ```
 
-which solves the problem because Flix can find an instance of `ToString` for the
-type `List[Int32]`.
+which solves the problem because Flix can find an instance of `ToString` type
+class for the concrete type `List[Int32]`.
 
 ## No instance of the 'Boxable' class for the type 't'
 
-Given a program like:
+Given the program:
 
 ```flix
 def connected(l: List[(t, t)]): List[(t, t)] = 
@@ -56,7 +56,7 @@ def connected(l: List[(t, t)]): List[(t, t)] =
     query db, pr select (x, y) from Path(x, y)
 ```
 
-which uses _polymorphic_ Datalog program values, Flix may report:
+which uses _polymorphic_ Datalog program values, the Flix compiler reports:
 
 ```
 ❌ -- Type Error ----------------------------------------
@@ -69,7 +69,8 @@ which uses _polymorphic_ Datalog program values, Flix may report:
 ```
 
 This is because Flix requires values used in Datalog constraints to be
-`Boxable`. A type can be made boxable if it implements `Eq` and `Order`. 
+`Boxable`. Any type can be made `Boxable` by implementing the `Eq` and `Order`
+type classes. 
 
 In the above case, the solution is to change the signature of `connected` to:
 
@@ -77,15 +78,17 @@ In the above case, the solution is to change the signature of `connected` to:
 def connected(l: List[(t, t)]): List[(t, t)] with Boxable[t] = 
 ```
 
+which captures the `Boxable` type class constraint.
+
 ## Records and Complex Instances
 
-Given a program like:
+Given the program:
 
 ```flix
 instance Eq[{fstName = String, lstName = String}]
 ```
 
-Flix reports:
+The Flix compiler reports:
 
 ```
 ❌ -- Instance Error --------------------------------------------------
@@ -106,7 +109,7 @@ type. For example:
 enum Person({fstName = String, lstName = String})
 ```
 
-and then we can define an implementation of `Eq` for the `Person` type:
+and then we can implement `Eq` for the `Person` type:
 
 ```flix
 instance Eq[Person] {
@@ -119,11 +122,7 @@ instance Eq[Person] {
 
 ## Expected kind 'Bool or Effect' here, but kind 'Type' is used
 
-In Flix the kind of every type variable is either inferred or assumed to be
-`Type`. In some cases, this can lead to kind errors. 
-
-For example, if we want to have an enum that wraps an effectful function we
-might write: 
+Given the program:
 
 ```flix
 enum A[a, b, ef] {
@@ -131,7 +130,7 @@ enum A[a, b, ef] {
 }
 ```
 
-but this gives the error:
+The Flix compiler reports:
 
 ```
 ❌ -- Kind Error -----------------------------------------------
@@ -146,12 +145,12 @@ Expected kind: Bool or Effect
 Actual kind:   Type
 ```
 
-The solution is to explicitly annotate the type variables `a`, `b`, and `ef`
-with their kinds: 
+This is because Flix assumes every un-annotated type variable to have kind
+`Type`. However, in the above case `a` and `b` should have kind `Type`, but `ef`
+should have kind `Bool`. We can make this explicit like so:
 
-```
+```flix
 enum A[a: Type, b: Type, ef: Bool] {
     case A(a -> b \ ef)
 }
 ```
-

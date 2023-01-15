@@ -1,6 +1,6 @@
 ## Essential Classes
 
-Programming in Flix invariable requires knowledge of three type classes: `Eq`,
+Practical programming in Flix requires knowledge of three type classes: `Eq`,
 `Order`, and `ToString`. 
 
 ### The Eq Class
@@ -10,6 +10,9 @@ The `Eq` class captures when two values of a specific type are equal:
 ```flix
 class Eq[a] {
 
+    ///
+    /// Returns `true` if and only if `x` is equal to `y`.
+    ///
     pub def eq(x: a, y: a): Bool
 
     // ... additional members omitted ...
@@ -37,8 +40,8 @@ class Order[a] with Eq[a] {
 }
 ```
 
-To implement `Order`, we only have to implement the `compare` function that
-returns value of type `Comparison` which is defined as:
+To implement the `Order` class, we must implement the `compare` function which
+returns value of type `Comparison`. The `Comparison` data type is defined as:
 
 ```flix
 enum Comparison {
@@ -50,13 +53,12 @@ enum Comparison {
 
 ### The ToString Class
 
-The `ToString` class enables us to obtain a human-readable string representation
-of a value:
+The `ToString` class is used to obtain a string representation of a specific value:
 
 ```flix
 class ToString[a] {
     ///
-    /// Returns a string representation of the given x.
+    /// Returns a string representation of the given `x`.
     ///
     pub def toString(x: a): String
 }
@@ -70,12 +72,12 @@ For example, the interpolated string
 "Good morning ${name}, it is ${hour} a clock."
 ```
 
-is syntactic sugar for the expression:
+is actually syntactic sugar for the expression:
 
 ```flix
 "Good morning " + ToString.toString(name) + ", it is " 
                 + ToString.toString(hour) + " a clock."
 ```
 
-In the following subsection, we discuss how implementations of the `Eq`,
-`Order`, and `ToString` type classes can be automatically derived. 
+In the following subsection, we discuss how to automatically derive
+implementations of the `Eq`, `Order`, and `ToString` type classes.

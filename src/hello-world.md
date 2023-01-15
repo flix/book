@@ -1,6 +1,6 @@
 ## Hello World
 
-We are now ready to write the famous _Hello World_ program in Flix:
+We can now write the famous _Hello World_ program in Flix:
 
 ```flix
 def main(): Unit \ IO = 
@@ -14,6 +14,6 @@ languages:
 
 - The `main` function has no formal parameters, in particular it does not take
   an arguments array. Instead the command line arguments are available by
-  calling `Environment.getArgs`.
+  calling the `Environment.getArgs` functions.
 - The return type of the `main` function is `Unit`.
 - The `main` function has the `IO` effect since it prints to the terminal.

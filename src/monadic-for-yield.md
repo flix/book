@@ -1,12 +1,13 @@
 ## Monadic For-Yield
 
-Flix supports a _for-yield_ construct similar to Scala's for-comprehensions and
-Haskell's do notation. The _for-yield_ construct is syntactic sugar for uses of
-`point` and `flatMap` (which are provided by the `Monad` type class). The
-_for-yield_ construct also supports a _guard_-expression that uses `empty`
-(which is provided by the `MonadZero` type class).
+Flix supports a monadic _for-yield_ construct similar to Scala's
+for-comprehensions and Haskell's do notation. The _for-yield_ construct is
+syntactic sugar for uses of `point` and `flatMap` (which are provided by the
+`Monad` type class). The _for-yield_ construct also supports a
+_guard_-expression that uses `empty` (which is provided by the `MonadZero` type
+class).
 
-For example, the `for-yield` expression
+For example, the `for-yield` expression:
 
 ```flix
 let l1 = 1 :: 2 :: Nil;
@@ -24,7 +25,7 @@ evaluates to the list:
 ### Using Guard Expressions
 
 We can use _guard expressions_ in `for-yield` expressions. For example, the
-program
+program:
 
 ```flix
 let l1 = 1 :: 2 :: Nil;
@@ -104,3 +105,30 @@ Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 > **Note:** We cannot use an `if`-guard with non-empty lists because such an
 > `if`-guard requires an instance of the `MonadZero` type class which is not
 > implemented by non-empty list (since such a list cannot be empty). 
+
+### Desugaring
+
+The monadic `for-yield` construct is simply syntactic sugar for uses of
+`Monad.flatMap`, `Applicative.point`, and `MonadZero.empty`. 
+
+For example, the expression:
+
+```flix
+let l1 = 1 :: 2 :: Nil;
+let l2 = 1 :: 2 :: Nil;
+for (x <- l1; y <- l2; if x < y)
+    yield (x, y)
+```
+
+is de-sugared to:
+
+```flix
+Monad.flatMap(x -> 
+    Monad.flatMap(y -> 
+        if (x < y)
+            Applicative.point((x, y))
+        else 
+            MonadZero.empty(), 
+    l2), 
+l1);
+```

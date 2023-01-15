@@ -1,6 +1,6 @@
 ## Primitive Types
 
-Flix supports the usual primitive types:
+Flix supports the primitive types:
 
 | Type         | Syntax                                   | Description                       |
 |--------------|------------------------------------------|-----------------------------------|
@@ -28,9 +28,7 @@ maps.
 
 #### List Literals
 
-A list literal is written using the infix `::`
-constructor.
-For example:
+A list literal is written using the infix `::` constructor. For example:
 
 ```flix
 1 :: 2 :: 3 :: Nil
@@ -42,11 +40,15 @@ which is syntactic sugar for:
 Cons(1, Cons(2, Cons(3, Nil)))
 ```
 
+Alternatively, the same list can also be written as:
+
+```flix
+List#{1, 2, 3}
+```
+
 #### Set Literals
 
-A set literal is written using the notation
-`Set#{v1, v2, ...}`.
-For example:
+A set literal is written using the notation `Set#{v1, v2, ...}`. For example:
 
 ```flix
 Set#{1, 2, 3}

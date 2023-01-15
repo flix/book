@@ -1,16 +1,16 @@
 ## Automatic Derivation
 
-Flix supports automatic derivation of several type classes. For example:
+Flix supports automatic derivation of several type classes, including:
 
-- `Eq` — to derive structural equality on a type.
-- `Order` — to derive a total ordering on a type.
-- `ToString` — to derive a human-readable string representation on a type.
-- `Sendable` — to enable a type to be sent over a channel.
+- `Eq` — to derive structural equality on the values of a type.
+- `Order` — to derive a total ordering on the values of a type.
+- `ToString` — to derive a human-readable string representation on the values of a type.
+- `Sendable` — to enable the values of an (immutable) type to be sent over a channel.
 
 ### Derivation of Eq and Order
 
 We can automatically derive instances of the `Eq` and `Order` type classes using
-a `with` clause in the `enum` declaration. For example: 
+the `with` clause in the `enum` declaration. For example: 
 
 ```flix
 enum Shape with Eq, Order {
@@ -31,8 +31,8 @@ def main(): Unit \ IO =
     println(Circle(456) <= Square(123))  // prints `true`.
 ```
 
-> **Note**: Automatic derivation of `Eq` and `Order` requires that the types
-> used inside the `enum` themselves implement `Eq` and `Order`.
+> **Note**: Automatic derivation of `Eq` and `Order` requires that the inner
+> types of the `enum` implement `Eq` and `Order` themselves.
 
 ### Derivation of ToString
 
@@ -56,7 +56,7 @@ def main(): Unit \ IO =
     println("A ${c}, ${s}, and ${r} walk into a bar.")
 ```
 
-Which prints:
+which prints:
 
 ```
 A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
@@ -64,8 +64,8 @@ A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
 
 ### Derivation of Sendable
 
-We can also automatically derive implementations of the `Sendable` type class
-(which allows values of a specific type to be sent over a channel). For example:
+We can automatically derive implementations of the `Sendable` type class (which
+allow values of a specific type to be sent over a channel). For example:
 
 ```flix
 enum Shape with Sendable, ToString {
@@ -89,7 +89,7 @@ enum Shape[r: Region] with Sendable {
 }
 ```
 
-We get a compilation error:
+The Flix compiler emits a compiler error:
 
 ```
 ❌ -- Safety Error --------------------------------------
@@ -102,3 +102,5 @@ Because it takes a type parameter of kind 'Region'.
                                ^^^^^^^^
                                unable to derive Sendable.
 ```
+
+This is because mutable data is not safe to share between threads.

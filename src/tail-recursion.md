@@ -15,14 +15,14 @@ def memberOf(x: a, l: List[a]): Bool with Eq[a] =
 ```
 
 The `memberOf` function pattern matches on the list `l`. If it is empty then it
-returns `false`. Otherwise, we have an element `y` and the rest of the list
+returns `false`. Otherwise, we have an element `y` and the rest of the list is
 `ys`. If `x == y` then we have found the element and we return `true`. Otherwise
 we _recurse_ on the rest of the list `ys`. 
 
 The recursive call to `memberOf` is in _tail position_, i.e. it is the last
 thing to happen in the `memberOf` function. This has two important benefits: (a)
-the Flix compiler is able to write `memberOf` to use an ordinary loop (which is
-more efficient than a function call) and more importantly (b) a call to
+the Flix compiler is able to rewrite `memberOf` to use an ordinary loop (which
+is more efficient than a function call) and more importantly (b) a call to
 `memberOf` _cannot_ overflow the stack, because the call stack never increases
 in height.
 
@@ -32,7 +32,8 @@ recursive calls in tail position never increase the stack height and hence
 cannot cause the stack to overflow!
 
 We _remark_ that Flix has ___full___ tail call elimination, not just tail call
-optimization. This means that the following program compiles and runs successful: 
+optimization. This means that the following program compiles and runs
+successfully: 
 
 ```flix
 def isOdd(n: Int32): Bool =
@@ -45,7 +46,7 @@ def main(): Unit \ IO =
     isOdd(12345) |> println
 ```
 
-which is not the case in several other programming languages.
+which is not the case in many other programming languages.
 
 
 ### Non-Tail Calls and StackOverflows

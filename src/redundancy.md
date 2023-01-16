@@ -1,15 +1,15 @@
 ## Redundancy
 
-The Flix compiler aggressively rejects programs that contain unused elements. 
-The idea is to help programmers avoid subtle bugs. While this can take some
-getting use to during development, we believe in the long-run the trade-off
-is worth it. 
+The Flix compiler aggressively rejects programs that contain unused elements.
+The idea is to help programmers avoid subtle bugs[^1]. While this can take some
+time getting used to, we believe the trade-off is worth it.
 
-In particular, the Flix compiler ensures that a program does not have:
+Specifically, the Flix compiler will ensure that a program does not have:
 
-- Unused local variables.
-- Useless expressions.
-- Unused non-unit values.
+- [Unused local variables](#unused-local-variables): local variables that are declared, but never used. 
+- [Shadowed local variables](#shadowed-local-variables): local variables that shadow other local variables.
+- [Useless expressions](#useless-expressions): pure expressions whose values are discarded.
+- [Unused non-unit values](#unused-non-unit-values): non-Unit valued expression whose values are discarded.
 
 ### Unused Local Variables
 
@@ -45,6 +45,39 @@ def main(): Unit \ IO =
     let _y = 456; // OK
     println("The sum is ${x + x}")
 ```
+
+### Shadowed Local Variables
+
+Flix rejects programs with shadowed variables.
+
+For example, the following program is rejected:
+
+```flix
+def main(): Unit \ IO = 
+    let x = 123;
+    let x = 456;
+    println("The value of x is ${x}.")
+```
+
+with the message:
+
+```
+❌ -- Redundancy Error -------------------------------------------------- Main.flix
+
+>> Shadowed variable 'x'.
+
+3 |     let x = 456;
+            ^
+            shadowing variable.
+
+The shadowed variable was declared here:
+
+2 |     let x = 123;
+            ^
+            shadowed variable.
+```
+
+
 
 ### Useless Expressions
 
@@ -113,3 +146,5 @@ def main(): Unit \ IO =
 ```
 
 which permits a non-Unit value to be thrown away as long as the expression is non-pure.
+
+[^1] See e.g. [Using Redundancies to Find Errors](https://dl.acm.org/doi/abs/10.1145/605466.605475).

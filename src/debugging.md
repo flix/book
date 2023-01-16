@@ -52,37 +52,85 @@ Or pipelines:
 DelayList.from(42) |> DelayList.map(x -> x + 10) |> debug |> DelayList.take(10)
 ```
 
-### Output format
+### Debug Format
 
-Debug output is not generated with `toString`. Instead `debug` prints the internal Flix datastructure. For example `debug(1 :: 2 :: Nil)` outputs:
+The `debug` expression (and its variants) do _not_ use the `ToString` type
+class. Instead they print the internal Flix representation of the given value. 
+
+For example, the expression:
+
+```flix
+debug(1 :: 2 :: Nil)
+```
+
+prints:
 
 ```flix
 Cons(1, Cons(2, Nil))
 ```
 
-This means that `debug` can output any Flix datastructure, whether or not it implements the `ToString` class.
+We can also print values that do not have a `ToString` instance: 
 
-You can bypass this by calling `toString` yourself, or using string interpolation:
+```flix
+debug(x -> x + 123)
+```
+
+prints:
+
+```
+Int32 -> Int32
+```
+
+We can always obtain the `ToString` representation by using an interpolated
+string. For example:
 
 ```flix
 debug("${x}")
 ```
 
-The debug format is available within string interploation by using `%{...}`:
+### Debug Variants
+
+The `debug` function comes in three variants:
+
+- `debug`: Prints its argument.
+- `debug!`: Prints its argument and source location.
+- `debug!!`: Prints its argument, source location, and source code.
+
+The following program:
 
 ```flix
-println("Internally, lists look like this: %{1 :: 2 :: Nil}")
+def main(): Unit = 
+    debug("A message");
+    debug!("Another message");
+    debug!!("A third message");
+    ()
 ```
 
-### Source location and expression
+prints:
 
-Flix provides two additional variants of `debug`: `debug!` and `debug!!`. The first displays the source location from which `debug` was called, and the second both the source location and the source code of the expression passed to `debug!!`
+```
+"A message"
+[C:\tmp\flix\Main.flix:3] "Another message"
+[C:\tmp\flix\Main.flix:4] A third message = "A third message"
+```
 
-### Limitations
+The third `debug!!` variant is intended to be used in situations like:
 
-* Although `debug` *appears* to be pure, it is not, and should not be used in production code. Future versions of Flix will enforce this requirement by raising an error if `debug` appears in production builds.
-* The location and expression output by `debug!` and `debug!!` are not guaranteed to be correct if they're used as values (e.g. within a pipeline).
-* Because `debug` appears to be pure, it can be optimised away, for example if the value is not used:
-  ```flix
-  let _ = debug(...)
-  ```
+```flix
+let x = 123;
+let y = 456;
+debug!!(x + y)
+```
+
+where it prints:
+
+```
+[C:\tmp\flix\Main.flix:3] x + y = 579
+```
+
+> **Note:** The `debug` expression should not be used in production code. 
+
+> **Warning:** The Flix compiler treats the `debug` expression as pure, hence
+> under certain circumstances the compiler may reorder or entirely remove a use
+> of `debug`.
+

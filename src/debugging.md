@@ -31,29 +31,38 @@ built-in debugging facility that allows us to do print-line debugging.
 
 ### The debug Function
 
-Flix provides a special-case `debug` function which has the same signature as the `identity` fuction:
+Flix has a `debug` function with the same signature as the `identity` fuction:
 
 ```flix
 def debug(x: a): a
 ```
 
-> **Note:** `debug` isn't a true function, which means that there are a few limitations on how it can be used: see [Limitations](#limitations) for details.
-
-Because `debug` appears to be pure, it can be used anywhere within Flix, including pure functions:
-
-```flix
-def myAdd(x: Int32): Int32 =
-    debug("myAdd called with: ${x}");
-    x + 1
-```
-
-And because it returns its argument, it can be inserted within expressions without modifying their behaviour. For example let statements:
+The `debug` "function" isn't really a function; rather its internal compiler
+magic that allows you to print _any value_ while fooling the type and effect
+system into believing that it is still pure. Using the `debug` function this
+program: 
 
 ```flix
-let x = debug(1 + 1);
+def sum(x: Int32, y: Int32): Int32 = 
+    debug(x);
+    debug(y);
+    x + y
 ```
 
-For-yield expressions:
+Now compiles and runs. 
+
+The `debug` function returns its argument. Hence its convenient to use in many
+situations.
+
+For example, we can write:
+
+```flix
+def sum(x: Int32, y: Int32): Int32 = debug(x + y)
+```
+
+to print the value of `x + y` _and_ return it. 
+
+We can also use it inside e.g. a `for-yield` expression:
 
 ```flix
 for(i <- List.range(0, 10);
@@ -61,10 +70,12 @@ for(i <- List.range(0, 10);
     yield (i, j)
 ```
 
-Or pipelines:
+Or in a pipeline:
 
 ```flix
-DelayList.from(42) |> DelayList.map(x -> x + 10) |> debug |> DelayList.take(10)
+List.range(1, 100) |>
+List.map(x -> debug(x + 1)) |>
+List.filter(x -> debug(x > 5))
 ```
 
 ### Debug Format

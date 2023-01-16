@@ -2,7 +2,7 @@
 
 In this chapter, we discuss some advanced features of Flix, including:
 
-- [Safe Upcasts](./upcast.md)
-- [Unsafe Type and Effect Casts](./casts.md)
-- [Bugs and Reachable Code](./bug-and-unreachable.md)
+- [Super Casts](./supercasts.md) and [Unsafe Casts](./unsafe-casts.md)
+- [The `bug!` and `unreachable!` functions](./bug-and-unreachable.md)
+- [Type Match](./type-match.md)
 - [Purity Reflection](./purity-reflection.md)

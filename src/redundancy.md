@@ -9,7 +9,7 @@ Specifically, the Flix compiler will ensure that a program does not have:
 - [Unused local variables](#unused-local-variables): local variables that are declared, but never used. 
 - [Shadowed local variables](#shadowed-local-variables): local variables that shadow other local variables.
 - [Useless expressions](#useless-expressions): pure expressions whose values are discarded.
-- [Unused non-unit values](#unused-non-unit-values): non-Unit valued expression whose values are discarded.
+- [Must use values](#must-use-values): expressions whose values are unused but their type is marked as `@MustUse`.
 
 ### Unused Local Variables
 
@@ -108,9 +108,12 @@ The expression has type 'Int32'
 An expression that has no side-effect and whose result is unused is suspicious,
 since it could just be removed from the program without changing its meaning.
 
-### Unused Non-Unit Values
+### Must Use Values
 
-Flix rejects programs with non-Unit valued expressions whose results are discarded.
+Flix rejects programs with expressions whose values are discarded but where
+their type is marked with the `@MustUse` annotation. Function types, and the
+`Result` and `Validation` types from the Flix Standard Library are marked as
+`@MustUse`.
 
 For example, the following program is rejected:
 
@@ -125,11 +128,11 @@ with the message:
 ```
 ❌ -- Redundancy Error -------------------------------------------------- Main.flix
 
->> Unused non-unit value: The impure expression value is not used.
+>> Unused value but its type is marked as @MustUse.
 
 2 |     File.creationTime("foo.txt");
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        discarded value.
+        unused value.
 
 The expression has type 'Result[String, Int64]'
 ```
@@ -145,6 +148,6 @@ def main(): Unit \ IO =
     println("Hello World!")
 ```
 
-which permits a non-Unit value to be thrown away as long as the expression is non-pure.
+which permits a `@MustUse` value to be thrown away as long as the expression is non-pure.
 
 [^1] See e.g. [Using Redundancies to Find Errors](https://dl.acm.org/doi/abs/10.1145/605466.605475).

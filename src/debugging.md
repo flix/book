@@ -1,20 +1,35 @@
 ## Debugging
 
-When debugging, it is often helpful to output the values of expressions and variables. This can be challenging in a functional language like Flix because `print` is impure, so:
+When debugging, it is often helpful to output the value of an expression or
+variable. 
+
+We might try something like:
 
 ```flix
-def myAdd(x: Int32): Int32 =
-    println("myAdd called with: ${x}");
-    x + 1
+def sum(x: Int32, y: Int32): Int32 = 
+    println(x);
+    println(y);
+    x + y
 ```
 
-Results in an error:
+Unfortunately this does not work: 
 
 ```
-Impure function declared as pure.
+❌ -- Type Error -------------------------------------------------- Main.flix
+
+>> Impure function declared as pure.
+
+1 | def sum(x: Int32, y: Int32): Int32 = 
+        ^^^
+        impure function.
 ```
 
-### `debug`
+The problem is that printing is inherently an effectful operation and hence we
+cannot use it to debug our pure functions! We could make our `sum` function have
+the `IO` effect, but that is rarely what we want. Fortunately, Flix has a
+built-in debugging facility that allows us to do print-line debugging.
+
+### The debug Function
 
 Flix provides a special-case `debug` function which has the same signature as the `identity` fuction:
 

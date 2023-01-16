@@ -55,15 +55,20 @@ version is:
 ```flix
 def main(): Unit \ IO = 
     let args = Environment.getArgs();
-    discard for (
-        file  <- List.head(args) |> 
-                 Option.toOk("Missing argument: filename");
-        lines <- File.readLines(file) |> 
-                 Result.mapErr(_ -> "Unable to read: ${file}")
-    ) yield {
-        let totalLines = List.length(lines);
-        let totalWords = List.sumWith(numberOfWords, lines);
-        println("Lines: ${totalLines}, Words: ${totalWords}")
+    let result = 
+        for (
+            file  <- List.head(args) |> 
+                     Option.toOk("Missing argument: filename");
+            lines <- File.readLines(file) |> 
+                     Result.mapErr(_ -> "Unable to read: ${file}")
+        ) yield {
+            let totalLines = List.length(lines);
+            let totalWords = List.sumWith(numberOfWords, lines);
+            (totalLines, totalWords)
+        };
+    match result {
+        case Ok((lines, words)) => println("Lines: ${lines}, Words: ${words}")
+        case Err(message)       => println(message)
     }
 ```
 

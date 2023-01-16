@@ -1,6 +1,7 @@
 # Parallelism
 
-We have seen how the `spawn` expression allows us to evaluate an expression in another thread:
+We have seen how the `spawn` expression allows us to evaluate an expression in a
+new thread:
 
 ```flix
 region rh {
@@ -8,9 +9,10 @@ region rh {
 }
 ```
 
-This allows us to write both concurrent and parallel programs using structured concurrency.
-The downside is that we must manually coordinate communication between threads using channels. 
-If want parallelism, but not concurrency, a more light-weight approach is to use the `par` expression.
+This allows us to write concurrent and parallel programs using structured
+concurrency. The downside is that we must manually coordinate communication
+between threads using channels. If want parallelism, but not concurrency, a more
+light-weight approach is to use the `par` expression.
 
 The `par` expression:
 

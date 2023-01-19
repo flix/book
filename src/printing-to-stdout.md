@@ -29,7 +29,7 @@ the terminal:
 ```flix
 mod Console {
     def print(x: a): Unit \ IO with ToString[a]
-    def printLine(x: a): Unit \ IO with ToString[a]
+    def println(x: a): Unit \ IO with ToString[a]
     def readLine(): Result[String, String] \ IO Impure
 }
 ```

@@ -25,7 +25,7 @@ def isConnected(s: Set[(Int32, Int32)], src: Int32, dst: Int32): Bool =
     };
     let edges = inject s into Edge;
     let paths = query edges, rules select true from Path(src, dst);
-    not (paths |> Array.isEmpty)
+    not (paths |> List.isEmpty)
 
 def main(): Unit \ IO =
     let s = Set#{(1, 2), (2, 3), (3, 4), (4, 5)};

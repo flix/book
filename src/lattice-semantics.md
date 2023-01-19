@@ -153,3 +153,96 @@ pub def main(): Unit \ IO =
 
 Note the careful use of `;` to designate lattice
 semantics.
+
+### Using Lattice Semantics to Compute Shortest Paths
+
+We can also use lattice semantics to compute shortest paths.
+
+The key is to define our own new data type `D` which is simple an `Int32` with
+forms a lattice with the reverse order of the integers (e.g. the smallest
+element is `Int32.maxValue()`).
+
+```flix
+pub enum D with Eq, Order, ToString {
+    case D(Int32)
+}
+
+instance PartialOrder[D] {
+    pub def lessEqual(x: D, y: D): Bool = 
+        let D(n1) = x;
+        let D(n2) = y;
+        n1 >= n2        // Note: Order reversed.
+}
+
+instance LowerBound[D] {
+    // Note: Because the order is reversed, the largest value is the smallest.
+    pub def minValue(): D = D(Int32.maxValue())
+}
+
+instance UpperBound[D] {
+    // Note: Because the order is reversed, the smallest value is the largest.
+    pub def maxValue(): D = D(Int32.minValue())
+}
+
+instance JoinLattice[D] {
+    pub def leastUpperBound(x: D, y: D): D = 
+        let D(n1) = x;
+        let D(n2) = y;
+        D(Int32.min(n1, n2))        // Note: Order reversed.
+}
+
+instance MeetLattice[D] {
+    pub def greatestLowerBound(x: D, y: D): D = 
+        let D(n1) = x;
+        let D(n2) = y;
+        D(Int32.max(n1, n2))        // Note: Order reversed.
+}
+
+def shortestPath(g: Set[(t, Int32, t)], o: t): Map[t, D] with Boxable[t] =
+    let db = inject g into Edge;
+    let pr = #{
+        Dist(o; D(0)).
+        Dist(y; add(d1 , D(d2))) :- Dist(x; d1), Edge(x, d2, y).
+    };
+    query db, pr select (x , d) from Dist(x; d) |> List.toMap
+
+def add(x: D, y: D): D = 
+    let D(n1) = x;
+    let D(n2) = y;
+    D(n1 + n2)
+
+def main(): Unit \ IO = 
+    let g = Set#{
+        ("Aarhus", 200, "Flensburg"),
+        ("Flensburg", 150, "Hamburg")
+    };
+    println(shortestPath(g, "Aarhus"))
+
+```
+
+Flix actually comes with a type like `D` built-in. It's called `Down` and simply
+reverses the order on the underlying type. We can use it and write the program
+as: 
+
+```flix
+def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Boxable[t] =
+    let db = inject g into Edge;
+    let pr = #{
+        Dist(o; Down(0)).
+        Dist(y; add(d1 , Down(d2))) :- Dist(x; d1), Edge(x, d2, y).
+    };
+    query db, pr select (x , d) from Dist(x; d) |> List.toMap
+
+def add(x: Down[Int32], y: Down[Int32]): Down[Int32] = 
+    let Down(n1) = x;
+    let Down(n2) = y;
+    Down(n1 + n2)
+
+def main(): Unit \ IO = 
+    let g = Set#{
+        ("Aarhus", 200, "Flensburg"),
+        ("Flensburg", 150, "Hamburg")
+    };
+    println(shortestPaths(g, "Aarhus"))
+
+```

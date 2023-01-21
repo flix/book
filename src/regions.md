@@ -23,7 +23,7 @@ We can use regions to implement a pure `sort` function that internally uses muta
 ```flix
 def sort(l: List[a]): List[a] with Order[a] =
     region rh {
-        let arr = List.toArray(r, l);
+        let arr = List.toArray(rh, l);
         Array.sort!(arr);
         Array.toList(arr)
     }

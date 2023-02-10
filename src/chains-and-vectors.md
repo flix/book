@@ -5,8 +5,8 @@
 In addition to immutable `List`s, Flix also supports immutable `Chain`s and
 `Vector`s. 
 
-The following table illustrates the performance trade-offs between `List`s,
-`Chain`s, and `Vector`s:
+The following table illustrates the performance trade-offs between lists,
+chains, and vectors:
 
 | Operation \ Type      |   List   | Chain |  Vector  |
 |-----------------------|:--------:|:-----:|:--------:|
@@ -18,13 +18,12 @@ The following table illustrates the performance trade-offs between `List`s,
 
 When to use `List`, `Chain`, or `Vector`?:
 
-- The `List` data structure should be the default choice. It is simple and
-  well-known. 
-- The `Vector` data structure is an excellent choice of the size of a collection
-  is fixed once created. We should also use vectors if there is a need for fast
-  random access lookups.
-- The `Chain` data structure is more specialized and should be used when there
-  is need for fast concatenation. 
+- The `List` data structure should be the default choice as it is simple and
+  well-known.
+- The `Vector` data structure is an excellent choice when the size of a
+  collection is fixed and/or when fast random access is required. 
+- The `Chain` data structure is more rarely used, but shines when fast appends
+  are required. 
 
 ### Chains
 
@@ -41,10 +40,20 @@ enum Chain[t] {
 ```
 
 The data structure supports `O(1)` append because we can construct a new chain
-from two existing chains using the `Chain` constructor. 
+from two existing chains using the `Chain` constructor (or more appropriately
+using `Chain.append`).
 
-We typically construct chains from other collections by calling `toChain`.
+We can build chains using `Chain.empty`, `Chain.singleton`, `Chain.cons`, and
+`Chain.append`.
 
+For example, we can write:
+
+```flix
+let c = Chain.cons(1, Chain.empty());
+println(c)
+```
+
+which prints `Chain#{1}` when compiled and executed.
 
 ### Vectors
 

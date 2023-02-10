@@ -64,14 +64,12 @@ Flix also comes with an (optional) Visual Studio Code color theme called "Flixif
 
 ### Known Limitations
 
-- Most functionality is only available while the program parses and type checks. 
-    - Thus before e.g. renaming a local variable it is best to ensure that no
-      errors are reported.
+- There is a known issue with PowerShell and using file names that contain
+  special characters. We recommend that Flix source files are given only ASCII
+  names. 
 
 - The extension assumes that you are working in "Workspace Mode", i.e. you must
   have a folder open which contains your Flix source code. 
-
-- Standby seems to break the connection between VSCode and the Flix language server.
 
 - Upon startup, the Flix compiler has to load the entire Flix standard library
   into its caches which takes a few seconds.

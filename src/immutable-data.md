@@ -11,6 +11,8 @@ We have already seen several examples of immutable data types:
 In addition, The Flix standard library offers several immutable data types:
 
 - `List[t]`     : An immutable singly-linked list of elements of type `t`.
+- `Chain[t]`    : An immutable chain of elements of type `t` with fast append.
+- `Vector[t]`   : An immutable sequence of elements of type `t` with fast lookup.
 - `Set[t]`      : An immutable set of elements of type `t`.
 - `Map[k, v]`   : An immutable map of keys of type `k` to values of type `v`.
 

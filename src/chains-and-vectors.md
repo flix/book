@@ -16,10 +16,15 @@ The following table illustrates the performance trade-offs between `List`s,
 | Cons                  |   O(1)   |  O(n) |   O(n)   |
 | Append                | O(n + m) |  O(1) | O(n + m) |
 
-We recommend to `List` for most code. If either (1) a sequence of elements if
-likely to have the same fixed-size and/or (2) many index operations are needed
-then we recommend to use `Vector`. Finally, in the more rare case, where
-concatenation (`append`) is the common operation one can use `Chain`s.
+When to use `List`, `Chain`, or `Vector`?:
+
+- The `List` data structure should be the default choice. It is simple and
+  well-known. 
+- The `Vector` data structure is an excellent choice of the size of a collection
+  is fixed once created. We should also use vectors if there is a need for fast
+  random access lookups.
+- The `Chain` data structure is more specialized and should be used when there
+  is need for fast concatenation. 
 
 ### Chains
 

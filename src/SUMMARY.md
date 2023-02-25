@@ -26,6 +26,7 @@
   - [Foreach](./foreach.md)
   - [Foreach-Yield](./foreach-yield.md)
   - [Monadic For-Yield](./monadic-for-yield.md)
+  - [Applicative For-Yield](./applicative-for-yield.md)
 - [Structured Concurrency](./concurrency.md)
 - [Parallelism](./parallelism.md)
 - [Effect System](./effects.md)

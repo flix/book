@@ -1,18 +1,17 @@
 ## Monadic For-Yield
 
-Flix supports a monadic _for-yield_ construct similar to Scala's
-for-comprehensions and Haskell's do notation. The _for-yield_ construct is
-syntactic sugar for uses of `point` and `flatMap` (which are provided by the
-`Monad` type class). The _for-yield_ construct also supports a
-_guard_-expression that uses `empty` (which is provided by the `MonadZero` type
-class).
+Flix supports a monadic _forM-yield_ construct similar to Scala's
+for-comprehensions and Haskell's do notation. The _forM_ construct is syntactic
+sugar for uses of `point` and `flatMap` (which are provided by the `Monad` type
+class). The _forM_ construct also supports a _guard_-expression that uses
+`empty` (which is provided by the `MonadZero` type class).
 
-For example, the `for-yield` expression:
+For example, the monadic `forM` expression:
 
 ```flix
 let l1 = 1 :: 2 :: Nil;
 let l2 = 1 :: 2 :: Nil;
-for (x <- l1; y <- l2)
+forM (x <- l1; y <- l2)
     yield (x, y)
 ```
 
@@ -24,13 +23,12 @@ evaluates to the list:
 
 ### Using Guard Expressions
 
-We can use _guard expressions_ in `for-yield` expressions. For example, the
-program:
+We can use _guard expressions_ in `forM` expressions. For example, the program:
 
 ```flix
 let l1 = 1 :: 2 :: Nil;
 let l2 = 1 :: 2 :: Nil;
-for (x <- l1; y <- l2; if x < y)
+forM (x <- l1; y <- l2; if x < y)
     yield (x, y)
 ```
 
@@ -42,14 +40,14 @@ evaluates to the list:
 
 ### Working with Options and Results
 
-We can also use `for-yield` to work with the `Option` data type. For example:
+We can also use `forM` to work with the `Option` data type. For example:
 
 ```flix
 def divide(x: Int32, y: Int32): Option[Int32] = 
     if (y == 0) None else Some(x / y)
 
 def f(): Option[Int32] = 
-    for (
+    forM (
         x <- divide(5, 2);
         y <- divide(x, 8);
         z <- divide(9, y)
@@ -59,13 +57,13 @@ def f(): Option[Int32] =
 Here the function `f` returns `None` since `x = 5 / 2 = 2` and `2 / 8 = 0` hence
 the last division fails. 
 
-Similarly, we can use `for-yield` to work with the `Result[e, t]` data type. For
+Similarly, we can use `forM` to work with the `Result[e, t]` data type. For
 example:
 
 ```flix
 def main(): Result[String, Unit] \ IO = 
     println("Please enter your first name, last name, and age:");
-    for (
+    forM (
         fstName <- Console.readLine();
         lstName <- Console.readLine();
         ageLine <- Console.readLine();
@@ -86,13 +84,13 @@ is successful then we print a greeting and return `Ok(())` (i.e., `Ok` of
 
 ### Working with Other Monads
 
-We can use `for-yield` with other types of `Monad`s, including `Chain` and
-`Nel`s (non-empty lists). For example, we can write:
+We can use `forM` with other types of `Monad`s, including `Chain` and `Nel`s
+(non-empty lists). For example, we can write:
 
 ```flix
 let l1 = Nel(1, 2 :: Nil);
 let l2 = Nel(1, 2 :: Nil);
-for (x <- l1; y <- l2)
+forM (x <- l1; y <- l2)
     yield (x, y)
 ```
 
@@ -108,15 +106,15 @@ Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 
 ### Desugaring
 
-The monadic `for-yield` construct is simply syntactic sugar for uses of
-`Monad.flatMap`, `Applicative.point`, and `MonadZero.empty`. 
+The `forM` expression is syntactic sugar for uses of `Monad.flatMap`,
+`Applicative.point`, and `MonadZero.empty`. 
 
 For example, the expression:
 
 ```flix
 let l1 = 1 :: 2 :: Nil;
 let l2 = 1 :: 2 :: Nil;
-for (x <- l1; y <- l2; if x < y)
+forM (x <- l1; y <- l2; if x < y)
     yield (x, y)
 ```
 

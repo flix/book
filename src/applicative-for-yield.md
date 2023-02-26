@@ -2,8 +2,6 @@
 
 > **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
-> **Note:** This documentation is a work in progress.
-
 In addition to the monadic `forM` expression, Flix supports an applicative
 `forA` expression that builds on the `Applicative` type class. The `forA`
 construct makes it simple to write error-handling code which uses the
@@ -11,8 +9,8 @@ construct makes it simple to write error-handling code which uses the
 
 ### Working with Validations
 
-For example, we can use the `forA` expression to validate user input while
-aggregating all errors into a `List[e]` (technically a `Chain[e]`).
+We can use the `forA` expression to validate user input while aggregating all
+errors into a `List[e]` (technically a non-empty chain `Nec[e]`).
 
 ```flix
 enum Connection(String, String)

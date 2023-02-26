@@ -73,8 +73,8 @@ enum Shape with Sendable, ToString {
 }
 
 def main(): Unit \ IO = 
-    region rh {
-        let (tx, rx) = Channel.buffered(rh, 10);
+    region rc {
+        let (tx, rx) = Channel.buffered(rc, 10);
         Channel.send(Circle(123), tx); // OK, since Shape is Sendable.
         println(Channel.recv(rx))
     }

@@ -8,8 +8,8 @@ processes inspired by Go and Rust.
 We can spawn a process with the `spawn` keyword:
 
 ```flix
-def main(): Unit \ IO = region r {
-    spawn println("Hello from thread") @ r;
+def main(): Unit \ IO = region rc {
+    spawn println("Hello from thread") @ rc;
     println("Hello from main")
 }
 ```
@@ -63,9 +63,9 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def main(): Int32 \ IO = region r {
-    let (tx, rx) = Channel.unbuffered(r);
-    spawn Channel.send(42, tx) @ r;
+def main(): Int32 \ IO = region rc {
+    let (tx, rx) = Channel.unbuffered(rc);
+    spawn Channel.send(42, tx) @ rc;
     Channel.recv(rx)
 }
 ```
@@ -93,11 +93,11 @@ def meow(tx: Sender[String, r]): Unit \ { Write(r) } =
 def woof(tx: Sender[String, r]): Unit \ { Read(r), Write(r) } = 
     Channel.send("Woof!", tx)
 
-def main(): Unit \ IO = region r {
-    let (tx1, rx1) = Channel.buffered(r, 1);
-    let (tx2, rx2) = Channel.buffered(r, 1);
-    spawn meow(tx1) @ r;
-    spawn woof(tx2) @ r;
+def main(): Unit \ IO = region rc {
+    let (tx1, rx1) = Channel.buffered(rc, 1);
+    let (tx2, rx2) = Channel.buffered(rc, 1);
+    spawn meow(tx1) @ rc;
+    spawn woof(tx2) @ rc;
     select {
         case m <- recv(rx1) => m
         case m <- recv(rx2) => m
@@ -119,9 +119,9 @@ We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): String = region r {
-    let (_, rx1) = Channel.buffered(r, 1);
-    let (_, rx2) = Channel.buffered(r, 1);
+def main(): String = region rc {
+    let (_, rx1) = Channel.buffered(rc, 1);
+    let (_, rx2) = Channel.buffered(rc, 1);
     select {
         case _ <- recv(rx1) => "one"
         case _ <- recv(rx2) => "two"
@@ -154,10 +154,10 @@ def slow(tx: Sender[String, r]): Unit \ { Write(r), IO} =
     Thread.sleep(Time/Duration.fromSeconds(60));
     Channel.send("I am very slow", tx)
 
-def main(): Unit \ IO = region r {
-    let (tx, rx) = Channel.buffered(r, 1);
-    spawn slow(tx) @ r;
-    let timeout = Channel.timeout(r, Time/Duration.fromSeconds(5));
+def main(): Unit \ IO = region rc {
+    let (tx, rx) = Channel.buffered(rc, 1);
+    spawn slow(tx) @ rc;
+    let timeout = Channel.timeout(rc, Time/Duration.fromSeconds(5));
     select {
         case m <- recv(rx)       => m
         case _ <- recv(timeout)  => "timeout"

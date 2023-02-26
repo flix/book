@@ -35,15 +35,15 @@ where `e1`, `e2`, and so forth are _element expressions_, and `r` is the _region
 expression_. For example:
 
 ```flix
-region rh {
-    let fruits = Array#{"Apple", "Pear", "Mango"} @ rh;
+region rc {
+    let fruits = Array#{"Apple", "Pear", "Mango"} @ rc;
     println(fruits)
 }
 ```
 
-Here we introduce a region named `rh`. Inside the region, we create an array of
+Here we introduce a region named `rc`. Inside the region, we create an array of
 `fruits` that contain the three strings `"Apple"`, `"Pear"`, and `"Mango"`. The
-type of `fruits` is `Array[String, rh]`. For more information about regions, we
+type of `fruits` is `Array[String, rc]`. For more information about regions, we
 refer to the chapter on [Regions](regions.md).
 
 Running the program prints `Array#{"Apple", "Pear", "Mango"}`.
@@ -54,22 +54,22 @@ We can allocate an array of size `n` filled with the same element using the
 `Array.repeat` function. For example: 
 
 ```flix
-region rh {
-    let arr = Array.repeat(rh, 1_000, 42);
+region rc {
+    let arr = Array.repeat(rc, 1_000, 42);
     println(arr)
 }
 ```
 
 Here we create an array `arr` of length `1_000` where each array element has the
-value `42`. Note that we must pass the region `rh` as an argument to
+value `42`. Note that we must pass the region `rc` as an argument to
 `Array.repeat` because the function must know to which region the returned array
 should belong.
 
 We can also create an array filled with all integers from zero to ninety-nine:
 
 ```flix
-region rh {
-    let arr = Array.range(rh, 0, 100);
+region rc {
+    let arr = Array.range(rc, 0, 100);
     println(arr)
 }
 ```
@@ -77,13 +77,13 @@ region rh {
 Moreover, we can convert most data structures to arrays. For example:
 
 ```flix
-region rh {
+region rc {
     let fruitList = List#{"Apple", "Pear", "Mango"};
-    let fruitArray = List.toArray(rh, fruitList);
+    let fruitArray = List.toArray(rc, fruitList);
 }
 ```
 
-Note that we must pass the region `rh` as an argument to `List.toArray` since
+Note that we must pass the region `rc` as an argument to `List.toArray` since
 the function must know to which region the returned array should belong.
 
 ### Allocating Arrays with Uninitialized Elements
@@ -92,14 +92,14 @@ We can use the `Array.new` function to create an array of a given length where
 the content of the array is uninitialized. For example:
 
 ```flix
-region rh {
-    let arr: Array[String, rh] = Array.new(rh, 100);
+region rc {
+    let arr: Array[String, rc] = Array.new(rc, 100);
     // ... initialize `arr` here ...
 }
 ```
 
-Here we create an array of length `100` of type `Array[String, rh]`. We use an
-explicit type annotation `: Array[String, rh]` to inform Flix of the expected
+Here we create an array of length `100` of type `Array[String, rc]`. We use an
+explicit type annotation `: Array[String, rc]` to inform Flix of the expected
 type of the array.
 
 > **Warning:** It is dangerous to use arrays that have uninitialized elements. 
@@ -118,8 +118,8 @@ We can retrieve or update the element at a specific position in an array using
 `Array.get` and `Array.put`, respectively. For example: 
 
 ```flix
-region rh {
-    let strings = Array.new(rh, 2);
+region rc {
+    let strings = Array.new(rc, 2);
     Array.put("Hello", 0, strings);
     Array.put("World", 1, strings);
     let s1 = Array.get(0, strings);
@@ -138,7 +138,7 @@ pipeline operator:
 
 ```flix
 let strings = 
-    Array.new(rh, 2) !>
+    Array.new(rc, 2) !>
     Array.put("Hello", 0) !>
     Array.put("World", 1);
 ```
@@ -149,9 +149,9 @@ We can slice arrays using `Array.slice`. A slice of an array is a new (shallow)
 copy of a sub-range of the original array. For example
 
 ```flix
-region rh {
-    let fruits = Array#{"Apple", "Pear", "Mango"} @ rh;
-    println(Array.slice(rh, 1, 2, fruits))
+region rc {
+    let fruits = Array#{"Apple", "Pear", "Mango"} @ rc;
+    println(Array.slice(rc, 1, 2, fruits))
 }
 ```
 
@@ -163,8 +163,8 @@ We can compute the length of an array using the `Array.length` function. For
 example
 
 ```flix
-region rh {
-    let fruits = Array#{"Apple", "Pear", "Mango"} @ rh;
+region rc {
+    let fruits = Array#{"Apple", "Pear", "Mango"} @ rc;
     println(Array.length(fruits))
 }
 ```

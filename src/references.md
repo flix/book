@@ -5,7 +5,7 @@
 Flix supports mutable _scoped_ references. A reference is a box whose value can
 change over time. The three key reference operations are:
 
-- Creating a new reference `ref e @ rh`.
+- Creating a new reference `ref e @ rc`.
 - Dereferencing a reference `deref e`.
 - Assigning to a reference `e := e`.
 
@@ -15,7 +15,7 @@ must belong to some region. Reading from and writing to a reference are
 _effectful_ operations. For example, reading the value of a reference `Ref[t,
 r]` has effect `r`.
 
-The `ref e @ rh` operation allocates a reference cell in a region of the heap
+The `ref e @ rc` operation allocates a reference cell in a region of the heap
 and returns its location, the `deref` operation dereferences a location and
 returns the content of a reference cell, and the assigment `:=` operation
 changes the value of a reference cell. Informally, a reference cell can be
@@ -23,16 +23,16 @@ thought of as an "object" with a single field that can be changed.
 
 ### Allocating References
 
-A reference cell is allocated with the `ref e @ rh` syntax. For example:
+A reference cell is allocated with the `ref e @ rc` syntax. For example:
 
 ```flix
-region rh {
-    let c = ref 42 @ rh;
+region rc {
+    let c = ref 42 @ rc;
     println(deref c)
 }
 ```
 
-Here we introduce a region named `rh`. Inside the region, we create a reference
+Here we introduce a region named `rc`. Inside the region, we create a reference
 cell called `c` with the value `42` which we then dereference and print. 
 
 ### Dereferencing References
@@ -40,8 +40,8 @@ cell called `c` with the value `42` which we then dereference and print.
 A reference cell is accessed (dereferenced) with the `deref e` syntax. For example:
 
 ```flix
-region rh {
-    let c = ref 42 @ rh;
+region rc {
+    let c = ref 42 @ rc;
     let x = deref c;
     let y = deref c;
     println(x + y)
@@ -55,8 +55,8 @@ Here the program prints `42 + 42 = 84`.
 We can update the value of a reference cell. For example:
 
 ```flix
-region rh {
-    let c = ref 0 @ rh;
+region rc {
+    let c = ref 0 @ rc;
     c := (deref c) + 1;
     c := (deref c) + 1;
     c := (deref c) + 1;
@@ -76,7 +76,7 @@ enum Counter[r: Region] { // The Region here is a type-kind
     case Counter(Ref[Int32, r])
 }
 
-def newCounter(rh: Region[r]): Counter[r] \ r = Counter(ref 0 @ rh)
+def newCounter(rc: Region[r]): Counter[r] \ r = Counter(ref 0 @ rc)
 
 def getCount(c: Counter[r]): Int32 \ r =
     let Counter(l) = c;
@@ -87,8 +87,8 @@ def increment(c: Counter[r]): Unit \ r =
     l := (deref l) + 1
 
 def main(): Unit \ IO =
-    region rh {
-        let c = newCounter(rh);
+    region rc {
+        let c = newCounter(rc);
         increment(c);
         increment(c);
         increment(c);
@@ -107,8 +107,8 @@ create a new `Counter`. Moreover, note that the functions `getCount` and
 References naturally support aliasing since that is their purpose. For example:
 
 ```flix
-region rh {
-    let l1 = ref 42 @ rh;
+region rc {
+    let l1 = ref 42 @ rc;
     let l2 = l1;
     l2 := 84;
     println(deref l1)
@@ -121,15 +121,15 @@ the alias `l2`.
 References can also point to references as the following example illustrates:
 
 ```flix
-region rh {
-    let l1 = ref 42 @ rh;
+region rc {
+    let l1 = ref 42 @ rc;
     let l2 = ref l1;
     let rs = deref (deref l2);
     println(rs)
 }
 ```
 
-Here the type of `l2` is `Ref[Ref[Int32, rh], rh]`. 
+Here the type of `l2` is `Ref[Ref[Int32, rc], rc]`. 
 
 ### Mutable Tuples and Records
 
@@ -139,25 +139,25 @@ mutable references.
 For example, here is a pair that contains two mutable references:
 
 ```flix
-region rh {
-    let p = (ref 1 @ rh, ref 2 @ rh);
+region rc {
+    let p = (ref 1 @ rc, ref 2 @ rc);
     fst(p) := 123
 };
 ```
 
-The type of the pair is `(Ref[Int32, rh], Ref[Int32, rh])`. The assignment does
+The type of the pair is `(Ref[Int32, rc], Ref[Int32, rc])`. The assignment does
 not change the pair but instead changes the value of the reference cell in the
 first component.
 
 Similarly, here is a record that contains two mutable references:
 
 ```flix
-region rh {
+region rc {
     let r = { fstName = ref "Lucky", lstName = ref "Luke" };
     r.fstName := "Unlucky"
 };
 ```
 
-The type of the record is `{ fstName = Ref[String, rh], lstName = Ref[String,
-rh] }`. Again, the assignment does not change the record, but instead changes
+The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String,
+rc] }`. Again, the assignment does not change the record, but instead changes
 the value of the reference cell corresponding to the `fstName` field.

@@ -13,24 +13,24 @@ real-world examples, but let us first discuss how to use a region:
 We introduce a new region scope with the `region` construct:
 
 ```flix
-region rh { // region starts.
-  ...       // the region handle `rh` is in scope.
-}           // region ends and all data associated with `rh` is no longer in scope.
+region rc { // region starts.
+  ...       // the region handle `rc` is in scope.
+}           // region ends and all data associated with `rc` is no longer in scope.
 ```
 
 We can use regions to implement a pure `sort` function that internally uses mutation:
 
 ```flix
 def sort(l: List[a]): List[a] with Order[a] =
-    region rh {
-        let arr = List.toArray(rh, l);
+    region rc {
+        let arr = List.toArray(rc, l);
         Array.sort!(arr);
         Array.toList(arr)
     }
 ```
 
-Here we introduce a region named `rh`. We use the function `Array.toArray` to
-convert the list `l` to a mutable array `arr` associated with the region `rh`.
+Here we introduce a region named `rc`. We use the function `Array.toArray` to
+convert the list `l` to a mutable array `arr` associated with the region `rc`.
 We then sort `arr` using `Array.sort!` which uses an efficient in-place sorting
 algorithm. Finally, we convert the sorted array back to a list and return it.
 The `sort` function is pure, even though it internally uses mutation.
@@ -40,12 +40,12 @@ is pure but internally uses a mutable `StringBuilder`:
 
 ```flix
 def toString(l: List[a]): String with ToString[a] =
-    region rh {
-        let sb = new StringBuilder(rh);
+    region rc {
+        let sb = new StringBuilder(rc);
         List.forEach(x -> StringBuilder.appendString!("${x} :: ", sb), l);
         StringBuilder.appendString!("Nil", sb);
         StringBuilder.toString(sb)
-    } // scope of rh ends, the entire expression is pure.
+    } // scope of rc ends, the entire expression is pure.
 ```
 
 The programming pattern is the same: We open a new region, allocate a
@@ -57,8 +57,8 @@ efficiently. For example, here is a fast implementation of `List.flatMap`:
 
 ```flix
 def flatMap(f: a -> List[b] \ ef, l: List[a]): List[b] \ ef =
-    region rh {
-        let ml = MutList.new(rh);
+    region rc {
+        let ml = MutList.new(rc);
         l |> List.forEach(x -> MutList.append!(f(x), ml));
         MutList.toList(ml)
     }
@@ -73,13 +73,13 @@ that allocates and returns a mutable data structure.
 For example, here is the `List.toMutDeque` function:
 
 ```flix
-def toMutDeque(rh: Region[r], l: List[a]): MutDeque[a, rh] \ rh =
-    let d = new MutDeque(rh);
+def toMutDeque(rc: Region[r], l: List[a]): MutDeque[a, rc] \ rc =
+    let d = new MutDeque(rc);
     forEach(x -> MutDeque.pushBack(x, d), l);
     d
 ```
 
-The function takes a region handle `rh`, allocates a new mutable deque
+The function takes a region handle `rc`, allocates a new mutable deque
 (`MutDeq`) in the given region, inserts all elements of the list `l` in the
 deque, and returns it. 
 
@@ -91,23 +91,23 @@ Consider the following program:
 
 ```flix
 def main(): Unit \ IO = 
-    let escaped = region rh {
-        Array#{1, 2, 3} @ rh
+    let escaped = region rc {
+        Array#{1, 2, 3} @ rc
     };
     println(escaped)
 ```
 
-Here we allocate the `Array#{1, 2, 3}` in the region `rh` and try to return it
+Here we allocate the `Array#{1, 2, 3}` in the region `rc` and try to return it
 outside of its enclosing scope. The Flix compiler detects such escape violations
 and reports an error:
 
 ```
 ❌ -- Type Error ----------------------------
 
->> The region variable 'rh' escapes its scope.
+>> The region variable 'rc' escapes its scope.
 
-2 |>     let escaped = region rh {
-3 |>         Array#{1, 2, 3} @ rh
+2 |>     let escaped = region rc {
+3 |>         Array#{1, 2, 3} @ rc
 4 |>     };
 
 region variable escapes.

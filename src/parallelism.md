@@ -4,8 +4,8 @@ We have seen how the `spawn` expression allows us to evaluate an expression in a
 new thread:
 
 ```flix
-region rh {
-    spawn (1 + 2) @ rh
+region rc {
+    spawn (1 + 2) @ rc
 }
 ```
 

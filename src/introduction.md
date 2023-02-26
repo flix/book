@@ -87,13 +87,13 @@ Here is an example that uses **region-based local mutation**:
 /// Regions encapsulate mutability to its declared scope.
 ///
 def deduplicate(l: List[a]): List[a] with Order[a] =
-    /// Declare a new region `r`.
-    region r {
+    /// Declare a new region `rc`.
+    region rc {
 
         /// Create a new `MutSet` at region `r`.
         /// This will be used to keep track of
         /// unique elements in `l`.
-        let s = new MutSet(r);
+        let s = new MutSet(rc);
 
         /// The lambda used in the call to `filter`
         /// would be impure without a region.
@@ -147,12 +147,12 @@ def wait(rx: Receiver[Int32, r], n: Int32, tx: Sender[List[Int32], r]): Unit \ I
     ()
 
 /// Spawn a process for send and wait, and print the result.
-def main(): Unit \ IO = region r {
+def main(): Unit \ IO = region rc {
     let l = 1 :: 2 :: 3 :: Nil;
-    let (tx1, rx1) = Channel.buffered(r, 100);
-    let (tx2, rx2) = Channel.buffered(r, 100);
-    spawn sendAll(l, tx1) @ r;
-    spawn wait(rx1, List.length(l), tx2) @ r;
+    let (tx1, rx1) = Channel.buffered(rc, 100);
+    let (tx2, rx2) = Channel.buffered(rc, 100);
+    spawn sendAll(l, tx1) @ rc;
+    spawn wait(rx1, List.length(l), tx2) @ rc;
     println(Channel.recv(rx2))
 }
 ```

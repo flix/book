@@ -1,4 +1,4 @@
-## Checked Casts
+## Checked Type and Effect Casts
 
 > **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 

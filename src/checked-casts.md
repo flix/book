@@ -1,10 +1,21 @@
-## Super Casts
+## Checked Casts
 
-The Flix type system does not natively support sub-typing. 
+> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
 
-But, for interoperability with Java, Flix has a safe _supercast_ expression.
+The Flix type and effect system – by design – does not support sub-typing nor
+sub-effecting. To work around these limitations, which are rare in practice,
+Flix has two _safe_ upcast constructs: 
 
-Consider, for example, the following program:
+- A checked type cast: `checked_cast(exp)`, and 
+- A checked effect cast `checked_ecast(exp)`.
+
+> **Note:** The `checked_cast` and `checked_ecast` expressions are guaranteed to
+> be _safe_. The Flix compiler will check at compile-time that every checked
+> cast cannot go wrong. 
+
+### Checked Type Casts
+
+The following program:
 
 ```flix
 def main(): Unit =
@@ -13,7 +24,7 @@ def main(): Unit =
     ()
 ```
 
-which does not compile:
+does not compile:
 
 ```
 ❌ -- Type Error --------------------------------------------------
@@ -25,45 +36,91 @@ which does not compile:
                                     expression has unexpected type.
 ```
 
-since in the Flix type system the `String` type is _not_ unifiable with the
-`Object` type.
+because in Flix the `String` type is _not_ a subtype of `Object`.
 
-We can, however, safely _supercast_ from `String` to `Object`:
+We can use a checked type cast to safely upcast from `String` to `Object`:
 
 ```flix
 def main(): Unit =
     let s = "Hello World";
-    let o: ##java.lang.Object = super_cast s;
+    let o: ##java.lang.Object = checked_cast(s);
     ()
 ```
 
-We can use the the `super_cast` construct to safely upcast any Java type to one
-of its super types:
+We can use the `checked_cast` construct to safely upcast any Java type to one of
+its super-types:
 
 ```flix
-let _: ##java.lang.Object       = super_cast "Hello World";
-let _: ##java.lang.CharSequence = super_cast "Hello World";
-let _: ##java.io.Serializable   = super_cast "Hello World";
-let _: ##java.lang.Object       = super_cast null;
-let _: ##java.lang.String       = super_cast null;
+let _: ##java.lang.Object       = checked_cast("Hello World");
+let _: ##java.lang.CharSequence = checked_cast("Hello World");
+let _: ##java.io.Serializable   = checked_cast("Hello World");
+let _: ##java.lang.Object       = checked_cast(null);
+let _: ##java.lang.String       = checked_cast(null);
 ```
+
+### Checked Effect Casts
+
+The following program:
+
+```flix
+def hof(f: Int32 -> Int32 \ IO): Int32 \ IO = f(42)
+
+def main(): Int32 \ IO =
+    hof(x -> x + 1)
+```
+
+does not compile:
+
+```
+❌ -- Type Error --------------------------------------------------
+
+>> Expected argument of type 'Int32 -> Int32 \ IO', but got 'Int32 -> Int32'.
+
+4 |     hof(x -> x + 1)
+            ^^^^^^^^^^
+            expected: 'Int32 -> Int32 & Impure \ IO'
+
+The function 'hof' expects its 1st argument to be of type 'Int32 -> Int32 \ IO'.
+
+Expected: Int32 -> Int32 & Impure \ IO
+  Actual: Int32 -> Int32
+```
+
+because in Flix a _pure_ function is _not_ a subtype of an impure function.
+Specifically, the `hof` requires a function with the `IO` effect, but we are
+passing in a pure function. 
+
+We can use a checked effect cast to safely upcast upcast a pure expression to an
+impure expression: 
+
+```flix
+def main(): Int32 \ IO =
+    hof(x -> checked_ecast(x + 1))
+```
+
+The `checked_ecast` construct allows us to pretend that `x + 1` has the `IO` effect. 
+
+> **Note:** In Flix – as a general rule – higher-order functions should _not_
+> require their function arguments to have a specific effect. Instead they
+> should be effect polymorphic. 
+
 ### Function Types
 
-The `super_cast` construct does _not_ work on function types.
+Neither the `checked_cast` nor the `checked_ecast` constructs work on function types. 
 
-For example, the following will not work:
+For example, the following does not work:
 
 ```flix
-let f: Unit -> ##java.lang.Object = super_cast (() -> "Hello World")
+let f: Unit -> ##java.lang.Object = checked_cast(() -> "Hello World")
 ```
 
 because it tries to cast the function type `Unit -> String` to `String ->
 Object`.
 
-Instead, one should write:
+Instead, we should write:
 
 ```flix
-let f: Unit -> ##java.lang.Object = (() -> super_cast "Hello World")
+let f: Unit -> ##java.lang.Object = (() -> checked_cast("Hello World"))
 ```
 
-which works because it directly casts `String` to `Object`.
+because it directly casts `String` to `Object`.

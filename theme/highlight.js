@@ -1,6 +1,6 @@
 /*!
-  Highlight.js v11.6.0 (git: 01e096544b)
-  (c) 2006-2022 undefined and other contributors
+  Highlight.js v11.7.0 (git: 5aa8d37bb8)
+  (c) 2006-2023 undefined and other contributors
   License: BSD-3-Clause
  */
 var hljs=function(){var e={exports:{}};function t(e){
@@ -40,9 +40,9 @@ addKeyword(e,t){""!==e&&(this.openNode(t),this.addText(e),this.closeNode())}
 addText(e){""!==e&&this.add(e)}addSublanguage(e,t){const n=e.root
 ;n.sublanguage=!0,n.language=t,this.add(n)}toHTML(){
 return new o(this,this.options).value()}finalize(){return!0}}function g(e){
-return e?"string"==typeof e?e:e.source:null}function d(e){return p("(?=",e,")")}
-function u(e){return p("(?:",e,")*")}function h(e){return p("(?:",e,")?")}
-function p(...e){return e.map((e=>g(e))).join("")}function f(...e){const t=(e=>{
+return e?"string"==typeof e?e:e.source:null}function d(e){return f("(?=",e,")")}
+function u(e){return f("(?:",e,")*")}function h(e){return f("(?:",e,")?")}
+function f(...e){return e.map((e=>g(e))).join("")}function p(...e){const t=(e=>{
 const t=e[e.length-1]
 ;return"object"==typeof t&&t.constructor===Object?(e.splice(e.length-1,1),t):{}
 })(e);return"("+(t.capture?"":"?:")+e.map((e=>g(e))).join("|")+")"}
@@ -53,31 +53,31 @@ const m=/\[(?:[^\\\]]|\\.)*\]|\(\??|\\([1-9][0-9]*)|\\./
 r+=i.substring(0,e.index),
 i=i.substring(e.index+e[0].length),"\\"===e[0][0]&&e[1]?r+="\\"+(Number(e[1])+t):(r+=e[0],
 "("===e[0]&&n++)}return r})).map((e=>`(${e})`)).join(t)}
-const w="[a-zA-Z]\\w*",x="[a-zA-Z_]\\w*",y="\\b\\d+(\\.\\d+)?",_="(-?)(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)",O="\\b(0b[01]+)",M={
+const x="[a-zA-Z]\\w*",_="[a-zA-Z_]\\w*",y="\\b\\d+(\\.\\d+)?",w="(-?)(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)",O="\\b(0b[01]+)",M={
 begin:"\\\\[\\s\\S]",relevance:0},N={scope:"string",begin:"'",end:"'",
 illegal:"\\n",contains:[M]},v={scope:"string",begin:'"',end:'"',illegal:"\\n",
-contains:[M]},S=(e,t,n={})=>{const i=r({scope:"comment",begin:e,end:t,
+contains:[M]},k=(e,t,n={})=>{const i=r({scope:"comment",begin:e,end:t,
 contains:[]},n);i.contains.push({scope:"doctag",
 begin:"[ ]*(?=(TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):)",
 end:/(TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):/,excludeBegin:!0,relevance:0})
-;const s=f("I","a","is","so","us","to","at","if","in","it","on",/[A-Za-z]+['](d|ve|re|ll|t|s|n)/,/[A-Za-z]+[-][a-z]+/,/[A-Za-z][a-z]{2,}/)
-;return i.contains.push({begin:p(/[ ]+/,"(",s,/[.]?[:]?([.][ ]|[ ])/,"){3}")}),i
-},k=S("//","$"),R=S("/\\*","\\*/"),j=S("#","$");var A=Object.freeze({
-__proto__:null,MATCH_NOTHING_RE:/\b\B/,IDENT_RE:w,UNDERSCORE_IDENT_RE:x,
-NUMBER_RE:y,C_NUMBER_RE:_,BINARY_NUMBER_RE:O,
+;const s=p("I","a","is","so","us","to","at","if","in","it","on",/[A-Za-z]+['](d|ve|re|ll|t|s|n)/,/[A-Za-z]+[-][a-z]+/,/[A-Za-z][a-z]{2,}/)
+;return i.contains.push({begin:f(/[ ]+/,"(",s,/[.]?[:]?([.][ ]|[ ])/,"){3}")}),i
+},S=k("//","$"),R=k("/\\*","\\*/"),j=k("#","$");var A=Object.freeze({
+__proto__:null,MATCH_NOTHING_RE:/\b\B/,IDENT_RE:x,UNDERSCORE_IDENT_RE:_,
+NUMBER_RE:y,C_NUMBER_RE:w,BINARY_NUMBER_RE:O,
 RE_STARTERS_RE:"!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|-|-=|/=|/|:|;|<<|<<=|<=|<|===|==|=|>>>=|>>=|>=|>>>|>>|>|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~",
 SHEBANG:(e={})=>{const t=/^#![ ]*\//
-;return e.binary&&(e.begin=p(t,/.*\b/,e.binary,/\b.*/)),r({scope:"meta",begin:t,
+;return e.binary&&(e.begin=f(t,/.*\b/,e.binary,/\b.*/)),r({scope:"meta",begin:t,
 end:/$/,relevance:0,"on:begin":(e,t)=>{0!==e.index&&t.ignoreMatch()}},e)},
 BACKSLASH_ESCAPE:M,APOS_STRING_MODE:N,QUOTE_STRING_MODE:v,PHRASAL_WORDS_MODE:{
 begin:/\b(a|an|the|are|I'm|isn't|don't|doesn't|won't|but|just|should|pretty|simply|enough|gonna|going|wtf|so|such|will|you|your|they|like|more)\b/
-},COMMENT:S,C_LINE_COMMENT_MODE:k,C_BLOCK_COMMENT_MODE:R,HASH_COMMENT_MODE:j,
+},COMMENT:k,C_LINE_COMMENT_MODE:S,C_BLOCK_COMMENT_MODE:R,HASH_COMMENT_MODE:j,
 NUMBER_MODE:{scope:"number",begin:y,relevance:0},C_NUMBER_MODE:{scope:"number",
-begin:_,relevance:0},BINARY_NUMBER_MODE:{scope:"number",begin:O,relevance:0},
+begin:w,relevance:0},BINARY_NUMBER_MODE:{scope:"number",begin:O,relevance:0},
 REGEXP_MODE:{begin:/(?=\/[^/\n]*\/)/,contains:[{scope:"regexp",begin:/\//,
 end:/\/[gimuy]*/,illegal:/\n/,contains:[M,{begin:/\[/,end:/\]/,relevance:0,
-contains:[M]}]}]},TITLE_MODE:{scope:"title",begin:w,relevance:0},
-UNDERSCORE_TITLE_MODE:{scope:"title",begin:x,relevance:0},METHOD_GUARD:{
+contains:[M]}]}]},TITLE_MODE:{scope:"title",begin:x,relevance:0},
+UNDERSCORE_TITLE_MODE:{scope:"title",begin:_,relevance:0},METHOD_GUARD:{
 begin:"\\.\\s*[a-zA-Z_]\\w*",relevance:0},END_SAME_AS_BEGIN:e=>Object.assign(e,{
 "on:begin":(e,t)=>{t.data._beginMatch=e[1]},"on:end":(e,t)=>{
 t.data._beginMatch!==e[1]&&t.ignoreMatch()}})});function I(e,t){
@@ -86,14 +86,14 @@ void 0!==e.className&&(e.scope=e.className,delete e.className)}function L(e,t){
 t&&e.beginKeywords&&(e.begin="\\b("+e.beginKeywords.split(" ").join("|")+")(?!\\.)(?=\\b|\\s)",
 e.__beforeBegin=I,e.keywords=e.keywords||e.beginKeywords,delete e.beginKeywords,
 void 0===e.relevance&&(e.relevance=0))}function B(e,t){
-Array.isArray(e.illegal)&&(e.illegal=f(...e.illegal))}function C(e,t){
+Array.isArray(e.illegal)&&(e.illegal=p(...e.illegal))}function C(e,t){
 if(e.match){
 if(e.begin||e.end)throw Error("begin & end are not supported with match")
 ;e.begin=e.match,delete e.match}}function D(e,t){
 void 0===e.relevance&&(e.relevance=1)}const P=(e,t)=>{if(!e.beforeMatch)return
 ;if(e.starts)throw Error("beforeMatch cannot be used with starts")
 ;const n=Object.assign({},e);Object.keys(e).forEach((t=>{delete e[t]
-})),e.keywords=n.keywords,e.begin=p(n.beforeMatch,d(n.begin)),e.starts={
+})),e.keywords=n.keywords,e.begin=f(n.beforeMatch,d(n.begin)),e.starts={
 relevance:0,contains:[Object.assign(n,{endsParent:!0})]
 },e.relevance=0,delete n.beforeMatch
 },H=["of","and","for","in","not","or","if","then","parent","list","value"]
@@ -170,7 +170,7 @@ starts:e.starts?r(e.starts):null
 }),e.illegal&&t.addRule(e.illegal,{type:"illegal"}),t})(a),a}(e)}function V(e){
 return!!e&&(e.endsWithParent||V(e.starts))}class J extends Error{
 constructor(e,t){super(e),this.name="HTMLInjectionError",this.html=t}}
-const Y=i,Q=r,ee=Symbol("nomatch");var te=(t=>{
+const Y=i,Q=r,ee=Symbol("nomatch"),te=t=>{
 const i=Object.create(null),r=Object.create(null),s=[];let o=!0
 ;const a="Could not find the language '{}', did you forget to load/include a language module?",c={
 disableAutodetect:!0,name:"Plain text",contains:[]};let g={
@@ -184,76 +184,76 @@ F("10.7.0","Please use highlight(code, options) instead.\nhttps://github.com/hig
 r=e,i=t),void 0===n&&(n=!0);const s={code:i,language:r};v("before:highlight",s)
 ;const o=s.result?s.result:E(s.language,s.code,n)
 ;return o.code=s.code,v("after:highlight",o),o}function E(e,t,r,s){
-const c=Object.create(null);function l(){if(!N.keywords)return void S.addText(k)
-;let e=0;N.keywordPatternRe.lastIndex=0;let t=N.keywordPatternRe.exec(k),n=""
-;for(;t;){n+=k.substring(e,t.index)
+const c=Object.create(null);function l(){if(!N.keywords)return void k.addText(S)
+;let e=0;N.keywordPatternRe.lastIndex=0;let t=N.keywordPatternRe.exec(S),n=""
+;for(;t;){n+=S.substring(e,t.index)
 ;const r=y.case_insensitive?t[0].toLowerCase():t[0],s=(i=r,N.keywords[i]);if(s){
 const[e,i]=s
-;if(S.addText(n),n="",c[r]=(c[r]||0)+1,c[r]<=7&&(R+=i),e.startsWith("_"))n+=t[0];else{
-const n=y.classNameAliases[e]||e;S.addKeyword(t[0],n)}}else n+=t[0]
-;e=N.keywordPatternRe.lastIndex,t=N.keywordPatternRe.exec(k)}var i
-;n+=k.substring(e),S.addText(n)}function d(){null!=N.subLanguage?(()=>{
-if(""===k)return;let e=null;if("string"==typeof N.subLanguage){
-if(!i[N.subLanguage])return void S.addText(k)
-;e=E(N.subLanguage,k,!0,v[N.subLanguage]),v[N.subLanguage]=e._top
-}else e=w(k,N.subLanguage.length?N.subLanguage:null)
-;N.relevance>0&&(R+=e.relevance),S.addSublanguage(e._emitter,e.language)
-})():l(),k=""}function u(e,t){let n=1;const i=t.length-1;for(;n<=i;){
+;if(k.addText(n),n="",c[r]=(c[r]||0)+1,c[r]<=7&&(R+=i),e.startsWith("_"))n+=t[0];else{
+const n=y.classNameAliases[e]||e;k.addKeyword(t[0],n)}}else n+=t[0]
+;e=N.keywordPatternRe.lastIndex,t=N.keywordPatternRe.exec(S)}var i
+;n+=S.substring(e),k.addText(n)}function d(){null!=N.subLanguage?(()=>{
+if(""===S)return;let e=null;if("string"==typeof N.subLanguage){
+if(!i[N.subLanguage])return void k.addText(S)
+;e=E(N.subLanguage,S,!0,v[N.subLanguage]),v[N.subLanguage]=e._top
+}else e=x(S,N.subLanguage.length?N.subLanguage:null)
+;N.relevance>0&&(R+=e.relevance),k.addSublanguage(e._emitter,e.language)
+})():l(),S=""}function u(e,t){let n=1;const i=t.length-1;for(;n<=i;){
 if(!e._emit[n]){n++;continue}const i=y.classNameAliases[e[n]]||e[n],r=t[n]
-;i?S.addKeyword(r,i):(k=r,l(),k=""),n++}}function h(e,t){
-return e.scope&&"string"==typeof e.scope&&S.openNode(y.classNameAliases[e.scope]||e.scope),
-e.beginScope&&(e.beginScope._wrap?(S.addKeyword(k,y.classNameAliases[e.beginScope._wrap]||e.beginScope._wrap),
-k=""):e.beginScope._multi&&(u(e.beginScope,t),k="")),N=Object.create(e,{parent:{
-value:N}}),N}function p(e,t,i){let r=((e,t)=>{const n=e&&e.exec(t)
+;i?k.addKeyword(r,i):(S=r,l(),S=""),n++}}function h(e,t){
+return e.scope&&"string"==typeof e.scope&&k.openNode(y.classNameAliases[e.scope]||e.scope),
+e.beginScope&&(e.beginScope._wrap?(k.addKeyword(S,y.classNameAliases[e.beginScope._wrap]||e.beginScope._wrap),
+S=""):e.beginScope._multi&&(u(e.beginScope,t),S="")),N=Object.create(e,{parent:{
+value:N}}),N}function f(e,t,i){let r=((e,t)=>{const n=e&&e.exec(t)
 ;return n&&0===n.index})(e.endRe,i);if(r){if(e["on:end"]){const i=new n(e)
 ;e["on:end"](t,i),i.isMatchIgnored&&(r=!1)}if(r){
 for(;e.endsParent&&e.parent;)e=e.parent;return e}}
-if(e.endsWithParent)return p(e.parent,t,i)}function f(e){
-return 0===N.matcher.regexIndex?(k+=e[0],1):(I=!0,0)}function b(e){
-const n=e[0],i=t.substring(e.index),r=p(N,e,i);if(!r)return ee;const s=N
+if(e.endsWithParent)return f(e.parent,t,i)}function p(e){
+return 0===N.matcher.regexIndex?(S+=e[0],1):(I=!0,0)}function b(e){
+const n=e[0],i=t.substring(e.index),r=f(N,e,i);if(!r)return ee;const s=N
 ;N.endScope&&N.endScope._wrap?(d(),
-S.addKeyword(n,N.endScope._wrap)):N.endScope&&N.endScope._multi?(d(),
-u(N.endScope,e)):s.skip?k+=n:(s.returnEnd||s.excludeEnd||(k+=n),
-d(),s.excludeEnd&&(k=n));do{
-N.scope&&S.closeNode(),N.skip||N.subLanguage||(R+=N.relevance),N=N.parent
+k.addKeyword(n,N.endScope._wrap)):N.endScope&&N.endScope._multi?(d(),
+u(N.endScope,e)):s.skip?S+=n:(s.returnEnd||s.excludeEnd||(S+=n),
+d(),s.excludeEnd&&(S=n));do{
+N.scope&&k.closeNode(),N.skip||N.subLanguage||(R+=N.relevance),N=N.parent
 }while(N!==r.parent);return r.starts&&h(r.starts,e),s.returnEnd?0:n.length}
-let m={};function x(i,s){const a=s&&s[0];if(k+=i,null==a)return d(),0
+let m={};function _(i,s){const a=s&&s[0];if(S+=i,null==a)return d(),0
 ;if("begin"===m.type&&"end"===s.type&&m.index===s.index&&""===a){
-if(k+=t.slice(s.index,s.index+1),!o){const t=Error(`0 width match regex (${e})`)
+if(S+=t.slice(s.index,s.index+1),!o){const t=Error(`0 width match regex (${e})`)
 ;throw t.languageName=e,t.badRule=m.rule,t}return 1}
 if(m=s,"begin"===s.type)return(e=>{
 const t=e[0],i=e.rule,r=new n(i),s=[i.__beforeBegin,i["on:begin"]]
-;for(const n of s)if(n&&(n(e,r),r.isMatchIgnored))return f(t)
-;return i.skip?k+=t:(i.excludeBegin&&(k+=t),
-d(),i.returnBegin||i.excludeBegin||(k=t)),h(i,e),i.returnBegin?0:t.length})(s)
+;for(const n of s)if(n&&(n(e,r),r.isMatchIgnored))return p(t)
+;return i.skip?S+=t:(i.excludeBegin&&(S+=t),
+d(),i.returnBegin||i.excludeBegin||(S=t)),h(i,e),i.returnBegin?0:t.length})(s)
 ;if("illegal"===s.type&&!r){
 const e=Error('Illegal lexeme "'+a+'" for mode "'+(N.scope||"<unnamed>")+'"')
 ;throw e.mode=N,e}if("end"===s.type){const e=b(s);if(e!==ee)return e}
 if("illegal"===s.type&&""===a)return 1
 ;if(A>1e5&&A>3*s.index)throw Error("potential infinite loop, way more iterations than matches")
-;return k+=a,a.length}const y=O(e)
+;return S+=a,a.length}const y=O(e)
 ;if(!y)throw z(a.replace("{}",e)),Error('Unknown language: "'+e+'"')
-;const _=q(y);let M="",N=s||_;const v={},S=new g.__emitter(g);(()=>{const e=[]
+;const w=q(y);let M="",N=s||w;const v={},k=new g.__emitter(g);(()=>{const e=[]
 ;for(let t=N;t!==y;t=t.parent)t.scope&&e.unshift(t.scope)
-;e.forEach((e=>S.openNode(e)))})();let k="",R=0,j=0,A=0,I=!1;try{
+;e.forEach((e=>k.openNode(e)))})();let S="",R=0,j=0,A=0,I=!1;try{
 for(N.matcher.considerAll();;){
 A++,I?I=!1:N.matcher.considerAll(),N.matcher.lastIndex=j
-;const e=N.matcher.exec(t);if(!e)break;const n=x(t.substring(j,e.index),e)
+;const e=N.matcher.exec(t);if(!e)break;const n=_(t.substring(j,e.index),e)
 ;j=e.index+n}
-return x(t.substring(j)),S.closeAllNodes(),S.finalize(),M=S.toHTML(),{
-language:e,value:M,relevance:R,illegal:!1,_emitter:S,_top:N}}catch(n){
+return _(t.substring(j)),k.closeAllNodes(),k.finalize(),M=k.toHTML(),{
+language:e,value:M,relevance:R,illegal:!1,_emitter:k,_top:N}}catch(n){
 if(n.message&&n.message.includes("Illegal"))return{language:e,value:Y(t),
 illegal:!0,relevance:0,_illegalBy:{message:n.message,index:j,
-context:t.slice(j-100,j+100),mode:n.mode,resultSoFar:M},_emitter:S};if(o)return{
-language:e,value:Y(t),illegal:!1,relevance:0,errorRaised:n,_emitter:S,_top:N}
-;throw n}}function w(e,t){t=t||g.languages||Object.keys(i);const n=(e=>{
+context:t.slice(j-100,j+100),mode:n.mode,resultSoFar:M},_emitter:k};if(o)return{
+language:e,value:Y(t),illegal:!1,relevance:0,errorRaised:n,_emitter:k,_top:N}
+;throw n}}function x(e,t){t=t||g.languages||Object.keys(i);const n=(e=>{
 const t={value:Y(e),illegal:!1,relevance:0,_top:c,_emitter:new g.__emitter(g)}
 ;return t._emitter.addText(e),t})(e),r=t.filter(O).filter(N).map((t=>E(t,e,!1)))
 ;r.unshift(n);const s=r.sort(((e,t)=>{
 if(e.relevance!==t.relevance)return t.relevance-e.relevance
 ;if(e.language&&t.language){if(O(e.language).supersetOf===t.language)return 1
 ;if(O(t.language).supersetOf===e.language)return-1}return 0})),[o,a]=s,l=o
-;return l.secondBest=a,l}function x(e){let t=null;const n=(e=>{
+;return l.secondBest=a,l}function _(e){let t=null;const n=(e=>{
 let t=e.className+" ";t+=e.parentNode?e.parentNode.className:""
 ;const n=g.languageDetectRe.exec(t);if(n){const t=O(n[1])
 ;return t||(W(a.replace("{}",n[1])),
@@ -264,28 +264,28 @@ return t.split(/\s+/).find((e=>b(e)||O(e)))})(e);if(b(n))return
 console.warn("https://github.com/highlightjs/highlight.js/wiki/security"),
 console.warn("The element with unescaped HTML:"),
 console.warn(e)),g.throwUnescapedHTML))throw new J("One of your code blocks includes unescaped HTML.",e.innerHTML)
-;t=e;const i=t.textContent,s=n?m(i,{language:n,ignoreIllegals:!0}):w(i)
+;t=e;const i=t.textContent,s=n?m(i,{language:n,ignoreIllegals:!0}):x(i)
 ;e.innerHTML=s.value,((e,t,n)=>{const i=t&&r[t]||n
 ;e.classList.add("hljs"),e.classList.add("language-"+i)
 })(e,n,s.language),e.result={language:s.language,re:s.relevance,
 relevance:s.relevance},s.secondBest&&(e.secondBest={
 language:s.secondBest.language,relevance:s.secondBest.relevance
-}),v("after:highlightElement",{el:e,result:s,text:i})}let y=!1;function _(){
-"loading"!==document.readyState?document.querySelectorAll(g.cssSelector).forEach(x):y=!0
+}),v("after:highlightElement",{el:e,result:s,text:i})}let y=!1;function w(){
+"loading"!==document.readyState?document.querySelectorAll(g.cssSelector).forEach(_):y=!0
 }function O(e){return e=(e||"").toLowerCase(),i[e]||i[r[e]]}
 function M(e,{languageName:t}){"string"==typeof e&&(e=[e]),e.forEach((e=>{
 r[e.toLowerCase()]=t}))}function N(e){const t=O(e)
 ;return t&&!t.disableAutodetect}function v(e,t){const n=e;s.forEach((e=>{
 e[n]&&e[n](t)}))}
 "undefined"!=typeof window&&window.addEventListener&&window.addEventListener("DOMContentLoaded",(()=>{
-y&&_()}),!1),Object.assign(t,{highlight:m,highlightAuto:w,highlightAll:_,
-highlightElement:x,
+y&&w()}),!1),Object.assign(t,{highlight:m,highlightAuto:x,highlightAll:w,
+highlightElement:_,
 highlightBlock:e=>(F("10.7.0","highlightBlock will be removed entirely in v12.0"),
-F("10.7.0","Please use highlightElement now."),x(e)),configure:e=>{g=Q(g,e)},
+F("10.7.0","Please use highlightElement now."),_(e)),configure:e=>{g=Q(g,e)},
 initHighlighting:()=>{
-_(),F("10.6.0","initHighlighting() deprecated.  Use highlightAll() now.")},
+w(),F("10.6.0","initHighlighting() deprecated.  Use highlightAll() now.")},
 initHighlightingOnLoad:()=>{
-_(),F("10.6.0","initHighlightingOnLoad() deprecated.  Use highlightAll() now.")
+w(),F("10.6.0","initHighlightingOnLoad() deprecated.  Use highlightAll() now.")
 },registerLanguage:(e,n)=>{let r=null;try{r=n(t)}catch(t){
 if(z("Language definition for '{}' could not be registered.".replace("{}",e)),
 !o)throw t;z(t),r=c}
@@ -297,12 +297,13 @@ autoDetection:N,inherit:Q,addPlugin:e=>{(e=>{
 e["before:highlightBlock"]&&!e["before:highlightElement"]&&(e["before:highlightElement"]=t=>{
 e["before:highlightBlock"](Object.assign({block:t.el},t))
 }),e["after:highlightBlock"]&&!e["after:highlightElement"]&&(e["after:highlightElement"]=t=>{
-e["after:highlightBlock"](Object.assign({block:t.el},t))})})(e),s.push(e)}
-}),t.debugMode=()=>{o=!1},t.safeMode=()=>{o=!0
-},t.versionString="11.6.0",t.regex={concat:p,lookahead:d,either:f,optional:h,
-anyNumberOfTimes:u};for(const t in A)"object"==typeof A[t]&&e.exports(A[t])
-;return Object.assign(t,A),t})({}),ne=Object.freeze({__proto__:null,
-grmr_flix:e=>{const t={scope:"number",
+e["after:highlightBlock"](Object.assign({block:t.el},t))})})(e),s.push(e)},
+removePlugin:e=>{const t=s.indexOf(e);-1!==t&&s.splice(t,1)}}),t.debugMode=()=>{
+o=!1},t.safeMode=()=>{o=!0},t.versionString="11.7.0",t.regex={concat:f,
+lookahead:d,either:p,optional:h,anyNumberOfTimes:u}
+;for(const t in A)"object"==typeof A[t]&&e.exports(A[t])
+;return Object.assign(t,A),t},ne=te({});ne.newInstance=()=>te({})
+;var ie=Object.freeze({__proto__:null,grmr_flix:e=>{const t={scope:"number",
 begin:e.C_NUMBER_RE+"(f(32|64)|i(8|16|32|64)|ii)?",relevance:0},n={
 scope:"string",begin:'"',end:'"',illegal:"\\n",contains:[e.BACKSLASH_ESCAPE,{
 scope:"subst",begin:/(\$|\%)\{/,end:/\}/}]},i={scope:"title",
@@ -313,12 +314,12 @@ contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,i]},s={
 scope:"title.function",beginKeywords:"def",end:/[(\[]/,excludeEnd:!0,
 contains:[i]},o={scope:"literal",variants:[{begin:/\?\?\?/},{begin:/\?/,
 contains:[i]}]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
-keyword:["instance","lawful","law","type","alias","yield","lazy","force","override","def","with","let","sealed","pub","object","if","then","else","for","foreach","import","use","get","set","new","catch","class","case","default","try","match","enum","and","or","not","ref","deref","as","eff","upcast","static","spawn","solve","select","region","par","namespace","without","do","resume","chan","select","inject","project","into","from","where","query","inline","discard"],
-literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err"],
+keyword:["alias","as","case","catch","deafult","def","do","eff","else","enum","for","forA","forM","force","foreach","from","get","if","import","inject","inline","instance","into","law","lawful","lazy","let","match","mod","namespace","object","override","par","project","pub","query","region","resume","sealed","select","set","solve","try","type","typematch","checked_cast","checked_ecast","unchecked_cast","use","where","with","without","yield"],
+literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err","null","static"],
 type:["Unit","Bool","Char","Float32","Float64","Int8","Int16","Int32","Int64","String","BigInt"],
-built_in:["debug","debug!","debug!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!"]
+built_in:["debug","debug!","debug!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!","and","or","not","ref","deref"]
 },contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,n,t,s,r,{scope:"meta",
-begin:"@[A-Za-z]+"},o]}}});const ie=te;for(const e of Object.keys(ne)){
-const t=e.replace("grmr_","").replace("_","-");ie.registerLanguage(t,ne[e])}
-return ie}()
+begin:"@[A-Za-z]+"},o]}}});const re=ne;for(const e of Object.keys(ie)){
+const t=e.replace("grmr_","").replace("_","-");re.registerLanguage(t,ie[e])}
+return re}()
 ;"object"==typeof exports&&"undefined"!=typeof module&&(module.exports=hljs);

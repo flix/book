@@ -74,14 +74,14 @@ enum Counter[r: Region] { // The Region here is a type-kind
     case Counter(Ref[Int32, r])
 }
 
-def newCounter(rc: Region[r]): Counter[r] \ r = Counter(ref 0 @ rc)
+def newCounter(rc: Region[r]): Counter[r] \ r = Counter.Counter(ref 0 @ rc)
 
 def getCount(c: Counter[r]): Int32 \ r =
-    let Counter(l) = c;
+    let Counter.Counter(l) = c;
     deref l
 
 def increment(c: Counter[r]): Unit \ r =
-    let Counter(l) = c;
+    let Counter.Counter(l) = c;
     l := (deref l) + 1
 
 def main(): Unit \ IO =

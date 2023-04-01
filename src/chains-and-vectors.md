@@ -1,7 +1,5 @@
 ## Chains and Vectors
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 In addition to immutable `List`s, Flix also supports immutable `Chain`s and
 `Vector`s. 
 

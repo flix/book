@@ -1,7 +1,5 @@
 ## References
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 Flix supports mutable _scoped_ references. A reference is a box whose value can
 change over time. The three key reference operations are:
 

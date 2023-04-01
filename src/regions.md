@@ -1,7 +1,5 @@
 ## Regions
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 Flix supports _scoped_ mutable memory. In Flix, all mutable memory belongs to a
 _region_ that is tied to its lexical scope. When execution leaves the lexical
 scope of a region, all memory in that region becomes unreachable. 

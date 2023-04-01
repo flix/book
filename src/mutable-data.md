@@ -1,7 +1,5 @@
 # Mutable Data
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 Flix is a _functional-first_ programming language that encourages but does not
 demand, the use of immutable data structures. While immutable data structures
 should be the default, Flix has rich support for imperative programming with

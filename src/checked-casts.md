@@ -1,7 +1,5 @@
 ## Checked Type and Effect Casts
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 The Flix type and effect system – by design – does not support sub-typing nor
 sub-effecting. To work around these limitations, which are rare in practice,
 Flix has two _safe_ upcast constructs: 

@@ -1,7 +1,5 @@
 ## Applicative For-Yield
 
-> **Note:** This documentation is relevant for Flix version 0.35.0 or higher.
-
 In addition to the monadic `forM` expression, Flix supports an applicative
 `forA` expression that builds on the `Applicative` type class. The `forA`
 construct makes it simple to write error-handling code which uses the

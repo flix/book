@@ -43,9 +43,9 @@ enum Animal {
 }
 
 def isTall(a: Animal): Bool = match a {
-    case Cat        => false
-    case Dog        => false
-    case Giraffe    => true
+    case Animal.Cat        => false
+    case Animal.Dog        => false
+    case Animal.Giraffe    => true
 }
 ```
 
@@ -88,8 +88,8 @@ compute the sum of all integers in such a tree:
 
 ```flix
 def sum(t: Tree): Int32 = match t {
-    case Leaf(x)    => x
-    case Node(l, r) => sum(l) + sum(r)
+    case Tree.Leaf(x)    => x
+    case Tree.Node(l, r) => sum(l) + sum(r)
 }
 ```
 
@@ -111,8 +111,8 @@ enum Bottle[a] {
 }
 
 def isEmpty[a](b: Bottle[a]): Bool = match b {
-    case Empty   => true
-    case Full(_) => false
+    case Bottle.Empty   => true
+    case Bottle.Full(_) => false
 }
 ```
 

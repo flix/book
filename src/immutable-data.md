@@ -20,7 +20,6 @@ Other immutable data types include:
 
 - `Option[t]`       : A type that is either `None` or `Some(t)`.
 - `Result[e, t]`    : A type that is either `Ok(t)` or `Err(e)`.
-- `Chain[t]`        : An immutable sequence of elements of type `t` that supports fast append.
 - `Nel[t]`          : An immutable non-empty singly-linked list of elements of type `t`.
 - `Nec[t]`          : An immutable non-empty sequence of elements of type `t` that supports fast append.
 - `MultiMap[k, v]`  : An immutable map of keys of type `k` to _sets_ of values of type `v`.

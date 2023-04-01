@@ -3,8 +3,8 @@
 We are now ready write our first real program! 
 
 We will write a simple variant of the venerable wordcount (`wc`) program from
-UNIX. We shall not be concerned with efficiency, but we will carefully all error
-cases. 
+UNIX. We shall not be concerned with efficiency, but we will carefully check all 
+error cases. 
 
 Create a new folder (e.g. `wc`) and put the following code into `Main.flix`:
 
@@ -35,7 +35,7 @@ The program works as follows:
    We use pattern matching on `args` to extract the file name and report an
    error if the list is empty.
 2. We use `File.readLines` to read all lines of the file. This operation may
-   fail (e.g. if the file does not exist) and hence it returns a `Result`. We use pattern matching on the result an print an error message if we could not read the file.
+   fail (e.g. if the file does not exist) and hence it returns a `Result`. We use pattern matching on the result and print an error message if we could not read the file.
 3. Otherwise we have a `List[String]` from which we can easily compute the
    number of lines and using the helper function `numberOfWords`, we can also
    easily compute the total number of words. Finally, we print these two numbers.

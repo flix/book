@@ -22,20 +22,19 @@ def validateUser(s: String): Validation[InvalidInput, String] =
     if (8 <= String.length(s) and String.forAll(Char.isLetter, s))
         Validation.Success(s)
     else 
-        Validation.Failure(Nec.singleton(InvalidUserName))
+        Validation.Failure(Nec.singleton(InvalidInput.InvalidUserName))
 
 def validatePass(s: String): Validation[InvalidInput, String] =
     if (12 <= String.length(s) and String.length(s) <= 20)
         Validation.Success(s)
     else 
-        Validation.Failure(Nec.singleton(InvalidPassword))
+        Validation.Failure(Nec.singleton(InvalidInput.InvalidPassword))
 
 def connect(u: String, p: String): Validation[InvalidInput, Connection] = 
     forA (
         user <- validateUser(u);
         pass <- validatePass(p)
-    ) yield Connection(user, pass) 
-
+    ) yield Connection.Connection(user, pass)
 ```
 
 The expression:

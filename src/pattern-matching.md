@@ -19,9 +19,9 @@ matching:
 
 ```flix
 def area(s: Shape): Int32 = match s {
-    case Circle(r)       => 3 * (r * r)
-    case Square(w)       => w * w
-    case Rectangle(h, w) => h * w
+    case Shape.Circle(r)       => 3 * (r * r)
+    case Shape.Square(w)       => w * w
+    case Shape.Rectangle(h, w) => h * w
 }
 ```
 

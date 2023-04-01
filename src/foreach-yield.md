@@ -1,7 +1,5 @@
 ## Foreach-Yield
 
-> **Note:** This feature is not yet available.
-
 Flix supports a special `foreach-yield` construct which is used to build
 collections from other collections. The `foreach-yield` construct is related to
 the `foreach` construct, but should not be confused with it. The `foreach`

@@ -5,3 +5,4 @@ By adding your name to this document, you agree to release all your contribution
 - [Magnus Madsen](https://github.com/magnus-madsen)
 - [Jakob Schneider](https://github.com/jaschdoc)
 - [Asger Alstrup Palm](https://github.com/alstrup)
+- [Herluf Baggesen](https://github.com/herluf-ba)

@@ -14,7 +14,7 @@ def main(): Unit \ IO = region rc {
 }
 ```
 
-Spawned processes are always associated with a region; the region will
+Spawned processes are always associated with a region; the region 
 will not exit until all the processes associated with it have completed:
 
 ```flix

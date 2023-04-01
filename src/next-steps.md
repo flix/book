@@ -70,6 +70,9 @@ def main(): Unit \ IO =
         case Ok((lines, words)) => println("Lines: ${lines}, Words: ${words}")
         case Err(message)       => println(message)
     }
+
+def numberOfWords(s: String): Int32 = 
+    s |> String.words |> List.length
 ```
 
 which takes advantages of the [monadic for-yield construct](./monadic-for-yield.md).

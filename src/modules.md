@@ -136,9 +136,9 @@ use Zoo.Animal.Dog
 use Zoo.Animal.Fox
 
 def says(a: Animal): String = match a {
-    case Cat => "Meow"
-    case Dog => "Woof"
-    case Fox => "Roar"
+    case Animal.Cat => "Meow"
+    case Animal.Dog => "Woof"
+    case Animal.Fox => "Roar"
 }
 
 def main(): Unit \ IO = 

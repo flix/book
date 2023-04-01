@@ -275,7 +275,7 @@ def main(): Unit \ IO =
     let r2 = #{
         ColorlessPath(x, y) :- ColorPath(x, _, y).
     };
-    let m = solve f1, r1 inject ColorPath;
+    let m = solve f1, r1 project ColorPath;
     query m, r2 select (x, y) from ColorlessPath(x, y) |> println
 ```
 

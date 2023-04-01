@@ -61,8 +61,10 @@
   - [Debugging](./debugging.md)
 - [Tools](./tools.md)
   - [Visual Studio Code](./vscode.md)
-  - [Package Manager](./build-and-packages.md)
   - [Test Framework](./test-framework.md)
+- [Build and Packages](./build-and-packages.md)
+  - [Build](./build.md)
+  - [Packages](./packages.md)
 
 ---
 

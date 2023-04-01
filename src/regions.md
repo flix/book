@@ -39,7 +39,7 @@ is pure but internally uses a mutable `StringBuilder`:
 ```flix
 def toString(l: List[a]): String with ToString[a] =
     region rc {
-        let sb = new StringBuilder(rc);
+        let sb = StringBuilder.new(rc);
         List.forEach(x -> StringBuilder.appendString!("${x} :: ", sb), l);
         StringBuilder.appendString!("Nil", sb);
         StringBuilder.toString(sb)
@@ -72,7 +72,7 @@ For example, here is the `List.toMutDeque` function:
 
 ```flix
 def toMutDeque(rc: Region[r], l: List[a]): MutDeque[a, rc] \ rc =
-    let d = new MutDeque(rc);
+    let d = MutDeque.new(rc);
     forEach(x -> MutDeque.pushBack(x, d), l);
     d
 ```

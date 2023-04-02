@@ -1,7 +1,7 @@
 ## Build Management
 
 We now discuss the build commands. Each command can be executed from the command
-line, from the REPL, or from VSCode. 
+line, from the REPL, and from VSCode. 
 
 ### Creating a New Project
 
@@ -25,19 +25,25 @@ This will create the default Flix project structure:
 The most relevant files are `flix.toml`, `src/Main.flix` and
 `test/TestMain.flix`.
 
-> **Tip:** The `init` command is safe to use; it will only create files which do
+The `flix.toml` manifest file is discussed in the next section.
+
+> **Tip:** The `init` command is safe to use; it will only create files that do
 > not already exist. 
 
 ### Checking a Project
 
-We can check a project for compiler errors with the `check` command. The `check`
-command is preferable to the `build` command during development because it skips
-code generation. 
+We can check a project for compiler errors with the `check` command. During
+development, the `check` command is preferable to the `build` command because it
+skips code generation (and hence is significantly faster). 
+
+> **Tip:** If VSCode reports no compiler errors there is no reason to run
+> `check` since they are functionally equivalent. 
 
 ### Building a Project
 
 We can compile a project with the `build` command. Running the `build` command
-will compile the entire project and emit bytecode (i.e. compiled Java classes). 
+will compile the entire project and emit bytecode, i.e. compiled Java classes,
+to the `build` directory.
 
 > **Note:** Flix has no `clean` command. Deleting the `build` directory serves
 > the same purpose.
@@ -45,11 +51,11 @@ will compile the entire project and emit bytecode (i.e. compiled Java classes).
 ### Building a JAR-file
 
 We can compile a project to a fat JAR-file with the `build-jar` command. The
-`build-jar` command emits a `artifact/projectname.jar` file. If there is `main`
+`build-jar` command emits a `artifact/project.jar` file. If there is `main`
 function, we can run it: 
 
 ```bash
-$ java -jar artifact/projectname.jar
+$ java -jar artifact/project.jar
 ```
 
 The JAR-file contains all class files from the `build` directory. The built JAR
@@ -61,8 +67,8 @@ on JAR-files.
 
 ### Building a Flix Project
 
-We can bundle a project into a Flix package file (fpkg) `build-pkg` command.
-Running the `build-pkg` command emits a `artifact/projectname.fpkg` file.
+We can bundle a project into a Flix package file (fpkg) with the `build-pkg`
+command. Running the `build-pkg` command emits a `artifact/project.fpkg` file.
 
 A Flix package file (fpkg) is essentially zip-file of the project source code. A
 Flix package, together with its `flix.toml` manifest, can be published on

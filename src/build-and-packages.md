@@ -25,4 +25,4 @@ package, and publish a Flix project, a `flix.toml` manifest is required. The
 already present. 
 
 > **Tip**: Flix scans for source files in the paths `*.flix`, `src/**.*flix,`,
-and `lib/**.*.flix`.
+and `test/**.*.flix`.

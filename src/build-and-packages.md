@@ -1,24 +1,28 @@
 # Build and Package Management
 
-The Flix compiler ships with a built-in build system and package manager. The
-Flix build system makes it easy to create, compile, run, and test a Flix
-project. The Flix package manager makes it possible to create packages, publish
-them on GitHub, and depend on them. The package manager also supports
-Maven-style dependencies. 
+Flix comes with a build system and package manager. The build system makes it
+simple to compile a Flix program to a collection of Java classes and to build a
+fat JAR. The package manager makes it possible to create Flix packages, publish
+them on GitHub, and depend on them via a manifest file. The package manager also
+makes it possible to depend on Java JAR-artifacts published on Maven. 
 
 The Flix build system supports the following commands:
 
-- `init`: Creates a new project in the current directory.
-- `check`: Checks the current project to check for errors.
-- `build`: Builds (i.e. compiles) the current project.
-- `build-jar`: Builds a jar-file from the current project. 
-- `build-pkg`: Builds a fpkg-file from the current project. 
-- `run`: Runs main for the current project.  
-- `test`: Runs tests for the current project.
+- `init`: creates a new Flix project in the current directory.
+- `check`: checks the current project for compiler errors.
+- `build`: builds the current project (i.e. emits Java bytecode).
+- `build-jar`: builds a jar-file from the current project. 
+- `build-pkg`: builds a fpkg-file from the current project. 
+- `run`: runs main in current project.  
+- `test`: runs all tests in the current project.
 
-A Flix package is Flix project that contains a `flix.toml` manifest which
-specifies the name of the package, its version, and its dependencies. As stated,
-Flix packages can depend on other Flix packages and on Maven dependencies. 
+All commands can be executed from the command line, from the REPL, and from
+VSCode.
 
-Flix packages are published as releases on GitHub.
+All commands, except `build-pkg` work without a manifest file. To build,
+package, and publish a Flix project, a `flix.toml` manifest is required. The
+`init` command will create an empty skeleton `flix.toml` manifest, if not
+already present. 
 
+> **Tip**: Flix scans for source files in the paths `*.flix`, `src/**.*flix,`,
+and `lib/**.*.flix`.

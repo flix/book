@@ -1,33 +1,41 @@
 ## Packages
 
-### The `flix.toml` Manifest
+Every non-trivial Flix project should have a `flix.toml` manifest. The manifest
+contains information about the project and its dependencies. 
 
-Flix packages are identified by a manifest file called `flix.toml`.
-
-A minimal manifest could be:
+A minimal manifest is of the form:
 
 ```toml
 [package]
-name        = "hello-library"                   # The name of the package.
-description = "A simple library"                # The description of the package.
-version     = "0.1.0"                           # The semantic version of the package.
-flix        = "0.33.0"                          # The required version of the Flix compiler.
-license     = "Apache-2.0"                      # The license applicable to this project (see also LICENSE.md).
-authors     = ["John Doe <john@example.com>"]   # The authors of this project.
+name        = "hello-library"
+description = "A simple library"
+version     = "0.1.0"
+flix        = "0.35.0"
+license     = "Apache-2.0"
+authors     = ["John Doe <john@example.com>"]
 ```
+
+> **Note:** The compiler field is not yet used, but it will be used in the
+> future. 
 
 ### Flix Dependencies
 
+We can add dependencies on other Flix packages to the manifest:
+
 ```toml
-[dependencies]                                  # Dependencies on Flix packages.
+[dependencies]
 "github:flix/museum"              = "1.1.0"
 "github:magnus-madsen/helloworld" = "1.3.0"
 ```
 
+> **Note:** Flix requires version numbers to follow SemVer.
+
 ### Maven Dependencies
 
+We can also add dependencies on Maven packages to the manifest:
+
 ```toml
-[mvn-dependencies]                              # Dependencies on Maven packages.
+[mvn-dependencies]
 "org.junit.jupiter:junit-jupiter-api" = "5.9.2"
 ```
 

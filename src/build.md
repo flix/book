@@ -1,28 +1,14 @@
 ## Build Management
 
-> **Note:** This section is a work in progress.
-
 ### Creating a New Project
 
-We can create a new project by creating an empty
-directory and running the `init` command inside it:
+We can create a new project, inside a directory, with the `init` command. 
 
-```bash
-$ mkdir myproject
-$ cd myproject
-$ java -jar flix.jar init
-```
-
-This will create a project structure with the
-following layout (running `$ tree .` in the directory
-will give the result below):
+This will create the default Flix project structure:
 
 ```
 .
-├── build
-├── flix.jar
-├── HISTORY.md
-├── lib
+├── flix.toml
 ├── LICENSE.md
 ├── README.md
 ├── src
@@ -30,132 +16,70 @@ will give the result below):
 └── test
     └── TestMain.flix
 
-4 directories, 6 files
+2 directories, 6 files
 ```
 
-The most relevant files are `src/Main.flix` and
+The most relevant files are `flix.toml`, `src/Main.flix` and
 `test/TestMain.flix`.
 
-The `lib/` directory is intended to hold Flix package
-files (`.fpkg`-files).
-The build system and Visual Studio Code will
-automatically detect Flix packages that are in the
-`lib/` directory.
+> **Tip:** The `init` command is safe to use; it will only create files which do
+> not already exist. 
 
 ### Checking a Project
 
-We can check a project for errors by running the
-`check` command inside the project directory:
-
-```bash
-$ java -jar flix.jar check
-```
-
-Checking a project is equivalent to building a
-project, except no code is generated and the
-process is significantly faster than a complete build.
+We can check a project for compiler errors by with the `check` command. The
+`check` command is significantly faster than the `build` command because it
+skips code generation. 
 
 ### Building a Project
 
-We can build a project by running the `build` command
-inside the project directory:
+We can build a project by with the `build` command. Running the `build` command
+will compile the entire project and emit Java bytecode. 
 
-```bash
-$ java -jar flix.jar build
-```
-
-Building a project populates the `build` directory
-with class files.
-
-> **Design Note**
->
-> There is no `clean` command, but deleting everything
-> inside the `build` directory serves the same purpose.
+> **Note:** Flix has no `clean` command. Deleting the `build` directory serves
+> the same purpose.
 
 ### Building a JAR-file
 
-We can compile a project to a JAR-file with the
-`build-jar` command:
+We can compile a Flix project to a fat JAR-file with the `build-jar` command.
+The `build-jar` command with emit an `artifact/projectname.jar` file. We can
+then run it: 
 
 ```bash
-$ java -jar flix.jar build-jar
+$ java -jar artifact/projectname.jar
 ```
 
-which will produce a `myproject.jar` ready to run:
+The JAR-file contains all class files from the `build` directory. The built JAR
+may depend on external JARs, if the project or one of its dependencies, depends
+on JAR-files (e.g. via Maven dependencies). 
 
-```bash
-$ java -jar myproject.jar
-```
+> **Note:** The project must be compiled with `build` before running
+> `build-jar`.
 
-The JAR-file contains all class files from the
-`build/` directory.
+### Building a Flix Project
 
-> **Warning**
->
-> The project must have been built beforehand with the
-> `build` command.
+We can bundle a Flix project into a Flix package file (fpkg) `build-pkg`
+command. Running the `build-pkg` command will emit the fpkg file in the
+`artifact` directory. 
 
-> **Design Note**
->
-> At the time of writing (July 2021), the built
-> JAR-file still depends on the `flix.jar` file.
-> Thus to run a Flix program you must put both the
-> generated JAR-file and `flix.jar` on the class path.
-> For example, on Windows, the command would be:
-> `java -jar "flix.jar;myproject.jar" Main`.
-> In the future, the plan is to make the generated
-> JAR-file fully self-contained.
-
-### Building a Flix Project File (fpkg)
-
-We can compile a project to a Flix package file
-(fpkg) with the `build-pkg` command:
-
-```bash
-$ java -jar flix.jar build-pkg
-```
-which will produce a `myproject.fpkg` package.
-
-A Flix package file is essentially a zip-file of the
-project source code.
-A Flix package file can be reused in another project
-by placing it into the `lib/` directory.
-
-It is recommended to include the semantic version in
-the filename of the package, e.g. `foo-1.2.1.fpkg`.
-
-> **Design Note**
->
-> Flix does not compile to an intermediate format, but
-> instead relies on packages to contain source code.
-> This means that Flix does not lose any information
-> about a package and can perform cross-package
-> optimizations.
+A Flix package file is essentially zip-file of the project source code. A Flix
+package, together with its `flix.toml` manifest, can be published on GitHub.
 
 ### Running a Project
 
-We do not have to build a JAR-file to run a project,
-we can simply use the `run` command:
-
-```bash
-$ java -jar flix.jar run
-```
-
-which will compile and run the main entry point.
+We do not have to build a JAR-file to run a project, we can simply use the `run`
+command which will compile and run the main entry point.
 
 ### Testing a Project
 
-We can use the `test` command to run all test cases
-in a project:
-
-```bash
-$ java -jar flix.jar test
-```
-
-Flix will collect all functions marked with `@test`,
-execute them, and print a summary of the results:
+We can use the `test` command to run all test cases in a project. Flix will
+collect all functions marked with `@Test`, execute them, and print a summary of
+the results:
 
 ```
--- Tests -------------------------------------------------- root
-✓ testMain01
+Running 1 tests...
+
+   PASS  test01 1,1ms
+
+Passed: 1, Failed: 0. Skipped: 0. Elapsed: 3,9ms.
 ```

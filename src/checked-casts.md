@@ -4,8 +4,8 @@ The Flix type and effect system – by design – does not support sub-typing no
 sub-effecting. To work around these limitations, which are rare in practice,
 Flix has two _safe_ upcast constructs: 
 
-- A checked type cast: `checked_cast(exp)`, and 
-- A checked effect cast `checked_ecast(exp)`.
+- A checked *type* cast: `checked_cast(exp)`, and 
+- A checked *effect* cast `checked_ecast(exp)`.
 
 > **Note:** The `checked_cast` and `checked_ecast` expressions are guaranteed to
 > be _safe_. The Flix compiler will check at compile-time that every checked

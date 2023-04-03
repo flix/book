@@ -1,4 +1,4 @@
-## Packages
+## Package Management
 
 Every non-trivial Flix project should have a `flix.toml` manifest. The manifest
 contains information about the project and its dependencies. 
@@ -17,7 +17,7 @@ authors     = ["John Doe <john@example.com>"]
 
 > **Note:** The `flix` field is not yet used, but it will be used in the future. 
 
-### Flix Dependencies
+### Adding Flix Dependencies
 
 We can add dependencies on other Flix packages to the manifest:
 
@@ -29,7 +29,7 @@ We can add dependencies on other Flix packages to the manifest:
 
 > **Note:** Flix requires version numbers to follow SemVer.
 
-### Maven Dependencies
+### Adding Maven Dependencies
 
 We can also add dependencies on Maven packages to the manifest:
 

@@ -36,17 +36,14 @@ We can check a project for compiler errors with the `check` command. During
 development, the `check` command is preferable to the `build` command because it
 skips code generation (and hence is significantly faster). 
 
-> **Tip:** If VSCode reports no compiler errors there is no reason to run
-> `check` since they are functionally equivalent. 
-
 ### Building a Project
 
 We can compile a project with the `build` command. Running the `build` command
 will compile the entire project and emit bytecode, i.e. compiled Java classes,
 to the `build` directory.
 
-> **Note:** Flix has no `clean` command. Deleting the `build` directory serves
-> the same purpose.
+Flix has no `clean` command. Deleting the `build` directory serves the same
+purpose.
 
 ### Building a JAR-file
 

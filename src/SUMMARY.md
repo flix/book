@@ -78,6 +78,7 @@
 ---
 
 - [Common Problems](./common-problems.md)
+- [Glossary](./glossary.md)
 
 ---
 

@@ -27,8 +27,6 @@ partial order instance we will later define, and is
 simply used to sort elements for pretty printing etc.
 
 ```flix
-instance Boxable[Sign]
-
 instance Eq[Sign] {
     pub def eq(x: Sign, y: Sign): Bool = match (x, y) {
         case (Bot, Bot) => true
@@ -198,7 +196,7 @@ instance MeetLattice[D] {
         D(Int32.max(n1, n2))        // Note: Order reversed.
 }
 
-def shortestPath(g: Set[(t, Int32, t)], o: t): Map[t, D] with Boxable[t] =
+def shortestPath(g: Set[(t, Int32, t)], o: t): Map[t, D] with Order[t] =
     let db = inject g into Edge;
     let pr = #{
         Dist(o; D(0)).
@@ -225,7 +223,7 @@ reverses the order on the underlying type. We can use it and write the program
 as: 
 
 ```flix
-def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Boxable[t] =
+def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Order[t] =
     let db = inject g into Edge;
     let pr = #{
         Dist(o; Down(0)).

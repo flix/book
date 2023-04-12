@@ -1,7 +1,6 @@
 # Common Problems
 
 - [ToString is not defined on 'a'](#tostring-is-not-defined-on-a)
-- [No instance of the 'Boxable' class for the type 't'](#no-instance-of-the-boxable-class-for-the-type-t)
 - [Records and Complex Instances](#records-and-complex-instances)
 - [Expected kind 'Bool or Effect' here, but kind 'Type' is used](#expected-kind-bool-or-effect-here-but-kind-type-is-used)
 
@@ -41,44 +40,6 @@ def main(): Unit \ IO =
 
 which solves the problem because Flix can find an instance of `ToString` type
 class for the concrete type `List[Int32]`.
-
-## No instance of the 'Boxable' class for the type 't'
-
-Given the program:
-
-```flix
-def connected(l: List[(t, t)]): List[(t, t)] = 
-    let db = inject l into Edge;
-    let pr = #{
-        Path(x, y) :- Edge(x, y).
-        Path(x, z) :- Path(x, y), Edge(y, z).
-    };
-    query db, pr select (x, y) from Path(x, y)
-```
-
-which uses _polymorphic_ Datalog program values, the Flix compiler reports:
-
-```
-❌ -- Type Error ----------------------------------------
-
->> No instance of the 'Boxable' class for the type 't'.
-
-7 |     query db, pr select (x, y) from Path(x, y)
-                                        ^^^^^^^^^^
-                                        missing instance
-```
-
-This is because Flix requires values used in Datalog constraints to be
-`Boxable`. Any type can be made `Boxable` by implementing the `Eq` and `Order`
-type classes. 
-
-In the above case, the solution is to change the signature of `connected` to:
-
-```flix
-def connected(l: List[(t, t)]): List[(t, t)] with Boxable[t] = 
-```
-
-which captures the `Boxable` type class constraint.
 
 ## Records and Complex Instances
 

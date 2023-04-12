@@ -180,7 +180,7 @@ def edgesWithColor(): #{ LabelledEdge(String, String, String) | r } = #{
 }
 
 def closure(): #{ LabelledEdge(String, l, String),
-                  LabelledPath(String, l, String) } with Boxable[l] = #{
+                  LabelledPath(String, l, String) } with Order[l] = #{
     LabelledPath(x, l, y) :- LabelledEdge(x, l, y).
     LabelledPath(x, l, z) :- LabelledPath(x, l, y), LabelledPath(y, l, z).
 }
@@ -208,12 +208,6 @@ that have the same label.
 The Flix type system ensures that we cannot
 accidentally mix edges (or paths) with different
 types of labels.
-
-> **Design Note**
->
-> The `Boxable` type class constraint simply requires
-> that each label type has `Eq`, `Order`, and
-> `ToString` instances.
 
 ## Injecting Facts into Datalog
 

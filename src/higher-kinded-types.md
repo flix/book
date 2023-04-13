@@ -6,7 +6,7 @@ abstract over _type constructors_.
 
 For example, we can write a type class that capture iteration over any
 collection of the shape `t[a]` where `t` is a type constructor of kind
- `Type ->Type` and `a` is the element type of kind `Type`:
+ `Type -> Type` and `a` is the element type of kind `Type`:
 
 ```flix
 class ForEach[t: Type -> Type] {
@@ -42,7 +42,7 @@ Flix supports the following kinds:
 - `RecordRow`: The kind of rows used in records 
     - e.g. in `{x = Int32, y = Int32 | r}` the type variable `r` has kind `RecordRow`.
 - `SchemaRow`: The kind of rows used in first-class Datalog constraints
-    - e.g. in `#{P(Int32, Int32) | r}` the type variable `r` has kind `RecordRow`.
+    - e.g. in `#{P(Int32, Int32) | r}` the type variable `r` has kind `SchemaRow`.
 
 Flix can usually infer kinds. For example, we can write:
 

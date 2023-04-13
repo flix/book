@@ -32,7 +32,7 @@ class Order[a] with Eq[a] {
     ///
     /// Returns `Comparison.LessThan` if `x` < `y`, 
     /// `Equal` if `x` == `y` or 
-    /// `Comparison.GreaterThan` `if `x` > `y`.
+    /// `Comparison.GreaterThan` if `x` > `y`.
     ///
     pub def compare(x: a, y: a): Comparison
 

@@ -58,6 +58,6 @@ function inside the `Addable` module. Note that the `add` signature is in the
 scope of the `Addable` module. 
 
 We should be aware that functions defined in the companion module of a type
-class cannot be overridden instances of the associated type class. Thus we
-should only use put members into the companion namespace when we do not intend
+class cannot be overridden by instances of the associated type class. Thus we
+should only put members into the companion namespace when we do not intend
 to override them later. 

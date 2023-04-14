@@ -57,8 +57,10 @@ Set#{1, 2, 3}
 which is syntactic sugar for:
 
 ```flix
-Set.insert(1, Set.insert(2, Set.insert(3, Set.empty())))
+Set.insert(3, Set.insert(2, Set.insert(1, Set.empty())))
 ```
+
+Note that the elements are inserted from left to right, thus 1 is inserted first.
 
 #### Map Literals
 
@@ -73,5 +75,7 @@ Map#{1 => "Hello", 2 => "World"}
 which is syntactic sugar for:
 
 ```flix
-Map.insert(1, "Hello", Map.insert(2, "World", Map.empty()))
+Map.insert(2, "World", Map.insert(1, "Hello", Map.empty()))
 ```
+
+Note that similar to sets above, the entries are inserted left to right. In particular, if multiple entries share the same key, the rightmost one overwrites the previous values.

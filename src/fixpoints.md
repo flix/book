@@ -152,7 +152,7 @@ function can be composed with.
 > over-approximation of the predicates that may occur
 > in a constraint system.
 > For example, if a constraint system has type
-> `#{ A(String), B(Int32, Int32) }` that does
+> `#{ A(String), B(Int32, Int32) }` that doesn't
 > necessarily mean that it will contain facts or rules
 > that use the predicate symbols `A` or `B`, but it
 > does guarantee that it will not contain any fact or

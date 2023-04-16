@@ -1,6 +1,6 @@
 ## Reading and Writing Fields
 
-We can read and write fields by importinf functions that serve as "getters" and "setters".
+We can read and write fields by importing functions that serve as "getters" and "setters".
 
 Assume we have the class:
 

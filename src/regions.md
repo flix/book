@@ -83,7 +83,7 @@ deque, and returns it.
 
 ### Regions are Scoped
 
-Regions and all memory associated with them cannot outline their lexical scope. 
+Regions and all memory associated with them cannot outlive their lexical scope.
 
 Consider the following program:
 

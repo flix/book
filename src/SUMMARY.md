@@ -42,6 +42,7 @@
 - [Fixpoints](./fixpoints.md)
   - [Stratified Negation](./stratified-negation.md)
   - [Local Predicates](./local-predicates.md)
+  - [Functional Predicates](./functional-predicates.md)
   - [Lattice Semantics](./lattice-semantics.md)
 - [Interoperability](./interoperability.md)
   - [Creating Objects](./creating-objects.md)

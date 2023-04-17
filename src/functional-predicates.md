@@ -40,3 +40,8 @@ as its output. Specifically, Flix requires that `b` and `e` are positively bound
 (i.e. bound by a non-negative body atom-- in this case `P` and `Q`.) In this
 case, `primesInRanges` returns a vector of `Int32`s, but in general a functional
 may return a vector of tuples. 
+
+> **Note:** An important limitation in the current implementation is that the
+> variables in the LHS of a functional predicate _must not_ be rebound. That is,
+> if the functional predicate is of the form `let (a, b) = f(x, y)` then `a` and
+> `b` must not be rebound in the rule. 

@@ -12,20 +12,20 @@ like Scala, but its type system is based on Hindley-Milner which supports
 complete type inference. Flix aims to offer a unique combination of features
 that no other programming language offers, including:
 
-- algebraic data types and pattern matching.
-- type classes with higher-kinded types.
-- structured concurrency based on channels and light-weight processes.
+-   algebraic data types and pattern matching.
+-   type classes with higher-kinded types.
+-   structured concurrency based on channels and light-weight processes.
 
 In addtion, Flix has several new powerful and unique features:
 
-- A polymorphic type and effect system with region-based local mutation.
-- Datalog constraints as first-class program values.
-- Function overloading based on purity reflection. 
+-   A polymorphic type and effect system with region-based local mutation.
+-   Datalog constraints as first-class program values.
+-   Function overloading based on purity reflection.
 
 Flix compiles to efficient JVM bytecode, runs on the Java Virtual Machine, and
 supports full tail call elimination. Flix has interoperability with Java and can
 use JVM classes and methods. Hence the entire Java ecosystem is available from
-within Flix. 
+within Flix.
 
 Flix aims to have world-class Visual Studio Code support. The [Flix Visual
 Studio Code extension](./vscode.md) uses the real Flix compiler hence there is
@@ -50,14 +50,14 @@ enum Shape {
 /// Computes the area of the given shape using
 /// pattern matching and basic arithmetic.
 def area(s: Shape): Int32 = match s {
-    case Circle(r)       => 3 * (r * r)
-    case Square(w)       => w * w
-    case Rectangle(h, w) => h * w
+    case Shape.Circle(r)       => 3 * (r * r)
+    case Shape.Square(w)       => w * w
+    case Shape.Rectangle(h, w) => h * w
 }
 
 // Computes the area of a 2 by 4.
 def main(): Unit \ IO =
-    area(Rectangle(2, 4)) |> println
+    area(Shape.Rectangle(2, 4)) |> println
 ```
 
 Here is an example that uses **polymorphic records**:

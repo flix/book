@@ -110,7 +110,7 @@ enum Bottle[a] {
     case Full(a)
 }
 
-def isEmpty[a](b: Bottle[a]): Bool = match b {
+def isEmpty(b: Bottle[a]): Bool = match b {
     case Bottle.Empty   => true
     case Bottle.Full(_) => false
 }

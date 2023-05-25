@@ -121,7 +121,7 @@ References can also point to references as the following example illustrates:
 ```flix
 region rc {
     let l1 = ref 42 @ rc;
-    let l2 = ref l1;
+    let l2 = ref l1 @ rc;
     let rs = deref (deref l2);
     println(rs)
 }
@@ -151,7 +151,7 @@ Similarly, here is a record that contains two mutable references:
 
 ```flix
 region rc {
-    let r = { fstName = ref "Lucky", lstName = ref "Luke" };
+    let r = { fstName = ref "Lucky" @ rc, lstName = ref "Luke" @ rc };
     r.fstName := "Unlucky"
 };
 ```

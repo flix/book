@@ -35,7 +35,7 @@ expression_. For example:
 ```flix
 region rc {
     let fruits = Array#{"Apple", "Pear", "Mango"} @ rc;
-    println(fruits)
+    println(Array.toString(fruits))
 }
 ```
 
@@ -54,7 +54,7 @@ We can allocate an array of size `n` filled with the same element using the
 ```flix
 region rc {
     let arr = Array.repeat(rc, 1_000, 42);
-    println(arr)
+    println(Array.toString(arr))
 }
 ```
 
@@ -68,7 +68,7 @@ We can also create an array filled with all integers from zero to ninety-nine:
 ```flix
 region rc {
     let arr = Array.range(rc, 0, 100);
-    println(arr)
+    println(Array.toString(arr))
 }
 ```
 
@@ -149,7 +149,8 @@ copy of a sub-range of the original array. For example
 ```flix
 region rc {
     let fruits = Array#{"Apple", "Pear", "Mango"} @ rc;
-    println(Array.slice(rc, 1, 2, fruits))
+    let result = Array.slice(rc, start = 1, end = 2, fruits);
+    println(Array.toString(result))
 }
 ```
 

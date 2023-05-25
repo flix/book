@@ -46,10 +46,9 @@ A screenshot of the Flix Visual Studio Code extension in action:
 Flix can also be used from the command line. Follow these steps:
 
 > 1. Create a new empty folder (e.g. `my-flix-project`).
-> 2. Download `flix.jar` from [https://github.com/flix/flix/releases](https://github.com/flix/flix/releases) and put it into the folder.
-> 3. Create a file called `Main.flix` with some source code and put it in the folder.
-> 4. Change directory (`cd`) into the folder (e.g. `cd my-flix-project`).
-> 5. Run `java -jar flix.jar Main.flix`.
+> 2. Download the latest `flix.jar` from [https://github.com/flix/flix/releases/latest](https://github.com/flix/flix/releases/latest) and put it into the folder.
+> 3. Enter the created directory (e.g. `cd my-flix-project`) and run `java -jar flix.jar init` to create an empty Flix project.
+> 4. Run `java -jar flix.jar run` to compile and run the project.
 
 ### Troubleshooting
 

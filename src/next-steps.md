@@ -6,7 +6,7 @@ We will write a simple variant of the venerable wordcount (`wc`) program from
 UNIX. We shall not be concerned with efficiency, but we will carefully check all 
 error cases. 
 
-Create a new folder (e.g. `wc`) and put the following code into `Main.flix`:
+Create a new folder (e.g. `wc`), set up an empty Flix project and put the following code into `src/Main.flix`:
 
 ```flix
 def main(): Unit \ IO = 
@@ -45,7 +45,7 @@ We can compile and run the program as follows:
 ```shell
 $ java -jar flix.jar build    
 $ java -jar flix.jar build-jar
-$ java -jar wc.jar Main.flix  
+$ java -jar artifact/wc.jar src/Main.flix
 Lines: 17, Words: 62
 ```
 

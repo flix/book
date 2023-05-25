@@ -1,6 +1,6 @@
 ## Hello World
 
-We can now write the famous _Hello World_ program in Flix:
+We can now see the famous _Hello World_ program in `src/Main.flix` file:
 
 ```flix
 def main(): Unit \ IO = 

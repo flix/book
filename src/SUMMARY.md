@@ -75,6 +75,7 @@
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
   - [Type Match](./type-match.md)
   - [Purity Reflection](./purity-reflection.md)
+  - [Type-Level Programming](./type-level-programming.md)
 
 ---
 

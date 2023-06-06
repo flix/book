@@ -1,7 +1,5 @@
 ## Functional Predicates
 
-> **Note:** This feature is available in Flix 0.36.0
-
 We sometimes run into a situation where we would like to use a logic predicate,
 but not to exhaustively enumerate all of its tuples. 
 

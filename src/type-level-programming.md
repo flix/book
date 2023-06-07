@@ -2,101 +2,117 @@
 
 > **Note:** This feature is experimental. Do not use in production.
 
+This section assumes prior familiarity with type-level programming and phantom
+types. 
+
 ### Type-Level Booleans
 
-Flix supports Booleans and Boolean formulas at the type-level.
+A unique Flix feature is its support for _type-level Boolean formulas_. This
+means `true` and `false` are types, but also that formulas such as `x and (not
+y)` are types. A type-level Boolean formulas has kind `Bool`. Two type-level
+Boolean formulas are equal if the formulas are equivalent (i.e. have the same
+truth tables). For example, the two types `true` and `x or not x` are _the same
+type_. 
 
-We can use such formulas to capture and statically enforce invariants of a
-program. For example:
+While type-level Boolean formulas are not as expressive as general refinement
+types or dependent types they support complete type inference and parametric
+polymorphism. This means that they are very ergonomic to work with. 
 
-> **Note:** The following example may confuse vampire and zombie mythology. 
+We can use type-level Boolean formulas to statically enforce program invariants. 
+
+We illustrate with a few examples:
+
+#### Humans and Vampires
 
 ```flix
 ///
-/// We can use a phantom type-level Booleans to capture
-/// whether a person is alive or undead (i.e. a vampire).
+/// We can use a phantom type-level Boolean to model whether a person is alive 
+/// or is undead (i.e. a vampire).
 ///
 enum Person[_isAlive: Bool] {
-    case Person({name = String, age = Int32})
+    /// A person has a name, an age, and is modelled as a record.
+    case P({name = String, age = Int32})
 }
 
 /// 
-/// We interpret `true` as Alive and `false` as Undead.
+/// We interpret the Boolean `true` is alive and the Boolean `false` as undead
+/// (i.e. a vampire).
 ///
 type alias Alive  = true
 type alias Undead = false
 
 ///
 /// A person who is born is alive. 
-/// See later for a natural birth with parents.
 ///
 def born(name: String): Person[Alive] =
-    Person.Person({name = name, age = 0})
+    Person.P({name = name, age = 0})
 
 ///
 /// A person who is alive and is bitten becomes a vampire.
 ///
-def bitten(p: Person[Alive]): Person[Undead] = match p {
-    case Person.Person(r) => Person.Person(r)
+/// Note that the type system enforces that an already undead (i.e. a vampire) 
+/// cannot be bitten again. 
+///
+def bite(p: Person[Alive]): Person[Undead] = match p {
+    /// The implementation is not important; it simply restructs the person.
+    case Person.P(r) => Person.P(r)
 }
 
 ///
-/// Two persons can be married, but only if they are both alive.
+/// Two persons can be married, but only if they are both alive or both undead.
 ///
-/// (The church does not recognize vampire marriages yet.)
+/// (The church does not yet recognize human-vampire marriages.)
 ///
-def marry(_p1: Person[Alive], _p2: Person[Alive]): Unit = ()
+/// Note that the type system enforces that both arguments have the same type.
+///
+def marry(_p1: Person[isAlive], _p2: Person[isAlive]): Unit = ()
 
 ///
-/// In our lore, a person who is undead can be resurrected.
+/// We can implement a more sophisticated version of born.
+/// 
+/// If two persons have a child then that child is a vampire if one of them is.
 ///
-def resurrect(p: Person[Undead]): Person[Alive] = match p {
-    case Person.Person(r) => Person.Person(r)
+/// Note that here we use the type-level computation `isAlive1 and isAlive2` 
+/// to compute whether the result is alive or undead.
+///
+def offspring(p1: Person[isAlive1], p2: Person[isAlive2]): Person[isAlive1 and isAlive2] = 
+    match (p1, p2) {
+        case (Person.P(r1), Person.P(r2)) => 
+            Person.P({name = "Spawn of ${r1.name} and ${r2.name}", age = 0})
 }
 
 ///
-/// If two persons have a child then that child is a vampire 
-/// if one of them is. At least that is how it works in Dawn
-/// of the Dead. Hm, but those are Zombies, I digress.
+/// A person can age-- no matter if they are alive or undead.
 ///
-/// Note the type-level computation of `isAlive1 and isAlive2`.
-///
-def offspring(p1: Person[isAlive1], p2: Person[isAlive2]): Person[isAlive1 and isAlive2] = match (p1, p2) {
-    case (Person.Person(r1), Person.Person(r2)) => 
-        Person.Person({name = "Son/Daughter of ${r1.name} and ${r2.name}", age = 0})
-}
-
-///
-/// A person can age-- no matter if they are alive or not.
-///
-/// Note that this function preserves the `isAlive` parameter.
+/// Note that this function preserves the `isAlive` parameter. That is, if a 
+/// person is alive they stay alive.
 ///
 def birthday(p: Person[isAlive]): Person[isAlive] = match p {
-    case Person.Person(r) => Person.Person({name = r.name, age = r.age + 1})
+    case Person.P(r) => Person.P({name = r.name, age = r.age + 1})
 }
 ```
 
-The Flix type system prevents us from misusing `Person`.
+We can now illustrate how the type system enforces certain invariants.
 
-For example, if we try:
+For example, the type system ensures that person cannot be bitten twice:
 
 ```flix
-let p = birthday(bitten(born("Dracula")));
-bitten(p);
+let p = birthday(bite(born("Dracula")));
+bite(p);
 ```
 
-then the Flix compiler emits a compiler error:
+If we compile this program then the Flix compiler emits a compiler error:
 
 ```
 ❌ -- Type Error -------------------------------------------------- 
 
->> Expected argument of type 'Person[Alive]', but got 'Person[false]'.
+>> Expected argument of type 'Person[true]', but got 'Person[false]'.
 
-69 |     bitten(p);
-                ^
-                expected: 'Person[Alive]'
+69 |     bite(p);
+              ^
+              expected: 'Person[true]'
 
-The function 'bitten' expects its 1st argument to be of type 'Person[Alive]'.
+The function 'bite' expects its 1st argument to be of type 'Person[true]'.
 ```
 
-Here we have to recall that false means `Undead`.
+Here we have to recall that `true` means `Alive` and `false` means `Undead`.

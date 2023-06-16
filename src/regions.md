@@ -5,7 +5,7 @@ _region_ that is tied to its lexical scope. When execution leaves the lexical
 scope of a region, all memory in that region becomes unreachable. 
 
 Regions are useful because they enable us to implement _pure functions_ that
-internally uses _mutation_. We will illustrate this powerful idea with several
+internally use _mutation_. We will illustrate this powerful idea with several
 real-world examples, but let us first discuss how to use a region:
 
 We introduce a new region scope with the `region` construct:
@@ -27,7 +27,7 @@ def sort(l: List[a]): List[a] with Order[a] =
     }
 ```
 
-Here we introduce a region named `rc`. We use the function `Array.toArray` to
+Here we introduce a region named `rc`. We use the function `List.toArray` to
 convert the list `l` to a mutable array `arr` associated with the region `rc`.
 We then sort `arr` using `Array.sort!` which uses an efficient in-place sorting
 algorithm. Finally, we convert the sorted array back to a list and return it.

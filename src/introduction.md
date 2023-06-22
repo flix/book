@@ -119,7 +119,7 @@ def reachable(edges: List[(Int32, Int32)], src: Int32, dst: Int32): Bool =
         Reachable() :- Path(src, dst).
     };
     let result = query db, pr select () from Reachable();
-    not List.isEmpty(result)
+    not Vector.isEmpty(result)
 ```
 
 And finally here is an example that uses **structured concurrency with channels

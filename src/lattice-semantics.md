@@ -202,7 +202,7 @@ def shortestPath(g: Set[(t, Int32, t)], o: t): Map[t, D] with Order[t] =
         Dist(o; D(0)).
         Dist(y; add(d1 , D(d2))) :- Dist(x; d1), Edge(x, d2, y).
     };
-    query db, pr select (x , d) from Dist(x; d) |> List.toMap
+    query db, pr select (x , d) from Dist(x; d) |> Vector.toMap
 
 def add(x: D, y: D): D = 
     let D(n1) = x;
@@ -229,7 +229,7 @@ def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Order[t
         Dist(o; Down(0)).
         Dist(y; add(d1 , Down(d2))) :- Dist(x; d1), Edge(x, d2, y).
     };
-    query db, pr select (x , d) from Dist(x; d) |> List.toMap
+    query db, pr select (x , d) from Dist(x; d) |> Vector.toMap
 
 def add(x: Down[Int32], y: Down[Int32]): Down[Int32] = 
     let Down(n1) = x;

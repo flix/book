@@ -27,7 +27,7 @@ Here the `cyclic` function returns a _Datalog program value_ which consists of
 three rules that compute the transitive closure of a graph of edges and whether
 there is path from a vertex to itself. We use the `cyclic` function inside
 `main` to determine if a small graph, given by `db`, has a cyclic. The program
-prints `true :: Nil` when compiled and run. 
+prints `Vector#{true}` when compiled and run. 
 
 Returning to `cyclic`, we see that its type is:
 
@@ -69,5 +69,5 @@ def main(): Unit \ IO =
     query db, cyclic() select (x, y) from Path(x, y) |> println
 ```
 
-prints the empty list `Nil` since `Path` has been made local by the predicate
+prints the empty vector `Vector#{}` since `Path` has been made local by the predicate
 abstraction.

@@ -83,7 +83,7 @@ pub class Iterable[t: Type -> Type] {
     ///
     /// Returns an iterator over `t`.
     ///
-    pub def iterator(rh: Region[r], t: t[a]): Iterator[a, r] \ r
+    pub def iterator(rc: Region[r], t: t[a]): Iterator[a, r, r] \ r
 }
 ```
 

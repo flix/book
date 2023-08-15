@@ -51,6 +51,7 @@
   - [Classes and Interfaces](./extending-classes-and-interfaces.md)
   - [Nested and Inner Classes](./nested-and-inner-classes.md)
   - [Exceptions](./exceptions.md)
+  - [Java Collections](./java-collections.md)
 - [Everyday Programming](./everyday-programming.md)
   - [The Main Function](./main.md)
   - [Printing to Standard Out](./printing-to-stdout.md)

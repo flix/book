@@ -7,7 +7,7 @@ Flix has several types of identifiers:
   * Can be used to name: namespaces, annotations, type classes, effects, predicates (within datalog), tags (within enums), types
 * **Lowercase name:** An identifier that starts with aa lowercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `anIdentifier`, `x`, `this_and_that`
-  * Can be used to name: annotations, attributes (within datalog), functions, fields (within records), variables
+  * Can be used to name: annotations, attributes (within datalog), functions, labels (within records), variables
 * **Greek name:** An identifier consisting of any combination of letters from the Greek alphabet (the unicode range U+0370 to U+03FF).
   * e.g. `Χαίρετε`, `αναγνωριστικό`
   * Can be used to name: functions, variables
@@ -26,7 +26,7 @@ The following are reserved by Flix and cannot be redefined within user code:
 
 `!=`, `**`, `..`, `::`, `:=`, `<-`, `<=`, `==`, `=>`, `>=`, `or`,
 `&&&`, `<+>`, `<<<`, `<=>`, `>>>`, `???`, `^^^`, `and`, `mod`, `not`, `rem`, `|||`, `~~~`,
-`$DEFAULT$`, `*`, `+`, `-`, `/`, `:`, `<`, 
+`$DEFAULT$`, `*`, `+`, `-`, `/`, `:`, `<`,
 `>`, `@`, `Absent`, `Bool`, `Impure`, `Nil`, `Predicate`, `Present`, `Pure`,
 `Read`, `RecordRow`, `Region`, `SchemaRow`, `Type`, `Write`, `alias`, `case`, `catch`, `chan`,
 `class`, `def`, `deref`, `else`, `enum`, `false`, `fix`, `force`,

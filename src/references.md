@@ -31,7 +31,7 @@ region rc {
 ```
 
 Here we introduce a region named `rc`. Inside the region, we create a reference
-cell called `c` with the value `42` which we then dereference and print. 
+cell called `c` with the value `42` which we then dereference and print.
 
 ### Dereferencing References
 
@@ -98,7 +98,7 @@ Here the `Counter` data type has a region type parameter. This is required since
 the counter internally uses a reference that requires a region. Hence `Counter`s
 are also scoped. Note that the `newCounter` function requires a region handle to
 create a new `Counter`. Moreover, note that the functions `getCount` and
-`increment` both have the `r` effect. 
+`increment` both have the `r` effect.
 
 ### Aliasing and References to References
 
@@ -127,7 +127,7 @@ region rc {
 }
 ```
 
-Here the type of `l2` is `Ref[Ref[Int32, rc], rc]`. 
+Here the type of `l2` is `Ref[Ref[Int32, rc], rc]`.
 
 ### Mutable Tuples and Records
 
@@ -158,4 +158,4 @@ region rc {
 
 The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String,
 rc] }`. Again, the assignment does not change the record, but instead changes
-the value of the reference cell corresponding to the `fstName` field.
+the value of the reference cell corresponding to the `fstName` label.

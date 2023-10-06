@@ -132,3 +132,5 @@ translate(from = English, to = French, "Where is the library?")
 ```
 
 which is equivalent to the above.
+
+## Pattern matching

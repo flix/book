@@ -42,17 +42,66 @@ def area(s: Shape): Int32 = match s {
 }
 ```
 
-In general, the syntax for record patterns are similar to their types:
+In the example above, we implicitly require that each pattern
+has exactly the specified labels.
+No more, no less.
+However, in general, the syntax for record patterns is similar to their types.
+Thus, we can match on a record that has at least one specific label.
 
-TODO: Write this out properly
+```flix
+def f(r: { height = Int32 | a }): Int32 = match r {
+    case { height | _ } => height // The extension has a wildcard pattern since it is unused
+}
+```
+
+Note, however, that the pattern also implies a type,
+thus the following example will not work.
+
+```flix
+def badTypes(r: { height = Int32 | a }): Int32 = match r {
+    case { height | _ } => height
+    case { height }     => height
+}
+```
+
+This is because the first case is a polymorphic record
+with a defined `height`-label, whereas the second case
+matches on a closed record that *only* has the
+`height`-label defined.
+
+Additionally, the `{ label }` pattern is actually
+syntactic sugar for `{ label = pattern }`.
+Thus, if you are dealing with multiple records,
+then it may be necessary to use different patterns.
+
+```flix
+def badShadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 = match (r1, r2) {
+    case ({ height | _ }, { height | _ }) => height + height
+    // This does not work because `height = height` is defined twice
+}
+```
+
+However, renaming the variables makes the program type check.
+
+```flix
+def goodShadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 = match (r1, r2) {
+    case ({ height = h1 | _ }, { height = h2 | _ }) => h1 + h2
+}
+```
+
+To summarize, here are a few examples of record patterns:
+
+- `{ }` - the empty record
+- `{ radius }` - a record containing only the label `radius`
+- `{ radius | _ }` - a record containg at least the label `radius`
+- `{ radius | r }` - a record containg at least the label `radius` where the rest of the record is bound to `r`
+- `{ radius = r }` - a record containg at least the label `radius` where the value is bound to `r` in the scope
+- `{ radius }` is actually syntactic sugar for `{ radius = radius }`
+
+A pseudo regex for the syntax is
 
 ```
-{ }            // The empty record
-{ radius }     // A record containing ONLY the field `radius`
-{ radius | _ } // A record containg at least the field `radius`
-{ radius | r } // A record containg at least the field `radius` where the rest of the record is bound to `r`
-{ radius = r } // A record containg at least the field `radius` where the value is bound to `r` in the scope
-// { radius } is actually syntactic sugar for { radius = radius }
+{ (label = pattern (, label = pattern)* ( | pattern )?)? }
 ```
 
 ### Let Pattern Match
@@ -84,6 +133,15 @@ let Some(x) = ...
 ```
 
 The Flix compiler will reject such non-exhaustive patterns.
+
+Records lend themselves well in this regard, as it
+allows you to destructure a record and only use
+the labels you are interested in:
+
+```flix
+let { height | _ } = r;
+height + height
+```
 
 ### Match Lambdas
 

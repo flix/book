@@ -2,7 +2,7 @@
 
 ### Matching on Enums
 
-Flix supports pattern matching on algebraic data types. 
+Flix supports pattern matching on algebraic data types.
 
 For example, if we have an algebraic data type that models shapes:
 
@@ -23,6 +23,36 @@ def area(s: Shape): Int32 = match s {
     case Shape.Square(w)       => w * w
     case Shape.Rectangle(h, w) => h * w
 }
+```
+
+This also works for record types, however, the syntax is slightly different.
+Let us rewrite the `Shape` type from before using records.
+
+```flix
+enum Shape {
+    case Circle({ radius = Int32 })
+    case Square({ width = Int32 })
+    case Rectangle({ height = Int32, width = Int32 })
+}
+
+def area(s: Shape): Int32 = match s {
+    case Shape.Circle({ radius })           => 3 * (radius * radius)
+    case Shape.Square({ width })            => width * width
+    case Shape.Rectangle({ height, width }) => height * width
+}
+```
+
+In general, the syntax for record patterns are similar to their types:
+
+TODO: Write this out properly
+
+```
+{ }            // The empty record
+{ radius }     // A record containing ONLY the field `radius`
+{ radius | _ } // A record containg at least the field `radius`
+{ radius | r } // A record containg at least the field `radius` where the rest of the record is bound to `r`
+{ radius = r } // A record containg at least the field `radius` where the value is bound to `r` in the scope
+// { radius } is actually syntactic sugar for { radius = radius }
 ```
 
 ### Let Pattern Match

@@ -76,18 +76,20 @@ Thus, if you are dealing with multiple records,
 then it may be necessary to use different patterns.
 
 ```flix
-def badShadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 = match (r1, r2) {
-    case ({ height | _ }, { height | _ }) => height + height
-    // This does not work because `height = height` is defined twice
-}
+def shadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 =
+    match (r1, r2) {
+        case ({ height | _ }, { height | _ }) => height + height
+        // This does not work because `height = height` is defined twice
+    }
 ```
 
 However, renaming the variables makes the program type check.
 
 ```flix
-def goodShadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 = match (r1, r2) {
-    case ({ height = h1 | _ }, { height = h2 | _ }) => h1 + h2
-}
+def renaming(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 =
+    match (r1, r2) {
+        case ({ height = h1 | _ }, { height = h2 | _ }) => h1 + h2
+    }
 ```
 
 To summarize, here are a few examples of record patterns:

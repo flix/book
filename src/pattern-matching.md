@@ -128,9 +128,9 @@ let Some(x) = ...
 
 The Flix compiler will reject such non-exhaustive patterns.
 
-Records lend themselves well in this regard, as it
-allows you to destructure a record and only use
-the labels you are interested in:
+Let-pattern-matches work well with records, as it
+allows you to destructure a record and only use the
+labels you are interested in:
 
 ```flix
 let { height | _ } = r;

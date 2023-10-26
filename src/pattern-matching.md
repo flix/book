@@ -25,8 +25,8 @@ def area(s: Shape): Int32 = match s {
 }
 ```
 
-This also works for record types, however, the syntax is slightly different.
-Let us rewrite the `Shape` type from before using records.
+This also works for record types; however, the syntax is slightly different.
+Let us rewrite the `Shape` type from before, this time using records.
 
 ```flix
 enum Shape {
@@ -97,12 +97,6 @@ To summarize, here are a few examples of record patterns:
 - `{ radius | r }` - a record containg at least the label `radius` where the rest of the record is bound to `r`
 - `{ radius = r }` - a record containg at least the label `radius` where the value is bound to `r` in the scope
 - `{ radius }` is actually syntactic sugar for `{ radius = radius }`
-
-A pseudo regex for the syntax is
-
-```
-{ (label = pattern (, label = pattern)* ( | pattern )?)? }
-```
 
 ### Let Pattern Match
 

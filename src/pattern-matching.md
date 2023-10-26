@@ -50,7 +50,8 @@ Thus, we can match on a record that has at least one specific label.
 
 ```flix
 def f(r: { height = Int32 | a }): Int32 = match r {
-    case { height | _ } => height // The extension has a wildcard pattern since it is unused
+    case { height | _ } => height
+    // The extension has a wildcard pattern since it is unused
 }
 ```
 

@@ -60,10 +60,23 @@ thus the following example will not work.
 
 ```flix
 def badTypes(r: { height = Int32 | a }): Int32 = match r {
+    case { height } => height
+}
+```
+
+Additionally, all cases must have the same type,
+so this will also not work:
+
+```flix
+match ??? {
     case { height | _ } => height
     case { height }     => height
 }
 ```
+
+This may be a contrived example, but it
+demonstrates a common pitfall, which is easy
+fixed.
 
 This is because the first case is a polymorphic record
 with a defined `height`-label, whereas the second case

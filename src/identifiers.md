@@ -4,7 +4,7 @@ Flix has several types of identifiers:
 
 * **Uppercase name:** An identifier that starts with an uppercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `String`, `ALL_UPPER`, `Shriek!`
-  * Can be used to name: namespaces, annotations, type classes, effects, predicates (within datalog), tags (within enums), types
+  * Can be used to name: namespaces, annotations, traits, effects, predicates (within datalog), tags (within enums), types
 * **Lowercase name:** An identifier that starts with aa lowercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `anIdentifier`, `x`, `this_and_that`
   * Can be used to name: annotations, attributes (within datalog), functions, labels (within records), variables
@@ -32,5 +32,5 @@ The following are reserved by Flix and cannot be redefined within user code:
 `class`, `def`, `deref`, `else`, `enum`, `false`, `fix`, `force`,
 `if`, `import`, `inline`, `instance`, `into`, `lat`, `law`, `lawful`, `lazy`, `let`, `match`,
 `namespace`, `null`, `opaque`, `override`, `pub`, `ref`, `region`, `reify`,
-`reifyBool`, `reifyEff`, `reifyType`, `rel`, `sealed`, `set`, `spawn`, `Static`, `true`,
+`reifyBool`, `reifyEff`, `reifyType`, `rel`, `sealed`, `set`, `spawn`, `Static`, `trait`, `true`,
 `type`, `use`, `where`, `with`, `discard`, `object`

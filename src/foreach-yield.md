@@ -40,13 +40,13 @@ def main(): Unit \ IO =
 Here we iterate through three collections `c1`, `c2`, and `c3` and return a set
 of the sums of their pairwise combinations. 
 
-### The Collectable Type Class 
+### The Collectable Trait 
 
-The workhorse behind the `foreach-yield` construct is the `Iterable` type class
-(discussed in the previous section) and the `Collectable` type class. 
+The workhorse behind the `foreach-yield` construct is the `Iterable` trait
+(discussed in the previous section) and the `Collectable` trait. 
 
 ```flix
-pub class Collectable[m: Type -> Type] {
+pub trait Collectable[m: Type -> Type] {
     ///
     /// Run an Iterator collecting the results.
     ///
@@ -54,7 +54,7 @@ pub class Collectable[m: Type -> Type] {
 }
 ```
 
-Without going into details, the `Collectable` type class is implemented by all
+Without going into details, the `Collectable` trait is implemented by all
 kinds of collections that can be constructed from an iterator. Notably, this
 includes the `List`, `Chain`, and `Set` data types. 
 

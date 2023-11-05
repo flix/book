@@ -2,7 +2,7 @@
 
 Flix has excellent support for (immutable) `Set`s and `Map` based on balanced
 trees; hence the elements of a `Set` and the keys of `Map` must implement the
-`Order` type class. 
+`Order` trait. 
 
 > **Tip:** The Flix `Set` and `Map` data structures will automatically
 > parallelize certain operations. Such operations are marked with

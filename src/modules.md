@@ -148,16 +148,16 @@ def main(): Unit \ IO =
 Note that `use Zoo.Animal` brings the `Animal` _type_ into scope, whereas `use
 Zoo.Animal.Cat` brings the `Cat` _case_ into scope.
 
-## Modules and Type Classes
+## Modules and Trait
 
-We can also define a type class inside a module. The mechanism is similar to
+We can also define a trait inside a module. The mechanism is similar to
 enums inside modules. 
 
 For example, we can write:
 
 ```flix
 mod Zoo {
-    pub class Speakable[t] {
+    pub trait Speakable[t] {
         pub def say(x: t): String
     }
 }
@@ -187,7 +187,7 @@ def main(): Unit \ IO =
     speak(Animal.Cat)
 ```
 
-Or we can `use` the `Zoo.Speakable` type class and the `Zoo.Speakable.say`
+Or we can `use` the `Zoo.Speakable` trait and the `Zoo.Speakable.say`
 function: 
 
 ```flix

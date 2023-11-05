@@ -1,15 +1,15 @@
 ## Higher-Kinded Types
 
 Flix supports [higher-kinded
-types](https://en.wikipedia.org/wiki/Kind_(type_theory)), hence type class can
+types](https://en.wikipedia.org/wiki/Kind_(type_theory)), hence traits can
 abstract over _type constructors_. 
 
-For example, we can write a type class that capture iteration over any
+For example, we can write a trait that capture iteration over any
 collection of the shape `t[a]` where `t` is a type constructor of kind
  `Type -> Type` and `a` is the element type of kind `Type`:
 
 ```flix
-class ForEach[t: Type -> Type] {
+trait ForEach[t: Type -> Type] {
     pub def forEach(f: a -> Unit \ ef, x: t[a]): Unit \ ef
 }
 ```
@@ -18,7 +18,7 @@ Note that to use higher-kinded types Flix _requires_ us to provide the kind
 annotation (i.e. we had to write `t: Type -> Type` to inform Flix that `ForEach`
 abstracts over type constructors.)
 
-We can implement instances of the `ForEach` type class for type constructors
+We can implement instances of the `ForEach` trait for type constructors
 such as `Option`, and `List`, `Set`. For example:
 
 ```flix
@@ -30,8 +30,8 @@ instance ForEach[List] {
 }
 ```
 
-> **Note**: Flix does not have a `ForEach` type class, but instead has the much
-> more powerful and versatile `Foldable` type class. 
+> **Note**: Flix does not have a `ForEach` trait, but instead has the much
+> more powerful and versatile `Foldable` trait. 
 
 ### The Flix Kinds
 
@@ -63,8 +63,8 @@ but this style is not considered idiomatic.
 Flix requires explicit kind annotations in two situations:
 
 - For non-Type kinds on enum type parameters.
-- For non-Type kinds on type classes.
+- For non-Type kinds on traits.
 
 In other words, if you are only using types of kind `Type`, no annotations are
-necessary. But if you want an enum declaration or type class to abstract over a
+necessary. But if you want an enum declaration or trait to abstract over a
 non-Type kind then you must explicitly write its kind. 

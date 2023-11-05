@@ -80,8 +80,8 @@ List.filter(x -> debug(x > 5))
 
 ### Debug Format
 
-The `debug` expression (and its variants) do _not_ use the `ToString` type
-class. Instead they print the internal Flix representation of the given value. 
+The `debug` expression (and its variants) do _not_ use the `ToString` trait.
+Instead they print the internal Flix representation of the given value. 
 
 For example, the expression:
 

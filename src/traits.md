@@ -1,9 +1,9 @@
-# Type Classes
+# Traits
 
-Type classes are one of the ways to support a high
+Traits are one of the ways to support a high
 level of genericity in functional programming.
-Flix's type classes largely follow the style of those
-of Haskell, with some additional principles.
+Flix's traits largely follow the style of type
+classes in Haskell, with some additional principles.
 
 ## Essentials
 
@@ -20,11 +20,11 @@ def isSingleton(l: List[a]): Bool =
     List.length(l) == 1
 ```
 
-We can generalize this behavior by using a type class
+We can generalize this behavior by using a trait
 constraint.
 Rather than requiring the argument to be a list, we
 use a type variable `a` and constrain it with to the
-type class `Length`, which means that the function
+trait `Length`, which means that the function
 `Length.length` can be applied to the argument.
 
 ```flix
@@ -32,17 +32,17 @@ def isSingleton(l: a): Bool with Length[a] =
     Length.length(l) == 1
 ```
 
-The type class declaration `Length` specifies what
+The trait declaration `Length` specifies what
 can be done with its members.
 In this case, there is only one function:
 `Length.length`, which takes the member type as an
 argument and returns an integer.
 The law `nonnegative` is also defined as part of the
-class.
+trait.
 Laws will be further explored below.
 
 ```flix
-pub class Length[a] {
+pub trait Length[a] {
     pub def length(x: a): Int32
 
     law nonnegative: forall(x: a) . Length.length(x) >= 0
@@ -58,8 +58,8 @@ isSingleton(1 :: 2 :: Nil)
 
 While we know that a list has a length, we haven't
 told this to the compiler.
-To do this, we introduce an `instance` of the type
-class for the generic type `List[a]`.
+To do this, we introduce an `instance` of the trait
+for the generic type `List[a]`.
 
 ```flix
 instance Length[List[a]] {
@@ -79,11 +79,11 @@ generally, for lists specifically the solution has a
 greater runtime complexity than necessary.
 In order to preserve the general solution while
 allowing for optimizations where needed, we can use a
-default implementation in the type class and an
+default implementation in the trait and an
 override implementation in the instance.
 
 ```flix
-pub class Length[a] {
+pub trait Length[a] {
 
     pub def length(x: a): Int32
 
@@ -104,7 +104,7 @@ instance Length[List[a]] {
 ```
 
 We have added the `isSingleton` function to the
-`Length` type class, with a default implementation
+`Length` trait, with a default implementation
 that works in general.
 (We also added a new law `singletonMeansOne`; see
 section **Laws**.)
@@ -128,11 +128,11 @@ implementation of the `isSingleton` function.
 ## Laws
 
 In addition to the functions forming part of their
-contract, type classes have laws that govern how the
+contract, traits have laws that govern how the
 functions may be implemented.
 
 ```flix
-pub class Length[a] {
+pub trait Length[a] {
     pub def length(x: a): Int32
 
     law nonnegative: forall(x: a) . Length.length(x) >= 0
@@ -153,10 +153,10 @@ documentation.
 
 We've seen type constraints on on function
 definitions, but constraints can appear on on
-instances and type classes themselves as well.
+instances and traits themselves as well.
 
 ```flix
-pub class TreeSize[a] {
+pub trait TreeSize[a] {
     /// Returns the number of nodes in the object graph of this object
     pub def size(x: a): Int32
 
@@ -175,19 +175,19 @@ instance TreeSize[List[a]] with TreeSize[a] {
 }
 ```
 
-## Sealed Classes
+## Sealed Traits
 
-In general, a user can add an instance of a class for
+In general, a user can add an instance of a trait for
 any type they define.
 In some cases, however, it is useful to restrict
-membership in a class to a finite list of types,
-defined by the author of the class.
-This is the purpose of a `sealed` class, for which
-instances outside the class's namespace are not
+membership in a trait to a finite list of types,
+defined by the author of the trait.
+This is the purpose of a `sealed` trait, for which
+instances outside the trait's namespace are not
 permitted.
 
 ```flix
-sealed class Primitive[a]
+sealed trait Primitive[a]
 
 instance Primitive[Bool]
 instance Primitive[Int32]

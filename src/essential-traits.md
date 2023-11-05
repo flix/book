@@ -1,14 +1,14 @@
-## Essential Classes
+## Essential Traits
 
-Practical programming in Flix requires knowledge of three type classes: `Eq`,
+Practical programming in Flix requires knowledge of three traits: `Eq`,
 `Order`, and `ToString`. 
 
-### The Eq Class
+### The Eq Trait
 
-The `Eq` class captures when two values of a specific type are equal:
+The `Eq` trait captures when two values of a specific type are equal:
 
 ```flix
-class Eq[a] {
+trait Eq[a] {
 
     ///
     /// Returns `true` if and only if `x` is equal to `y`.
@@ -21,13 +21,13 @@ class Eq[a] {
 
 To implement `Eq`, we only have to implement the `eq` function.
 
-### The Order Class
+### The Order Trait
 
-The `Order` class captures when one value is smaller or equal to another value
+The `Order` trait captures when one value is smaller or equal to another value
 of the same type:
 
 ```flix
-class Order[a] with Eq[a] {
+trait Order[a] with Eq[a] {
 
     ///
     /// Returns `Comparison.LessThan` if `x` < `y`, 
@@ -40,7 +40,7 @@ class Order[a] with Eq[a] {
 }
 ```
 
-To implement the `Order` class, we must implement the `compare` function which
+To implement the `Order` trait, we must implement the `compare` function which
 returns value of type `Comparison`. The `Comparison` data type is defined as:
 
 ```flix
@@ -51,12 +51,12 @@ enum Comparison {
 }
 ```
 
-### The ToString Class
+### The ToString Trait
 
-The `ToString` class is used to obtain a string representation of a specific value:
+The `ToString` trait is used to obtain a string representation of a specific value:
 
 ```flix
-class ToString[a] {
+trait ToString[a] {
     ///
     /// Returns a string representation of the given `x`.
     ///
@@ -64,7 +64,7 @@ class ToString[a] {
 }
 ```
 
-Flix uses the `ToString` type class in string interpolations. 
+Flix uses the `ToString` trait in string interpolations. 
 
 For example, the interpolated string
 
@@ -80,4 +80,4 @@ is actually syntactic sugar for the expression:
 ```
 
 In the following subsection, we discuss how to automatically derive
-implementations of the `Eq`, `Order`, and `ToString` type classes.
+implementations of the `Eq`, `Order`, and `ToString` traits.

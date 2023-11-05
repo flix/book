@@ -42,7 +42,7 @@ Flix also comes with an (optional) Visual Studio Code color theme called "Flixif
     - Find all references to a function.
     - Find all references to a local variable or formal parameter.
     - Find all references to an enum case.
-    - Find all implementations of a type class.
+    - Find all implementations of a trait.
 
 * __Symbols__
     - List all document symbols.

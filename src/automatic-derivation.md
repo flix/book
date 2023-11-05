@@ -1,6 +1,6 @@
 ## Automatic Derivation
 
-Flix supports automatic derivation of several type classes, including:
+Flix supports automatic derivation of several traits, including:
 
 - `Eq` — to derive structural equality on the values of a type.
 - `Order` — to derive a total ordering on the values of a type.
@@ -9,7 +9,7 @@ Flix supports automatic derivation of several type classes, including:
 
 ### Derivation of Eq and Order
 
-We can automatically derive instances of the `Eq` and `Order` type classes using
+We can automatically derive instances of the `Eq` and `Order` traits using
 the `with` clause in the `enum` declaration. For example: 
 
 ```flix
@@ -64,7 +64,7 @@ A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
 
 ### Derivation of Sendable
 
-We can automatically derive implementations of the `Sendable` type class (which
+We can automatically derive implementations of the `Sendable` trait (which
 allow values of a specific type to be sent over a channel). For example:
 
 ```flix

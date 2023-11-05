@@ -13,7 +13,7 @@ complete type inference. Flix aims to offer a unique combination of features
 that no other programming language offers, including:
 
 -   algebraic data types and pattern matching.
--   type classes with higher-kinded types.
+-   traits with higher-kinded types.
 -   structured concurrency based on channels and light-weight processes.
 
 In addtion, Flix has several new powerful and unique features:

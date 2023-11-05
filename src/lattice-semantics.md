@@ -61,7 +61,7 @@ instance ToString[Sign] {
 }
 ```
 
-With these type class instances in place, we can now
+With these trait instances in place, we can now
 define the lattice operations on `Sign`.
 
 We define the bottom element and the partial order:

@@ -27,7 +27,7 @@ The Flix compiler reports:
 ```
 
 The issue is that the empty list has the polymorphic type: `List[a]` for any
-`a`. This means that Flix cannot select the appropriate `ToString` type class
+`a`. This means that Flix cannot select the appropriate `ToString` trait
 instance. 
 
 The solution is to specify the type of the empty list. For example, we can write:
@@ -38,8 +38,8 @@ def main(): Unit \ IO =
     println(l)
 ```
 
-which solves the problem because Flix can find an instance of `ToString` type
-class for the concrete type `List[Int32]`.
+which solves the problem because Flix can find an instance of `ToString` trait
+for the concrete type `List[Int32]`.
 
 ## Records and Complex Instances
 
@@ -61,8 +61,8 @@ The Flix compiler reports:
              complex instance type
 ```
 
-This is because, at least for the moment, it is not possible type define type
-class instances on records (or Datalog schema rows). This may change in the
+This is because, at least for the moment, it is not possible type define 
+trait instances on records (or Datalog schema rows). This may change in the
 future. Until then, it is necessary to wrap the record in an algebraic data
 type. For example:
 

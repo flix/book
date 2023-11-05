@@ -229,7 +229,7 @@ constraint set `p` of type
 `#{ Edge(Int32, Int32) | ... }`.
 
 The `inject` expression works with any type that
-implements the `Foldable` type class.
+implements the `Foldable` trait.
 Consequently, it can be used with lists, sets, maps,
 and so forth.
 

@@ -2,9 +2,9 @@
 
 We can read and write fields by importing functions that serve as "getters" and "setters".
 
-Assume we have the class:
+Assume we have the Java class:
 
-```flix
+```java
 class TestClass {
     boolean boolField = true;
 }

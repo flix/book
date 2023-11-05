@@ -1,6 +1,6 @@
 ## Companion Modules
 
-In Flix every enum and type class declaration is associated with a _companion
+In Flix every enum and trait declaration is associated with a _companion
 module_.
 
 ### Enum Companions
@@ -27,21 +27,21 @@ mod Color {
 Here the `Color` type and the `Red`, `Green`, and `Blue` cases are automatically
 in scope within the companion `Color` module. 
 
-### Type Class Companions
+### Trait Companions
 
-Every type class declaration also gives rise to a companion module.
+Every trait declaration also gives rise to a companion module.
 
-For example, we can define a type class `Addable` for types whose elements can be added:
+For example, we can define a trait `Addable` for types whose elements can be added:
 
 ```flix
-class Addable[t] {
+trait Addable[t] {
     pub def add(x: t, y: t): t
 }
 ```
 
-The `Addable` type class implicitly introduces a companion module `Addable`. We
+The `Addable` trait implicitly introduces a companion module `Addable`. We
 typically use the companion module to store functionality that is related to the
-type class. 
+trait. 
 
 For example, we could have:
 
@@ -52,12 +52,12 @@ mod Addable {
 ```
 
 When accessing a member of `Addable`, Flix will automatically look in both the
-class declaration and its companion namespace. Consequently, `Addable.add`
-refers to the type class member `add` whereas `Addable.add3` refers to the
+trait declaration and its companion namespace. Consequently, `Addable.add`
+refers to the trait member `add` whereas `Addable.add3` refers to the
 function inside the `Addable` module. Note that the `add` signature is in the
 scope of the `Addable` module. 
 
-We should be aware that functions defined in the companion module of a type
-class cannot be overridden by instances of the associated type class. Thus we
+We should be aware that functions defined in the companion module of a trait
+cannot be overridden by instances of the associated trait. Thus we
 should only put members into the companion namespace when we do not intend
 to override them later. 

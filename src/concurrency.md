@@ -19,7 +19,7 @@ will not exit until all the processes associated with it have completed:
 
 ```flix
 def slowPrint(delay: Int32, message: String): Unit \ IO =
-    Thread.sleep(Time/Duration.fromSeconds(delay));
+    Thread.sleep(Time.Duration.fromSeconds(delay));
     println(message)
 
 def main(): Unit \ IO = 

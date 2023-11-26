@@ -34,7 +34,7 @@
   - [Declaring Modules](./declaring-modules.md)
   - [Using Modules](./using-modules.md)
   - [Companion Modules](./companion-modules.md)
-- [Traits](./taits.md)
+- [Traits](./traits.md)
   - [Essential Traits](./essential-traits.md)
   - [Automatic Derivation](./automatic-derivation.md)
   - [Higher-Kinded Types](./higher-kinded-types.md)

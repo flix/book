@@ -71,7 +71,7 @@ A Flix package file (fpkg) is essentially zip-file of the project source code. A
 Flix package, together with its `flix.toml` manifest, can be published on
 GitHub.
 
-### Build a native executable
+### Building a native executable
 
 It is possible to run the GraalVM `native-image` using the
 jar file that to obtain a native executable.

@@ -1,6 +1,6 @@
 # Getting Started
 
-Getting started with Flix is straightforward. All you need is [Java version 11+](https://adoptium.net/temurin/releases/).
+Getting started with Flix is straightforward. All you need is [Java version 21+](https://adoptium.net/temurin/releases/).
 
 You can check if Java is installed and its version by typing:
 
@@ -11,15 +11,15 @@ $ java -version
 which should print something like:
 
 ```
-openjdk version "18.0.2.1" 2022-08-18
-OpenJDK Runtime Environment Temurin-18.0.2.1+1 (build 18.0.2.1+1)
-OpenJDK 64-Bit Server VM Temurin-18.0.2.1+1 (build 18.0.2.1+1, mixed mode, sharing)
+openjdk version "21" 2023-09-19 LTS
+OpenJDK Runtime Environment Temurin-21+35 (build 21+35-LTS)
+OpenJDK 64-Bit Server VM Temurin-21+35 (build 21+35-LTS, mixed mode, sharing)
 ```
 
 If Java is not installed or your version is too old, a newer version can be
 downloaded from [Adoptium](https://adoptium.net/temurin/releases/).
 
-Once you have Java 11+ installed there are two ways to proceed:
+Once you have Java 21+ installed there are two ways to proceed:
 
 - You can use the [Flix VSCode extension](https://marketplace.visualstudio.com/items?itemName=flix.flix) (__highly recommended__) or
 - You can run the Flix compiler from the command line.

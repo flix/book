@@ -1,12 +1,12 @@
 ## Unchecked Type and Effect Casts
 
-Flix also supports _unchecked_ type and effect casts. 
+Flix also supports _unchecked_ type and effect casts.
 
 ### Unchecked Type Casts
 
 An *unchecked type cast* instructs the compiler that an expression has a specific type.
 
-> **Warning️️:** Type casts are very dangerous and should be used with utmost
+> **Warning:** Type casts are very dangerous and should be used with utmost
 > caution!
 
 Flix programmers should normally never need to use an unchecked type cast.
@@ -45,7 +45,7 @@ unchecked_cast((123, 456) as ##java.lang.Integer)
 An *unchecked effect cast* instructs the compiler that an expression has a
 specific effect.
 
-> **Warning️️:** Effect casts are extremely dangerous and should be used with
+> **Warning:** Effect casts are extremely dangerous and should be used with
 > extreme caution!
 
 Flix programmers should normally never need to use an unchecked effect cast.
@@ -55,11 +55,11 @@ Flix programmers should normally never need to use an unchecked effect cast.
 We can pretend an impure expression is pure:
 
 ```flix
-def main(): Unit = 
+def main(): Unit =
     unchecked_cast(println("Hello World") as _ \ {})
 ```
 
 Here we call `println` which has the `IO` effect and then we explicitly, and
-unsafely, cast away the effect, pretending that the expression is pure. 
+unsafely, cast away the effect, pretending that the expression is pure.
 
 > **Warning:** Never cast effectful expressions to pure. You have been warned.

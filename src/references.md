@@ -15,7 +15,7 @@ r]` has effect `r`.
 
 The `ref e @ rc` operation allocates a reference cell in a region of the heap
 and returns its location, the `deref` operation dereferences a location and
-returns the content of a reference cell, and the assigment `:=` operation
+returns the content of a reference cell, and the assignment `:=` operation
 changes the value of a reference cell. Informally, a reference cell can be
 thought of as an "object" with a single field that can be changed.
 

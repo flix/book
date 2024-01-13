@@ -16,7 +16,7 @@ that no other programming language offers, including:
 -   traits with higher-kinded types.
 -   structured concurrency based on channels and light-weight processes.
 
-In addtion, Flix has several new powerful and unique features:
+In addition, Flix has several new powerful and unique features:
 
 -   A polymorphic type and effect system with region-based local mutation.
 -   Datalog constraints as first-class program values.

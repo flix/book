@@ -13,9 +13,16 @@ We are implementing effects and handlers in a collection of work packages.
 
 Here is the current status:
 
-**WP1: (completed)** 
+**WP1: (completed):** Add support for declaration of monomorphic effects.
 
-**WP1: (in progress)** 
+**WP2: (completed):** Add support `do` and `try-with` with simplified effect type rules.
+
+**WP3: (completed):** Add support for suspensions and resumptions.
+
+**WP4: (in progress):** Add tests for effects and handlers.
+
+**WP5: (in progress):**
+
 
 **WP1: (planned)** Flix 
 

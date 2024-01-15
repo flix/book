@@ -12,9 +12,45 @@
 > checker, but crash at runtime (or perhaps crash the compiler during code
 > generation). 
 
-> **Note:** Only monomorphic effects are supported at this time.
-
 ## Getting Started with Effects and Handlers
+
+### Exceptions
+
+We can use effects and handlers to implement exceptions.
+
+For example:
+
+```flix
+eff Throw {
+    pub def throw(): Void
+}
+
+def divide(x: Int32, y: Int32): Int32 \ Throw = 
+    if (y == 0) {
+        do Throw.throw(); unreachable!()
+    } else {
+        x / y
+    }
+
+def main(): Unit \ IO = 
+    try {
+        println(divide(3, 2));
+        println(divide(3, 0))
+    } with Throw {
+        def throw(_k) = println("Oops: Division by Zero!")
+    }
+```
+
+Here we declare the effect `Throw` and use it inside `Divide`. Because of a
+limitation of the Flix type system, we have to follow the call to `throw` with a
+call to `unreachable!`. In `main` we perform two divisions. The first succeeds
+and prints `1`. The second fails, and the error message is printed. The
+continuation `_k` is unused (and in fact cannot be used because it requires an
+argument of type `Void`). 
+
+
+
+> **Note:** Only monomorphic effects are supported at this time.
 
 ## Milestones
 

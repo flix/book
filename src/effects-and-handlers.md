@@ -48,6 +48,8 @@ and prints `1`. The second fails, and the error message is printed. The
 continuation `_k` is unused (and in fact cannot be used because it requires an
 argument of type `Void`). 
 
+### Resumable Effects
+
 
 
 > **Note:** Only monomorphic effects are supported at this time.
@@ -73,22 +75,25 @@ include: (i) randomness, (ii) logging, (iii) current time, (iv) file operations,
 **WP6: (in progress):** Add support for associated effects. Update standard
 library to use associated effects where appropriate. 
 
-**WP7: (planned):** Enforce that all effects are handled within a spawn expression.
+**WP7: (in progress):** Re-order compiler pipeline in the backend to make it
+more robust in the presence of erasure. 
 
-**WP8: (planned):** Enforce that all effects are handled within a new object expression.
+**WP8: (planned):** Enforce that all effects are handled within a spawn expression.
 
-**WP9: (planned):** Re-order compiler pipeline in the backend to make it more
-robust in the presence of erasure. 
+**WP9: (planned):** Enforce that all effects are handled within a new object expression.
 
-**WP10: (planned)** Compilation to efficient JVM bytecode. Proposed optimizations
+**WP10: (planned):** Upgrade the effect system to work in the Boolean algebra of
+sets, instead of the algebra of Boolean formulas. 
+
+**WP11: (planned)** Compilation to efficient JVM bytecode. Proposed optimizations
 include: (i) split Purity into three: Pure, Impure, ControlImpure, and use the
 information to generate more compact call sites, (ii) only restore live
 variables at resumption points, (iii) merge Boolean and Int8-Int32 into Int64,
 and merge Float32 into Float64 in the Value class. 
 
-**WP11: (planned)** Allow effects to declared as exceptions (i.e. non-resumable)
+**WP12: (planned)** Allow effects to declared as exceptions (i.e. non-resumable)
 and use exceptions in the implementation. Integrate with Java exceptions, if
 possible. 
 
-**WP12: (planned)** Add support for polymorphic user-defined effects, e.g.
+**WP13: (planned)** Add support for polymorphic user-defined effects, e.g.
 `Throw[a]`. This extension requires new research. 

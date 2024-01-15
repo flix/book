@@ -1,15 +1,24 @@
 # Effects and Handlers
 
-> **Warning:** Effects and handlers are an experimental feature. Do not use in
-> production.
+> **Warning:** Effects and handlers are an experimental feature. Do not use them
+> in production.
+
+> **Warning:** Do not use effects and handlers inside spawn expressions.
 
 > **Warning:** Do not use effects and handlers inside new object expressions.
+
+> **Warning:** Typing of user-defined effects, in the presence of effect
+> polymorpism, is incomplete. In other words, programs may pass the type
+> checker, but crash at runtime (or perhaps crash the compiler during code
+> generation). 
+
+> **Note:** Only monomorphic effects are supported at this time.
 
 ## Getting Started with Effects and Handlers
 
 ## Milestones
 
-We are implementing effects and handlers in a collection of work packages.
+We are currently implementing effects and handlers as a collection of work packages.
 
 Here is the current status:
 
@@ -25,16 +34,25 @@ Here is the current status:
 include: (i) randomness, (ii) logging, (iii) current time, (iv) file operations,
 (v) sockets (vi) http client, and more.
 
-**WP5: (planned):** Add tests for effects and handlers.
+**WP6: (in progress):** Add support for associated effects. Update standard
+library to use associated effects where appropriate. 
 
+**WP7: (planned):** Enforce that all effects are handled within a spawn expression.
 
-**WP6: (planned)** Compilation to efficient JVM bytecode. Proposed optimizations
+**WP8: (planned):** Enforce that all effects are handled within a new object expression.
+
+**WP9: (planned):** Re-order compiler pipeline in the backend to make it more
+robust in the presence of erasure. 
+
+**WP10: (planned)** Compilation to efficient JVM bytecode. Proposed optimizations
 include: (i) split Purity into three: Pure, Impure, ControlImpure, and use the
 information to generate more compact call sites, (ii) only restore live
 variables at resumption points, (iii) merge Boolean and Int8-Int32 into Int64,
 and merge Float32 into Float64 in the Value class. 
 
-**WP7: (planned)** Allow effects to declared as exceptions (i.e. non-resumable)
+**WP11: (planned)** Allow effects to declared as exceptions (i.e. non-resumable)
 and use exceptions in the implementation. Integrate with Java exceptions, if
 possible. 
 
+**WP12: (planned)** Add support for polymorphic user-defined effects, e.g.
+`Throw[a]`. This extension requires new research. 

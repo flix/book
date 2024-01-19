@@ -1,7 +1,7 @@
 ## String Interpolation
 
 Flix strings support interpolation. Inside a string, the form `"${e}"` evaluates
-`e` to a value and converts it to a string using the `ToString` type class. For
+`e` to a value and converts it to a string using the `ToString` trait. For
 example:
 
 ```flix
@@ -44,7 +44,7 @@ let o = Some(123);
 ```
 
 which is equivalent to an explicit use of the `toString` function from the
-`ToString` type class:
+`ToString` trait:
 
 ```flix
 ToString.toString(o)

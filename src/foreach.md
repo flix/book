@@ -69,17 +69,17 @@ foreach(fruit <- fruits) {
 The braces have no impact on the meaning of the `foreach` loop; they are purely
 stylistic. 
 
-### The Iterable Type Class
+### The Iterable Trait
 
 We can use the `foreach` syntax to iterate through any collection type that
-implements the `Iterable` type class. In particular, the `Iterable` class
+implements the `Iterable` trait. In particular, the `Iterable` trait
 defines a single signature: 
 
 ```flix
 ///
-/// A type class for immutable data structures that can be iterated.
+/// A trait for immutable data structures that can be iterated.
 ///
-pub class Iterable[t: Type -> Type] {
+pub trait Iterable[t: Type -> Type] {
     ///
     /// Returns an iterator over `t`.
     ///

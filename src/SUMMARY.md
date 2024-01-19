@@ -34,8 +34,8 @@
   - [Declaring Modules](./declaring-modules.md)
   - [Using Modules](./using-modules.md)
   - [Companion Modules](./companion-modules.md)
-- [Type Classes](./type-classes.md)
-  - [Essential Classes](./essential-classes.md)
+- [Traits](./traits.md)
+  - [Essential Traits](./essential-traits.md)
   - [Automatic Derivation](./automatic-derivation.md)
   - [Higher-Kinded Types](./higher-kinded-types.md)
 - [Laziness](./laziness.md)
@@ -67,7 +67,7 @@
 - [Build and Packages](./build-and-packages.md)
   - [Build](./build.md)
   - [Packages](./packages.md)
-
+  - [Publish](./publish.md)
 ---
 
 - [Advanced Features](./advanced-features.md)

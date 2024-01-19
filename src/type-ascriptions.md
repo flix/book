@@ -39,10 +39,10 @@ enum A[t: Type] {
 }
 ```
 
-and on type classes:
+and on traits:
 
 ```flix
-class MyClass[t: Type] {
+trait MyTrait[t: Type] {
     // ...
 }
 ```

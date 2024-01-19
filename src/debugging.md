@@ -1,25 +1,25 @@
 ## Debugging
 
 When debugging, it is often helpful to output the value of an expression or
-variable. 
+variable.
 
 We might try something like:
 
 ```flix
-def sum(x: Int32, y: Int32): Int32 = 
+def sum(x: Int32, y: Int32): Int32 =
     println(x);
     println(y);
     x + y
 ```
 
-Unfortunately this does not work: 
+Unfortunately this does not work:
 
 ```
 ❌ -- Type Error -------------------------------------------------- Main.flix
 
 >> Impure function declared as pure.
 
-1 | def sum(x: Int32, y: Int32): Int32 = 
+1 | def sum(x: Int32, y: Int32): Int32 =
         ^^^
         impure function.
 ```
@@ -31,7 +31,7 @@ built-in debugging facility that allows us to do print-line debugging.
 
 ### The debug Function
 
-Flix has a `debug` function with the same signature as the `identity` fuction:
+Flix has a `debug` function with the same signature as the `identity` function:
 
 ```flix
 def debug(x: a): a
@@ -40,16 +40,16 @@ def debug(x: a): a
 The `debug` "function" isn't really a function; rather its internal compiler
 magic that allows you to print _any value_ while fooling the type and effect
 system into believing that it is still pure. Using the `debug` function this
-program: 
+program:
 
 ```flix
-def sum(x: Int32, y: Int32): Int32 = 
+def sum(x: Int32, y: Int32): Int32 =
     debug(x);
     debug(y);
     x + y
 ```
 
-Now compiles and runs. 
+Now compiles and runs.
 
 The `debug` function returns its argument. Hence its convenient to use in many
 situations.
@@ -60,7 +60,7 @@ For example, we can write:
 def sum(x: Int32, y: Int32): Int32 = debug(x + y)
 ```
 
-to print the value of `x + y` _and_ return it. 
+to print the value of `x + y` _and_ return it.
 
 We can also use it inside e.g. a `for-yield` expression:
 
@@ -80,8 +80,8 @@ List.filter(x -> debug(x > 5))
 
 ### Debug Format
 
-The `debug` expression (and its variants) do _not_ use the `ToString` type
-class. Instead they print the internal Flix representation of the given value. 
+The `debug` expression (and its variants) do _not_ use the `ToString` trait.
+Instead they print the internal Flix representation of the given value.
 
 For example, the expression:
 
@@ -95,7 +95,7 @@ prints:
 Cons(1, Cons(2, Nil))
 ```
 
-We can also print values that do not have a `ToString` instance: 
+We can also print values that do not have a `ToString` instance:
 
 ```flix
 debug(x -> x + 123)
@@ -125,7 +125,7 @@ The `debug` function comes in three variants:
 The following program:
 
 ```flix
-def main(): Unit = 
+def main(): Unit =
     debug("A message");
     debug!("Another message");
     debug!!("A third message");
@@ -154,7 +154,7 @@ where it prints:
 [C:\tmp\flix\Main.flix:3] x + y = 579
 ```
 
-> **Note:** The `debug` expression should not be used in production code. 
+> **Note:** The `debug` expression should not be used in production code.
 
 > **Warning:** The Flix compiler treats the `debug` expression as pure, hence
 > under certain circumstances the compiler may reorder or entirely remove a use

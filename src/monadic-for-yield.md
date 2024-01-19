@@ -2,9 +2,9 @@
 
 Flix supports a monadic _forM-yield_ construct similar to Scala's
 for-comprehensions and Haskell's do notation. The _forM_ construct is syntactic
-sugar for uses of `point` and `flatMap` (which are provided by the `Monad` type
-class). The _forM_ construct also supports a _guard_-expression that uses
-`empty` (which is provided by the `MonadZero` type class).
+sugar for uses of `point` and `flatMap` (which are provided by the `Monad`
+trait). The _forM_ construct also supports a _guard_-expression that uses
+`empty` (which is provided by the `MonadZero` trait).
 
 For example, the monadic `forM` expression:
 
@@ -101,7 +101,7 @@ Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 ```
 
 > **Note:** We cannot use an `if`-guard with non-empty lists because such an
-> `if`-guard requires an instance of the `MonadZero` type class which is not
+> `if`-guard requires an instance of the `MonadZero` trait which is not
 > implemented by non-empty list (since such a list cannot be empty). 
 
 ### Desugaring

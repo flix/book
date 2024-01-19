@@ -7,8 +7,8 @@ For example:
 println("Hello World")
 ```
 
-The `println` function can print any value whose type implements `ToString` type
-class and consequently can be converted to a `String`. For example:
+The `println` function can print any value whose type implements the `ToString`
+trait and consequently can be converted to a `String`. For example:
 
 ```flix
 let o = Some(123);

@@ -1,7 +1,7 @@
 ## Applicative For-Yield
 
 In addition to the monadic `forM` expression, Flix supports an applicative
-`forA` expression that builds on the `Applicative` type class. The `forA`
+`forA` expression that builds on the `Applicative` trait. The `forA`
 construct makes it simple to write error-handling code which uses the
 `Validation[e, t]` data type. 
 

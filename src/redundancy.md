@@ -6,7 +6,7 @@ time getting used to, we believe the trade-off is worth it.
 
 Specifically, the Flix compiler will ensure that a program does not have:
 
-- [Unused local variables](#unused-local-variables): local variables that are declared, but never used. 
+- [Unused local variables](#unused-local-variables): local variables that are declared, but never used.
 - [Shadowed local variables](#shadowed-local-variables): local variables that shadow other local variables.
 - [Useless expressions](#useless-expressions): pure expressions whose values are discarded.
 - [Must use values](#must-use-values): expressions whose values are unused but their type is marked as `@MustUse`.
@@ -36,7 +36,7 @@ with the message:
             unused local variable.
 ```
 
-Unused local variables can be prefixed by an underscore `_` to supress the error.
+Unused local variables can be prefixed by an underscore `_` to suppress the error.
 For example, if we replace `y` by `_y` the above program compiles:
 
 ```flix
@@ -53,7 +53,7 @@ Flix rejects programs with shadowed variables.
 For example, the following program is rejected:
 
 ```flix
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let x = 123;
     let x = 456;
     println("The value of x is ${x}.")
@@ -138,7 +138,7 @@ The expression has type 'Result[String, Int64]'
 ```
 
 Even though `File.creationTime` has a side-effects, we should probably be using the result `Result[String, Int64]`.
-At least to ensure that the operation was successful. 
+At least to ensure that the operation was successful.
 
 If the result of an impure expression is truly not needed, then the `discard` expression can be used:
 

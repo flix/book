@@ -75,8 +75,7 @@ match ??? {
 ```
 
 This may be a contrived example, but it
-demonstrates a common pitfall, which is easy
-fixed.
+demonstrates a common pitfall, which is easily fixed.
 
 This is because the first case is a polymorphic record
 with a defined `height`-label, whereas the second case
@@ -108,11 +107,10 @@ def renaming(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 =
 To summarize, here are a few examples of record patterns:
 
 - `{ }` - the empty record
-- `{ radius }` - a record containing only the label `radius`
+- `{ radius = r }` - a record containg only the label `radius` where the value is bound to `r` in the scope
+- `{ radius }` - a record containing only the label `radius` (this is actually syntactic sugar for `{ radius = radius }`)
 - `{ radius | _ }` - a record containg at least the label `radius`
 - `{ radius | r }` - a record containg at least the label `radius` where the rest of the record is bound to `r`
-- `{ radius = r }` - a record containg at least the label `radius` where the value is bound to `r` in the scope
-- `{ radius }` is actually syntactic sugar for `{ radius = radius }`
 
 ### Let Pattern Match
 
@@ -144,8 +142,8 @@ let Some(x) = ...
 
 The Flix compiler will reject such non-exhaustive patterns.
 
-Let-pattern-matches work well with records, as it
-allows you to destructure a record and only use the
+Let-pattern-matches work well with records, as they
+allow you to destructure a record and only use the
 labels you are interested in:
 
 ```flix

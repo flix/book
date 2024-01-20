@@ -27,7 +27,7 @@ eff Throw {
 
 def divide(x: Int32, y: Int32): Int32 \ Throw = 
     if (y == 0) {
-        do Throw.throw(); unreachable!()
+        do Throw.throw()
     } else {
         x / y
     }
@@ -41,15 +41,45 @@ def main(): Unit \ IO =
     }
 ```
 
-Here we declare the effect `Throw` and use it inside `Divide`. Because of a
-limitation of the Flix type system, we have to follow the call to `throw` with a
-call to `unreachable!`. In `main` we perform two divisions. The first succeeds
-and prints `1`. The second fails, and the error message is printed. The
-continuation `_k` is unused (and in fact cannot be used because it requires an
-argument of type `Void`). 
+Here we declare the effect `Throw` and use it inside `Divide`. In `main` we
+perform two divisions. The first succeeds and prints `1`. The second fails, and
+the error message is printed. The continuation `_k` is unused (and in fact
+cannot be used because it requires an argument of type `Void`). 
 
 ### Resumable Effects
 
+We can use effects and handlers to implement one-shot continuations.
+
+For example:
+
+```flix
+eff Ask {
+    pub def ask(): String
+}
+
+eff Say {
+    pub def say(s: String): Unit
+}
+
+def greeting(): Unit \ {Ask, Say} = 
+    let name = do Ask.ask();
+    do Say.say("Hello Mr. ${name}")
+
+def main(): Unit \ IO = 
+    try {
+        try greeting() with Ask {
+            def ask(k) = k("Bond, James Bond")
+        }
+    } with Say {
+        def say(s, k) = { println(s); k() }
+    }
+```
+
+Here we declare two effects: `Ask` and `Say`. We use both effects in `greeting`.
+In `main` we call `greeting` and register a handler for each effect. We handle
+the `Ask` effect by always resuming the continuation with `Bond, James Bond`.
+We handle the `Say` effect by printing to the terminal, and then resuming the
+continuation.
 
 
 > **Note:** Only monomorphic effects are supported at this time.
@@ -66,20 +96,20 @@ Here is the current status:
 
 **WP3: (completed):** Add support for suspensions and resumptions.
 
-**WP4: (in progress):** Add tests for effects and handlers.
+**WP4: (completed):** Add special type rule for `do` and for `Void` to support
+the exception use case.
 
-**WP5: (in progress):** Add common effects to standard library. Proposed effects
+**WP5: (in progress):** Add tests for effects and handlers.
+
+**WP6: (in progress):** Add common effects to standard library. Proposed effects
 include: (i) randomness, (ii) logging, (iii) current time, (iv) file operations,
 (v) sockets (vi) http client, and more.
 
-**WP6: (in progress):** Add support for associated effects. Update standard
+**WP7: (in progress):** Add support for associated effects. Update standard
 library to use associated effects where appropriate. 
 
-**WP7: (in progress):** Re-order compiler pipeline in the backend to make it
+**WP8: (in progress):** Re-order compiler pipeline in the backend to make it
 more robust in the presence of erasure. 
-
-**WP8: (in progress):** Add special type rule for `do` and for `Void` to support
-the exception use case.
 
 **WP9: (planned):** Enforce that all effects are handled within a spawn expression.
 

@@ -130,6 +130,23 @@ possible.
 The Flix effect system currently has some limitations. We are working on improving
 these.
 
+### Mixing User-Defined Effects and IO
+
+The Flix effect system does not yet enforce that all effects are handled, if
+user-defined effects are mixed with the built-on `IO` effect. For example: 
+
+```flix
+eff Ask {
+    pub def ask(): String
+}
+
+def main(): Unit \ IO = 
+    do Ask.ask();
+    println("Hello World!")
+```
+
+The recommendation is to avoid mixing user-defined effects and `IO`.
+
 ### Spawn
 
 The Flix effect system does not yet enforce that all effects are handled in spawn.

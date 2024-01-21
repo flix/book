@@ -79,31 +79,6 @@ continuation.
 
 > **Note:** Only monomorphic effects are supported at this time.
 
-## Effect System Limitations
-
-The Flix effect system currently has some limitations. We are working on improving
-these.
-
-### Spawn
-
-The Flix effect system does not yet enforce that all effects are handled in spawn.
-
-For example, the program below will compile, but crash at runtime:
-
-```flix
-eff Ask {
-    pub def ask(): String
-}
-
-def main(): Unit \ IO = 
-    region rc {
-        spawn do Ask.ask() @ rc
-    }
-```
-
-
-
-
 ## Milestones
 
 We are currently implementing effects and handlers as a collection of work packages.
@@ -149,3 +124,50 @@ possible.
 
 **WP14: (planned)** Add support for polymorphic user-defined effects, e.g.
 `Throw[a]`. This extension requires new research. 
+
+## Effect System Limitations
+
+The Flix effect system currently has some limitations. We are working on improving
+these.
+
+### Spawn
+
+The Flix effect system does not yet enforce that all effects are handled in spawn.
+
+For example, the program below will compile, but crash at runtime:
+
+```flix
+eff Ask {
+    pub def ask(): String
+}
+
+def main(): Unit \ IO = 
+    region rc {
+        spawn do Ask.ask() @ rc
+    }
+```
+
+### New Object Expressions
+
+The Flix effect system does not yet enforce that all effects are handled in new object expressions.
+
+For example, the program below will compile, but crash at runtime:
+
+```flix
+import java.lang.Runnable
+
+eff Ask {
+    pub def ask(): String
+}
+
+def newRunnable(): Runnable \ IO = new Runnable {
+    def run(_this: Runnable): Unit \ IO = 
+        do Ask.ask(); ()
+}
+
+def main(): Unit \ IO = 
+    import java.lang.Runnable.run(): Unit \ IO;
+    let r = newRunnable();
+    run(r)
+
+```

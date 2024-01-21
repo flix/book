@@ -79,6 +79,31 @@ continuation.
 
 > **Note:** Only monomorphic effects are supported at this time.
 
+## Effect System Limitations
+
+The Flix effect system currently has some limitations. We are working on improving
+these.
+
+### Spawn
+
+The Flix effect system does not yet enforce that all effects are handled in spawn.
+
+For example, the program below will compile, but crash at runtime:
+
+```flix
+eff Ask {
+    pub def ask(): String
+}
+
+def main(): Unit \ IO = 
+    region rc {
+        spawn do Ask.ask() @ rc
+    }
+```
+
+
+
+
 ## Milestones
 
 We are currently implementing effects and handlers as a collection of work packages.
@@ -96,9 +121,8 @@ the exception use case.
 
 **WP5: (in progress):** Add tests for effects and handlers.
 
-**WP6: (in progress):** Add common effects to standard library. Proposed effects
-include: (i) randomness, (ii) logging, (iii) current time, (iv) file operations,
-(v) sockets (vi) http client, and more.
+**WP6: (in progress):** Add some common effects to standard library. Proposed effects
+include: (i) randomness, (ii) logging, and (iii) time.
 
 **WP7: (in progress):** Add support for associated effects. Update standard
 library to use associated effects where appropriate. 

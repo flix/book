@@ -2,7 +2,7 @@
 
 ### Matching on Enums
 
-Flix supports pattern matching on algebraic data types. 
+Flix supports pattern matching on algebraic data types.
 
 For example, if we have an algebraic data type that models shapes:
 
@@ -24,6 +24,93 @@ def area(s: Shape): Int32 = match s {
     case Shape.Rectangle(h, w) => h * w
 }
 ```
+
+This also works for record types; however, the syntax is slightly different.
+Let us rewrite the `Shape` type from before, this time using records.
+
+```flix
+enum Shape {
+    case Circle({ radius = Int32 })
+    case Square({ width = Int32 })
+    case Rectangle({ height = Int32, width = Int32 })
+}
+
+def area(s: Shape): Int32 = match s {
+    case Shape.Circle({ radius })           => 3 * (radius * radius)
+    case Shape.Square({ width })            => width * width
+    case Shape.Rectangle({ height, width }) => height * width
+}
+```
+
+In the example above, we implicitly require that each pattern
+has exactly the specified labels.
+No more, no less.
+However, in general, the syntax for record patterns is similar to their types.
+Thus, we can match on a record that has at least one specific label.
+
+```flix
+def f(r: { height = Int32 | a }): Int32 = match r {
+    case { height | _ } => height
+    // The extension has a wildcard pattern since it is unused
+}
+```
+
+Note, however, that the pattern also implies a type,
+thus the following example will not work.
+
+```flix
+def badTypes(r: { height = Int32 | a }): Int32 = match r {
+    case { height } => height
+}
+```
+
+Additionally, all cases must have the same type,
+so this will also not work:
+
+```flix
+match ??? {
+    case { height | _ } => height
+    case { height }     => height
+}
+```
+
+This may be a contrived example, but it
+demonstrates a common pitfall, which is easily fixed.
+
+This is because the first case is a polymorphic record
+with a defined `height`-label, whereas the second case
+matches on a closed record that *only* has the
+`height`-label defined.
+
+Additionally, the `{ label }` pattern is actually
+syntactic sugar for `{ label = pattern }`.
+Thus, if you are dealing with multiple records,
+then it may be necessary to use different patterns.
+
+```flix
+def shadowing(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 =
+    match (r1, r2) {
+        case ({ height | _ }, { height | _ }) => height + height
+        // This does not work because `height = height` is defined twice
+    }
+```
+
+However, renaming the variables makes the program type check.
+
+```flix
+def renaming(r1: { height = Int32 | a }, r2: { height = Int32 | b }): Int32 =
+    match (r1, r2) {
+        case ({ height = h1 | _ }, { height = h2 | _ }) => h1 + h2
+    }
+```
+
+To summarize, here are a few examples of record patterns:
+
+- `{ }` - the empty record
+- `{ radius = r }` - a record containg only the label `radius` where the value is bound to `r` in the scope
+- `{ radius }` - a record containing only the label `radius` (this is actually syntactic sugar for `{ radius = radius }`)
+- `{ radius | _ }` - a record containg at least the label `radius`
+- `{ radius | r }` - a record containg at least the label `radius` where the rest of the record is bound to `r`
 
 ### Let Pattern Match
 
@@ -54,6 +141,15 @@ let Some(x) = ...
 ```
 
 The Flix compiler will reject such non-exhaustive patterns.
+
+Let-pattern-matches work well with records, as they
+allow you to destructure a record and only use the
+labels you are interested in:
+
+```flix
+let { height | _ } = r;
+height + height
+```
 
 ### Match Lambdas
 

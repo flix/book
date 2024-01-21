@@ -16,9 +16,7 @@
 
 ### Exceptions
 
-We can use effects and handlers to implement exceptions.
-
-For example:
+We can use effects and handlers to implement exceptions. For example:
 
 ```flix
 eff Throw {
@@ -48,9 +46,7 @@ cannot be used because it requires an argument of type `Void`).
 
 ### Resumable Effects
 
-We can use effects and handlers to implement one-shot continuations.
-
-For example:
+We can also implement resumable effects. For example:
 
 ```flix
 eff Ask {
@@ -80,7 +76,6 @@ In `main` we call `greeting` and register a handler for each effect. We handle
 the `Ask` effect by always resuming the continuation with `Bond, James Bond`.
 We handle the `Say` effect by printing to the terminal, and then resuming the
 continuation.
-
 
 > **Note:** Only monomorphic effects are supported at this time.
 

@@ -80,17 +80,15 @@ continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
-<div style="color:gray;">
-
 ## Milestones
 
 We are currently implementing effects and handlers as a collection of work packages.
 
-Here is the current status:
+Here is our current progress:
 
 **WP1: (completed):** Add support for declaration of monomorphic effects.
 
-**WP2: (completed):** Add support `do` and `try-with` with simplified effect type rules.
+**WP2: (completed):** Add support for `do` and `try-with` with simplified effect type rules.
 
 **WP3: (completed):** Add support for suspensions and resumptions.
 
@@ -99,8 +97,7 @@ the exception use case.
 
 **WP5: (in progress):** Add tests for effects and handlers.
 
-**WP6: (in progress):** Add some common effects to standard library. Proposed effects
-include: (i) randomness, (ii) logging, and (iii) time.
+**WP6: (in progress):** Add some common effects to standard library.
 
 **WP7: (in progress):** Add support for associated effects. Update standard
 library to use associated effects where appropriate. 
@@ -121,11 +118,7 @@ information to generate more compact call sites, (ii) only restore live
 variables at resumption points, (iii) merge Boolean and Int8-Int32 into Int64,
 and merge Float32 into Float64 in the Value class. 
 
-**WP13: (planned)** Allow effects to declared as exceptions (i.e. non-resumable)
-and use exceptions in the implementation. Integrate with Java exceptions, if
-possible. 
-
-**WP14: (planned)** Add support for polymorphic user-defined effects, e.g.
+**WP13: (planned)** Add support for polymorphic user-defined effects, e.g.
 `Throw[a]`. This extension requires new research. 
 
 ## Limitations
@@ -134,7 +127,7 @@ The technology preview has some limitations. We are working on lifting these.
 
 ### Polymorphic Effects
 
-The Flix effect system does not yet support polymorphic effects. For example, we declare:
+The Flix effect system does not yet support polymorphic effects. For example, if we declare:
 
 ```flix
 eff Throw[a] {
@@ -220,5 +213,3 @@ def main(): Unit \ IO =
 ```
 
 > **Warning:** Do not use effects and handlers inside new object expressions.
-
-</div>

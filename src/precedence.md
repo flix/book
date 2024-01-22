@@ -4,7 +4,7 @@
 1. User-defined operators (including operators defined in the standard library such as `|>`)
 1. Functions applied infix with backticks
 1. Composition (`<+>`)
-1. Multiplicative (`**`, `*`, `/`, `mod`, and `rem`)
+1. Multiplicative (`**`, `*`, and `/`)
 1. Additive (`+` and `-`)
 1. Shift (`<<<` and `>>>`)
 1. Comparison (`<=`, `>=`, `<`, and `>`)

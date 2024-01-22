@@ -1,20 +1,13 @@
 # Effects and Handlers
 
-> **Warning:** Effects and handlers are an experimental feature. Do not use them
-> in production.
+> **Warning:** Effects handlers are a technology preview and subject to change.
 
-> **Warning:** Do not use effects and handlers inside spawn expressions.
+> **Warning:** Effects handlers are an experimental feature. Do not use them in
+> production.
 
-> **Warning:** Do not use effects and handlers inside new object expressions.
+## Getting Started with User-Defined Effects and Handlers
 
-> **Warning:** Typing of user-defined effects, in the presence of effect
-> polymorpism, is incomplete. In other words, programs may pass the type
-> checker, but crash at runtime (or perhaps crash the compiler during code
-> generation). 
-
-## Getting Started with Effects and Handlers
-
-### Exceptions
+### Non-Resumable Effects: Exceptions
 
 We can use effects and handlers to implement exceptions. For example:
 
@@ -39,10 +32,17 @@ def main(): Unit \ IO =
     }
 ```
 
-Here we declare the effect `Throw` and use it inside `Divide`. In `main` we
-perform two divisions. The first succeeds and prints `1`. The second fails, and
-the error message is printed. The continuation `_k` is unused (and in fact
-cannot be used because it requires an argument of type `Void`). 
+Here we declare the effect `Throw` and use it inside the `divide` function. In
+`main` we perform two divisions. The first succeeds and prints `1`. The second
+fails and the error message is printed. The continuation `_k` is unused (and in
+fact cannot be used because it requires an argument of type `Void`). The `main`
+function has the `IO` effect since we use `println` in the handler, but it does
+_not_ have the `Throw` effect since that has been handled.
+
+> **Note:** `Void` is an empty (uninhabited) type built-in to Flix. The `Void`
+> type, in combination with an effect operation, can be used everywhere a normal
+> type is required. But notably a function, e.g. a continuation, which requires
+> an argument of type `Void` cannot be invoked. 
 
 ### Resumable Effects
 
@@ -72,12 +72,15 @@ def main(): Unit \ IO =
 ```
 
 Here we declare two effects: `Ask` and `Say`. We use both effects in `greeting`.
-In `main` we call `greeting` and register a handler for each effect. We handle
-the `Ask` effect by always resuming the continuation with `Bond, James Bond`.
-We handle the `Say` effect by printing to the terminal, and then resuming the
+In `main` we call `greeting` and handle each effect. We handle the `Ask` effect
+by always resuming the continuation with the string `"Bond, James Bond"`. We
+handle the `Say` effect by printing to the terminal, and then resuming the
 continuation.
 
-> **Note:** Only monomorphic effects are supported at this time.
+In this case, the order of handlers does not matter, but in the general case the
+order may matter. 
+
+<div style="color:gray;">
 
 ## Milestones
 
@@ -125,15 +128,40 @@ possible.
 **WP14: (planned)** Add support for polymorphic user-defined effects, e.g.
 `Throw[a]`. This extension requires new research. 
 
-## Effect System Limitations
+## Limitations
 
-The Flix effect system currently has some limitations. We are working on improving
-these.
+The technology preview has some limitations. We are working on lifting these.
 
-### Mixing User-Defined Effects and IO
+### Polymorphic Effects
 
-The Flix effect system does not yet enforce that all effects are handled, if
-user-defined effects are mixed with the built-on `IO` effect. For example: 
+The Flix effect system does not yet support polymorphic effects. For example, we declare:
+
+```flix
+eff Throw[a] {
+    pub def throw(x: a): Void
+}
+```
+
+the Flix compiler reports:
+
+```
+❌ -- Syntax Error --
+
+>> Unexpected effect type parameters.
+
+1 | eff Throw[a] {
+              ^
+              unexpected effect type parameters
+```
+
+We plan to support polymorphic effects. 
+
+### Mixing User-Defined Effects and the `IO` Effect
+
+When user-defined effects are combined with the `IO` effect, the Flix effect
+system does not enforce that all effects are handled. 
+
+For example, the program below will compile, but crash at runtime:
 
 ```flix
 eff Ask {
@@ -145,7 +173,7 @@ def main(): Unit \ IO =
     println("Hello World!")
 ```
 
-The recommendation is to avoid mixing user-defined effects and `IO`.
+> **Warning:** Do not combine user-defined effects and the `IO` effect.
 
 ### Spawn
 
@@ -163,6 +191,8 @@ def main(): Unit \ IO =
         spawn do Ask.ask() @ rc
     }
 ```
+
+> **Warning:** Do not use effects and handlers inside spawn expressions.
 
 ### New Object Expressions
 
@@ -188,3 +218,7 @@ def main(): Unit \ IO =
     run(r)
 
 ```
+
+> **Warning:** Do not use effects and handlers inside new object expressions.
+
+</div>

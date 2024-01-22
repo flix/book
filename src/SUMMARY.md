@@ -38,6 +38,7 @@
   - [Essential Traits](./essential-traits.md)
   - [Automatic Derivation](./automatic-derivation.md)
   - [Higher-Kinded Types](./higher-kinded-types.md)
+- [Effects and Handlers](./effects-and-handlers.md)
 - [Laziness](./laziness.md)
 - [Fixpoints](./fixpoints.md)
   - [Stratified Negation](./stratified-negation.md)

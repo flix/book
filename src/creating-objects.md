@@ -35,3 +35,7 @@ newFile("foo", "HelloWorld.txt")
 
 Here the import describes that the constructor expects two
 `String` arguments.
+
+> **Note:** `import` statements must occur at the expression-level,
+> i.e. they must occur inside a function. Unlike `use` declarations,
+> they cannot occur at top of a module.

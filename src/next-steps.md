@@ -14,7 +14,7 @@ def main(): Unit \ IO =
     match args {
         case Nil => println("Missing argument: filename")
         case file :: _ => 
-            match File.readLines(file) {
+            match Files.readLines(file) {
                 case Err(_) => 
                     println("Unable to read: ${file}")
                 case Ok(lines) => 

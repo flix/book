@@ -103,7 +103,7 @@ pipeline operator:
 
 ```flix
 List.range(1, 100) |>
-List.filter(x -> x mod 2 == 0) |>
+List.filter(x -> x `Int32.mod` 2 == 0) |>
 List.map(x -> x * x) |>
 println;
 ```

@@ -14,7 +14,7 @@ def main(): Unit \ IO = region rc {
 }
 ```
 
-Spawned processes are always associated with a region; the region 
+Spawned processes are always associated with a region; the region
 will not exit until all the processes associated with it have completed:
 
 ```flix
@@ -22,7 +22,7 @@ def slowPrint(delay: Int32, message: String): Unit \ IO =
     Thread.sleep(Time.Duration.fromSeconds(delay));
     println(message)
 
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     region r1 {
         region r2 {
             spawn slowPrint(2, "Hello from r1") @ r1;
@@ -33,7 +33,7 @@ def main(): Unit \ IO =
     println("r1 is now complete")
 ```
 
-This means that Flix supports _structured concurrency_; spawned 
+This means that Flix supports _structured concurrency_; spawned
 processes have clearly defined entry and exit points.
 
 ## Communicating with Channels
@@ -76,8 +76,8 @@ spawns the `send` function, and waits
 for a message from the channel.
 
 As the example shows, a channel consists of two end points:
-the _Sender_ and the _Receiver_. As one would expect, 
-messages can only be send using the `Sender`, and only 
+the _Sender_ and the _Receiver_. As one would expect,
+messages can only be send using the `Sender`, and only
 received using the `Receiver`.
 
 ## Selecting on Channels
@@ -87,10 +87,10 @@ message from a collection of channels.
 For example:
 
 ```flix
-def meow(tx: Sender[String, r]): Unit \ { Write(r) } = 
+def meow(tx: Sender[String, r]): Unit \ r =
     Channel.send("Meow!", tx)
 
-def woof(tx: Sender[String, r]): Unit \ { Read(r), Write(r) } = 
+def woof(tx: Sender[String, r]): Unit \ r =
     Channel.send("Woof!", tx)
 
 def main(): Unit \ IO = region rc {
@@ -150,14 +150,14 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(tx: Sender[String, r]): Unit \ { Write(r), IO} =
-    Thread.sleep(Time/Duration.fromSeconds(60));
+def slow(tx: Sender[String, r]): Unit \ { r, IO } =
+    Thread.sleep(Time.Duration.fromSeconds(60));
     Channel.send("I am very slow", tx)
 
 def main(): Unit \ IO = region rc {
     let (tx, rx) = Channel.buffered(rc, 1);
     spawn slow(tx) @ rc;
-    let timeout = Channel.timeout(rc, Time/Duration.fromSeconds(5));
+    let timeout = Channel.timeout(rc, Time.Duration.fromSeconds(5));
     select {
         case m <- recv(rx)       => m
         case _ <- recv(timeout)  => "timeout"

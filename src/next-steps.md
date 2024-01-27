@@ -34,7 +34,7 @@ The program works as follows:
    with at least one element; the name of the file to count lines and words in.
    We use pattern matching on `args` to extract the file name and report an
    error if the list is empty.
-2. We use `File.readLines` to read all lines of the file. This operation may
+2. We use `Files.readLines` to read all lines of the file. This operation may
    fail (e.g. if the file does not exist) and hence it returns a `Result`. We use pattern matching on the result and print an error message if we could not read the file.
 3. Otherwise we have a `List[String]` from which we can easily compute the
    number of lines and using the helper function `numberOfWords`, we can also
@@ -59,7 +59,7 @@ def main(): Unit \ IO =
         for (
             file  <- List.head(args) |> 
                      Option.toOk("Missing argument: filename");
-            lines <- File.readLines(file) |> 
+            lines <- Files.readLines(file) |>
                      Result.mapErr(_ -> "Unable to read: ${file}")
         ) yield {
             let totalLines = List.length(lines);

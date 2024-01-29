@@ -149,25 +149,6 @@ the Flix compiler reports:
 
 We plan to support polymorphic effects. 
 
-### Mixing User-Defined Effects and the `IO` Effect
-
-When user-defined effects are combined with the `IO` effect, the Flix effect
-system does not enforce that all effects are handled. 
-
-For example, the program below will compile, but crash at runtime:
-
-```flix
-eff Ask {
-    pub def ask(): String
-}
-
-def main(): Unit \ IO = 
-    do Ask.ask();
-    println("Hello World!")
-```
-
-> **Warning:** Do not combine user-defined effects and the `IO` effect.
-
 ### Spawn
 
 The Flix effect system does not yet enforce that all effects are handled in spawn.

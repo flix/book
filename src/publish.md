@@ -4,8 +4,6 @@ Flix packages are published on GitHub.
 
 ### Automatically Publishing a Package
 
-> **Note:** This feature requires Flix 0.44.0+
-
 Flix can automatically package and publish artifacts on GitHub by following these steps:
 
 1. Check that you have a `flix.toml` manifest (if not create one with `init`).

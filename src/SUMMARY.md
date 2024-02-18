@@ -69,6 +69,7 @@
   - [Build](./build.md)
   - [Packages](./packages.md)
   - [Publish](./publish.md)
+  - [Outdated](./outdated.md)
 ---
 
 - [Advanced Features](./advanced-features.md)

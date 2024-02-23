@@ -25,7 +25,7 @@ Note that greek letters, math symbols, and operator letters cannot be combined w
 The following are reserved by Flix and cannot be redefined within user code:
 
 `!=`, `**`, `..`, `::`, `:=`, `<-`, `<=`, `==`, `=>`, `>=`, `or`,
-`&&&`, `<+>`, `<<<`, `<=>`, `>>>`, `???`, `^^^`, `and`, `mod`, `not`, `rem`, `|||`, `~~~`,
+`&&&`, `<+>`, `<<<`, `<=>`, `>>>`, `???`, `^^^`, `and`, `mod`, `not`, `|||`, `~~~`,
 `$DEFAULT$`, `*`, `+`, `-`, `/`, `:`, `<`,
 `>`, `@`, `Absent`, `Bool`, `Impure`, `Nil`, `Predicate`, `Present`, `Pure`,
 `Read`, `RecordRow`, `Region`, `SchemaRow`, `Type`, `Write`, `alias`, `case`, `catch`, `chan`,
@@ -33,4 +33,4 @@ The following are reserved by Flix and cannot be redefined within user code:
 `if`, `import`, `inline`, `instance`, `into`, `lat`, `law`, `lawful`, `lazy`, `let`, `match`,
 `namespace`, `null`, `opaque`, `override`, `pub`, `ref`, `region`, `reify`,
 `reifyBool`, `reifyEff`, `reifyType`, `rel`, `sealed`, `set`, `spawn`, `Static`, `trait`, `true`,
-`type`, `use`, `where`, `with`, `discard`, `object`
+`type`, `use`, `where`, `with`, `discard`, `object`, `choose`, `solve`, `inject`, `project`

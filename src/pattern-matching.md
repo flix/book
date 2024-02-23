@@ -25,7 +25,9 @@ def area(s: Shape): Int32 = match s {
 }
 ```
 
-This also works for record types; however, the syntax is slightly different.
+### Matching on Records
+
+The above also works for record types; however, the syntax is slightly different.
 Let us rewrite the `Shape` type from before, this time using records.
 
 ```flix

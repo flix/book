@@ -12,6 +12,11 @@ __Paul Butcher__ is writing a blog post series on Flix:
 __Susan Potter__ is writing a blog post series on Flix:
 
 - [Getting Started with Flix, Part 0](https://www.susanpotter.net/software/getting-started-with-flix-part-0/)
+- [Higher-order functions & infix combinators, Part 1](https://www.susanpotter.net/software/flix-series-part-1-higher-order-functions-infix-combinators/)
+
+__Jesse Claven__ wrote a blog post on logic programming in Flix:
+
+- [Programming: Imperative to Functional to Logic](https://j-e-s-s-e.com/notes/programming-imperative-to-functional-to-logic)
 
 __Magnus Madsen__ wrote a few blog posts on Flix during COVID:
 

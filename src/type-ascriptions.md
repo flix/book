@@ -8,10 +8,12 @@ it be used to violate type safety.
 A type ascription can be placed after an expression:
 
 ```flix
-("Hello" :: "World" :: Nil) : List[String]
+(("Hello" :: "World" :: Nil) : List[String])
 ```
 
-and it can also be placed on a let-binding:
+but it must be wrapped in parentheses to disambiguate it from other expressions.
+
+It can also be placed on a let-binding parentheses:
 
 ```flix
 let l: List[String] = "Hello" :: "World" :: Nil
@@ -21,7 +23,7 @@ let l: List[String] = "Hello" :: "World" :: Nil
 Flix also supports kind ascriptions. Where a type ascription specifies the
 _type_ of an _expression_, a kind ascription specifies the _kind_ of a _type_.
 
-We can use kind ascriptions on type parameters. For example: 
+We can use kind ascriptions on type parameters. For example:
 
 ```flix
 def fst1[a: Type, b: Type](p: (a, b)): a = let (x, _) = p; x
@@ -29,7 +31,7 @@ def fst1[a: Type, b: Type](p: (a, b)): a = let (x, _) = p; x
 
 Here we have specified that the _kind_ of the two type parameters `a` and `b` is
 `Type`. We will typically never have to specify such kinds since they can
-inferred. 
+inferred.
 
 We can also provide kind ascriptions on algebraic data types:
 

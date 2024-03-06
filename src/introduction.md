@@ -127,7 +127,7 @@ and processes**:
 
 ```flix
 /// A function that sends every element of a list
-def sendAll(l: List[Int32], tx: Sender[Int32, r]): Unit \ IO =
+def sendAll(l: List[Int32], tx: Sender[Int32, r]): Unit \ {r, IO} =
     match l {
         case Nil     => ()
         case x :: xs => Channel.send(x, tx); sendAll(xs, tx)
@@ -135,16 +135,15 @@ def sendAll(l: List[Int32], tx: Sender[Int32, r]): Unit \ IO =
 
 /// A function that receives n elements
 /// and collects them into a list.
-def recvN(n: Int32, rx: Receiver[Int32, r]): List[Int32] \ IO =
+def recvN(n: Int32, rx: Receiver[Int32, r]): List[Int32] \ {r, IO} =
     match n {
         case 0 => Nil
         case _ => Channel.recv(rx) :: recvN(n - 1, rx)
     }
 
 /// A function that calls receive and sends the result on d.
-def wait(rx: Receiver[Int32, r], n: Int32, tx: Sender[List[Int32], r]): Unit \ IO =
-    Channel.send(recvN(n, rx), tx);
-    ()
+def wait(rx: Receiver[Int32, r], n: Int32, tx: Sender[List[Int32], r]): Unit \ {r, IO} =
+    Channel.send(recvN(n, rx), tx)
 
 /// Spawn a process for send and wait, and print the result.
 def main(): Unit \ IO = region rc {

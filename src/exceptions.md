@@ -2,7 +2,7 @@
 
 In Flix, all error handling should be done using the `Result[e, t]` type.
 However, for interoperability with Java, Flix also has a classic `try-catch`
-mechanism. 
+mechanism.
 
 For example, we can write:
 
@@ -12,7 +12,7 @@ For example, we can write:
 ///
 pub def exists(f: String): Result[String, Bool] \ IO =
     try {
-        import new java.io.File(String): ##java.io.File \ IO as newFile;
+        import java_new java.io.File(String): ##java.io.File \ IO as newFile;
         import java.io.File.exists(): Bool \ IO;
         Ok(exists(newFile(f)))
     } catch {
@@ -23,7 +23,7 @@ pub def exists(f: String): Result[String, Bool] \ IO =
 ```
 
 Here we import the `File` constructor as `newFile` and the `File.exists` method
-as `exists`. We then call the methods and catch the `IOException`. 
+as `exists`. We then call the methods and catch the `IOException`.
 
 > **Note:** Flix programs should not rely on the exception mechanism. Instead,
 > we should guard all call to Java code that might throw exceptions close to
@@ -38,7 +38,7 @@ thrown in sub-threads are propagated to the thread of the region.
 For example, given the program:
 
 ```flix
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     region rc {
         spawn f() @ rc;
         spawn g() @ rc
@@ -49,4 +49,4 @@ def main(): Unit \ IO =
 where `f` and `g` are some functions. If `f` or `g` were to throw an unhandled
 exception then that exception would be _caught_ and _rethrown_ inside the `main`
 thread. This means that we cannot successfully leave the scope of `rc` _unless_
-`f` and `g` terminated _and_ did not throw any unhandled exceptions. 
+`f` and `g` terminated _and_ did not throw any unhandled exceptions.

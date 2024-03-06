@@ -6,7 +6,7 @@ Flix function and use it to construct new objects.
 For example:
 
 ```flix
-import new java.io.File(String): ##java.io.File \ IO as newFile;
+import java_new java.io.File(String): ##java.io.File \ IO as newFile;
 newFile("HelloWorld.txt")
 ```
 
@@ -29,7 +29,7 @@ pathname and one for the child pathname.
 We can use this constructor as follows:
 
 ```flix
-import new java.io.File(String, String): ##java.io.File \ IO as newFile;
+import java_new java.io.File(String, String): ##java.io.File \ IO as newFile;
 newFile("foo", "HelloWorld.txt")
 ```
 

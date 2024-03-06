@@ -13,21 +13,21 @@ class TestClass {
 Then here is how we can access the `boolField`:
 
 ```flix
-import new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
+import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
 import get flix.test.TestClass.boolField: Bool \ IO as getField;
 let o = newObject();
 getField(o)
 ```
 
 Here we import the (default, empty) constructor of `TestClass` as `newObject`.
-Next, we import the field `boolField` as the function `getField`. We use 
-`newObject` to construct a fresh object and we call `getField` on it to 
+Next, we import the field `boolField` as the function `getField`. We use
+`newObject` to construct a fresh object and we call `getField` on it to
 obtain the value of `o.boolField`.
 
 Writing a field of an object is similar:
 
 ```flix
-import new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
+import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
 import get flix.test.TestClass.boolField: Bool \ IO as getField;
 import set flix.test.TestClass.boolField: Unit \ IO as setField;
 let o = newObject();

@@ -14,7 +14,7 @@ Then here is how we can access the `boolField`:
 
 ```flix
 import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
-import get flix.test.TestClass.boolField: Bool \ IO as getField;
+import java_get_field flix.test.TestClass.boolField: Bool \ IO as getField;
 let o = newObject();
 getField(o)
 ```
@@ -28,7 +28,7 @@ Writing a field of an object is similar:
 
 ```flix
 import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
-import get flix.test.TestClass.boolField: Bool \ IO as getField;
+import java_get_field flix.test.TestClass.boolField: Bool \ IO as getField;
 import set flix.test.TestClass.boolField: Unit \ IO as setField;
 let o = newObject();
 setField(o, false);
@@ -44,7 +44,7 @@ reading or writing object fields.
 For example:
 
 ```flix
-import static get java.lang.Integer.MIN_VALUE: Int32 \ IO as getMinValue;
+import static java_get_field java.lang.Integer.MIN_VALUE: Int32 \ IO as getMinValue;
 getMinValue()
 ```
 

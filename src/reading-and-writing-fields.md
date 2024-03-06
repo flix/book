@@ -29,7 +29,7 @@ Writing a field of an object is similar:
 ```flix
 import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
 import java_get_field flix.test.TestClass.boolField: Bool \ IO as getField;
-import set flix.test.TestClass.boolField: Unit \ IO as setField;
+import java_set_field flix.test.TestClass.boolField: Unit \ IO as setField;
 let o = newObject();
 setField(o, false);
 getField(o)

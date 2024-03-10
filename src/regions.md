@@ -2,7 +2,7 @@
 
 Flix supports _scoped_ mutable memory. In Flix, all mutable memory belongs to a
 _region_ that is tied to its lexical scope. When execution leaves the lexical
-scope of a region, all memory in that region becomes unreachable. 
+scope of a region, all memory in that region becomes unreachable.
 
 Regions are useful because they enable us to implement _pure functions_ that
 internally use _mutation_. We will illustrate this powerful idea with several
@@ -39,7 +39,7 @@ is pure but internally uses a mutable `StringBuilder`:
 ```flix
 def toString(l: List[a]): String with ToString[a] =
     region rc {
-        let sb = StringBuilder.new(rc);
+        let sb = StringBuilder.empty(rc);
         List.forEach(x -> StringBuilder.appendString!("${x} :: ", sb), l);
         StringBuilder.appendString!("Nil", sb);
         StringBuilder.toString(sb)
@@ -56,7 +56,7 @@ efficiently. For example, here is a fast implementation of `List.flatMap`:
 ```flix
 def flatMap(f: a -> List[b] \ ef, l: List[a]): List[b] \ ef =
     region rc {
-        let ml = MutList.new(rc);
+        let ml = MutList.empty(rc);
         l |> List.forEach(x -> MutList.append!(f(x), ml));
         MutList.toList(ml)
     }
@@ -72,14 +72,14 @@ For example, here is the `List.toMutDeque` function:
 
 ```flix
 def toMutDeque(rc: Region[r], l: List[a]): MutDeque[a, rc] \ rc =
-    let d = MutDeque.new(rc);
+    let d = MutDeque.empty(rc);
     forEach(x -> MutDeque.pushBack(x, d), l);
     d
 ```
 
 The function takes a region handle `rc`, allocates a new mutable deque
 (`MutDeq`) in the given region, inserts all elements of the list `l` in the
-deque, and returns it. 
+deque, and returns it.
 
 ### Regions are Scoped
 
@@ -88,7 +88,7 @@ Regions and all memory associated with them cannot outlive their lexical scope.
 Consider the following program:
 
 ```flix
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let escaped = region rc {
         Array#{1, 2, 3} @ rc
     };

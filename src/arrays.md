@@ -10,14 +10,14 @@ elements and `r` is its region. Like all mutable memory in Flix, every array
 must belong to some region. Reading from and writing to arrays are _effectful_
 operations. For example, reading an element from an array of type `Array[t, r]`
 has the effect `r`. Likewise, creating an array in a region is also an effectful
-operation. 
+operation.
 
 Arrays are _always_ unboxed. For example, an array of type `Array[Int32, r]` is
 represented as a sequence of primitive 32-bit integers, i.e., in JVM
 terminology, the array is represented as `int[]`. Flix will never box primitive
 integers as `java.lang.Integer` objects but still permits primitives in generic
 collections and functions. The same is true for other types of primitives and
-arrays of primitives. 
+arrays of primitives.
 
 Arrays are low-level data structures typically used to implement higher-level
 data structures. Therefore, unless implementing such data structures, we
@@ -49,7 +49,7 @@ Running the program prints `Array#{"Apple", "Pear", "Mango"}`.
 ### Allocating Arrays
 
 We can allocate an array of size `n` filled with the same element using the
-`Array.repeat` function. For example: 
+`Array.repeat` function. For example:
 
 ```flix
 region rc {
@@ -91,7 +91,7 @@ the content of the array is uninitialized. For example:
 
 ```flix
 region rc {
-    let arr: Array[String, rc] = Array.new(rc, 100);
+    let arr: Array[String, rc] = Array.empty(rc, 100);
     // ... initialize `arr` here ...
 }
 ```
@@ -100,7 +100,7 @@ Here we create an array of length `100` of type `Array[String, rc]`. We use an
 explicit type annotation `: Array[String, rc]` to inform Flix of the expected
 type of the array.
 
-> **Warning:** It is dangerous to use arrays that have uninitialized elements. 
+> **Warning:** It is dangerous to use arrays that have uninitialized elements.
 
 What are the elements of an uninitialized array? Flix follows Java (and the JVM)
 which defines a _default value_ for every primitive-- and reference type. So,
@@ -108,16 +108,16 @@ for example, the default values for `Bool` and `Int32` are `false` and `0`,
 respectively. The default value for reference types are `null`. So be careful!
 Flix does not have a `null` value, but one can be indirectly introduced by
 reading from improperly initialized arrays which can lead to
-`NullPointerException`s. 
+`NullPointerException`s.
 
 ### Reading from and Writing to Arrays
 
 We can retrieve or update the element at a specific position in an array using
-`Array.get` and `Array.put`, respectively. For example: 
+`Array.get` and `Array.put`, respectively. For example:
 
 ```flix
 region rc {
-    let strings = Array.new(rc, 2);
+    let strings = Array.empty(rc, 2);
     Array.put("Hello", 0, strings);
     Array.put("World", 1, strings);
     let s1 = Array.get(0, strings);
@@ -129,14 +129,14 @@ region rc {
 Here we create an empty array of length of two. We then store the string
 `"Hello"` at position zero and the string `"World"` at position one. Next, we
 retrieve the two strings, and print them. Thus the program, when compiled and
-run, prints `Hello World`. 
+run, prints `Hello World`.
 
 We can also write part of the program in a more _fluent-style_ using the `!>`
-pipeline operator: 
+pipeline operator:
 
 ```flix
-let strings = 
-    Array.new(rc, 2) !>
+let strings =
+    Array.empty(rc, 2) !>
     Array.put("Hello", 0) !>
     Array.put("World", 1);
 ```

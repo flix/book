@@ -5,7 +5,7 @@ We can use the import mechanism to invoke methods on objects.
 For example:
 
 ```flix
-import new java.io.File(String): ##java.io.File \ IO as newFile;
+import java_new java.io.File(String): ##java.io.File \ IO as newFile;
 import java.io.File.exists(): Bool \ IO as fileExists;
 let f = newFile("HelloWorld.txt");
 fileExists(f)
@@ -17,7 +17,7 @@ If the Java method name is a legal Flix name and we want to reuse it,
 we can also import the method without an `as` clause. For example:
 
 ```flix
-import new java.io.File(String): ##java.io.File \ IO as newFile;
+import java_new java.io.File(String): ##java.io.File \ IO as newFile;
 import java.io.File.exists(): Bool \ IO;
 let f = newFile("HelloWorld.txt");
 exists(f)

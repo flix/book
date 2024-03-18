@@ -106,10 +106,10 @@ References naturally support aliasing since that is their purpose. For example:
 
 ```flix
 region rc {
-    let l1 = ref 42 @ rc;
+    let l1 = Ref.fresh(rc, 42);
     let l2 = l1;
-    l2 := 84;
-    println(deref l1)
+    Ref.put(84, l2);
+    println(Ref.get(l1))
 }
 ```
 
@@ -120,9 +120,9 @@ References can also point to references as the following example illustrates:
 
 ```flix
 region rc {
-    let l1 = ref 42 @ rc;
-    let l2 = ref l1 @ rc;
-    let rs = deref (deref l2);
+    let l1 = Ref.fresh(rc, 42);
+    let l2 = Ref.fresh(rc, l1);
+    let rs = Ref.get(Ref.get(l2));
     println(rs)
 }
 ```
@@ -138,8 +138,8 @@ For example, here is a pair that contains two mutable references:
 
 ```flix
 region rc {
-    let p = (ref 1 @ rc, ref 2 @ rc);
-    fst(p) := 123
+    let p = (Ref.fresh(rc, 1), Ref.fresh(rc, 2));
+    Ref.put(123, fst(p))
 };
 ```
 
@@ -151,11 +151,11 @@ Similarly, here is a record that contains two mutable references:
 
 ```flix
 region rc {
-    let r = { fstName = ref "Lucky" @ rc, lstName = ref "Luke" @ rc };
-    r.fstName := "Unlucky"
+    let r = { fstName = Ref.fresh(rc, "Lucky"), lstName = Ref.fresh(rc, "Luke") };
+    Ref.put("Unlucky", r.fstName)
 };
 ```
 
-The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String,
-rc] }`. Again, the assignment does not change the record, but instead changes
+The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String, rc] }`.
+Again, the assignment does not change the record, but instead changes
 the value of the reference cell corresponding to the `fstName` label.

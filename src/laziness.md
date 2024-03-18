@@ -22,7 +22,7 @@ Laziness can be used to create lazy data structures which are evaluated as they'
 Here for example, is a data structure which implements an infinitely long stream of integers which increase by one each time:
 
 ```flix
-namespace IntStream {
+mod IntStream {
 
     enum IntStream { case SCons(Int32, Lazy[IntStream]) }
 

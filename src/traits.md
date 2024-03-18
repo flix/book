@@ -183,7 +183,7 @@ In some cases, however, it is useful to restrict
 membership in a trait to a finite list of types,
 defined by the author of the trait.
 This is the purpose of a `sealed` trait, for which
-instances outside the trait's namespace are not
+instances outside the trait's module are not
 permitted.
 
 ```flix

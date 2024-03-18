@@ -7,3 +7,4 @@ By adding your name to this document, you agree to release all your contribution
 - [Asger Alstrup Palm](https://github.com/alstrup)
 - [Herluf Baggesen](https://github.com/herluf-ba)
 - [Rutvik Patel](https://github.com/heyrutvik)
+- [Stephen Bastians](https://github.com/stetimi)

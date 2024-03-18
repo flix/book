@@ -25,7 +25,7 @@ mod Color {
 ```
 
 Here the `Color` type and the `Red`, `Green`, and `Blue` cases are automatically
-in scope within the companion `Color` module. 
+in scope within the companion `Color` module.
 
 ### Trait Companions
 
@@ -41,7 +41,7 @@ trait Addable[t] {
 
 The `Addable` trait implicitly introduces a companion module `Addable`. We
 typically use the companion module to store functionality that is related to the
-trait. 
+trait.
 
 For example, we could have:
 
@@ -52,12 +52,12 @@ mod Addable {
 ```
 
 When accessing a member of `Addable`, Flix will automatically look in both the
-trait declaration and its companion namespace. Consequently, `Addable.add`
+trait declaration and its companion module. Consequently, `Addable.add`
 refers to the trait member `add` whereas `Addable.add3` refers to the
 function inside the `Addable` module. Note that the `add` signature is in the
-scope of the `Addable` module. 
+scope of the `Addable` module.
 
 We should be aware that functions defined in the companion module of a trait
 cannot be overridden by instances of the associated trait. Thus we
 should only put members into the companion namespace when we do not intend
-to override them later. 
+to override them later.

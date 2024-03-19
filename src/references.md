@@ -3,9 +3,9 @@
 Flix supports mutable _scoped_ references. A reference is a box whose value can
 change over time. The three key reference operations are:
 
-- Creating a new reference `ref e @ rc`.
-- Dereferencing a reference `deref e`.
-- Assigning to a reference `e := e`.
+- Creating a new reference `Ref.fresh(rc, e)`.
+- Dereferencing a reference `Ref.get(e)`.
+- Assigning to a reference `Ref.put(e, e)`.
 
 In Flix, the type of a reference is `Ref[t, r]` where `t` is the type of the
 element and `r` is its region. Like all mutable memory in Flix, every reference
@@ -13,20 +13,20 @@ must belong to some region. Reading from and writing to a reference are
 _effectful_ operations. For example, reading the value of a reference `Ref[t,
 r]` has effect `r`.
 
-The `ref e @ rc` operation allocates a reference cell in a region of the heap
-and returns its location, the `deref` operation dereferences a location and
-returns the content of a reference cell, and the assignment `:=` operation
+The `Ref.fresh(rc, e)` operation allocates a reference cell in a region of the heap
+and returns its location, the `Ref.get` operation dereferences a location and
+returns the content of a reference cell, and the assignment `Ref.put` operation
 changes the value of a reference cell. Informally, a reference cell can be
 thought of as an "object" with a single field that can be changed.
 
 ### Allocating References
 
-A reference cell is allocated with the `ref e @ rc` syntax. For example:
+A reference cell is allocated with the `Ref.fresh(rc, e)` function. For example:
 
 ```flix
 region rc {
-    let c = ref 42 @ rc;
-    println(deref c)
+    let c = Ref.fresh(rc, 42);
+    println(Ref.get(c))
 }
 ```
 
@@ -35,13 +35,13 @@ cell called `c` with the value `42` which we then dereference and print.
 
 ### Dereferencing References
 
-A reference cell is accessed (dereferenced) with the `deref e` syntax. For example:
+A reference cell is accessed (dereferenced) with the `Ref.get` function. For example:
 
 ```flix
 region rc {
-    let c = ref 42 @ rc;
-    let x = deref c;
-    let y = deref c;
+    let c = Ref.fresh(rc, 42);
+    let x = Ref.get(c);
+    let y = Ref.get(c);
     println(x + y)
 }
 ```
@@ -54,11 +54,11 @@ We can update the value of a reference cell. For example:
 
 ```flix
 region rc {
-    let c = ref 0 @ rc;
-    c := (deref c) + 1;
-    c := (deref c) + 1;
-    c := (deref c) + 1;
-    println(deref c)
+    let c = Ref.fresh(rc, 0);
+    Ref.put(Ref.get(c) + 1, c);
+    Ref.put(Ref.get(c) + 1, c);
+    Ref.put(Ref.get(c) + 1, c);
+    println(Ref.get(c))
 }
 ```
 
@@ -74,15 +74,15 @@ enum Counter[r: Region] { // The Region here is a type-kind
     case Counter(Ref[Int32, r])
 }
 
-def newCounter(rc: Region[r]): Counter[r] \ r = Counter.Counter(ref 0 @ rc)
+def newCounter(rc: Region[r]): Counter[r] \ r = Counter.Counter(Ref.fresh(rc, 0))
 
 def getCount(c: Counter[r]): Int32 \ r =
     let Counter.Counter(l) = c;
-    deref l
+    Ref.get(l)
 
 def increment(c: Counter[r]): Unit \ r =
     let Counter.Counter(l) = c;
-    l := (deref l) + 1
+    Ref.put(Ref.get(l) + 1, l)
 
 def main(): Unit \ IO =
     region rc {
@@ -106,10 +106,10 @@ References naturally support aliasing since that is their purpose. For example:
 
 ```flix
 region rc {
-    let l1 = ref 42 @ rc;
+    let l1 = Ref.fresh(rc, 42);
     let l2 = l1;
-    l2 := 84;
-    println(deref l1)
+    Ref.put(84, l2);
+    println(Ref.get(l1))
 }
 ```
 
@@ -120,9 +120,9 @@ References can also point to references as the following example illustrates:
 
 ```flix
 region rc {
-    let l1 = ref 42 @ rc;
-    let l2 = ref l1 @ rc;
-    let rs = deref (deref l2);
+    let l1 = Ref.fresh(rc, 42);
+    let l2 = Ref.fresh(rc, l1);
+    let rs = Ref.get(Ref.get(l2));
     println(rs)
 }
 ```
@@ -138,8 +138,8 @@ For example, here is a pair that contains two mutable references:
 
 ```flix
 region rc {
-    let p = (ref 1 @ rc, ref 2 @ rc);
-    fst(p) := 123
+    let p = (Ref.fresh(rc, 1), Ref.fresh(rc, 2));
+    Ref.put(123, fst(p))
 };
 ```
 
@@ -151,11 +151,11 @@ Similarly, here is a record that contains two mutable references:
 
 ```flix
 region rc {
-    let r = { fstName = ref "Lucky" @ rc, lstName = ref "Luke" @ rc };
-    r.fstName := "Unlucky"
+    let r = { fstName = Ref.fresh(rc, "Lucky"), lstName = Ref.fresh(rc, "Luke") };
+    Ref.put("Unlucky", r.fstName)
 };
 ```
 
-The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String,
-rc] }`. Again, the assignment does not change the record, but instead changes
+The type of the record is `{ fstName = Ref[String, rc], lstName = Ref[String, rc] }`.
+Again, the assignment does not change the record, but instead changes
 the value of the reference cell corresponding to the `fstName` label.

@@ -12,6 +12,7 @@ The Flix build system supports the following commands:
 - `check`: checks the current project for compiler errors.
 - `build`: builds the current project (i.e. emits Java bytecode).
 - `build-jar`: builds a jar-file from the current project. 
+- `build-fatjar`: builds a jar-file with all dependencies bundled.
 - `build-pkg`: builds a fpkg-file from the current project. 
 - `run`: runs main in current project.  
 - `test`: runs all tests in the current project.

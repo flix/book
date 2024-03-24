@@ -47,7 +47,7 @@ purpose.
 
 ### Building a JAR-file
 
-We can compile a project to a fat JAR-file with the `build-jar` command. The
+We can compile a project to a JAR-file with the `build-jar` command. The
 `build-jar` command emits a `artifact/project.jar` file. If there is `main`
 function, we can run it: 
 
@@ -61,6 +61,20 @@ on JAR-files.
 
 > **Note:** The project must be compiled with `build` before running
 > `build-jar`.
+
+### Building a fat JAR-file (bundling all dependencies)
+
+We can compile a project to a single standalone fat JAR-file with the
+`build-fatjar` command. The `build-fatjar` command emits a
+`artifact/project.jar` file where _all_ dependencies — both Flix and Maven — are
+bundled into one single JAR-file. 
+
+The JAR-file contains all class files from the `build` directory together with
+all class files extract from all Maven dependencies found in the `lib`
+directory. 
+
+> **Note:** The project must be compiled with `build` before running
+> `build-fatjar`.
 
 ### Building a Flix Project
 

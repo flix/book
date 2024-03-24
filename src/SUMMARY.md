@@ -83,6 +83,7 @@
 ---
 
 - [Common Problems](./common-problems.md)
+- [Frequently Asked Questions](./frequently-asked-questions.md)
 - [Glossary](./glossary.md)
 
 ---

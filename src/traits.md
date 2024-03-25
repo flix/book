@@ -1,9 +1,8 @@
 # Traits
 
-Traits are one of the ways to support a high
-level of genericity in functional programming.
-Flix's traits largely follow the style of type
-classes in Haskell, with some additional principles.
+Traits (also known as _type classes_) support abstraction and overloading. At a
+first-glance, the trait system in Flix is similar to that of Haskell and Rust,
+with some more important differences.
 
 ## Essentials
 

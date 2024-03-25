@@ -1,6 +1,6 @@
 /*!
-  Highlight.js v11.9.0 (git: 105a11a13e)
-  (c) 2006-2024 undefined and other contributors
+  Highlight.js v11.9.0 (git: 0d7061cd0b)
+  (c) 2006-2024 Josh Goebel <hello@joshgoebel.com> and other contributors
   License: BSD-3-Clause
  */
 var hljs=function(){function e(t){
@@ -317,7 +317,7 @@ contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,i]},s={
 scope:"title.function",beginKeywords:"def",end:/[(\[]/,excludeEnd:!0,
 contains:[i]},o={scope:"literal",variants:[{begin:/\?\?\?/},{begin:/\?/,
 contains:[i]}]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
-keyword:["alias","as","case","catch","default","def","do","eff","else","enum","for","forA","forM","force","foreach","from","if","import","inject","inline","instance","into","java_get_field","java_new","java_set_field","law","lawful","lazy","let","match","mod","namespace","object","override","par","project","pub","query","region","resume","sealed","select","solve","try","type","typematch","checked_cast","checked_ecast","unchecked_cast","use","where","with","without","yield"],
+keyword:["alias","as","case","catch","checked_cast","checked_ecast","default","def","do","eff","else","enum","for","forA","forM","force","foreach","from","if","import","inject","inline","instance","into","java_get_field","java_new","java_set_field","law","lawful","lazy","let","match","mod","object","override","par","project","pub","query","region","resume","sealed","select","solve","trait","try","type","typematch","unchecked_cast","unchecked_ecast","use","where","with","without","yield"],
 literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err","null","static"],
 type:["Unit","Bool","Char","Float32","Float64","Int8","Int16","Int32","Int64","String","BigInt"],
 built_in:["debug","debug!","debug!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!","and","or","not","ref","deref"]

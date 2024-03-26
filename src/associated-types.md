@@ -105,7 +105,45 @@ But while each instance is valid on its own, we cannot have both:
 ...
 ```
 
-### Example: A trait for Collections
+### Example: A `ForEach` Trait
+
+We can use associated types to define a trait for collections that have a
+`forEach` function: 
+
+```flix
+trait ForEach[t] {
+    type Elm
+    pub def forEach(f: ForEach.Elm[t] -> Unit \ ef, x: t): Unit \ ef
+}
+```
+
+Here `t` is type of the collection and the associated type `Elm` is the type of
+its elements. We can implement several instances for `ForEach`. For example, we
+can implement an instance for `List[a]`:
+
+```flix
+instance ForEach[List[a]] {
+    type Elm = a
+    pub def forEach(f: a -> Unit \ ef, x: List[a]): Unit \ ef = List.forEach(f, x)
+}
+```
+
+We can also implement an instance for `Map[k, v]`:
+
+```flix
+instance ForEach[Map[k, v]] {
+    type Elm = (k, v)
+    pub def forEach(f: ((k, v)) -> Unit \ ef, x: Map[k, v]): Unit \ ef = 
+        Map.forEach(k -> v -> f((k, v)), x)
+}
+```
+
+What is interesting and useful is that we can define the element type to be
+key-value pairs. Note: We need the extra parentheses around the argument to `f`
+because we want it to take an uncurried pair. 
+
+
+### Example: A `Collection` Trait
 
 
 

@@ -19,7 +19,7 @@ trait Addable[t] {
 }
 ```
 
-We can define multiple instances of the `Addable` trait for types such as
+We can implement multiple instances of the `Addable` trait for types such as
 floating-point numbers, integers, and strings. For example, here is the instance
 for `Int32`:
 
@@ -142,7 +142,7 @@ What is interesting and useful is that we can define the element type to be
 key-value pairs. Note: We need extra parentheses around the argument to `f`
 because we want it to take a pair. 
 
-We can even define an instance for `String` where we can iterate through each
+We can even implement an instance for `String` where we can iterate through each
 individual character: 
 
 ```flix
@@ -155,14 +155,56 @@ instance ForEach[String] {
 
 ### Example: A `Collection` Trait
 
+As another example, we can define a trait for collections:
 
+```flix
+trait Collection[t] {
+    type Elm
+    pub def empty(): t
+    pub def insert(x: Collection.Elm[t], c: t): t
+    pub def toList(c: t): List[Collection.Elm[t]]
+}
+```
 
+Here `t` is the type of the collection and `Elm` is the type of its elements.
+Every collection must support three operations: `empty`, `insert`, and `toList`. 
 
-<div style="color:gray;">
+We can implement an instance of `Collection` for `Vector[a]`: 
 
+```flix
+instance Collection[Vector[a]] {
+    type Elm = a
+    pub def empty(): Vector[a] = Vector.empty()
+    pub def insert(x: a, c: Vector[a]): Vector[a] = Vector.append(c, Vector#{x})
+    pub def toList(c: Vector[a]): List[a] = Vector.toList(c)
+}
+```
 
-We can go even further. Mul example.
+And we can implement an instance of `Collection` for `Set[a]`: 
 
-Another example: A trait for collections:
+```flix
+instance Collection[Set[a]] with Order[a] {
+    type Elm = a
+    pub def empty(): Set[a] = Set.empty()
+    pub def insert(x: a, c: Set[a]): Set[a] = Set.insert(x, c)
+    pub def toList(c: Set[a]): List[a] = Set.toList(c)
+}
+```
 
-</div>
+### Equality Constraints
+
+We may sometimes want to write polymorphic functions where we _restrict_ which
+associated types are permitted. For example, returning to the example of the
+`Collection` trait, we can write a function where we require that the element
+type is an `Int32`. This allows us to write a sum function:
+
+```flix
+def sum(c: t): Int32 with Collection[t] where Collection.Elm[t] ~ Int32 = 
+    Collection.toList(c) |> List.sum
+```
+
+Here the `where` clause contains a list of _type equality constraints_.
+Specifically, the equality constraint `Collection.Elm[t] ~ Int32` assert that
+`sum` can be used with any type `t` that for which there is an instance of
+`Collection` as long as the element type of that instance is equal to `Int32`.
+This restriction allows us to call `List.sum`.

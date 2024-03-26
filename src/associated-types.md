@@ -139,9 +139,19 @@ instance ForEach[Map[k, v]] {
 ```
 
 What is interesting and useful is that we can define the element type to be
-key-value pairs. Note: We need the extra parentheses around the argument to `f`
-because we want it to take an uncurried pair. 
+key-value pairs. Note: We need extra parentheses around the argument to `f`
+because we want it to take a pair. 
 
+We can even define an instance for `String` where we can iterate through each
+individual character: 
+
+```flix
+instance ForEach[String] {
+    type Elm = Char
+    pub def forEach(f: Char -> Unit \ ef, x: String): Unit \ ef = 
+        x |> String.toList |> List.forEach(f)
+}
+```
 
 ### Example: A `Collection` Trait
 

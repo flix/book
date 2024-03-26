@@ -82,8 +82,31 @@ instance Addable[Set[a]] with Order[a] {
 }
 ```
 
-The key takeaway is that each trait instances gets to specify the associated
-types. This is what allows us to add two strings or add an element to a set. 
+The important point is that each trait instance can specify the associated type. 
+
+We might wonder if we can specify two instances for `Set[a]`: (i) one for adding
+an element to a set, as above, and (ii) one for adding two sets:
+
+```flix
+instance Addable[Set[a]] with Order[a] {
+    type Rhs = Set[a]
+    pub def add(x: Set[a], y: Set[a]): Set[a] = Set.union(x, y)
+
+}
+```
+
+But while each instance is valid on its own, we cannot have both:
+
+```
+❌ -- Instance Error -------------------------------------------------- 
+
+>> Overlapping instances for 'Addable'.
+
+...
+```
+
+### Example: A trait for Collections
+
 
 
 

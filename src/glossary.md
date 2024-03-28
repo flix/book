@@ -3,13 +3,14 @@
 ***Algebraic Data Type.*** A data type defined using sum and product types, i.e.
 using enumerated types and tuple types.
 
-***Algebraic Effect.*** A user-defined effect which can be handled. The handler
-is supplied with the (delimited) continuation of the effect. The continuation
-can be dropped, resume once, or resumed multiple-times.
+***Algebraic Effect.***  <a name="associated-effect"></a> A user-defined effect
+which can be handled. The handler is supplied with the (delimited) continuation
+of the effect. The continuation can be dropped, resume once, or resumed
+multiple-times.
 
-***Associated Type.*** A type that belongs to a trait. Each trait instance
-specifies the specific associated type for that instance. Hence different trait
-instances can have different associated types.
+***Associated Type.***  <a name="associated-type"></a> A type that belongs to a
+trait. Each trait instance specifies the specific associated type for that
+instance. Hence different trait instances can have different associated types.
 
 ***Associated Effect.*** An effect that belongs to a trait. Each trait instance
 specifies the specific associated effect for that instance. Hence different
@@ -23,7 +24,7 @@ fail at runtime.
 
 ***Effect Cast.*** A cast that changes the _effect_ of an expression.
 
-***Effect Member.*** See associated effect.
+***Effect Member.*** See [associated effect](#associated-effect).
 
 ***Effect Polymorphic.*** A function whose effect(s) depend on the effect(s) of
 its function argument. See also [higher-order function](#higher-order-function).
@@ -58,7 +59,7 @@ type of an expression without requiring annotations from the programmer.
 ***Type Match.*** A language feature that allows a function to inspect (reflect)
 on a type. 
 
-***Type Member.*** See associated type.
+***Type Member.*** See [associated type](#associated-type).
 
 ***Unchecked Cast.*** An unsafe cast which is not verified by the compiler. Can
 fail at runtime. 

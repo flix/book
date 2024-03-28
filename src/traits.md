@@ -4,8 +4,6 @@ Traits (also known as _type classes_) support abstraction and overloading. At a
 first-glance, the trait system in Flix is similar to that of Haskell and Rust,
 with some more important differences.
 
-<div style="color:gray">
-
 ## Essentials
 
 The function `isSingleton` naively determines whether
@@ -195,5 +193,3 @@ instance Primitive[Int32]
 instance Primitive[Float64]
 // ... and so on
 ```
-
-</div>

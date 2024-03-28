@@ -91,3 +91,82 @@ instance Dividable[Int32] {
 
 ### Associated Effects and Regions
 
+We often want to use associated effects in combination with regions.
+
+Assume we have the `ForEach` trait from the before:
+
+```flix
+trait ForEach[t] {
+    type Elm
+    pub def forEach(f: ForEach.Elm[t] -> Unit \ ef, x: t): Unit \ ef
+}
+```
+
+As we have seen, we can implement it for e.g. `List[t]` but also `Map[k, v]`.
+But what if we wanted to implement it for e.g. `MutList[t, r]` or `MutSet[t,
+r]`. We can try: 
+
+```flix
+instance ForEach[MutList[t, r]] {
+    type Elm = t
+    pub def forEach(f: t -> Unit \ ef, x: MutList[t, r]): Unit \ ef = 
+        MutList.forEach(f, x)
+}
+```
+
+But Flix reports:
+
+```
+❌ -- Type Error -------------------------------------------------- 
+
+>> Unable to unify the effect formulas: 'ef' and 'ef + r'.
+
+9 |         MutList.forEach(f, x)
+            ^^^^^^^^^^^^^^^^^^^^^
+            mismatched effect formulas.
+```
+
+The problem is that `MutList.forEach` has an effect in the region `r`, but the
+signature of `forEach` in the trait only permits the `ef` effect from the
+function `f`. 
+
+We can solve the problem by extending the `ForEach` trait with an associated effect:
+
+```flix
+trait ForEach[t] {
+    type Elm
+    type Aef: Eff
+    pub def forEach(f: ForEach.Elm[t] -> Unit \ ef, x: t): Unit \ ef + ForEach.Aef[t]
+}
+```
+
+We must specify that `Aef` is an effect with the kind annotation `Aef: Eff`. If
+we don't specify the kind then it defaults to `Type` which is not what we want
+here. 
+
+With the updated `ForEach` trait, we can implement it for both `List[t]` and
+`MutList[t]`:
+
+```flix
+instance ForEach[List[t]] {
+    type Elm = t
+    type Aef = { Pure }
+    pub def forEach(f: t -> Unit \ ef, x: List[t]): Unit \ ef = List.forEach(f, x)
+}
+```
+
+and 
+
+```flix
+instance ForEach[MutList[t, r]] {
+    type Elm = t
+    type Aef = { r }
+    pub def forEach(f: t -> Unit \ ef, x: MutList[t, r]): Unit \ ef + r = 
+        MutList.forEach(f, x)
+}
+```
+
+Notice how the implementation for `List[t]` specifies that the associated effect
+is pure, whereas the implementation for `MutList[t, r]` specifies that there is
+a heap effect in region `r`. 
+

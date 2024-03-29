@@ -1,6 +1,6 @@
 ## Essential Traits
 
-Practical programming in Flix requires knowledge of three traits: `Eq`,
+Practical programming in Flix requires knowledge of at least three traits: `Eq`,
 `Order`, and `ToString`. 
 
 ### The Eq Trait
@@ -19,7 +19,8 @@ trait Eq[a] {
 }
 ```
 
-To implement `Eq`, we only have to implement the `eq` function.
+To implement `Eq`, we only have to implement the `eq` function. When we
+implement `eq` we automatically get an implementation of `Eq.neq`.
 
 ### The Order Trait
 
@@ -50,6 +51,10 @@ enum Comparison {
     case GreaterThan
 }
 ```
+
+When we implement `compare`, we automatically get implementations of
+`Order.less`, `Order.lessThan`, `Order.greater`, `Order.greaterEqual`,
+`Order.max`, and `Order.min`.
 
 ### The ToString Trait
 

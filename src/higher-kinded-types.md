@@ -14,19 +14,26 @@ trait ForEach[t: Type -> Type] {
 }
 ```
 
-Note that to use higher-kinded types Flix _requires_ us to provide the kind
-annotation (i.e. we had to write `t: Type -> Type` to inform Flix that `ForEach`
-abstracts over type constructors.)
+To use higher-kinded types Flix _requires_ us to provide kind annotations, i.e.
+we had to write `t: Type -> Type` to inform Flix that `ForEach` abstracts over
+type constructors.
 
-We can implement instances of the `ForEach` trait for type constructors
-such as `Option`, and `List`, `Set`. For example:
+We can implement an instance of the `ForEach` trait for `Option[t]`: 
+
+```flix
+instance ForEach[Option] {
+    pub def forEach(f: a -> Unit \ ef, o: Option[a]): Unit \ ef = match o {
+        case None    => ()
+        case Some(x) => f(x)
+    }
+}
+```
+
+and we can implement an instance for `List[t]`:
 
 ```flix
 instance ForEach[List] {
-    pub def forEach(f: a -> Unit \ ef, l: List[a]): Unit \ ef = match l {
-        case Nil     => ()
-        case x :: xs => f(x); ForEach.forEach(f, xs)
-    }
+    pub def forEach(f: a -> Unit \ ef, l: List[a]): Unit \ ef = List.forEach(f, l)
 }
 ```
 

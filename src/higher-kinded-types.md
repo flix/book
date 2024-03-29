@@ -67,11 +67,12 @@ def sum[t: Type, r: RecordRow](r: {x = t, y = t | r}): t with Add[t] = r.x + r.y
 
 but this style is not considered idiomatic.
 
-Flix requires explicit kind annotations in three situations:
+Flix requires explicit kind annotations in four situations:
 
-- For non-Type kinds on enum type parameters.
-- For non-Type kinds on traits.
-- For non-Type type members in traits.
+- For type parameters of non-Type kind on enums.
+- For type parameters of non-Type kind on type aliases.
+- For type parameters of non-Type kind on traits.
+- For type members of a non-Type kind in a trait.
 
 The most common scenario where you will need a kind annotation is when you want
 a type parameter or type member to range over an effect. 
@@ -79,10 +80,12 @@ a type parameter or type member to range over an effect.
 ### Higher-Kinded Types vs. Associated Types
 
 In practice higher-kinded types and associated types can be used to define
-similar abstractions. For example, as we have seen, we can define the `ForEach`
-trait in two different ways: 
+similar abstractions. 
 
-With a higher-kinded type: 
+For example, as we have seen, we can define the `ForEach` trait in two different
+ways: 
+
+With a _higher-kinded type_: 
 
 ```flix
 trait ForEach[t: Type -> Type] {
@@ -90,7 +93,7 @@ trait ForEach[t: Type -> Type] {
 }
 ```
 
-and with an associated type:
+and with an _associated type_:
 
 ```flix
 trait ForEach[t] {
@@ -99,10 +102,10 @@ trait ForEach[t] {
 }
 ```
 
-In the case of `ForEach` the definition with the associated type is more
-flexible, since we can define an instance for `String` with associated element
-type `Char`. However, higher-kinded types are still useful. For example, the
-Flix Standard Library defines the `Functor` trait as: 
+In the case of `ForEach`, the definition with an associated type is more
+flexible, since we can implement an instance for `String` with associated
+element type `Char`. However, higher-kinded types are still useful. For example,
+the Flix Standard Library defines the `Functor` trait as: 
 
 ```flix
 trait Functor[m : Type -> Type] {
@@ -110,7 +113,6 @@ trait Functor[m : Type -> Type] {
 }
 ```
 
-Notably the kind of `m` ensures that evert `Functor` instance is structure
+Notably the kind of `m` ensures that every `Functor` implementation is structure
 preserving. That is, we know that when we `map` over e.g. an `Option[a]` then we
-get back and an `Option[b]`.
-
+get back an `Option[b]`.

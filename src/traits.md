@@ -96,3 +96,34 @@ use it for `List[Int32]`, `List[String]`, and so forth, provided that the
 element type implements `Equatable`.
 
 > **Note:** In the Flix Standard Library the `Equatable` trait is called `Eq`.
+
+## Malformed Traits
+
+Every function signature in a trait must mention the type parameter of the
+trait. 
+
+For example, the following is illegal:
+
+```flix
+trait Animal[a] {
+    pub def isMammal(x: a): Bool    // OK     -- mentions a.
+    pub def giraffeAvgLegs(): Int32 // NOT OK -- does not mention a.
+}
+```
+
+and Flix reports:
+
+```
+❌ -- Resolution Error -------------------------------------------------- 
+
+>> Unexpected signature 'giraffeAvgLegs' which does not mention the type 
+>> variable of the class.
+
+7 |     pub def giraffeAvgLegs(): Int32 
+                ^^^^^^^^^^^
+                unexpected signature.
+```
+
+The problem here is that the `giraffeAvgLegs` signature does not belong in the
+`Animal` trait because it is does not depend on `a`, i.e. on the specific
+animal.

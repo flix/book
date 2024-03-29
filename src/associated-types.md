@@ -6,8 +6,8 @@
 > available on nightly builds. 
 
 An associated type is a type member of a trait that is specified by each trait
-instance. Associated types are a more natural alternative to multi-parameter
-type classes. 
+instance. Associated types are often considered a more natural alternative to
+[multi-parameter type classes](https://en.wikipedia.org/wiki/Type_class#Multi-parameter_type_classes). 
 
 We illustrate associated types with an example. 
 
@@ -59,11 +59,12 @@ trait Addable[t] {
 }
 ```
 
-The `Addable` trait now has an associated type called `Rhs`. We can refer to it
-as `Addable.Rhs[t]` as seen in the signature of `Add`. Whenever we declare an
-instance of `Addable`, we must specify the associated effect. 
+The `Addable` trait now has an associated type called `Rhs`. We refer to it as
+`Addable.Rhs[t]` as seen in the signature of `add`. Whenever we declare an
+instance of `Addable`, we must specify the associated type. 
 
-We can still implement instances for integers and strings, as before. For example:
+We can still implement instances for integers and strings, as before. For
+example:
 
 ```flix
 instance Addable[Int32] {
@@ -72,8 +73,7 @@ instance Addable[Int32] {
 }
 ```
 
-But we can now also implement an instance that allows adding an element to a
-set: 
+But we can also implement an instance that allows adding an element to a set: 
 
 ```flix
 instance Addable[Set[a]] with Order[a] {
@@ -82,10 +82,10 @@ instance Addable[Set[a]] with Order[a] {
 }
 ```
 
-The important point is that each trait instance can specify the associated type. 
+The important point is that _each trait instance specifies the associated type_.
 
-We might wonder if we can specify two instances for `Set[a]`: (i) one for adding
-an element to a set, as above, and (ii) one for adding two sets:
+We might wonder if we can specify two instances for `Set[a]`: (a) one for adding
+an element to a set, as above, and (b) one for adding two sets:
 
 ```flix
 instance Addable[Set[a]] with Order[a] {
@@ -105,6 +105,10 @@ But while each instance is valid on its own, we cannot have both:
 ...
 ```
 
+If we had such overlapping instances, an expression like `Addable.add(Set#{},
+Set#{})` would become ambiguous: Are we adding two sets? Or are we adding the
+empty set to a set? 
+
 ### Example: A `ForEach` Trait
 
 We can use associated types to define a trait for collections that have a
@@ -117,9 +121,9 @@ trait ForEach[t] {
 }
 ```
 
-Here `t` is type of the collection and the associated type `Elm` is the type of
-its elements. We can implement several instances for `ForEach`. For example, we
-can implement an instance for `List[a]`:
+Here `t` is the type of the collection and the associated type `Elm` is the type
+of its elements. We can implement several instances for `ForEach`. For example,
+we can implement an instance for `List[a]`:
 
 ```flix
 instance ForEach[List[a]] {
@@ -139,10 +143,10 @@ instance ForEach[Map[k, v]] {
 ```
 
 What is interesting and useful is that we can define the element type to be
-key-value pairs. Note: We need extra parentheses around the argument to `f`
-because we want it to take a pair. 
+key-value pairs. We need extra parentheses around the argument to `f` because we
+want it to take a pair. 
 
-We can even implement an instance for `String` where we can iterate through each
+We can implement an instance for `String` where we can iterate through each
 individual character: 
 
 ```flix
@@ -193,10 +197,12 @@ instance Collection[Set[a]] with Order[a] {
 
 ### Equality Constraints
 
-We may sometimes want to write polymorphic functions where we _restrict_ which
-associated types are permitted. For example, returning to the example of the
-`Collection` trait, we can write a function where we require that the element
-type is an `Int32`. This allows us to write a sum function:
+We sometimes want to write polymorphic functions where we _restrict_ an
+associated type. 
+
+For example, returning to the example of the `Collection` trait, we can write a
+function where we require that the element type is an `Int32`. This allows us to
+write a sum function:
 
 ```flix
 def sum(c: t): Int32 with Collection[t] where Collection.Elm[t] ~ Int32 = 
@@ -205,6 +211,7 @@ def sum(c: t): Int32 with Collection[t] where Collection.Elm[t] ~ Int32 =
 
 Here the `where` clause contains a list of _type equality constraints_.
 Specifically, the equality constraint `Collection.Elm[t] ~ Int32` assert that
-`sum` can be used with any type `t` that for which there is an instance of
+`sum` can be used with any type `t` for which there is an instance of
 `Collection` as long as the element type of that instance is equal to `Int32`.
-This restriction allows us to call `List.sum`.
+This restriction ensures that the elements of the collection are integers and
+allows us to call `List.sum`.

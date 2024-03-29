@@ -1,8 +1,8 @@
 # Traits
 
-Traits (also known as _type classes_) support abstraction and overloading. At a
-first-glance, the trait system in Flix is similar to that of Haskell and Rust,
-with some more important differences. Flix traits support associated types,
+Traits, also known as [type classes](https://en.wikipedia.org/wiki/Type_class),
+support abstraction and modularity. The Flix trait system is similar to that of
+Haskell and Rust, but not identical. Traits in Flix support associated types,
 associated effects, and higher-kinded types. 
 
 We illustrate traits with an example.
@@ -30,9 +30,9 @@ def equals(x: List[Int32], y: List[Int32]): Bool =
 ```
 
 But what if we wanted a common abstraction for data types which support
-equality? Enter traits. 
+equality? 
 
-We can define an `Equatable` trait:
+Here we can use traits. We can define an `Equatable` trait:
 
 ```flix
 trait Equatable[t] {
@@ -40,9 +40,9 @@ trait Equatable[t] {
 }
 ```
 
-which has a single `equals` _signature_. The trait is polymorphic over the type
-parameter `t` which means that we can implement `Equatable` for both `Option[t]`
-and `List[t]`: 
+which has a single `equals` _trait signature_. The trait is polymorphic over the
+type parameter `t` which means that we can implement `Equatable` for both
+`Option[t]` and `List[t]`: 
 
 ```flix
 instance Equatable[Option[t]] with Equatable[t] {
@@ -74,10 +74,10 @@ instance Equatable[List[t]] with Equatable[t] {
 ```
 
 Assuming we also implement `Equatable` for `Int32`, we can use `Equatable` to
-compute whether two `Option[Int32]` are equal. But we can compute if two
-`Option[List[Option[Int32]]]` types are equal! This demonstrates the power of
+compute whether two `Option[Int32]` values are equal. But we can also compute if
+two `Option[List[Int32]]` values are equal! This demonstrates the power of
 abstraction: We have implemented instances for `Option[t]` and `List[t]` and we
-can now reuse these everywhere. 
+can now reuse these instances everywhere. 
 
 We can use our newly defined `Equatable` trait to write polymorphic functions.
 
@@ -91,23 +91,78 @@ def memberOf(x: t, l: List[t]): Bool with Equatable[t] =
     }
 ```
 
-What is important is that we can use `memberOf` with a list of any type! We can
-use it for `List[Int32]`, `List[String]`, and so forth, provided that the
-element type implements `Equatable`.
+We can use `memberOf` for a list of any type, as the element type implements
+`Equatable`.
 
 > **Note:** In the Flix Standard Library the `Equatable` trait is called `Eq`.
+> Moreover, the `==` operator is syntactic sugar for the trait signature
+> `Eq.eq`.
 
-## Malformed Traits
+## Sealed Traits
 
-Every function signature in a trait must mention the type parameter of the
-trait. 
+We can declare a trait as `sealed` to restrict who can implement the trait.
 
-For example, the following is illegal:
+For example:
+
+```flix
+mod Zoo {
+    sealed trait Animal[a] {
+        pub def isMammal(x: a): Bool
+    }
+
+    instance Animal[Giraffe] {
+        pub def isMammal(_: Giraffe): Bool = true
+    }
+
+    instance Animal[Penguin] {
+        pub def isMammal(_: Penguin): Bool = true
+    }
+
+    pub enum Giraffe
+    pub enum Penguin
+}
+```
+
+Here we can implement instances for `Animal` and `Giraffe` because they occur in
+the same module as the `Animal` trait. But we cannot implement `Animal` from
+outside the `Zoo` module. If we try: 
+
+```flix
+mod Lake {
+    pub enum Swan
+
+    instance Zoo.Animal[Swan] {
+        pub def isMammal(_: Swan): Bool = false
+    }
+}
+```
+
+then Flix reports:
+
+```
+❌ -- Resolution Error -------------------------------------------------- 
+
+>> Class 'Zoo.Animal' is sealed from the module 'Lake'.
+
+21 |     instance Zoo.Animal[Swan] {
+                  ^^^^^^^^^^
+                  sealed class.
+```
+
+
+## Well-formed Traits
+
+A trait is _not_ a C\# or Java-style interface. Specifically:
+
+- every trait must have exactly one type parameter, and
+- every signature must mention that type parameter.
+
+For example, the following trait is incorrect:
 
 ```flix
 trait Animal[a] {
-    pub def isMammal(x: a): Bool    // OK     -- mentions a.
-    pub def giraffeAvgLegs(): Int32 // NOT OK -- does not mention a.
+    pub def isMammal(x: a): Bool      // OK     -- mentions a.
+    pub def numberOfGiraffes(): Int32 // NOT OK -- does not mention a.
 }
 ```
 
@@ -116,14 +171,13 @@ and Flix reports:
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Unexpected signature 'giraffeAvgLegs' which does not mention the type 
->> variable of the class.
+>> Unexpected signature 'numberOfGiraffes' which does not mention the type 
+>> variable of the trait.
 
-7 |     pub def giraffeAvgLegs(): Int32 
+7 |     pub def numberOfGiraffes(): Int32 
                 ^^^^^^^^^^^
                 unexpected signature.
 ```
 
-The problem here is that the `giraffeAvgLegs` signature does not belong in the
-`Animal` trait because it is does not depend on `a`, i.e. on the specific
-animal.
+The problem is that the signature for `numberOfGiraffes` does not mention the
+type parameter `a`. 

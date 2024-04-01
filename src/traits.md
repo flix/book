@@ -181,3 +181,44 @@ and Flix reports:
 
 The problem is that the signature for `numberOfGiraffes` does not mention the
 type parameter `a`. 
+
+### Complex Instances
+
+A trait _instance_ must be define on exactly one type constructor which is
+applied to zero or more distinct type variables. 
+
+For example, given the previous `Equatable` trait:
+
+```flix
+
+trait Equatable[t] {
+    pub def equals(x: t, y: t): Bool
+}
+```
+
+We can implement instances for e.g.:
+
+- `Option[a]`
+- `List[a]`
+- `(a, b)`
+
+but we _cannot_ implement instances for e.g.:
+
+- `Option[Int32]`
+- `List[String]`
+- `(a, Bool)` 
+- `Map[Int32, v]`
+
+If we try to implement an instance for e.g. `List[Int32]` Flix reports:
+
+```
+❌ -- Instance Error -------------------------------------------------- 
+
+>> Complex instance type 'List[Int32]' in 'Equatable'.
+
+6 | instance Equatable[List[Int32]] {
+             ^^^^^^^^^
+             complex instance type
+
+An instance type must be a type constructor applied to zero or more distinct type variables.
+```

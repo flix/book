@@ -184,13 +184,14 @@ type parameter `a`.
 
 ### Complex Instances
 
-A trait _instance_ must be define on exactly one type constructor which is
-applied to zero or more distinct type variables. 
+A trait _instance_ must be defined on:
 
-For example, given the previous `Equatable` trait:
+- exactly one type constructor —
+- that is applied to zero or more distinct type variables. 
+
+For example, given the `Equatable` trait from before:
 
 ```flix
-
 trait Equatable[t] {
     pub def equals(x: t, y: t): Bool
 }
@@ -209,7 +210,7 @@ but we _cannot_ implement instances for e.g.:
 - `(a, Bool)` 
 - `Map[Int32, v]`
 
-If we try to implement an instance for e.g. `List[Int32]` Flix reports:
+If we try to implement an instance for e.g. `List[Int32]` the Flix compiler reports:
 
 ```
 ❌ -- Instance Error -------------------------------------------------- 
@@ -220,5 +221,38 @@ If we try to implement an instance for e.g. `List[Int32]` Flix reports:
              ^^^^^^^^^
              complex instance type
 
-An instance type must be a type constructor applied to zero or more distinct type variables.
+An instance type must be a type constructor applied to zero or more 
+distinct type variables.
+```
+
+### Overlapping Instances
+
+We cannot implement two instances of of the same trait for overlapping types.
+
+For example, if we try to implement two instances of `Equatable` for `List[t]`:
+
+```flix
+instance Equatable[List[t]] {
+    pub def equals(x: List[t], y: List[t]): Bool = ???
+}
+
+instance Equatable[List[t]] {
+    pub def equals(x: List[t], y: List[t]): Bool = ???
+}
+```
+
+then the Flix compiler reports:
+
+```
+❌ -- Instance Error -------------------------------------------------- 
+
+>> Overlapping instances for 'Equatable'.
+
+1 | instance Equatable[List[t]] {
+              ^^^^^^^^^
+              the first instance was declared here.
+
+4 | instance Equatable[List[t]] {
+             ^^^^^^^^^
+             the second instance was declared here.
 ```

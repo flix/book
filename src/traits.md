@@ -150,7 +150,7 @@ then Flix reports:
 ```
 
 
-## Well-formed Traits
+## Malformed Traits
 
 A trait is _not_ a C\# or Java-style interface. Specifically:
 
@@ -166,7 +166,7 @@ trait Animal[a] {
 }
 ```
 
-and Flix reports:
+If we compile the above trait, Flix reports:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
@@ -181,3 +181,78 @@ and Flix reports:
 
 The problem is that the signature for `numberOfGiraffes` does not mention the
 type parameter `a`. 
+
+## Complex Instances
+
+A trait _instance_ must be defined on:
+
+- exactly one type constructor —
+- that is applied to zero or more distinct type variables. 
+
+For example, given the `Equatable` trait from before:
+
+```flix
+trait Equatable[t] {
+    pub def equals(x: t, y: t): Bool
+}
+```
+
+We can implement instances for e.g.:
+
+- `Option[a]`
+- `List[a]`
+- `(a, b)`
+
+but we _cannot_ implement instances for e.g.:
+
+- `Option[Int32]`
+- `List[String]`
+- `(a, Bool)` 
+- `Map[Int32, v]`
+
+If we try to implement an instance for e.g. `List[Int32]` Flix reports:
+
+```
+❌ -- Instance Error -------------------------------------------------- 
+
+>> Complex instance type 'List[Int32]' in 'Equatable'.
+
+6 | instance Equatable[List[Int32]] {
+             ^^^^^^^^^
+             complex instance type
+
+An instance type must be a type constructor applied to zero or more 
+distinct type variables.
+```
+
+## Overlapping Instances
+
+We cannot implement two instances of of the same trait for overlapping types.
+
+For example, if we try to implement two instances of `Equatable` for `List[t]`:
+
+```flix
+instance Equatable[List[t]] {
+    pub def equals(x: List[t], y: List[t]): Bool = ???
+}
+
+instance Equatable[List[t]] {
+    pub def equals(x: List[t], y: List[t]): Bool = ???
+}
+```
+
+then Flix reports:
+
+```
+❌ -- Instance Error -------------------------------------------------- 
+
+>> Overlapping instances for 'Equatable'.
+
+1 | instance Equatable[List[t]] {
+              ^^^^^^^^^
+              the first instance was declared here.
+
+4 | instance Equatable[List[t]] {
+             ^^^^^^^^^
+             the second instance was declared here.
+```

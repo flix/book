@@ -150,7 +150,7 @@ then Flix reports:
 ```
 
 
-## Well-formed Traits
+## Malformed Traits
 
 A trait is _not_ a C\# or Java-style interface. Specifically:
 
@@ -166,7 +166,7 @@ trait Animal[a] {
 }
 ```
 
-and Flix reports:
+If we compile the above trait, Flix reports:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
@@ -182,7 +182,7 @@ and Flix reports:
 The problem is that the signature for `numberOfGiraffes` does not mention the
 type parameter `a`. 
 
-### Complex Instances
+## Complex Instances
 
 A trait _instance_ must be defined on:
 
@@ -210,7 +210,7 @@ but we _cannot_ implement instances for e.g.:
 - `(a, Bool)` 
 - `Map[Int32, v]`
 
-If we try to implement an instance for e.g. `List[Int32]` the Flix compiler reports:
+If we try to implement an instance for e.g. `List[Int32]` Flix reports:
 
 ```
 ❌ -- Instance Error -------------------------------------------------- 
@@ -225,7 +225,7 @@ An instance type must be a type constructor applied to zero or more
 distinct type variables.
 ```
 
-### Overlapping Instances
+## Overlapping Instances
 
 We cannot implement two instances of of the same trait for overlapping types.
 
@@ -241,7 +241,7 @@ instance Equatable[List[t]] {
 }
 ```
 
-then the Flix compiler reports:
+then Flix reports:
 
 ```
 ❌ -- Instance Error -------------------------------------------------- 

@@ -215,3 +215,28 @@ Specifically, the equality constraint `Collection.Elm[t] ~ Int32` assert that
 `Collection` as long as the element type of that instance is equal to `Int32`.
 This restriction ensures that the elements of the collection are integers and
 allows us to call `List.sum`.
+
+### Default Types
+
+We can define a default type for an associated type.
+
+Returning to `Addable`, we can define the associated type `Rhs` with `t` as its
+default:
+
+```flix
+trait Addable[t] {
+    type Rhs = t  // Associated type with default type.
+    pub def add(x: t, y: Addable.Rhs[t]): t
+}
+```
+
+Here we specify that if `Rhs` is not defined by an instance implementation then
+it defaults to `t`. The upshot is that we can define an instance for `Int32`:
+
+```flix
+instance Addable[Int32] {
+    pub def add(x: Int32, y: Int32): Int32 = x + y
+}
+```
+
+without having to explicit define `type Rhs = Int32`.

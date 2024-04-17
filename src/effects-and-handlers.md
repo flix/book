@@ -80,47 +80,6 @@ continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
-## Milestones
-
-We are currently implementing effects and handlers as a collection of work packages.
-
-Here is our current progress:
-
-**WP1: (completed):** Add support for declaration of monomorphic effects.
-
-**WP2: (completed):** Add support for `do` and `try-with` with simplified effect type rules.
-
-**WP3: (completed):** Add support for suspensions and resumptions.
-
-**WP4: (completed):** Add special type rule for `do` and for `Void` to support
-the exception use case.
-
-**WP5: (in progress):** Add tests for effects and handlers.
-
-**WP6: (in progress):** Add some common effects to standard library.
-
-**WP7: (in progress):** Add support for associated effects. Update standard
-library to use associated effects where appropriate. 
-
-**WP8: (in progress):** Re-order compiler pipeline in the backend to make it
-more robust in the presence of erasure. 
-
-**WP9: (planned):** Enforce that all effects are handled within a spawn expression.
-
-**WP10: (planned):** Enforce that all effects are handled within a new object expression.
-
-**WP11: (planned):** Upgrade the effect system to work in the Boolean algebra of
-sets, instead of the algebra of Boolean formulas. 
-
-**WP12: (planned)** Compilation to efficient JVM bytecode. Proposed optimizations
-include: (i) split Purity into three: Pure, Impure, ControlImpure, and use the
-information to generate more compact call sites, (ii) only restore live
-variables at resumption points, (iii) merge Boolean and Int8-Int32 into Int64,
-and merge Float32 into Float64 in the Value class. 
-
-**WP13: (planned)** Add support for polymorphic user-defined effects, e.g.
-`Throw[a]`. This extension requires new research. 
-
 ## Limitations
 
 The technology preview has some limitations. We are working on lifting these.

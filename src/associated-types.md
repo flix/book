@@ -1,10 +1,5 @@
 ## Associated Types
 
-> **Warning:** Associated types are an experimental feature. 
-
-> **Warning:** Associated types have not yet been released and are only
-> available on nightly builds. 
-
 An associated type is a type member of a trait that is specified by each trait
 instance. Associated types are often considered a more natural alternative to
 [multi-parameter type classes](https://en.wikipedia.org/wiki/Type_class#Multi-parameter_type_classes). 

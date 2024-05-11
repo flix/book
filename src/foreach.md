@@ -79,11 +79,16 @@ defines a single signature:
 ///
 /// A trait for immutable data structures that can be iterated.
 ///
-pub trait Iterable[t: Type -> Type] {
+pub trait Iterable[t] {
+     ///
+    /// The element type of the Iterable.
+    ///
+    type Elm[t]: Type
+
     ///
     /// Returns an iterator over `t`.
     ///
-    pub def iterator(rc: Region[r], t: t[a]): Iterator[a, r, r] \ r
+    pub def iterator(rc: Region[r], t: t): Iterator[Iterable.Elm[t], r + aef, r] \ (r + aef) where Iterable.Aef[t] ~ aef
 }
 ```
 

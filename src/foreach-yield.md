@@ -46,11 +46,16 @@ The workhorse behind the `foreach-yield` construct is the `Iterable` trait
 (discussed in the previous section) and the `Collectable` trait. 
 
 ```flix
-pub trait Collectable[m: Type -> Type] {
+pub trait Collectable[t: Type] {
+    ///
+    /// The element type of the Collectable.
+    ///
+    type Elm[t]: Type
+
     ///
     /// Run an Iterator collecting the results.
     ///
-    pub def collect(iter: Iterator[a, r]): m[a] \ r with Order[a]
+    pub def collect(iter: Iterator[Collectable.Elm[t], ef, r]): t \ (ef + Collectable.Aef[t] +  r)
 }
 ```
 

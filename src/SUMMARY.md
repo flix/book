@@ -38,6 +38,7 @@
   - [Essential Traits](./essential-traits.md)
   - [Automatic Derivation](./automatic-derivation.md)
   - [Associated Types](./associated-types.md)
+  - [Associated Effects](./associated-effects.md)
   - [Higher-Kinded Types](./higher-kinded-types.md)
 - [Fixpoints](./fixpoints.md)
   - [Stratified Negation](./stratified-negation.md)

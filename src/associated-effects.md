@@ -1,10 +1,5 @@
 ## Associated Effects
 
-> **Warning:** Associated effects are an experimental feature. 
-
-> **Warning:** Associated effects have not yet been released and are only
-> available on nightly builds. 
-
 We have seen how associated types increase the flexibility of traits by allowing
 each instance to specify concrete types for the associated types. Associated
 _effects_ work in the same manner, but concern effects. 

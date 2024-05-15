@@ -10,7 +10,7 @@ We can define a trait for types that can be divded:
 
 ```flix
 trait Dividable[t] {
-    pub def add(x: t, y: t): t
+    pub def div(x: t, y: t): t
 }
 ```
 
@@ -18,11 +18,11 @@ and we can implement the trait for e.g. `Float32` and `Int32`:
 
 ```flix
 instance Dividable[Float32] {
-    pub def add(x: Float32, y: Float32): Float32 = x / y
+    pub def div(x: Float32, y: Float32): Float32 = x / y
 }
 
 instance Dividable[Int32] {
-    pub def add(x: Int32, y: Int32): Int32 = x / y
+    pub def div(x: Int32, y: Int32): Int32 = x / y
 }
 ```
 
@@ -35,7 +35,7 @@ pub eff DivByZero {
 }
 
 instance Dividable[Int32] {
-    pub def add(x: Int32, y: Int32): Int32 \ DivByZero = 
+    pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
         if (y == 0) do DivByZero.throw() else x / y
 }
 ````
@@ -45,9 +45,9 @@ But unfortunately this does not quite work:
 ```
 ❌ -- Type Error --------------------------------------------------
 
->> Mismatched signature 'add' required by 'Dividable'.
+>> Mismatched signature 'div' required by 'Dividable'.
 
-14 |     pub def add(x: Int32, y: Int32): Int32 \ DivByZero = 
+14 |     pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
                  ^^^
 ...
 ```
@@ -65,7 +65,7 @@ specify that a `DivByZero` exception may be raised whereas the instance for
 ```flix
 trait Dividable[t] {
     type Aef: Eff
-    pub def add(x: t, y: t): t \ Dividable.Aef[t]
+    pub def div(x: t, y: t): t \ Dividable.Aef[t]
 }
 ```
 
@@ -74,12 +74,12 @@ and we re-implement the instances for `Float32` and `Int32`:
 ```flix
 instance Dividable[Float32] {
     type Aef = { Pure } // No exception, div-by-zero yields NaN.
-    pub def add(x: Float32, y: Float32): Float32 = x / y
+    pub def div(x: Float32, y: Float32): Float32 = x / y
 }
 
 instance Dividable[Int32] {
     type Aef = { DivByZero }
-    pub def add(x: Int32, y: Int32): Int32 \ DivByZero = 
+    pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
         if (y == 0) do DivByZero.throw() else x / y
 }
 ```

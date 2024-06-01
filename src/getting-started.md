@@ -50,6 +50,23 @@ Flix can also be used from the command line. Follow these steps:
 > 3. Enter the created directory (e.g. `cd my-flix-project`) and run `java -jar flix.jar init` to create an empty Flix project.
 > 4. Run `java -jar flix.jar run` to compile and run the project.
 
+### Using nix
+
+Flix can also be installed using the [nix package manager](https://nixos.org/).
+To install for the currently running shell run:
+
+```shell
+$ nix-shell -p flix
+```
+
+Or alternatively to install globally:
+
+```shell
+$ nix-env -i flix
+```
+
+Then run `flix run` in your project directory.
+
 ### Troubleshooting
 
 The most common reasons for Flix not working are (a) the `java` command not

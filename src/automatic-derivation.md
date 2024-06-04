@@ -6,6 +6,7 @@ Flix supports automatic derivation of several type classes, including:
 - `Order` — to derive a total ordering on the values of a type.
 - `ToString` — to derive a human-readable string representation on the values of a type.
 - `Sendable` — to enable the values of an (immutable) type to be sent over a channel.
+- `Coerce` - to convert simple data types to their underlying representation.
 
 ### Derivation of Eq and Order
 
@@ -104,3 +105,43 @@ Because it takes a type parameter of kind 'Region'.
 ```
 
 This is because mutable data is not safe to share between threads.
+
+### Derivation of Coerce
+
+We can automatically derive implementations of the `Coerce` type class.
+The `Coerce` class converts a simple (one-case) data type
+to its underlying implementation.
+
+```flix
+enum Shape with Coerce {
+    case Circle(Int32)
+}
+
+def main(): Unit \ IO =
+    let c = Circle(123);
+    println("The radius is ${coerce(c)}")
+```
+
+We _cannot_ derive `Coerce` for an enum with more than one case.
+For example, if we try:
+
+```flix
+enum Shape with Coerce {
+    case Circle(Int32)
+    case Square(Int32)
+}
+```
+
+The Flix compiler emits a compiler error:
+
+```
+❌ -- Derivation Error --------------------------------------------------
+
+>> Cannot derive 'Coerce' for the non-singleton enum 'Shape'.
+
+1 | enum Shape with Coerce {
+                    ^^^^^^
+                    illegal derivation
+
+'Coerce' can only be derived for enums with exactly one case.
+```

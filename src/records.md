@@ -28,11 +28,11 @@ does not matter.
 
 ### Label Access
 
-We can access the label of a record using a dot:
+We can access the label of a record using a hash:
 
 ```flix
 let p = { x = 1, y = 2 };
-p.x + p.y
+p#x + p#y
 ```
 
 The type system ensures that we cannot access a label that does not exist.
@@ -48,7 +48,7 @@ record with an updated label value:
 ```flix
 let p1 = { x = 1, y = 2 };
 let p2 = { x = 3 | p1 };
-p1.x + p2.x
+p1#x + p2#x
 ```
 
 The expression `{ x = 3 | p1 }` updates the record `p1` with a new value of its
@@ -63,7 +63,7 @@ We can add a new label to an existing record as follows:
 ```flix
 let p1 = { x = 1, y = 2 };
 let p2 = { +z = 3 | p1 };
-p1.x + p1.y + p2.z
+p1#x + p1#y + p2#z
 ```
 
 Here the expression `{ +z = 3 | p1 }` extends the record `p1` with a new label
@@ -87,7 +87,7 @@ been removed.
 A function may specify that it requires a record with two labels:
 
 ```flix
-def f(r: {x = Int32, y = Int32}): Int32 = r.x + r.y
+def f(r: {x = Int32, y = Int32}): Int32 = r#x + r#y
 ```
 
 We can call this function with the records `{ x = 1, y = 2 }` and `{ y = 2, x =
@@ -98,7 +98,7 @@ say that the record `r` is *closed*.
 We can lift this restriction by using row polymorphism:
 
 ```flix
-def g(r: {x = Int32, y = Int32 | s}): Int32 = r.x + r.y
+def g(r: {x = Int32, y = Int32 | s}): Int32 = r#x + r#y
 ```
 
 We can call this function with *any* record as long as it has `x` and `y` labels

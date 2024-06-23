@@ -10,8 +10,8 @@ change over time. The three key reference operations are:
 In Flix, the type of a reference is `Ref[t, r]` where `t` is the type of the
 element and `r` is its region. Like all mutable memory in Flix, every reference
 must belong to some region. Reading from and writing to a reference are
-_effectful_ operations. For example, reading the value of a reference `Ref[t,
-r]` has effect `r`.
+_effectful_ operations. For example, reading the value of a reference `Ref[t, r]`
+has effect `r`.
 
 The `Ref.fresh(rc, e)` operation allocates a reference cell in a region of the heap
 and returns its location, the `Ref.get` operation dereferences a location and
@@ -152,7 +152,7 @@ Similarly, here is a record that contains two mutable references:
 ```flix
 region rc {
     let r = { fstName = Ref.fresh(rc, "Lucky"), lstName = Ref.fresh(rc, "Luke") };
-    Ref.put("Unlucky", r.fstName)
+    Ref.put("Unlucky", r#fstName)
 };
 ```
 

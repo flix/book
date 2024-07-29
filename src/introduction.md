@@ -33,7 +33,7 @@ always a 1:1 correspondence between the Flix language and what is reported in
 the editor. The advantages are many: (a) diagnostics are always exact, (b) code
 navigation "just works", and (c) refactorings are always correct.
 
-## Look'n Feel
+## Look 'n' Feel
 
 Here are a few programs to illustrate the look and feel of Flix:
 

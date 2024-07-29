@@ -1,5 +1,23 @@
 ## Invoking Object Methods
 
+In Flix, we can call methods on objects using syntax similar to Java.
+
+For example:
+
+```flix
+import java.io.File
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
+    println(f.getName())
+```
+
+Here we import the `java.io.File` class, instantiate a `File` object, and then
+call the `getName` method on that object. 
+
+
+<div style="color:gray">
+
 We can use the import mechanism to invoke methods on objects.
 
 For example:
@@ -62,3 +80,4 @@ import static java.lang.String.valueOf(Bool): String \ {};
 valueOf(true)
 ```
 
+</div>

@@ -1,6 +1,6 @@
 ## Creating Objects
 
-In Flix, we can create a objects using syntax similar to Java.
+In Flix, we can create objects using syntax similar to Java.
 
 For example:
 

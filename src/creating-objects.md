@@ -1,41 +1,60 @@
 ## Creating Objects
 
-We can import the constructor of a Java class as a
-Flix function and use it to construct new objects.
+In Flix, we can create a objects using syntax similar to Java.
 
 For example:
 
 ```flix
-import java_new java.io.File(String): ##java.io.File \ IO as newFile;
-newFile("HelloWorld.txt")
+import java.io.File
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
+    println("Hello World!")
 ```
 
-Here we import the constructor of the `java.io.File`
-class and give it the local name `newFile`.
-The `newFile` function takes a string argument and
-returns a fresh Java `File` object.
-Constructing a fresh object is impure, hence `main`
-is marked as having the `IO` effect.
+Here we import the `java.io.File` class and instantiate a `File` object by
+calling one of its constructor using the `new` keyword. 
 
-When we import a constructor, we must specify the
-types of its formal parameters. This is required because
-Java supports constructor overloading (i.e. a class may
-have multiple constructors only distinguished by their
-formal parameters.)
-
-For example, the `java.io.File` class has another
-constructor that takes two arguments: one for the parent
-pathname and one for the child pathname.
-We can use this constructor as follows:
+The `File` class has multiple constructors, so we can also write:
 
 ```flix
-import java_new java.io.File(String, String): ##java.io.File \ IO as newFile;
-newFile("foo", "HelloWorld.txt")
+import java.io.File
+
+def main(): Unit \ IO = 
+    let f1 = new File("foo.txt");
+    let f2 = new File("bar", "foo.txt");
+    println("Hello World!")
 ```
 
-Here the import describes that the constructor expects two
-`String` arguments.
+Flix resolves the constructor based on the number of arguments and their types.
 
-> **Note:** `import` statements must occur at the expression-level,
-> i.e. they must occur inside a function. Unlike `use` declarations,
-> they cannot occur at top of a module.
+As a final example, we can write:
+
+```flix
+import java.io.File
+import java.net.URI
+
+def main(): Unit \ IO = 
+    let f1 = new File("foo.txt");
+    let f2 = new File("bar", "foo.txt");
+    let f3 = new File(new URI("file://foo.txt"));
+    println("Hello World!")
+```
+
+We can use a _renaming import_ to resolve a clash between a Java name and a Flix
+module: 
+
+```flix
+import java.lang.{String => JString}
+
+def main(): Unit \ IO = 
+    let s = new JString("Hello World");
+    println("Hello World!")
+```
+
+Here `JString` refers to the Java class `java.lang.String` whereas `String`
+refers to the Flix module. Note that internally Flix and Java strings are the
+same. 
+
+> **Note:** In Flix, Java classes must be `import`ed before they can be used.
+> Specifically, we _cannot_ write `new java.io.File(...)`.

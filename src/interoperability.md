@@ -1,6 +1,6 @@
 # Interoperability with Java
 
-Flix is [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM)-based programming language,
+Flix is a [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM)-based programming language,
 hence:
 
 - Flix programs compile to efficient JVM bytecode.

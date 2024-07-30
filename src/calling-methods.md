@@ -1,5 +1,7 @@
 ## Invoking Object Methods
 
+> **Note:** Requires Flix 0.49.0
+
 In Flix, we can call methods on objects using syntax similar to Java.
 
 For example:

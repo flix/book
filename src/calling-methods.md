@@ -15,62 +15,59 @@ def main(): Unit \ IO =
 Here we import the `java.io.File` class, instantiate a `File` object, and then
 call the `getName` method on that object. 
 
+Like with constructors, Flix resolves the method based on the number of
+arguments and their types.
+
+Here is another example:
+
+```flix
+import java.io.File
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
+    if (f.exists())
+        println("The file ${f.getName()} exists!")
+    else
+        println("The file ${f.getName()} does not exist!")
+```
+
+And here is a larger example:
+
+```flix
+import java.io.File
+import java.io.FileWriter
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
+    let w = new FileWriter(f);
+    w.append("Hello World\n");
+    w.close()
+```
+
+In the above example, we may want to catch the `IOException` that can be raised:
+
+```flix
+import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
+    try {
+        let w = new FileWriter(f);
+        w.append("Hello World\n");
+        w.close()
+    } catch {
+        case _: IOException => println("Unable to write to file: ${f.getName()}")
+    }
+```
+
+
+## Invoking Static Methods
+
 
 <div style="color:gray">
 
-We can use the import mechanism to invoke methods on objects.
-
-For example:
-
-```flix
-import java_new java.io.File(String): ##java.io.File \ IO as newFile;
-import java.io.File.exists(): Bool \ IO as fileExists;
-let f = newFile("HelloWorld.txt");
-fileExists(f)
-```
-
-Here we import the `java.io.File.exists` method under the name `fileExists`.
-
-If the Java method name is a legal Flix name and we want to reuse it,
-we can also import the method without an `as` clause. For example:
-
-```flix
-import java_new java.io.File(String): ##java.io.File \ IO as newFile;
-import java.io.File.exists(): Bool \ IO;
-let f = newFile("HelloWorld.txt");
-exists(f)
-```
-
-Here we import the method under the name `exists`.
-
-When a Java method is imported, we must annotate it with its effect.
-Most commonly, a Java method has a side-effect (such as deleting a file),
-and hence must be annotated with the `IO` effect.
-
-In rare cases where a method is pure, we can import it as such by
-writing the empty effect set: `{}`. For example:
-
-```flix
-import java.lang.String.startsWith(String): Bool \ {};
-startsWith("Hello World", "Hello")
-```
-
-And as another example:
-
-```flix
-import java.lang.String.charAt(Int32): Char \ {};
-charAt("Hello World", 2)
-```
-
-Type signatures should use Flix type names and not
-Java type names for primitive types.
-For example, if a Java method takes a `Double` its
-signature should use the Flix type `Float64`.
-Similarly, if a Java method takes a `Boolean` its
-signature should use the Flix type `Bool`.
-This goes for return types, too.
-
-## Invoking Static Methods
 
 We can invoke a _static_ method by writing the
 `static` keyword after import:

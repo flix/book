@@ -96,3 +96,32 @@ def main(): Unit \ IO =
     println(Math.abs(-123.456f64))
 ```
 
+## Invoking Java Methods Known to be Pure
+
+Any Flix expression that creates a Java object, calls an object method, or calls
+a static method gets the `IO` effect. This is to be expected: Java code may have
+side-effects on the environment. 
+
+In rare cases, if we know for certain that a Java method has no side-effects, we
+can use an `unsafe` block to inform Flix to treat that expression as pure. 
+
+For example:
+
+```flix
+import java.lang.Math
+
+def pythagoras(x: Float64, y: Float64): Float64 = 
+    unsafe Math.sqrt((Math.pow(x, 2.0) + Math.pow(y, 2.0)))
+
+def main(): Unit \ IO = 
+    println(pythagoras(3.0, 4.0))
+```
+
+Here we know for certain that `Math.pow` and `Math.sqrt` are _pure_ functions,
+hence we can put them inside an `unsafe` block. Thus we are able to type the
+Flix `pythagoras` function as pure, i.e. without the `IO` effect.
+
+> **Warning:** Do _not_, under any circumstances, use `unsafe` on expressions
+> that have side-effects. Doing so breaks the type and effect system which can
+> lead to incorrect compiler optimizations which can change the meaning of your
+> program in subtle or catastrophic ways! 

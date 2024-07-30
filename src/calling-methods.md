@@ -58,23 +58,39 @@ def main(): Unit \ IO =
         w.append("Hello World\n");
         w.close()
     } catch {
-        case _: IOException => println("Unable to write to file: ${f.getName()}")
+        case ex: IOException => 
+            println("Unable to write to file: ${f.getName()}");
+            println("The error message was: ${ex.getMessage()}")
     }
 ```
 
-
 ## Invoking Static Methods
 
+In Flix, we can call static methods (i.e. class methods) using syntax similar to Java:
 
-<div style="color:gray">
-
-
-We can invoke a _static_ method by writing the
-`static` keyword after import:
+For example:
 
 ```flix
-import static java.lang.String.valueOf(Bool): String \ {};
-valueOf(true)
+import java.lang.Math
+
+def main(): Unit \ IO = 
+    let n = Math.sin(3.14);
+    println(n)
+
 ```
 
-</div>
+Like with constructors and methods, Flix resolves the static method based on the
+number of arguments and their types.
+
+Here is another example:
+
+```flix
+import java.lang.Math
+
+def main(): Unit \ IO = 
+    println(Math.abs(-123i32));
+    println(Math.abs(-123i64));
+    println(Math.abs(-123.456f32));
+    println(Math.abs(-123.456f64))
+```
+

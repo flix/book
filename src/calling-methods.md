@@ -2,7 +2,7 @@
 
 > **Note:** Requires Flix 0.49.0
 
-In Flix, we can call methods on objects using syntax similar to Java.
+In Flix, we can call methods on Java objects using syntax similar to Java.
 
 For example:
 
@@ -96,15 +96,27 @@ def main(): Unit \ IO =
     println(Math.abs(-123.456f64))
 ```
 
+## Callings Methods with VarArgs
+
+TBD
+
+## Dealing with Boxing and Unboxing
+
+TBD
+
+## When Constructor or Method Resolution Fails
+
+TBD
+
 ## Invoking Java Methods Known to be Pure
 
 Any Flix expression that creates a Java object, calls a Java method, or calls a
 Java static method has the `IO` effect. This is to be expected: Java
 constructors and methods may have arbitrary side-effects. 
 
-In rare cases, if we know for certain that a Java constructor or method
-invocation has no side-effects, we can use an `unsafe` block to tell Flix to
-treat that expression as pure. 
+If we know for certain that a Java constructor or method invocation has no
+side-effects, we can use an `unsafe` block to tell Flix to treat that expression
+as pure. 
 
 For example:
 

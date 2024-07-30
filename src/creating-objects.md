@@ -15,7 +15,7 @@ def main(): Unit \ IO =
 ```
 
 Here we import the `java.io.File` class and instantiate a `File` object by
-calling one of its constructor using the `new` keyword. 
+calling one of its constructors using the `new` keyword. 
 
 The `File` class has multiple constructors, so we can also write:
 

@@ -1,19 +1,36 @@
 ## Nested and Inner Classes
 
-[Java supports two different types of nested class](https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html): static nested classes and inner classes:
+Java supports nested static and non-static inner classes:
+
+For example:
 
 ```java
+package Foo.Bar;
+
 class OuterClass {
     ...
     class InnerClass {
         ...
     }
-    static class StaticNestedClass {
-        ...
+    static class StaticInnerClass {
+        public static String hello() { return "Hi"; }
     }
 }
 ```
 
-Although these appear superficially similar, they provide very different functionality.
+In Flix, we can access the `StaticInnerClass` using the import statement:
 
-Flix supports static nested classes, but does not yet support inner classes. To reference a static nested class, use a `$` instead of `.` in the class name, for example `java.util.Locale$Builder`.
+```flix
+import Foo.Bar.{OuterClass$StaticInnerClass => Inner}
+
+def main(): Unit \ IO = 
+    println(Inner.hello())
+```
+
+A typical example is to access the `Map.Entry` class:
+
+```flix
+import java.util.{Map$Entry => Entry}
+```
+
+> **Note:** Flix does not support accessing nested non-static inner classes.

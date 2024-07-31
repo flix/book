@@ -35,7 +35,7 @@ Here the calls `new FileReader()`, `r.readLine()`, and `r.close()` can throw
 `IOException`s. We use a `try-catch` block to catch these exceptions. We add a
 special case for the `FileNotFoundException` exception. 
 
-> **Note:** Flix programs should not use exceptions. It is considered bad style.
+> **Note:** Flix programs should not use exceptions: it is considered bad style.
 > Instead, programs should use the `Result[e, t]` type. The `try-catch`
 > construct should only be used on the boundary between Flix and Java code. 
 

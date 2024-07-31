@@ -18,7 +18,7 @@ class OuterClass {
 }
 ```
 
-In Flix, we can access the `StaticInnerClass` using the import statement:
+In Flix, we can access the `StaticInnerClass` using the `import` statement:
 
 ```flix
 import Foo.Bar.{OuterClass$StaticInnerClass => Inner}

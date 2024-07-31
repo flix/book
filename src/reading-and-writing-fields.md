@@ -1,53 +1,53 @@
 ## Reading and Writing Fields
 
-We can read and write fields by importing functions that serve as "getters" and "setters".
+> **Note:** Requires Flix 0.49.0
 
-Assume we have the Java class:
+Flix supports reading object fields and static (class) fields with standard Java
+syntax.
 
-```java
-class TestClass {
-    boolean boolField = true;
-}
-```
+### Reading Object Fields
 
-Then here is how we can access the `boolField`:
+TBD
 
-```flix
-import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
-import java_get_field flix.test.TestClass.boolField: Bool \ IO as getField;
-let o = newObject();
-getField(o)
-```
+### Reading Static Fields
 
-Here we import the (default, empty) constructor of `TestClass` as `newObject`.
-Next, we import the field `boolField` as the function `getField`. We use
-`newObject` to construct a fresh object and we call `getField` on it to
-obtain the value of `o.boolField`.
-
-Writing a field of an object is similar:
+We can read a static field as follows:
 
 ```flix
-import java_new flix.test.TestClass(): ##flix.test.TestClass \ IO as newObject;
-import java_get_field flix.test.TestClass.boolField: Bool \ IO as getField;
-import java_set_field flix.test.TestClass.boolField: Unit \ IO as setField;
-let o = newObject();
-setField(o, false);
-getField(o)
+import java.lang.Math
+
+def area(radius: Float64): Float64 = (unsafe Math.PI) * radius * radius
 ```
 
-Here we import both a "getter" and "setter" for the `boolField` field.
+We import the `java.lang.Math` class and then we access the static `PI` field. 
 
-### Reading and Writing Static Fields
+We know that the `PI` field will never change, hence we cast away the effect with `unsafe`.
 
-Reading or writing _static_ fields is similar to
-reading or writing object fields.
-For example:
+### Writing Object Fields
+
+Flix supports writing to an object field with the non-standard syntax:
 
 ```flix
-import static java_get_field java.lang.Integer.MIN_VALUE: Int32 \ IO as getMinValue;
-getMinValue()
+import java_set_field foo.bar.Baz.boolField: Unit \ IO as setField;
+let o = ...;
+setField(o, false)
 ```
 
-The only difference is to write the
-`static` keyword to indicate that the reference is to
-a static field.
+Here the `import` *expression* creates a function named `setField` which we
+call. 
+
+> **Note**: We are currently working on a more tolerable syntax.
+
+### Writing Static Fields
+
+Flix supports writing to a static field with the non-standard syntax:
+
+```flix
+import static java_set_field foo.bar.Baz.StaticBoolField: Unit \ IO as setField;
+let o = ...;
+setField(o, false)
+```
+> **Note**: We are currently working on a more tolerable syntax.
+
+Here the `import` *expression* creates a function named `setField` which we
+call. 

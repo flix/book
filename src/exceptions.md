@@ -1,52 +1,46 @@
 ## Exceptions
 
-In Flix, all error handling should be done using the `Result[e, t]` type.
-However, for interoperability with Java, Flix also has a classic `try-catch`
-mechanism.
+> **Note:** Requires Flix 0.49.0
 
-For example, we can write:
+In Flix, we can catch Java exceptions using a `try-catch` construct similar to
+the one in Java. The syntax is slightly different, but semantically equivalent
+to Java.
+
+For example: 
 
 ```flix
-///
-/// Returns `true` if the given file `f` exists.
-///
-pub def exists(f: String): Result[String, Bool] \ IO =
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.FileNotFoundException
+import java.io.IOException
+
+def main(): Unit \ IO = 
+    let f = new File("foo.txt");
     try {
-        import java_new java.io.File(String): ##java.io.File \ IO as newFile;
-        import java.io.File.exists(): Bool \ IO;
-        Ok(exists(newFile(f)))
+        let r = new BufferedReader(new FileReader(f));
+        let l = r.readLine();
+        println("The first line of the file is: ${l}");
+        r.close()
     } catch {
-        case ex: ##java.io.IOException =>
-            import java.lang.Throwable.getMessage(): String \ IO;
-            Err(getMessage(ex))
+        case _: FileNotFoundException => 
+            println("The file does not exist!")
+        case ex: IOException => 
+            println("The file could not be read!");
+            println("The error message was: ${ex.getMessage()}")
     }
 ```
 
-Here we import the `File` constructor as `newFile` and the `File.exists` method
-as `exists`. We then call the methods and catch the `IOException`.
+Here the calls `new FileReader()`, `r.readLine()`, and `r.close()` can throw
+`IOException`s. We use a `try-catch` block to catch these exceptions. We add a
+special case for the `FileNotFoundException` exception. 
 
-> **Note:** Flix programs should not rely on the exception mechanism. Instead,
-> we should guard all call to Java code that might throw exceptions close to
-> their call site and turn these exceptions into `Result`s.
+> **Note:** Flix programs should not use exceptions. It is considered bad style.
+> Instead, programs should use the `Result[e, t]` type. The `try-catch`
+> construct should only be used on the boundary between Flix and Java code. 
 
-### Structured Concurrency and Exceptions
+> **Note:** Flix does not (yet) support a `finally` block.
 
-Flix supports [structured concurrency](./concurrency.md). This means that (1)
-threads cannot outlive the lifetime of their region and (2) that exceptions
-thrown in sub-threads are propagated to the thread of the region.
+> **Note:** Flix does not (yet) support throwing Java exceptions. 
 
-For example, given the program:
-
-```flix
-def main(): Unit \ IO =
-    region rc {
-        spawn f() @ rc;
-        spawn g() @ rc
-    };
-    println("Done")
-```
-
-where `f` and `g` are some functions. If `f` or `g` were to throw an unhandled
-exception then that exception would be _caught_ and _rethrown_ inside the `main`
-thread. This means that we cannot successfully leave the scope of `rc` _unless_
-`f` and `g` terminated _and_ did not throw any unhandled exceptions.
+> **Note:** In Flix a function can contain at most one `try-catch` block.

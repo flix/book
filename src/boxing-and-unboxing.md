@@ -16,14 +16,13 @@ import java.lang.Integer
 import java.util.Objects
 
 def hash(x: Int32): Int32 = unsafe {
-        let boxed = Integer.valueOf(x);
-        Objects.hashCode(boxed)
-    }
+    let boxed = Integer.valueOf(x);
+    Objects.hashCode(boxed)
+}
 ```
 
 We must use `unsafe` to cast away the `IO` effect from the call to
 `Integer.valueOf()` and `Objects.hashCode()`.
-
 
 ### Unboxing
 

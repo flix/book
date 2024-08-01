@@ -133,6 +133,26 @@ The type ascription specifies that `o` has type `Bool` which allows method
 resolution to complete successfully. Note that the extra pair of parenthesis is
 required. 
 
+## Invoking Object Methods through Static Fields
+
+We may want to write:
+
+```flix
+import java.lang.System
+
+def main(): Unit \ IO = 
+    System.out.println("Hello World!")
+```
+
+But due to a limitation of the Flix parser, the above has to be written as:
+
+```flix
+import java.lang.System
+
+def main(): Unit \ IO = 
+    (System.out).println("Hello World!")
+```
+
 ## Invoking Java Methods Known to be Pure
 
 Any Flix expression that creates a Java object, calls a Java method, or calls a

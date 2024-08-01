@@ -183,3 +183,27 @@ the Flix `pythagoras` function as pure, i.e. without the `IO` effect.
 > have side-effects. Doing so breaks the type and effect system which can lead
 > to incorrect compiler optimizations which can change the meaning of your
 > program in subtle or catastrophic ways! 
+
+## Partial Application of Java Constructors and Methods
+
+Flix supports partial application of Flix functions. However, Java constructors
+and methods can never be partially applied. This limitation can be overcome
+introducing an explicit lambda.
+
+For example:
+
+```flix
+import java.lang.{String => JString}
+
+def main(): Unit \ IO = 
+    def replaceAll(s, src, dst) = s.replaceAll(src, dst);
+    let f = replaceAll("Hello World");
+    let s1 = f("World")("Galaxy");
+    let s2 = f("World")("Universe");
+    println(s1);
+    println(s2)
+```
+
+Here we introduce a Flix function `replaceAll` which calls `String.replaceAll`.
+Since `replaceAll` is a Flix function, we can partially apply it as shown in the
+example. 

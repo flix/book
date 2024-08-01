@@ -30,7 +30,7 @@ def main(): Unit \ IO =
 
 Flix resolves the constructor based on the number of arguments and their types.
 
-As a final example, we can write:
+As another example, we can write:
 
 ```flix
 import java.io.File
@@ -58,5 +58,7 @@ Here `JString` refers to the Java class `java.lang.String` whereas `String`
 refers to the Flix module. Note that internally Flix and Java strings are the
 same. 
 
-> **Note:** In Flix, Java classes must be `import`ed before they can be used.
-> Specifically, we _cannot_ write `new java.io.File(...)`.
+> **Note:** Any interaction with Java code always has the `IO` effect. 
+
+> **Note:** In Flix, Java classes must be `import`ed before they can be used. In
+> particular, we _cannot_ write `new java.io.File(...)`.

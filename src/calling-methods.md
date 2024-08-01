@@ -100,13 +100,38 @@ def main(): Unit \ IO =
 
 TBD
 
-## Dealing with Boxing and Unboxing
-
-TBD
-
 ## When Constructor or Method Resolution Fails
 
-TBD
+In some cases the Flix compiler is unable to determine what Java constructor or
+method is called.
+
+For example, in the program:
+
+```flix
+import java.lang.{String => JString}
+
+def f(): String \ IO = 
+    let o = ???;
+    JString.valueOf(o)
+```
+
+The type of `o` is unknown, hence Flix cannot know if we want to call
+`String.valueOf(boolean)`, `String.valueOf(char)`, `String.valueOf(double)`, or
+one of the other overloaded versions. 
+
+The solution is to put a type ascription on the relevant argument: 
+
+```flix
+import java.lang.{String => JString}
+
+def f(): String \ IO = 
+    let o = ???;
+    JString.valueOf((o: Bool))
+```
+
+The type ascription specifies that `o` has type `Bool` which allows method
+resolution to complete successfully. Note that the extra pair of parenthesis is
+required. 
 
 ## Invoking Java Methods Known to be Pure
 

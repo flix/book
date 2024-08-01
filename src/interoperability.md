@@ -9,13 +9,16 @@ hence:
 
 Flix supports most Java features necessary for interoperability:
 
-- [Creating objects from existing classes](./creating-objects.md)
+- [Creating objects from classes](./creating-objects.md)
 - [Calling methods on classes and objects](./calling-methods.md)
-- [Reading and writing fields on objects](./reading-and-writing-fields.md)
+- [Reading and writing fields on classes and objects](./reading-and-writing-fields.md)
 - [Anonymous extension of classes and interfaces](./extending-classes-and-interfaces.md)
-- [Nested and inner classes](./nested-and-inner-classes.md)
+- [Accessing inner classes](./nested-and-inner-classes.md)
+- [Catching and throwing exceptions](./exceptions.md)
+- [Boxing and unboxing of primitive values](./boxing-and-unboxing.md)
 
-Thus Flix programs can reuse Java Class Library and have access to the Java ecosystem.
+Thus Flix programs can reuse the Java Class Library. In addition, the Flix
+package manager has Maven support. 
 
 Flix and Java share the same base types, but they have different names, as shown
 in the table:

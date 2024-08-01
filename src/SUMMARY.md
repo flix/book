@@ -52,6 +52,7 @@
   - [Classes and Interfaces](./extending-classes-and-interfaces.md)
   - [Nested and Inner Classes](./nested-and-inner-classes.md)
   - [Exceptions](./exceptions.md)
+  - [Boxing and Unboxing](./boxing-and-unboxing.md)
   - [Java Collections](./java-collections.md)
 - [Everyday Programming](./everyday-programming.md)
   - [The Main Function](./main.md)

@@ -1,6 +1,6 @@
 # Interoperability with Java
 
-Flix is [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM)-based programming language,
+Flix is a [Java Virtual Machine](https://en.wikipedia.org/wiki/Java_virtual_machine) (JVM)-based programming language,
 hence:
 
 - Flix programs compile to efficient JVM bytecode.
@@ -9,15 +9,19 @@ hence:
 
 Flix supports most Java features necessary for interoperability:
 
-- [Creating objects from existing classes](./creating-objects.md)
+- [Creating objects from classes](./creating-objects.md)
 - [Calling methods on classes and objects](./calling-methods.md)
-- [Reading and writing fields on objects](./reading-and-writing-fields.md)
+- [Reading and writing fields on classes and objects](./reading-and-writing-fields.md)
 - [Anonymous extension of classes and interfaces](./extending-classes-and-interfaces.md)
-- [Nested and inner classes](./nested-and-inner-classes.md)
+- [Accessing inner classes](./nested-and-inner-classes.md)
+- [Catching and throwing exceptions](./exceptions.md)
+- [Boxing and unboxing of primitive values](./boxing-and-unboxing.md)
 
-Thus Flix programs can reuse Java Class Library and have access to the Java ecosystem.
+Thus Flix programs can reuse the Java Class Library. In addition, the Flix
+package manager has Maven support. 
 
-Flix and Java share the same base types, in particular:
+Flix and Java share the same base types, but they have different names, as shown
+in the table:
 
 | Flix Type | Java Type |
 |-----------|-----------|
@@ -35,12 +39,4 @@ In Flix primitive types are always unboxed.
 Hence, to call a Java method that expects a `java.lang.Integer`,
 if you have a Flix `Int32`, it must be boxed by calling `java.lang.Integer.valueOf`.
 
-> **Design Note:** Unlike other programming languages that target the JVM,
-> Flix does not aim to embed the Java type system within Flix.
-> Instead, Flix sacrifices some convenience to stay true to its design goals.
-> In particular, the Flix type system does not support sub-typing.
-> Consequently, unlike in Java, a sub-type cannot be used where its super-type is expected.
-> For example, `java.lang.String` is incompatible with `java.lang.Object`.
-> Fortunately, this limitation can be overcome by using [upcasts](./upcast.md).
-
-[^1]: Flix currently targets Java 11. Once Project Loom is released, we will target that version.
+[^1]: Flix requires at least Java 21.

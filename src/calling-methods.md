@@ -1,4 +1,4 @@
-## Invoking Object Methods
+## Calling Object Methods
 
 > **Note:** Requires Flix 0.49.0
 
@@ -66,7 +66,7 @@ def main(): Unit \ IO =
     }
 ```
 
-## Invoking Static Methods
+## Calling Static Methods
 
 In Flix, we can call static methods (i.e. class methods) using syntax similar to Java:
 
@@ -96,7 +96,7 @@ def main(): Unit \ IO =
     println(Math.abs(-123.456f64))
 ```
 
-## Callings Methods with VarArgs
+## Calling Constructors and Methods with VarArgs
 
 TBD
 
@@ -133,7 +133,7 @@ The type ascription specifies that `o` has type `Bool` which allows method
 resolution to complete successfully. Note that the extra pair of parenthesis is
 required. 
 
-## Invoking Object Methods through Static Fields
+## Calling Object Methods through Static Fields
 
 We may want to write:
 
@@ -153,7 +153,7 @@ def main(): Unit \ IO =
     (System.out).println("Hello World!")
 ```
 
-## Invoking Java Methods Known to be Pure
+## Calling Java Methods Known to be Pure
 
 Any Flix expression that creates a Java object, calls a Java method, or calls a
 Java static method has the `IO` effect. This is to be expected: Java

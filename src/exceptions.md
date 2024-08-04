@@ -40,6 +40,4 @@ special case for the `FileNotFoundException` exception.
 
 > **Note:** Flix does not (yet) support a `finally` block.
 
-> **Note:** Flix does not (yet) support throwing Java exceptions. 
-
 > **Note:** In Flix a function can contain at most one `try-catch` block.

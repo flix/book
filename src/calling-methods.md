@@ -96,10 +96,6 @@ def main(): Unit \ IO =
     println(Math.abs(-123.456f64))
 ```
 
-## Calling Constructors and Methods with VarArgs
-
-TBD
-
 ## When Constructor or Method Resolution Fails
 
 In some cases the Flix compiler is unable to determine what Java constructor or
@@ -132,26 +128,6 @@ def f(): String \ IO =
 The type ascription specifies that `o` has type `Bool` which allows method
 resolution to complete successfully. Note that the extra pair of parenthesis is
 required. 
-
-## Calling Object Methods through Static Fields
-
-We may want to write:
-
-```flix
-import java.lang.System
-
-def main(): Unit \ IO = 
-    System.out.println("Hello World!")
-```
-
-But due to a limitation of the Flix parser, the above has to be written as:
-
-```flix
-import java.lang.System
-
-def main(): Unit \ IO = 
-    (System.out).println("Hello World!")
-```
 
 ## Calling Java Methods Known to be Pure
 

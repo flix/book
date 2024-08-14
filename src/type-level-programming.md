@@ -3,7 +3,7 @@
 > **Note:** This feature is experimental. Do not use in production.
 
 This section assumes prior familiarity with type-level programming and phantom
-types. 
+types.
 
 ### Type-Level Booleans
 
@@ -12,13 +12,13 @@ means `true` and `false` are types, but also that formulas such as `x and (not
 y)` are types. A type-level Boolean formulas has kind `Bool`. Two type-level
 Boolean formulas are equal if the formulas are equivalent (i.e. have the same
 truth tables). For example, the two types `true` and `x or not x` are _the same
-type_. 
+type_.
 
 While type-level Boolean formulas are not as expressive as general refinement
 types or dependent types they support complete type inference and parametric
-polymorphism. This means that they are very ergonomic to work with. 
+polymorphism. This means that they are very ergonomic to work with.
 
-We can use type-level Boolean formulas to statically enforce program invariants. 
+We can use type-level Boolean formulas to statically enforce program invariants.
 
 We illustrate with a few examples:
 
@@ -26,7 +26,7 @@ We illustrate with a few examples:
 
 ```flix
 ///
-/// We can use a phantom type-level Boolean to model whether a person is alive 
+/// We can use a phantom type-level Boolean to model whether a person is alive
 /// or is undead (i.e. a vampire).
 ///
 enum Person[_isAlive: Bool] {
@@ -34,7 +34,7 @@ enum Person[_isAlive: Bool] {
     case P({name = String, age = Int32})
 }
 
-/// 
+///
 /// We interpret the Boolean `true` is alive and the Boolean `false` as undead
 /// (i.e. a vampire).
 ///
@@ -42,7 +42,7 @@ type alias Alive  = true
 type alias Undead = false
 
 ///
-/// A person who is born is alive. 
+/// A person who is born is alive.
 ///
 def born(name: String): Person[Alive] =
     Person.P({name = name, age = 0})
@@ -50,8 +50,8 @@ def born(name: String): Person[Alive] =
 ///
 /// A person who is alive and is bitten becomes a vampire.
 ///
-/// Note that the type system enforces that an already undead (i.e. a vampire) 
-/// cannot be bitten again. 
+/// Note that the type system enforces that an already undead (i.e. a vampire)
+/// cannot be bitten again.
 ///
 def bite(p: Person[Alive]): Person[Undead] = match p {
     /// The implementation is not important; it simply restructs the person.
@@ -69,26 +69,26 @@ def marry(_p1: Person[isAlive], _p2: Person[isAlive]): Unit = ()
 
 ///
 /// We can implement a more sophisticated version of born.
-/// 
+///
 /// If two persons have a child then that child is a vampire if one of them is.
 ///
-/// Note that here we use the type-level computation `isAlive1 and isAlive2` 
+/// Note that here we use the type-level computation `isAlive1 and isAlive2`
 /// to compute whether the result is alive or undead.
 ///
-def offspring(p1: Person[isAlive1], p2: Person[isAlive2]): Person[isAlive1 and isAlive2] = 
+def offspring(p1: Person[isAlive1], p2: Person[isAlive2]): Person[isAlive1 and isAlive2] =
     match (p1, p2) {
-        case (Person.P(r1), Person.P(r2)) => 
-            Person.P({name = "Spawn of ${r1.name} and ${r2.name}", age = 0})
+        case (Person.P(r1), Person.P(r2)) =>
+            Person.P({name = "Spawn of ${r1#name} and ${r2#name}", age = 0})
 }
 
 ///
 /// A person can age-- no matter if they are alive or undead.
 ///
-/// Note that this function preserves the `isAlive` parameter. That is, if a 
+/// Note that this function preserves the `isAlive` parameter. That is, if a
 /// person is alive they stay alive.
 ///
 def birthday(p: Person[isAlive]): Person[isAlive] = match p {
-    case Person.P(r) => Person.P({name = r.name, age = r.age + 1})
+    case Person.P(r) => Person.P({name = r#name, age = r#age + 1})
 }
 ```
 
@@ -104,7 +104,7 @@ bite(p);
 If we compile this program then the Flix compiler emits a compiler error:
 
 ```
-❌ -- Type Error -------------------------------------------------- 
+❌ -- Type Error --------------------------------------------------
 
 >> Expected argument of type 'Person[true]', but got 'Person[false]'.
 

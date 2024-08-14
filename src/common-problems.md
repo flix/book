@@ -9,7 +9,7 @@
 Given the program:
 
 ```flix
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let l = Nil;
     println(l)
 ```
@@ -28,12 +28,12 @@ The Flix compiler reports:
 
 The issue is that the empty list has the polymorphic type: `List[a]` for any
 `a`. This means that Flix cannot select the appropriate `ToString` trait
-instance. 
+instance.
 
 The solution is to specify the type of the empty list. For example, we can write:
 
 ```flix
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let l: List[Int32] = Nil;
     println(l)
 ```
@@ -61,7 +61,7 @@ The Flix compiler reports:
              complex instance type
 ```
 
-This is because, at least for the moment, it is not possible type define 
+This is because, at least for the moment, it is not possible type define
 trait instances on records (or Datalog schema rows). This may change in the
 future. Until then, it is necessary to wrap the record in an algebraic data
 type. For example:
@@ -74,10 +74,10 @@ and then we can implement `Eq` for the `Person` type:
 
 ```flix
 instance Eq[Person] {
-    pub def eq(x: Person, y: Person): Bool = 
+    pub def eq(x: Person, y: Person): Bool =
         let Person(r1) = x;
         let Person(r2) = y;
-        r1.fstName == r2.fstName and r1.lstName == r2.lstName
+        r1#fstName == r2#fstName and r1#lstName == r2#lstName
 }
 ```
 

@@ -1,7 +1,5 @@
 ## Reading and Writing Fields
 
-> **Note:** Requires Flix 0.49.0
-
 Flix supports reading object fields and static (class) fields with standard Java
 syntax.
 

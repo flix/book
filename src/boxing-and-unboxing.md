@@ -1,7 +1,5 @@
 ## Boxing and Unboxing
 
-> **Note:** Requires Flix 0.49.0
-
 Unlike Java, Flix never performs implicit boxing or unboxing of values. 
 
 We believe auto boxing is a design flaw and do not plan to support it. Hence,

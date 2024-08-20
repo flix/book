@@ -1,7 +1,5 @@
 ## Creating Objects
 
-> **Note:** Requires Flix 0.49.0
-
 In Flix, we can create objects using syntax similar to Java.
 
 For example:

@@ -1,7 +1,5 @@
 ## Exceptions
 
-> **Note:** Requires Flix 0.49.0
-
 In Flix, we can catch Java exceptions using the `try-catch` construct. The
 construct is similar to the one in Java, but the syntax is slightly different. 
 

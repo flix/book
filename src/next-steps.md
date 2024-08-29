@@ -56,7 +56,7 @@ version is:
 def main(): Unit \ IO = 
     let args = Environment.getArgs();
     let result = 
-        for (
+        forM (
             file  <- List.head(args) |> 
                      Option.toOk("Missing argument: filename");
             lines <- Files.readLines(file) |>

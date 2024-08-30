@@ -63,10 +63,10 @@ begin:"[ ]*(?=(TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):)",
 end:/(TODO|FIXME|NOTE|BUG|OPTIMIZE|HACK|XXX):/,excludeBegin:!0,relevance:0})
 ;const s=f("I","a","is","so","us","to","at","if","in","it","on",/[A-Za-z]+['](d|ve|re|ll|t|s|n)/,/[A-Za-z]+[-][a-z]+/,/[A-Za-z][a-z]{2,}/)
 ;return r.contains.push({begin:h(/[ ]+/,"(",s,/[.]?[:]?([.][ ]|[ ])/,"){3}")}),r
-},v=k("//","$"),S=k("/\\*","\\*/"),R=k("#","$");var j=Object.freeze({
+},S=k("//","$"),v=k("/\\*","\\*/"),R=k("#","$");var j=Object.freeze({
 __proto__:null,APOS_STRING_MODE:M,BACKSLASH_ESCAPE:O,BINARY_NUMBER_MODE:{
 scope:"number",begin:w,relevance:0},BINARY_NUMBER_RE:w,COMMENT:k,
-C_BLOCK_COMMENT_MODE:S,C_LINE_COMMENT_MODE:v,C_NUMBER_MODE:{scope:"number",
+C_BLOCK_COMMENT_MODE:v,C_LINE_COMMENT_MODE:S,C_NUMBER_MODE:{scope:"number",
 begin:y,relevance:0},C_NUMBER_RE:y,END_SAME_AS_BEGIN:e=>Object.assign(e,{
 "on:begin":(e,t)=>{t.data._beginMatch=e[1]},"on:end":(e,t)=>{
 t.data._beginMatch!==e[1]&&t.ignoreMatch()}}),HASH_COMMENT_MODE:R,IDENT_RE:E,
@@ -185,26 +185,26 @@ F("10.7.0","Please use highlight(code, options) instead.\nhttps://github.com/hig
 r=e,i=t),void 0===n&&(n=!0);const s={code:i,language:r};k("before:highlight",s)
 ;const o=s.result?s.result:E(s.language,s.code,n)
 ;return o.code=s.code,k("after:highlight",o),o}function E(e,n,r,s){
-const c=Object.create(null);function l(){if(!k.keywords)return void S.addText(R)
+const c=Object.create(null);function l(){if(!k.keywords)return void v.addText(R)
 ;let e=0;k.keywordPatternRe.lastIndex=0;let t=k.keywordPatternRe.exec(R),n=""
 ;for(;t;){n+=R.substring(e,t.index)
 ;const r=w.case_insensitive?t[0].toLowerCase():t[0],s=(i=r,k.keywords[i]);if(s){
 const[e,i]=s
-;if(S.addText(n),n="",c[r]=(c[r]||0)+1,c[r]<=7&&(j+=i),e.startsWith("_"))n+=t[0];else{
+;if(v.addText(n),n="",c[r]=(c[r]||0)+1,c[r]<=7&&(j+=i),e.startsWith("_"))n+=t[0];else{
 const n=w.classNameAliases[e]||e;u(t[0],n)}}else n+=t[0]
 ;e=k.keywordPatternRe.lastIndex,t=k.keywordPatternRe.exec(R)}var i
-;n+=R.substring(e),S.addText(n)}function g(){null!=k.subLanguage?(()=>{
+;n+=R.substring(e),v.addText(n)}function g(){null!=k.subLanguage?(()=>{
 if(""===R)return;let e=null;if("string"==typeof k.subLanguage){
-if(!i[k.subLanguage])return void S.addText(R)
-;e=E(k.subLanguage,R,!0,v[k.subLanguage]),v[k.subLanguage]=e._top
+if(!i[k.subLanguage])return void v.addText(R)
+;e=E(k.subLanguage,R,!0,S[k.subLanguage]),S[k.subLanguage]=e._top
 }else e=_(R,k.subLanguage.length?k.subLanguage:null)
-;k.relevance>0&&(j+=e.relevance),S.__addSublanguage(e._emitter,e.language)
+;k.relevance>0&&(j+=e.relevance),v.__addSublanguage(e._emitter,e.language)
 })():l(),R=""}function u(e,t){
-""!==e&&(S.startScope(t),S.addText(e),S.endScope())}function d(e,t){let n=1
+""!==e&&(v.startScope(t),v.addText(e),v.endScope())}function d(e,t){let n=1
 ;const i=t.length-1;for(;n<=i;){if(!e._emit[n]){n++;continue}
 const i=w.classNameAliases[e[n]]||e[n],r=t[n];i?u(r,i):(R=r,l(),R=""),n++}}
 function h(e,t){
-return e.scope&&"string"==typeof e.scope&&S.openNode(w.classNameAliases[e.scope]||e.scope),
+return e.scope&&"string"==typeof e.scope&&v.openNode(w.classNameAliases[e.scope]||e.scope),
 e.beginScope&&(e.beginScope._wrap?(u(R,w.classNameAliases[e.beginScope._wrap]||e.beginScope._wrap),
 R=""):e.beginScope._multi&&(d(e.beginScope,t),R="")),k=Object.create(e,{parent:{
 value:k}}),k}function f(e,n,i){let r=((e,t)=>{const n=e&&e.exec(t)
@@ -218,7 +218,7 @@ const t=e[0],i=n.substring(e.index),r=f(k,e,i);if(!r)return ee;const s=k
 u(t,k.endScope._wrap)):k.endScope&&k.endScope._multi?(g(),
 d(k.endScope,e)):s.skip?R+=t:(s.returnEnd||s.excludeEnd||(R+=t),
 g(),s.excludeEnd&&(R=t));do{
-k.scope&&S.closeNode(),k.skip||k.subLanguage||(j+=k.relevance),k=k.parent
+k.scope&&v.closeNode(),k.skip||k.subLanguage||(j+=k.relevance),k=k.parent
 }while(k!==r.parent);return r.starts&&h(r.starts,e),s.returnEnd?0:t.length}
 let x={};function y(i,s){const a=s&&s[0];if(R+=i,null==a)return g(),0
 ;if("begin"===x.type&&"end"===s.type&&x.index===s.index&&""===a){
@@ -236,18 +236,18 @@ if("illegal"===s.type&&""===a)return 1
 ;if(I>1e5&&I>3*s.index)throw Error("potential infinite loop, way more iterations than matches")
 ;return R+=a,a.length}const w=O(e)
 ;if(!w)throw K(a.replace("{}",e)),Error('Unknown language: "'+e+'"')
-;const M=q(w);let N="",k=s||M;const v={},S=new p.__emitter(p);(()=>{const e=[]
+;const M=q(w);let N="",k=s||M;const S={},v=new p.__emitter(p);(()=>{const e=[]
 ;for(let t=k;t!==w;t=t.parent)t.scope&&e.unshift(t.scope)
-;e.forEach((e=>S.openNode(e)))})();let R="",j=0,A=0,I=0,T=!1;try{
-if(w.__emitTokens)w.__emitTokens(n,S);else{for(k.matcher.considerAll();;){
+;e.forEach((e=>v.openNode(e)))})();let R="",j=0,A=0,I=0,T=!1;try{
+if(w.__emitTokens)w.__emitTokens(n,v);else{for(k.matcher.considerAll();;){
 I++,T?T=!1:k.matcher.considerAll(),k.matcher.lastIndex=A
 ;const e=k.matcher.exec(n);if(!e)break;const t=y(n.substring(A,e.index),e)
-;A=e.index+t}y(n.substring(A))}return S.finalize(),N=S.toHTML(),{language:e,
-value:N,relevance:j,illegal:!1,_emitter:S,_top:k}}catch(t){
+;A=e.index+t}y(n.substring(A))}return v.finalize(),N=v.toHTML(),{language:e,
+value:N,relevance:j,illegal:!1,_emitter:v,_top:k}}catch(t){
 if(t.message&&t.message.includes("Illegal"))return{language:e,value:Y(n),
 illegal:!0,relevance:0,_illegalBy:{message:t.message,index:A,
-context:n.slice(A-100,A+100),mode:t.mode,resultSoFar:N},_emitter:S};if(o)return{
-language:e,value:Y(n),illegal:!1,relevance:0,errorRaised:t,_emitter:S,_top:k}
+context:n.slice(A-100,A+100),mode:t.mode,resultSoFar:N},_emitter:v};if(o)return{
+language:e,value:Y(n),illegal:!1,relevance:0,errorRaised:t,_emitter:v,_top:k}
 ;throw t}}function _(e,t){t=t||p.languages||Object.keys(i);const n=(e=>{
 const t={value:Y(e),illegal:!1,relevance:0,_top:l,_emitter:new p.__emitter(p)}
 ;return t._emitter.addText(e),t})(e),r=t.filter(O).filter(N).map((t=>E(t,e,!1)))
@@ -316,7 +316,7 @@ contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,i]},s={
 scope:"title.function",beginKeywords:"def",end:/[(\[]/,excludeEnd:!0,
 contains:[i]},o={scope:"literal",variants:[{begin:/\?\?\?/},{begin:/\?/,
 contains:[i]}]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
-keyword:["alias","as","case","catch","checked_cast","checked_ecast","default","def","do","eff","else","enum","for","forA","forM","force","foreach","from","if","import","inject","inline","instance","into","java_get_field","java_new","java_set_field","law","lawful","lazy","let","match","mod","new","object","par","project","pub","query","redef","region","resume","sealed","select","solve","trait","try","type","typematch","unchecked_cast","unchecked_ecast","use","where","with","without","yield"],
+keyword:["alias","as","case","catch","checked_cast","checked_ecast","default","def","do","eff","else","enum","for","forA","forM","force","foreach","from","if","import","inject","inline","instance","into","law","lawful","lazy","let","match","mod","new","object","par","project","pub","query","redef","region","resume","sealed","select","solve","struct","throw","trait","try","type","typematch","unchecked_cast","unchecked_ecast","unsafe","use","where","with","without","yield"],
 literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err","null","static"],
 type:["Unit","Bool","Char","Float32","Float64","Int8","Int16","Int32","Int64","String","BigInt"],
 built_in:["debug","debug!","debug!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!","and","or","not","ref","deref"]

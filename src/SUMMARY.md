@@ -93,6 +93,7 @@
 - [Additional Information](./additional-information.md)
   - [Research Literature](./research-literature.md)
   - [Blog Posts](./blog-posts.md)
+  - [Videos](./videos.md)
 
 ---
 

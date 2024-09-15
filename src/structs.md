@@ -2,9 +2,14 @@
 
 > **Note:** Requires Flix version 0.51.0
 
-Flix supports mutable _scoped_ structs. 
+Flix supports mutable _scoped_ structs. In Flix, like for arrays, every struct
+must have an associated region. Flix supports three operations on structs:
 
-In Flix, like for arrays, every struct must have an associated region.
+- Creating a struct with `new Struct @ rc { ... }`.
+- Accessing the field of a struct with `struct->field`.
+- Updating a mutable field of a struct with `struct-> field = ...`.
+
+Each operation has an effect in the region associated with the struct.
 
 ### Defining a Struct
 
@@ -22,9 +27,6 @@ We see several notable things: First, every struct must have a region type
 parameter. Second, a struct consists of a collection of fields. Third, fields
 can be immutable, which is the default, or mutable which must be indicated by
 using the `mut` modifier. 
-
-> **Note:** The fields of a struct are only visible within the companion module
-of the struct. 
 
 ### Creating a Struct
 
@@ -68,7 +70,7 @@ Actual Order:   height, age, name
              incorrect order
 ```
 
-## Reading and Writing Fields of a Struct
+### Reading and Writing Fields of a Struct
 
 We can read and write fields of a struct using the `->` operator:
 
@@ -98,6 +100,43 @@ result in the `age` field of the same struct.
 > from the function arrow ` -> `. The difference is that the field access
 > operator cannot have space around it, whereas the function arrow must have
 > space around it. 
+
+#### Field Visibility 
+
+The fields of a struct are only visible within the companion module of the
+struct. Hence in the above example, all our functions where placed within the
+`Person` companion module. If we try to access a struct field outside the module, e.g. with:
+
+```flix
+def getName(p: Person[r]): String \ r = 
+    p->name 
+```
+
+The Flix compiler emits an error:
+
+```flix
+❌ -- Resolution Error -------------------------------------------------- 
+
+>> Undefined struct field 'name'.
+
+37 |     p->name 
+            ^^^^
+            undefined field
+```
+
+If we want to provide access to struct fields outside of its companion module
+then we can define explicit getters and setters. For example, we could take the
+`getName` function from above, and place it into the companion module: 
+
+```flix
+mod Person {
+    /// A getter function which provides access to the name field.
+    def getName(p: Person[r]): String \ r = 
+        p->name 
+}
+```
+
+#### Immutable Fields
 
 If a field is immutable, it cannot be changed. For example, if we try:
 

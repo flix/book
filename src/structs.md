@@ -2,6 +2,8 @@
 
 > **Note:** Requires Flix version 0.51.0
 
+<div style="color:gray">
+
 Flix supports mutable _scoped_ structs. In Flix, like for arrays, every struct
 must have an associated region. Flix supports three operations on structs:
 
@@ -131,12 +133,12 @@ then we can define explicit getters and setters. For example, we could take the
 ```flix
 mod Person {
     /// A getter function which provides access to the name field.
-    def getName(p: Person[r]): String \ r = 
+    pub def getName(p: Person[r]): String \ r = 
         p->name 
 }
 ```
 
-#### Immutable Fields
+#### Immutable and Mutable Fields
 
 If a field is immutable, it cannot be changed. For example, if we try:
 
@@ -152,12 +154,15 @@ The Flix compiler emits an error:
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Modification of immutable field `Person.name`. 
->> Mark the field as `mut` to allow mutation.
+>> Modification of immutable field 'name' on 'Person'.
 
 24 |         person->name = newName
                      ^^^^
-                     field not marked `mut`
+                     immutable field
+
+Mark the field as 'mut' in the declaration of the struct.
 ```
 
 We can overcome this issue by marking the field as `mut`.
+
+</div>

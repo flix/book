@@ -72,39 +72,42 @@ Actual Order:   height, age, name
              incorrect order
 ```
 
-### Reading and Writing Fields of a Struct
+</div>
+
+### Reading and Writing Fields
 
 We can read and write fields of a struct using the `->` operator:
 
 ```flix
 mod Person {
-    pub def birthday(person: Person[r]): Unit \ r =
-        person->age = person->age + 1;
-        if(person->age < 18) {
-            person->height = person->height + 10
+    pub def birthday(p: Person[r]): Unit \ r =
+        p->age = p->age + 1;
+        if(p->age < 18) {
+            p->height = p->height + 10
         } else {
             ()
         }
 }
 ```
 
-Here the `birthday` function takes a `Person` struct and conceptually increases
-their age and height. For example, in the line:
+The `birthday` function takes a `Person` struct `p` and mutates its `age` and
+`height` fields. 
+
+For example, in the line:
 
 ```flix
-person->age = person->age + 1;
+p->age = p->age + 1;
 ```
 
-We access the current age as `person->age`, increment it, and then store the
-result in the `age` field of the same struct. 
+We access the current age as `p->age`, increment it, and store the result back
+in the `age` field.
 
-> **Note:** It is important to distinguish the struct field access operator `->`
-> from the function arrow ` -> `. The difference is that the field access
-> operator cannot have space around it, whereas the function arrow must have
-> space around it. 
+We must distinguish between the _struct field access operator_ `->` and the
+function arrow ` -> `. The former has no space around it, whereas the latter
+should have space on both sides. In summary:
 
-
-</div>
+- `s->f`: a struct field access of field `f` on struct `s`.
+- `x -> x`: a function from formal parameter `x` to the variable expression `x`.
 
 #### Field Visibility 
 

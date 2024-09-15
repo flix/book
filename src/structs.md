@@ -138,31 +138,72 @@ mod Person {
 }
 ```
 
+</div>
+
 #### Immutable and Mutable Fields
 
-If a field is immutable, it cannot be changed. For example, if we try:
+In Flix, every field of a struct is either immutable or mutable. A mutable field
+must be marked with the `mut` modifier. Otherwise the field is immutable by
+default, i.e. the value of the field cannot be changed once the struct value has
+been created. 
+
+For example, we can define a struct to represent a `User`:
 
 ```flix
-mod Person {
-    pub def changeName(newName: String, person: Person[r]): Unit \ r = 
-        person->name = newName
+struct User[r] {
+    id: Int32,
+    mut name: String,
+    mut email: String
 }
 ```
 
-The Flix compiler emits an error:
+Here the identifier `id` is immutable and cannot be changed, whereas the `name`
+and `email` fields can be changed over the lifetime of the struct value. 
+
+If we try to modify an immutable field:
+
+```flix
+mod User {
+    pub def changeId(u: User[r]): Unit \ r =
+        u->id = 0
+}
+```
+
+The Flix compiler emits a compiler error:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Modification of immutable field 'name' on 'Person'.
+>> Modification of immutable field 'id' on User'.
 
-24 |         person->name = newName
-                     ^^^^
-                     immutable field
+9 |         u->id = 0
+               ^^
+               immutable field
 
 Mark the field as 'mut' in the declaration of the struct.
 ```
 
-We can overcome this issue by marking the field as `mut`.
+We remark that immutability is _not_ transitive. 
 
-</div>
+For example, we can define a struct:
+
+```flix
+struct Book[r] {
+    title: String,
+    authors: MutList[String, r]
+}
+```
+
+where the `authors` field is immutable. 
+
+However, since a `MutList` can be changed, we can write:
+
+```flix
+mod Book {
+    pub def addAuthor(a: String, b: Book[r]): Unit \ r =
+        MutList.push!(a, b->authors)
+}
+```
+
+Here we are not changing the field of the struct. We are changing the underlying
+mutable list. 

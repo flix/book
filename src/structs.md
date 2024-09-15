@@ -244,3 +244,35 @@ mod Book {
 
 Here we are not changing the field of the struct. We are changing the underlying
 mutable list. 
+
+### Recursive and Polymorphic Structs
+
+We can define a struct for a binary search tree that is recursive and polymorphic:
+
+```flix
+struct Tree[k, v, r] {
+    mut key: k,
+    mut value: v,
+    mut left: Option[Tree[k, v, r]],
+    mut right: Option[Tree[k, v, r]]
+}
+```
+
+If we assume that `Tree[k, v, r]` is sorted, we can define a `search` function:
+
+```flix
+mod Tree {
+    pub def search(k: k, t: Tree[k, v, r]): Option[v] \ r with Order[k] = 
+        match (k <=> t->key) {
+            case Comparison.EqualTo     => Some(t->value)
+            case Comparison.LessThan    => 
+                // Search left.
+                forM(l <- t->left;  result <- search(k, l)) 
+                    yield result
+            case Comparison.GreaterThan => 
+                // Search right.
+                forM(r <- t->right; result <- search(k, r)) 
+                    yield result
+        }
+}
+```

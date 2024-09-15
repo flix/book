@@ -103,42 +103,71 @@ result in the `age` field of the same struct.
 > operator cannot have space around it, whereas the function arrow must have
 > space around it. 
 
+
+</div>
+
 #### Field Visibility 
 
-The fields of a struct are only visible within the companion module of the
-struct. Hence in the above example, all our functions where placed within the
-`Person` companion module. If we try to access a struct field outside the module, e.g. with:
+In Flix, the fields of a struct are only visible from within its companion
+module. 
+
+For example, if we write:
 
 ```flix
-def getName(p: Person[r]): String \ r = 
-    p->name 
+struct Point[r] {
+    x: Int32,
+    y: Int32
+}
+
+def area(p: Point[r]): Int32 \ r = 
+    p->x * p->y
 ```
 
-The Flix compiler emits an error:
+The Flix compiler emits two compilation errors:
 
-```flix
+```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Undefined struct field 'name'.
+>> Undefined struct field 'x'.
 
-37 |     p->name 
-            ^^^^
-            undefined field
+7 |     p->x * p->y
+           ^
+           undefined field
+
+❌ -- Resolution Error -------------------------------------------------- 
+
+>> Undefined struct field 'y'.
+
+7 |     p->x * p->y
+                  ^
+                  undefined field
 ```
 
-If we want to provide access to struct fields outside of its companion module
-then we can define explicit getters and setters. For example, we could take the
-`getName` function from above, and place it into the companion module: 
+Instead, we should define the `area` function inside the companion module:
 
 ```flix
-mod Person {
-    /// A getter function which provides access to the name field.
-    pub def getName(p: Person[r]): String \ r = 
-        p->name 
+struct Point[r] {
+    x: Int32,
+    y: Int32
+}
+
+mod Point { // Companion module for Point
+    pub def area(p: Point[r]): Int32 \ r = 
+        p->x * p->y
 }
 ```
 
-</div>
+If we want to provide access to fields of a struct from outside its companion
+module, we can introduce getters (and setters). For example: 
+
+```flix
+mod Point {
+    pub def getX(p: Point[r]): Int32 \ r = p->x
+    pub def getY(p: Point[r]): Int32 \ r = p->y
+}
+```
+
+Thus access to the data of a struct is tightly controlled.
 
 #### Immutable and Mutable Fields
 

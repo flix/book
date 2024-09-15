@@ -68,7 +68,57 @@ Actual Order:   height, age, name
              incorrect order
 ```
 
-## Reading Fields of a Struct
+## Reading and Writing Fields of a Struct
 
-We can read the fields of a struct using the `->` operator:
+We can read and write fields of a struct using the `->` operator:
 
+```flix
+mod Person {
+    pub def birthday(person: Person[r]): Unit \ r =
+        person->age = person->age + 1;
+        if(person->age < 18) {
+            person->height = person->height + 10
+        } else {
+            ()
+        }
+}
+```
+
+Here the `birthday` function takes a `Person` struct and conceptually increases
+their age and height. For example, in the line:
+
+```flix
+person->age = person->age + 1;
+```
+
+We access the current age as `person->age`, increment it, and then store the
+result in the `age` field of the same struct. 
+
+> **Note:** It is important to distinguish the struct field access operator `->`
+> from the function arrow ` -> `. The difference is that the field access
+> operator cannot have space around it, whereas the function arrow must have
+> space around it. 
+
+If a field is immutable, it cannot be changed. For example, if we try:
+
+```flix
+mod Person {
+    pub def changeName(newName: String, person: Person[r]): Unit \ r = 
+        person->name = newName
+}
+```
+
+The Flix compiler emits an error:
+
+```
+❌ -- Resolution Error -------------------------------------------------- 
+
+>> Modification of immutable field `Person.name`. 
+>> Mark the field as `mut` to allow mutation.
+
+24 |         person->name = newName
+                     ^^^^
+                     field not marked `mut`
+```
+
+We can overcome this issue by marking the field as `mut`.

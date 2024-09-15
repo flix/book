@@ -13,7 +13,7 @@ must have an associated region. Flix supports three operations on structs:
 
 Each operation has an effect in the region associated with the struct.
 
-### Defining a Struct
+### Declaring a Struct
 
 We can define a struct as follows:
 
@@ -30,49 +30,54 @@ parameter. Second, a struct consists of a collection of fields. Third, fields
 can be immutable, which is the default, or mutable which must be indicated by
 using the `mut` modifier. 
 
+</div>
+
 ### Creating a Struct
 
 We can create an instance of the `Person` struct as follows:
 
 ```flix
 mod Person {
-    pub def mkPerson(rc: Region[r], name: String): Person[r] \ r =
-        new Person @ rc { name = name, age = 0, height = 30 }
+    pub def mkLuckyLuke(rc: Region[r]): Person[r] \ r =
+        new Person @ rc { name = "Lucky Luke", age = 30, height = 185 }
 }
 ```
 
-The `mkPerson` function takes two arguments: a region capability `rc` and the
-`name` of the person. The syntax:
+The `mkPerson` function takes one argument: the region capability `rc` where the
+new person struct should be created. The syntax:
 
 ```flix
-new Person @ rc { name = name, age = 0, height = 30 }
+new Person @ rc { name = "Lucky Luke", age = 30, height = 185 }
 ```
 
-creates an instance of the struct `Person` in the region specified by `rc` with
-the values of the fields as specified. Note that the fields must be specified in
-the same order as they were in the declaration of the struct. If we specify the
-wrong order: 
+specifies that we create a new instance of the `Person` struct in the region
+`rc`. We then specify the values of each field of the struct. In Flix, all
+fields must be initialized explicitly and immediately. 
+
+Moreover, the fields must be specified in the same order as the declaration
+order. 
+
+For example, if we were to write:
+
 
 ```flix
-new Person @ rc { height = 30, age = 0, name = name }
+new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
 ```
 
-The Flix compiler emits an error:
+The Flix compiler emits the error:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Structs fields must be initialized in their declaration order
+>> Struct fields must be initialized in their declaration order
 
-Expected Order: name, age, height
-Actual Order:   height, age, name
+Expected: name, age, height
+Actual  : age, name, height
 
-11 |         new Person @ rc { height = 30, age = 0, name = name }
+11 |         new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
              incorrect order
 ```
-
-</div>
 
 ### Reading and Writing Fields
 

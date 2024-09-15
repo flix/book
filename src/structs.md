@@ -251,7 +251,7 @@ We can define a struct for a binary search tree that is recursive and polymorphi
 
 ```flix
 struct Tree[k, v, r] {
-    mut key: k,
+    key: k,
     mut value: v,
     mut left: Option[Tree[k, v, r]],
     mut right: Option[Tree[k, v, r]]

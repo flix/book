@@ -2,20 +2,14 @@
 
 > **Note:** Requires Flix version 0.51.0
 
-<div style="color:gray">
-
-Flix supports mutable _scoped_ structs. In Flix, like for arrays, every struct
+Flix supports mutable _scoped_ structs. In Flix, like with arrays, every struct
 must have an associated region. Flix supports three operations on structs:
 
 - Creating a struct with `new Struct @ rc { ... }`.
 - Accessing the field of a struct with `struct->field`.
-- Updating a mutable field of a struct with `struct-> field = ...`.
+- Updating a _mutable_ field of a struct with `struct-> field = ...`.
 
 Each operation has an effect in the region associated with the struct.
-
-
-</div>
-
 
 ### Declaring a Struct
 

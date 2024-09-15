@@ -13,9 +13,13 @@ must have an associated region. Flix supports three operations on structs:
 
 Each operation has an effect in the region associated with the struct.
 
+
+</div>
+
+
 ### Declaring a Struct
 
-We can define a struct as follows:
+We can declare a struct as follows:
 
 ```flix
 struct Person[r] {
@@ -25,12 +29,14 @@ struct Person[r] {
 }
 ```
 
-We see several notable things: First, every struct must have a region type
-parameter. Second, a struct consists of a collection of fields. Third, fields
-can be immutable, which is the default, or mutable which must be indicated by
-using the `mut` modifier. 
+Here we declare a struct with three fields: `name`, `age`, and `height`. The
+`name` field is immutable, i.e. cannot be changed once a struct instance has
+been created. The `age` and `heights` are mutable and can be changed after
+creation. The `Person` struct has one type parameter: `r` which specifies the
+region that the struct will be associated with. 
 
-</div>
+> **Note:** Every struct must have a region type parameter and it must be the
+> last type parameter. 
 
 ### Creating a Struct
 

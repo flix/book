@@ -20,7 +20,7 @@ Flix supports three operations on structs:
 - Accessing the field of a struct with `struct->field`.
 - Updating a _mutable_ field of a struct with `struct->field = ...`.
 
-Each operation has an effect in the region associated with the struct.
+Each operation has an effect in the region of the struct.
 
 An immutable field cannot be updated. 
 
@@ -40,10 +40,10 @@ Here we declare a struct with three fields: `name`, `age`, and `height`. The
 `name` field is immutable, i.e. cannot be changed once a struct instance has
 been created. The `age` and `heights` are mutable and can be changed after
 creation. The `Person` struct has one type parameter: `r` which specifies the
-region that the struct will be associated with. 
+region that the struct belongs to.
 
-> **Note:** Every struct must have a region type parameter and it must be the
-> last type parameter. 
+Every struct must have a region type parameter and it must be the last in the
+type parameter list. 
 
 ### Creating a Struct
 
@@ -56,18 +56,18 @@ mod Person {
 }
 ```
 
-The `mkPerson` function takes one argument: the region capability `rc` where the
-new person struct should be created. The syntax:
+The `mkPerson` function takes one argument: the region capability `rc` which the
+new instance should belong to. The syntax:
 
 ```flix
 new Person @ rc { name = "Lucky Luke", age = 30, height = 185 }
 ```
 
 specifies that we create a new instance of the `Person` struct in the region
-`rc`. We then specify the values of each field of the struct. In Flix, all
-fields must be initialized explicitly and immediately. 
+`rc`. We then specify the values of each field of the struct. All struct fields
+must be initialized immediately and explicitly. 
 
-Moreover, the fields must be specified in the same order as the declaration
+In addition, the fields must be specified in the same order as the declaration
 order. 
 
 For example, if we were to write:
@@ -88,7 +88,7 @@ Expected: name, age, height
 Actual  : age, name, height
 
 11 |         new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
              incorrect order
 ```
 

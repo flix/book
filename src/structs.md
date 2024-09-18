@@ -7,7 +7,7 @@ must have an associated region. Flix supports three operations on structs:
 
 - Creating a struct with `new Struct @ rc { ... }`.
 - Accessing the field of a struct with `struct->field`.
-- Updating a _mutable_ field of a struct with `struct-> field = ...`.
+- Updating a _mutable_ field of a struct with `struct->field = ...`.
 
 Each operation has an effect in the region associated with the struct.
 

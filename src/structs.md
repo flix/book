@@ -2,14 +2,27 @@
 
 > **Note:** Requires Flix version 0.51.0
 
-Flix supports mutable _scoped_ structs. In Flix, like with arrays, every struct
-must have an associated region. Flix supports three operations on structs:
+Flix supports mutable _scoped_ structs. A struct is a sequence of user-defined
+fields. Fields are immutable by default, but can made mutable by marking them
+with the `mut` modifier. 
+
+Like all mutable memory in Flix, every struct must belong to some region.
+Structs are the mutable alternative to extensible records which are immutable.
+
+The fields of a struct are unboxed, i.e. primitive types do not cause an extra
+layer of indirection. Thus structs are a memory efficient data structure that
+can be used to implement higher-level mutable data structures, e.g. mutable
+lists, mutable stacks, mutable queues, and so forth. 
+
+Flix supports three operations on structs:
 
 - Creating a struct with `new Struct @ rc { ... }`.
 - Accessing the field of a struct with `struct->field`.
 - Updating a _mutable_ field of a struct with `struct->field = ...`.
 
 Each operation has an effect in the region associated with the struct.
+
+An immutable field cannot be updated. 
 
 ### Declaring a Struct
 

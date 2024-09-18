@@ -94,7 +94,7 @@ Actual  : age, name, height
 
 ### Reading and Writing Fields
 
-We can read and write fields of a struct using the `->` operator:
+We can read and write fields of a struct using the `->` operator. For example: 
 
 ```flix
 mod Person {
@@ -121,8 +121,8 @@ We access the current age as `p->age`, increment it, and store the result back
 in the `age` field.
 
 We must distinguish between the _struct field access operator_ `->` and the
-function arrow ` -> `. The former has no space around it, whereas the latter
-should have space on both sides. In summary:
+function arrow <code>&nbsp; ->  &nbsp;</code>. The former has no space around
+it, whereas the latter should have space on both sides. In summary:
 
 - `s->f`: a struct field access of field `f` on struct `s`.
 - `x -> x`: a function from formal parameter `x` to the variable expression `x`.

@@ -2,14 +2,25 @@
 
 > **Note:** Requires Flix version 0.51.0
 
-Flix supports mutable _scoped_ structs. In Flix, like with arrays, every struct
-must have an associated region. Flix supports three operations on structs:
+Flix supports mutable _scoped_ structs. A struct is a sequence of user-defined
+fields. Fields are immutable by default, but can made mutable by marking them
+with the `mut` modifier. Like all mutable memory in Flix, every struct must
+belong to some region. 
 
-- Creating a struct with `new Struct @ rc { ... }`.
-- Accessing the field of a struct with `struct->field`.
+Structs are the mutable alternative to extensible records which are immutable.
+
+The fields of a struct are unboxed, i.e. primitive types do not cause
+indirection. Thus structs are a memory efficient data structure that can be used
+to implement higher-level mutable data structures, e.g. mutable lists, mutable
+stacks, mutable queues, and so forth. 
+
+Flix supports three operations for working with structs:
+
+- Creating a struct instance in a region with `new Struct @ rc { ... }`.
+- Accessing a field of a struct with `struct->field`.
 - Updating a _mutable_ field of a struct with `struct->field = ...`.
 
-Each operation has an effect in the region associated with the struct.
+Each operation has an effect in the region of the struct.
 
 ### Declaring a Struct
 
@@ -24,13 +35,13 @@ struct Person[r] {
 ```
 
 Here we declare a struct with three fields: `name`, `age`, and `height`. The
-`name` field is immutable, i.e. cannot be changed once a struct instance has
-been created. The `age` and `heights` are mutable and can be changed after
+`name` field is immutable, i.e. cannot be changed once the struct instance has
+been created. The `age` and `heights` are mutable and hence can be changed after
 creation. The `Person` struct has one type parameter: `r` which specifies the
-region that the struct will be associated with. 
+region that the struct belongs to.
 
-> **Note:** Every struct must have a region type parameter and it must be the
-> last type parameter. 
+Every struct must have a region type parameter and it must be the last in the
+type parameter list. 
 
 ### Creating a Struct
 
@@ -43,22 +54,22 @@ mod Person {
 }
 ```
 
-The `mkPerson` function takes one argument: the region capability `rc` where the
-new person struct should be created. The syntax:
+The `mkPerson` function takes one argument: the region capability `rc` to
+associate to the struct with. 
+
+The syntax:
 
 ```flix
 new Person @ rc { name = "Lucky Luke", age = 30, height = 185 }
 ```
 
 specifies that we create a new instance of the `Person` struct in the region
-`rc`. We then specify the values of each field of the struct. In Flix, all
-fields must be initialized explicitly and immediately. 
+`rc`. We then specify the values of each field of the struct. All struct fields
+must be initialized immediately and explicitly. 
 
-Moreover, the fields must be specified in the same order as the declaration
-order. 
+In addition, the fields must be initialized in their declaration order.
 
-For example, if we were to write:
-
+For example, if we write:
 
 ```flix
 new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
@@ -69,19 +80,19 @@ The Flix compiler emits the error:
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Struct fields must be initialized in their declaration order
+>> Struct fields must be initialized in their declaration order.
 
 Expected: name, age, height
 Actual  : age, name, height
 
 11 |         new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
              incorrect order
 ```
 
 ### Reading and Writing Fields
 
-We can read and write fields of a struct using the `->` operator:
+We can read and write fields of a struct using the field access operator `->`. For example: 
 
 ```flix
 mod Person {
@@ -104,20 +115,20 @@ For example, in the line:
 p->age = p->age + 1;
 ```
 
-We access the current age as `p->age`, increment it, and store the result back
+we access the current age as `p->age`, increment it, and store the result back
 in the `age` field.
 
 We must distinguish between the _struct field access operator_ `->` and the
-function arrow ` -> `. The former has no space around it, whereas the latter
-should have space on both sides. In summary:
+function arrow <code>&nbsp; ->  &nbsp;</code>. The former has no space around
+it, whereas the latter should have space on both sides. In summary:
 
-- `s->f`: a struct field access of field `f` on struct `s`.
-- `x -> x`: a function from formal parameter `x` to the variable expression `x`.
+- `s->f`: is a struct field access of field `f` on struct `s`.
+- `x -> x`: is a function from formal parameter `x` to the variable expression `x`.
 
 #### Field Visibility 
 
 In Flix, the fields of a struct are only visible from within its companion
-module. 
+module. We can think of this as a form of compiler-enforced encapsulation. 
 
 For example, if we write:
 
@@ -131,7 +142,7 @@ def area(p: Point[r]): Int32 \ r =
     p->x * p->y
 ```
 
-The Flix compiler emits two compilation errors:
+The Flix compiler emits two errors:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
@@ -151,7 +162,7 @@ The Flix compiler emits two compilation errors:
                   undefined field
 ```
 
-Instead, we should define the `area` function inside the companion module:
+Instead, we should define the `area` function _inside_ the companion module:
 
 ```flix
 struct Point[r] {
@@ -165,8 +176,8 @@ mod Point { // Companion module for Point
 }
 ```
 
-If we want to provide access to fields of a struct from outside its companion
-module, we can introduce getters (and setters). For example: 
+If we want to provide access to the ields of a struct from outside its companion
+module, we can introduce explicit getters and setters. For example: 
 
 ```flix
 mod Point {
@@ -175,16 +186,16 @@ mod Point {
 }
 ```
 
-Thus access to the data of a struct is tightly controlled.
+Thus access to the fields of struct is tightly controlled. 
 
 #### Immutable and Mutable Fields
 
 In Flix, every field of a struct is either immutable or mutable. A mutable field
 must be marked with the `mut` modifier. Otherwise the field is immutable by
-default, i.e. the value of the field cannot be changed once the struct value has
+default, i.e. the value of the field cannot be changed once the struct instance has
 been created. 
 
-For example, we can define a struct to represent a `User`:
+For example, we can define a struct to represent a user:
 
 ```flix
 struct User[r] {
@@ -194,8 +205,8 @@ struct User[r] {
 }
 ```
 
-Here the identifier `id` is immutable and cannot be changed, whereas the `name`
-and `email` fields can be changed over the lifetime of the struct value. 
+Here the identifier `id` is immutable and cannot be changed whereas the `name`
+and `email` fields can be changed over the lifetime of the struct instance. 
 
 If we try to modify an immutable field:
 
@@ -206,7 +217,7 @@ mod User {
 }
 ```
 
-The Flix compiler emits a compiler error:
+The Flix compiler emits an error:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
@@ -220,7 +231,7 @@ The Flix compiler emits a compiler error:
 Mark the field as 'mut' in the declaration of the struct.
 ```
 
-We remark that immutability is _not_ transitive. 
+We remark that field immutability is _not_ transitive. 
 
 For example, we can define a struct:
 
@@ -262,17 +273,22 @@ If we assume that `Tree[k, v, r]` is sorted, we can define a `search` function:
 
 ```flix
 mod Tree {
-    pub def search(k: k, t: Tree[k, v, r]): Option[v] \ r with Order[k] = 
-        match (k <=> t->key) {
-            case Comparison.EqualTo     => Some(t->value)
-            case Comparison.LessThan    => 
-                // Search left.
-                forM(l <- t->left;  result <- search(k, l)) 
-                    yield result
-            case Comparison.GreaterThan => 
-                // Search right.
-                forM(r <- t->right; result <- search(k, r)) 
-                    yield result
+    // A function to search the tree `t` for the given key `k`.
+    pub def search(k: k, t: Tree[k, v, r]): Option[v] \ r with Order[k] =
+        match (Order.compare(k, t->key)) {
+            case Comparison.EqualTo  => Some(t->value)
+            case Comparison.LessThan =>
+                // Search in the left subtree.
+                match t->left {
+                    case None            => None
+                    case Some(leftTree)  => search(k, leftTree)
+                }
+            case Comparison.GreaterThan =>
+                // Search in the right subtree.
+                match t->right {
+                    case None            => None
+                    case Some(rightTree) => search(k, rightTree)
+                }
         }
 }
 ```

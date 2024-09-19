@@ -186,16 +186,16 @@ mod Point {
 }
 ```
 
-Thus access to the data of a struct is tightly controlled.
+Thus access to the fields of struct is tightly controlled. 
 
 #### Immutable and Mutable Fields
 
 In Flix, every field of a struct is either immutable or mutable. A mutable field
 must be marked with the `mut` modifier. Otherwise the field is immutable by
-default, i.e. the value of the field cannot be changed once the struct value has
+default, i.e. the value of the field cannot be changed once the struct instance has
 been created. 
 
-For example, we can define a struct to represent a `User`:
+For example, we can define a struct to represent a user:
 
 ```flix
 struct User[r] {
@@ -205,8 +205,8 @@ struct User[r] {
 }
 ```
 
-Here the identifier `id` is immutable and cannot be changed, whereas the `name`
-and `email` fields can be changed over the lifetime of the struct value. 
+Here the identifier `id` is immutable and cannot be changed whereas the `name`
+and `email` fields can be changed over the lifetime of the struct instance. 
 
 If we try to modify an immutable field:
 
@@ -217,7 +217,7 @@ mod User {
 }
 ```
 
-The Flix compiler emits a compiler error:
+The Flix compiler emits an error:
 
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
@@ -231,7 +231,7 @@ The Flix compiler emits a compiler error:
 Mark the field as 'mut' in the declaration of the struct.
 ```
 
-We remark that immutability is _not_ transitive. 
+We remark that field immutability is _not_ transitive. 
 
 For example, we can define a struct:
 
@@ -273,17 +273,22 @@ If we assume that `Tree[k, v, r]` is sorted, we can define a `search` function:
 
 ```flix
 mod Tree {
-    pub def search(k: k, t: Tree[k, v, r]): Option[v] \ r with Order[k] = 
-        match (k <=> t->key) {
-            case Comparison.EqualTo     => Some(t->value)
-            case Comparison.LessThan    => 
-                // Search left.
-                forM(l <- t->left;  result <- search(k, l)) 
-                    yield result
-            case Comparison.GreaterThan => 
-                // Search right.
-                forM(r <- t->right; result <- search(k, r)) 
-                    yield result
+    // A function to search the tree `t` for the given key `k`.
+    pub def search(k: k, t: Tree[k, v, r]): Option[v] \ r with Order[k] =
+        match (Order.compare(k, t->key)) {
+            case Comparison.EqualTo  => Some(t->value)
+            case Comparison.LessThan =>
+                // Search in the left subtree.
+                match t->left {
+                    case None            => None
+                    case Some(leftTree)  => search(k, leftTree)
+                }
+            case Comparison.GreaterThan =>
+                // Search in the right subtree.
+                match t->right {
+                    case None            => None
+                    case Some(rightTree) => search(k, rightTree)
+                }
         }
 }
 ```

@@ -17,7 +17,7 @@ lists, mutable stacks, mutable queues, and so forth.
 Flix supports three operations on structs:
 
 - Creating a struct with `new Struct @ rc { ... }`.
-- Accessing the field of a struct with `struct->field`.
+- Accessing a field of a struct with `struct->field`.
 - Updating a _mutable_ field of a struct with `struct->field = ...`.
 
 Each operation has an effect in the region of the struct.

@@ -94,6 +94,32 @@ def main(): Unit \ IO =
     println(Math.abs(-123.456f64))
 ```
 
+## Calling Constructors or Methods with VarArgs
+
+We can call a constructor or method that takes variable arguments using the
+the special syntax `...{ value1, value2, ...}`. For example:
+
+```flix
+import java.nio.file.Path
+
+def getMyPhoto(): Path \ IO =
+    Path.of("Documents", ...{"Images", "me.jpg"})
+```
+
+Here we call the `Path.of` Java method which requires a single string and then
+a varargs array of strings.
+
+In the special case where we want to call a constructor or method without any
+varargs we have to explicitly pass an empty `Vector[t]`. Moreover, we have to
+specify the type of the elements. For example:
+
+```
+import java.nio.file.Path
+
+def getDocuments(): Path \ IO =
+    Path.of("Documents", (Vector.empty(): Vector[String]))
+```
+
 ## When Constructor or Method Resolution Fails
 
 In some cases the Flix compiler is unable to determine what Java constructor or

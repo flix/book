@@ -36,7 +36,7 @@ def main(): Unit \ IO =
         println(divide(3, 2));
         println(divide(3, 0))
     } with DivByZero {
-        def divByZero(_k) = println("Oops: Division by Zero!")
+        def divByZero(_) = println("Oops: Division by Zero!")
     }
 ```
 
@@ -61,7 +61,7 @@ def main(): Unit \ IO =
     try {
         List.map(x -> divide(42, x), l) |> println
     } with DivByZero {
-        def divByZero(_k) = println("Oops: Division by Zero!")
+        def divByZero(_) = println("Oops: Division by Zero!")
     }
 ```
 
@@ -70,11 +70,9 @@ raise a `DivByZero` exception, hence the program prints `Oops: Division by
 Zero!` and nothing else. Importantly, the `DivByZero` effect is precisely
 tracked through the effect polymorphic call to `List.map`. 
 
-<div style="color:gray">
-
 ### Resumable Effects
 
-We can also implement resumable effects. For example:
+Flix also supports resumable effects. For example:
 
 ```flix
 eff Ask {
@@ -91,24 +89,23 @@ def greeting(): Unit \ {Ask, Say} =
 
 def main(): Unit \ IO = 
     try {
-        try greeting() with Ask {
-            def ask(k) = k("Bond, James Bond")
-        }
+        greeting()
+    } with Ask {
+        def ask(_, resume) = resume("Bond, James Bond")
     } with Say {
-        def say(s, k) = { println(s); k() }
+        def say(s, resume) = { println(s); resume() }
     }
 ```
 
-Here we declare two effects: `Ask` and `Say`. We use both effects in `greeting`.
-In `main` we call `greeting` and handle each effect. We handle the `Ask` effect
-by always resuming the continuation with the string `"Bond, James Bond"`. We
-handle the `Say` effect by printing to the terminal, and then resuming the
-continuation.
+Here we declare two effects: `Ask` and `Say`. The `Ask` effect is a consumer: it
+needs a string from the environment. The `Say` effect is a producer: it passes a
+string to the environment. We use both effects in `greeting`. In `main` we call
+`greeting` and handle each effect. We handle the `Ask` effect by always resuming
+the continuation with the string `"Bond, James Bond"`. We handle the `Say`
+effect by printing to the terminal, and then resuming the continuation.
 
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
-
-</div>
 
 ### Polymorphic Effects
 

@@ -163,4 +163,6 @@ In summary, Flix function types are of the form:
 |                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b \ ef`      |    n/a     |
 | The type of an _effect polymorphic_ function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b \ { ef1, ef2 }` |    n/a     |
 
+TODO: Subeffecting
+
 </div>

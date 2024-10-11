@@ -9,18 +9,14 @@ Copenhagen](https://di.ku.dk/).
 
 Flix is inspired by OCaml and Haskell with ideas from Rust and Scala. Flix looks
 like Scala, but its type system is based on Hindley-Milner which supports
-complete type inference. Flix aims to offer a unique combination of features
-that no other programming language offers, including:
+complete type inference. Flix is a state-of-the-art programming language with
+multiple innovative features, including: 
 
--   algebraic data types and pattern matching.
--   traits with higher-kinded types.
--   structured concurrency based on channels and light-weight processes.
-
-In addition, Flix has several new powerful and unique features:
-
--   A polymorphic type and effect system with region-based local mutation.
--   Datalog constraints as first-class program values.
--   Function overloading based on purity reflection.
+- a polymorphic type and effect system with full type inference.
+- region-based local mutable memory.
+- user-defined effects and handlers.
+- higher-kinded type classes ("traits") with associated types and effects.
+- embedded first-class Datalog programming.
 
 Flix compiles to efficient JVM bytecode, runs on the Java Virtual Machine, and
 supports full tail call elimination. Flix has interoperability with Java and can
@@ -105,6 +101,35 @@ def deduplicate(l: List[a]): List[a] with Order[a] =
                 true
             }
         }, l)
+    }
+```
+
+Here is an example the uses **user-defined effects and handlers**:
+
+```flix
+eff MyPrint {
+    pub def println(s: String): Unit
+}
+
+eff MyTime {
+    pub def getCurrentHour(): Int32
+}
+
+def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
+    let hour = do MyTime.getCurrentHour();
+    if (hour < 12)
+        do MyPrint.println("Good morning, ${name}")
+    else 
+        do MyPrint.println("Good afternoon, ${name}")
+}
+
+def main(): Unit \ IO = 
+    try {
+        (sayGreeting("Mr. Bond, James Bond"): Unit)
+    } with MyPrint {
+        def println(s, k) = { println(s); k() }
+    } with MyTime {
+        def getCurrentHour(_, k) = k(11)
     }
 ```
 

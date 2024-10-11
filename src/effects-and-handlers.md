@@ -1,4 +1,4 @@
-# Effects and Handlers
+## Effects and Handlers
 
 > **Warning:** Effects handlers are a technology preview and subject to change.
 

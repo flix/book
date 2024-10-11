@@ -79,9 +79,13 @@ continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
+</div>
+
 ### Polymorphic Effects
 
-The Flix effect system does not yet support polymorphic effects. For example, if we declare:
+The Flix type and effect system does not yet support polymorphic effects.[^1] 
+
+For example, we *cannot* declare a polymorphic `Throw[a]` effect:
 
 ```flix
 eff Throw[a] {
@@ -101,13 +105,27 @@ the Flix compiler reports:
               unexpected effect type parameters
 ```
 
-We plan to support polymorphic effects. 
+Unfortunately, if we need to throw values of different types, we have to declare
+different effects. 
 
-### Spawn
+For example:
 
-The Flix effect system does not yet enforce that all effects are handled in spawn.
+```flix
+eff ThrowBool {
+    pub def throw(x: Bool): Void
+}
 
-For example, the program below will compile, but crash at runtime:
+eff ThrowInt32 {
+    pub def throw(x: Int32): Void
+}
+```
+
+### Control Effects in New Object and Spawn Expressions
+
+Flix does not permit unhandled control effects in new object expressions nor in
+spawn expressions. 
+
+For example, if we write:
 
 ```flix
 eff Ask {
@@ -120,33 +138,19 @@ def main(): Unit \ IO =
     }
 ```
 
-> **Warning:** Do not use effects and handlers inside spawn expressions.
+The Flix compiler emits the error message:
 
-### New Object Expressions
+```
+-- Safety Error -------------------------------------------------- 
 
-The Flix type and effect system does not yet enforce that all effects are
-handled in new object expressions.
+>> Illegal spawn effect: 'Ask'. 
 
-For example, the program below will compile, but crash at runtime:
+>> A spawn expression must be pure or have a base effect.
 
-```flix
-import java.lang.Runnable
-
-eff Ask {
-    pub def ask(): String
-}
-
-def newRunnable(): Runnable \ IO = new Runnable {
-    def run(_this: Runnable): Unit \ Ask = 
-        do Ask.ask(); ()
-}
-
-def main(): Unit \ IO = 
-    import java.lang.Runnable.run(): Unit \ IO;
-    let r = newRunnable();
-    run(r)
+7 |         spawn do Ask.ask() @ rc
+                  ^^^^^^^^^^^^
+                  illegal effect.
 ```
 
-> **Warning:** Do not use effects and handlers inside new object expressions.
-
-</div>
+[^1]: We are currently working on lifting this restrction, but it requires
+    further research. 

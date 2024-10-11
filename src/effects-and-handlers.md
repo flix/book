@@ -1,9 +1,8 @@
 ## Effects and Handlers
 
-> **Warning:** Effects handlers are a technology preview and subject to change.
+<div style="color:gray">
 
-> **Warning:** Effects handlers are an experimental feature. Do not use them in
-> production.
+> **Note:** User-defined effects and handlers requires Flix 0.53.0
 
 ## Getting Started with User-Defined Effects and Handlers
 
@@ -80,10 +79,6 @@ continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
-## Limitations
-
-The technology preview has some limitations. We are working on lifting these.
-
 ### Polymorphic Effects
 
 The Flix effect system does not yet support polymorphic effects. For example, if we declare:
@@ -129,7 +124,8 @@ def main(): Unit \ IO =
 
 ### New Object Expressions
 
-The Flix effect system does not yet enforce that all effects are handled in new object expressions.
+The Flix type and effect system does not yet enforce that all effects are
+handled in new object expressions.
 
 For example, the program below will compile, but crash at runtime:
 
@@ -141,7 +137,7 @@ eff Ask {
 }
 
 def newRunnable(): Runnable \ IO = new Runnable {
-    def run(_this: Runnable): Unit \ IO = 
+    def run(_this: Runnable): Unit \ Ask = 
         do Ask.ask(); ()
 }
 
@@ -149,7 +145,8 @@ def main(): Unit \ IO =
     import java.lang.Runnable.run(): Unit \ IO;
     let r = newRunnable();
     run(r)
-
 ```
 
 > **Warning:** Do not use effects and handlers inside new object expressions.
+
+</div>

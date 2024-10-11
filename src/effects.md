@@ -20,4 +20,8 @@ whereas the following expression is impure (marked with `\ IO`):
 println("Hello World") : Unit \ IO
 ```
 
+Why do we want an effect system? What are the benefits:
+
+
+
 </div>

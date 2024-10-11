@@ -107,6 +107,16 @@ effect by printing to the terminal, and then resuming the continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
+### Multiple Effects and Handlers
+
+TBD: Random and Print?
+
+
+### Multiple Resumptions
+
+TBD
+
+
 ### Polymorphic Effects
 
 The Flix type and effect system does not yet support polymorphic effects.[^1] 

@@ -9,13 +9,13 @@ Copenhagen](https://di.ku.dk/).
 
 Flix is inspired by OCaml and Haskell with ideas from Rust and Scala. Flix looks
 like Scala, but its type system is based on Hindley-Milner which supports
-complete type inference. Flix is a state-of-the-art programming language with
+complete type inference. Flix is a *state-of-the-art* programming language with
 multiple innovative features, including: 
 
 - a polymorphic type and effect system with full type inference.
 - region-based local mutable memory.
 - user-defined effects and handlers.
-- higher-kinded type classes ("traits") with associated types and effects.
+- higher-kinded traits with associated types and effects.
 - embedded first-class Datalog programming.
 
 Flix compiles to efficient JVM bytecode, runs on the Java Virtual Machine, and
@@ -104,7 +104,7 @@ def deduplicate(l: List[a]): List[a] with Order[a] =
     }
 ```
 
-Here is an example the uses **user-defined effects and handlers**:
+Here is an example that uses **user-defined effects and handlers**:
 
 ```flix
 eff MyPrint {

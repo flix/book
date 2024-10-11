@@ -1,23 +1,32 @@
 ## Effects and Handlers
 
-<div style="color:gray">
-
 > **Note:** User-defined effects and handlers requires Flix 0.53.0
 
-## Getting Started with User-Defined Effects and Handlers
+Flix supports user-defined control effects and handlers in the style of
+[Eff](https://www.eff-lang.org/) and [Koka](https://koka-lang.github.io/). 
+
+Flix effect handlers use dynamic scope, shallow handlers, and support multiple
+resumptions.
+
+We gradually introduce effects and handlers, but we recommend the reader also
+take a look at: 
+
+- [An Introduction to Algebraic Effects and Handlers](https://www.eff-lang.org/handlers-tutorial.pdf) &mdash; Matija Pretnar
+
+We begin an effect most programmers are familiar with: *exceptions*.
 
 ### Non-Resumable Effects: Exceptions
 
 We can use effects and handlers to implement exceptions. For example:
 
 ```flix
-eff Throw {
-    pub def throw(): Void
+eff DivByZero {
+    pub def divByZero(): Void
 }
 
-def divide(x: Int32, y: Int32): Int32 \ Throw = 
+def divide(x: Int32, y: Int32): Int32 \ DivByZero = 
     if (y == 0) {
-        do Throw.throw()
+        do DivByZero.divByZero()
     } else {
         x / y
     }
@@ -26,22 +35,42 @@ def main(): Unit \ IO =
     try {
         println(divide(3, 2));
         println(divide(3, 0))
-    } with Throw {
-        def throw(_k) = println("Oops: Division by Zero!")
+    } with DivByZero {
+        def divByZero(_k) = println("Oops: Division by Zero!")
     }
 ```
 
-Here we declare the effect `Throw` and use it inside the `divide` function. In
-`main` we perform two divisions. The first succeeds and prints `1`. The second
-fails and the error message is printed. The continuation `_k` is unused (and in
-fact cannot be used because it requires an argument of type `Void`). The `main`
-function has the `IO` effect since we use `println` in the handler, but it does
-_not_ have the `Throw` effect since that has been handled.
+Here we declare the effect `DivByZero` and use it inside the `divide` function.
+In `main` we perform two divisions. The first succeeds and prints `1`. The
+second fails and the error message is printed. The continuation `_k` is unused
+(and in fact cannot be used because it requires an argument of type `Void`). The
+`main` function has the `IO` effect since we use `println` in the handler, but
+it does _not_ have the `DivByZero` effect since that has been handled.
 
 > **Note:** `Void` is an empty (uninhabited) type built-in to Flix. The `Void`
 > type, in combination with an effect operation, can be used everywhere a normal
 > type is required. But notably a function, e.g. a continuation, which requires
-> an argument of type `Void` cannot be invoked. 
+> an argument of type `Void` cannot be called. 
+
+Recall that Flix supports [effect polymorphism](./effect-polymorphism.md), hence
+the following works without issue:
+
+```flix
+def main(): Unit \ IO = 
+    let l = List#{3, 2, 1, 0};
+    try {
+        List.map(x -> divide(42, x), l) |> println
+    } with DivByZero {
+        def divByZero(_k) = println("Oops: Division by Zero!")
+    }
+```
+
+Here we map over the list `List#{3, 2, 1, 0}`. The last call to `divide` will
+raise a `DivByZero` exception, hence the program prints `Oops: Division by
+Zero!` and nothing else. Importantly, the `DivByZero` effect is precisely
+tracked through the effect polymorphic call to `List.map`. 
+
+<div style="color:gray">
 
 ### Resumable Effects
 

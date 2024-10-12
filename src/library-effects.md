@@ -1,142 +1,136 @@
 ## Library Effects
 
-Flix comes with a collection of built-in effects that are available in the
-standard library. 
-
-Each effect introduces a companion module which contains both `handle` and `run`
-functions. 
-
-Here are some of them: 
+The Flix Standard Library comes with a collection of effects and handlers ready
+for use. 
 
 ### Clock
+
+Flix defines a `Clock` effect to access the time since the [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time):
 
 ```flix
 eff Clock {
     /// Returns a measure of time since the epoch in the given time unit `u`.
-    pub def currentTime(u: TimeUnit): Int64
+    def currentTime(u: TimeUnit): Int64
 }
 ```
 
-The `Clock` module also contains the methods:
+The `Clock` companion module also defines the functions `run` and `handle`:
 
 ```flix
-TBD
+mod Clock {
+    /// Runs `f` handling the `Clock` effect using `IO`.
+    def run(f: Unit -> a \ ef): a \ (ef - {Clock} + IO)
+
+    /// Returns `f` where the `Clock` effect has been handled using `IO`.
+    def handle(f: a -> b \ ef): a -> b \ (ef - {Clock} + IO)
+}
 ```
 
-Every effect comes with these `handle` and `run` functions in the companion module of the effect. 
+Every standard library effect defines a companion module with `run` and `handle`
+functions.
 
 ### Console
+
+Flix defines a `Console` effect to read from and write to the user's shell:
 
 ```flix
 eff Console {
     /// Reads a single line from the console.
-    pub def readln(): String
+    def readln(): String
 
     /// Prints the given string `s` to the standard out.
-    pub def print(s: String): Unit
+    def print(s: String): Unit
 
     /// Prints the given string `s` to the standard err.
-    pub def printErr(s: String): Unit
+    def eprint(s: String): Unit
 
     /// Prints the given string `s` to the standard out followed by a new line.
-    pub def println(s: String): Unit
+    def println(s: String): Unit
 
     /// Prints the given string `s` to the standard err followed by a new line.
-    pub def printlnErr(s: String): Unit
+    def eprintln(s: String): Unit
 }
 ```
 
 ### Logger
 
+Flix defines a `Logger` effect for logging messages:
+
 ```flix
-pub eff Logger {
-
-    ///
+eff Logger {
     /// Logs the given message `m` at the given severity `s`.
-    ///
-    pub def log(s: Severity, m: String): Unit
-
+    def log(s: Severity, m: String): Unit
 }
 ```
 
-Module provides:
+The `Logger` companion module provides several convenience functions:
 
 ```flix
 mod Logger {
-    ///
     /// Logs the message `m` at the `Trace` level.
-    ///
-    pub def trace(m: a): Unit \ Logger with ToString[a] = do Logger.log(Severity.Trace, "${m}")
+    def trace(m: a): Unit \ Logger with ToString[a]
 
-    ///
     /// Logs the message `m` at the `Debug` level.
-    ///
-    pub def debug1(m: a): Unit \ Logger with ToString[a] = do Logger.log(Severity.Debug, "${m}")
+    def debug(m: a): Unit \ Logger with ToString[a]
 
-    ///
     /// Logs the message `m` at the `Info` level.
-    ///
-    pub def info(m: a): Unit \ Logger with ToString[a] = do Logger.log(Severity.Info, "${m}")
+    def info(m: a): Unit \ Logger with ToString[a]
 
-    ///
     /// Logs the message `m` at the `Warn` level.
-    ///
-    pub def warn(m: a): Unit \ Logger with ToString[a] = do Logger.log(Severity.Warn, "${m}")
+    def warn(m: a): Unit \ Logger with ToString[a]
 
-    ///
     /// Logs the message `m` at the `Fatal` level.
-    ///
-    pub def fatal(m: a): Unit \ Logger with ToString[a] = do Logger.log(Severity.Fatal, "${m}")
+    def fatal(m: a): Unit \ Logger with ToString[a]
 }
 ```
 
 ### Process
 
+Flix defines a `Process` effect for execution of commands outside of the JVM:
+
 ```flix
 eff Process {
-
-    ///
     /// Immediately executes the command `cmd` passing the arguments `args`.
-    ///
-    pub def exec(cmd: String, args: List[String]): Unit
-
+    def exec(cmd: String, args: List[String]): Unit
 }
 ```
 
 ### Random
 
+<div style="color:gray">
+
 ```flix
-pub eff Random {
+eff Random {
 
     ///
     /// Returns a pseudorandom boolean.
     ///
-    pub def randomBool(): Bool
+    def randomBool(): Bool
 
     ///
     /// Returns a pseudorandom 32-bit floating-point number.
     ///
-    pub def randomFloat32(): Float32
+    def randomFloat32(): Float32
 
     ///
     /// Returns a pseudorandom 64-bit floating-point number.
     ///
-    pub def randomFloat64(): Float64
+    def randomFloat64(): Float64
 
     ///
     /// Returns a pseudorandom 32-bit integer.
     ///
-    pub def randomInt32(): Int32
+    def randomInt32(): Int32
 
     ///
     /// Returns a pseudorandom 64-bit integer.
     ///
-    pub def randomInt64(): Int64
+    def randomInt64(): Int64
 
     ///
     /// Returns a Gaussian distributed 64-bit floating point number.
     ///
-    pub def randomGaussian(): Float64
+    p def randomGaussian(): Float64
 
 }
 ```

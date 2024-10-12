@@ -108,6 +108,7 @@ def gameLoop(secret: Int32): Unit \ IO = {
             if (secret == g) {
                 println("Correct!")
             } else {
+                println("Incorrect!");
                 gameLoop(secret)
             }
         case Result.Err(_) => 
@@ -134,6 +135,73 @@ the `main` function.
 Here is what we should have done:
 
 ```flix
-TBD
+import java.lang.System
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.{Random => JRandom}
+
+eff Guess {
+    pub def readGuess(): Result[String, String]
+}
+
+eff Secret {
+    pub def getSecret(): Int32
+}
+
+eff Terminal {
+    pub def println(s: String): Unit    
+}
+
+def readAndParseGuess(): Result[String, Int32] \ {Guess} = 
+    forM(g <- do Guess.readGuess(); 
+         n <- Int32.parse(10, g)
+    ) yield n
+
+def gameLoop(secret: Int32): Unit \ {Guess, Terminal} = {
+    do Terminal.println("Enter a guess:");
+    match readAndParseGuess() {
+        case Result.Ok(g) => 
+            if (secret == g) {
+                do Terminal.println("Correct!")
+            } else {
+                do Terminal.println("Incorrect!");
+                gameLoop(secret)
+            }
+        case Result.Err(_) => 
+            do Terminal.println("Not a number? Goodbye.");
+            do Terminal.println("The secret was: ${secret}")
+    }
+}
+
+def main(): Unit \ IO = 
+    try {
+        let secret = do Secret.getSecret();
+        gameLoop(secret)
+    } with Secret {
+        def getSecret(_, resume) = 
+            let rnd = new JRandom();
+            resume(rnd.nextInt())
+    } with Guess {
+        def readGuess(_, resume) = 
+            let reader = new BufferedReader(new InputStreamReader(System.in));
+            let line = reader.readLine();
+            if (Object.isNull(line)) 
+                resume(Result.Err("no input"))
+            else 
+                resume(Result.Ok(line))
+    } with Terminal {
+        def println(s, resume) = { println(s); resume() }
+    }
 ```
 
+Notice how we have introduced effects for the three actions the program can
+take: 
+
+1. Creating a secret number.
+2. Reading a number from the user.
+3. Printing to the terminal.
+
+Moreover, notice how each function now specifies its effect(s). 
+
+Importantly, all IO code is now contained within `main` where we actually handle
+the effects. 

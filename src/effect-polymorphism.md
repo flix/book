@@ -165,4 +165,8 @@ In summary, Flix function types are of the form:
 
 TODO: Subeffecting
 
+### Effect Exclusion
+
+### Sub-Effecting
+
 </div>

@@ -130,7 +130,7 @@ and `handle` for re-interpreting the effect in `IO`. In other words, for
 For example, if a we have a function that uses the `Clock` effect:
 
 ```flix
-def getEpoch(): Int64 \ {Clock} = Clock.now()
+def getEpoch(): Int64 \ Clock = Clock.now()
 ```
 
 We can run it by writing:

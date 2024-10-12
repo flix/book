@@ -217,7 +217,7 @@ matters*! If we handle the `Exc` effect "first" then we obtain the list
 `Some(heads) :: Some(tails) :: None :: Nil`. If, on the other hand, we handle
 `Exc` "last" then the whole computation fails with `None`.
 
-### Effects Handlers and Monads
+### Effect Handlers and Monads
 
 Flix supports effect handlers and [monads](./monadic-for-yield.md) because we
 want to support both styles of programming: 

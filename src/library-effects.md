@@ -97,47 +97,37 @@ eff Process {
 
 ### Random
 
-<div style="color:gray">
+Flix defines a `Random` effect for the creation of random values:
 
 ```flix
 eff Random {
-
-    ///
     /// Returns a pseudorandom boolean.
-    ///
     def randomBool(): Bool
 
-    ///
     /// Returns a pseudorandom 32-bit floating-point number.
-    ///
     def randomFloat32(): Float32
 
-    ///
     /// Returns a pseudorandom 64-bit floating-point number.
-    ///
     def randomFloat64(): Float64
 
-    ///
     /// Returns a pseudorandom 32-bit integer.
-    ///
     def randomInt32(): Int32
 
-    ///
     /// Returns a pseudorandom 64-bit integer.
-    ///
     def randomInt64(): Int64
 
-    ///
     /// Returns a Gaussian distributed 64-bit floating point number.
-    ///
-    p def randomGaussian(): Float64
-
+    def randomGaussian(): Float64
 }
 ```
 
-### Running Effects
+### Running Functions with Effects
 
-If we have a program that uses the `Clock` effect:
+As discussed, every Flix Standard Library effect provides two functions: `run`
+and `handle` for re-interpreting the effect in `IO`. In other words, for
+**making the effect happen**. 
+
+For example, if a we have a function that uses the `Clock` effect:
 
 ```flix
 def getEpoch(): Int64 \ {Clock} = Clock.now()
@@ -147,7 +137,15 @@ We can run it by writing:
 
 ```flix
 def main(): Unit \ IO = 
-    println(Clock.handle(getEpoch)())
+    println(Clock.run(getEpoch))
+```
+
+Or we can handle it and then run the returned function:
+
+```flix
+def main(): Unit \ IO = 
+    let f = Clock.handle(getEpoch);
+    println(f())
 ```
 
 If a function has multiple effects:
@@ -156,19 +154,25 @@ If a function has multiple effects:
 def greet(name: String): Unit \ {Clock, Console} = ...
 ```
 
-We can run the program by writing:
+We cannot easily use `run`, but we can use `Clock.handle` and `Console.handle`:
 
 ```flix
 def main(): Unit \ IO = 
-    println(Clock.handle(Console.handle(getEpoch))())
+    let f = Clock.handle(
+                Console.handle(
+                    () -> greet("Mr. Bond")));
+    println(f())
 ```
+
+We had to write `() -> greet("Mr. Bond")` because `handle` takes a function as
+its argument.
 
 ### Using App
 
-Manually adding all the handlers can be tedius. For a simpler solution, which
-handles all library provided effects, we can use `App.run`:
+Using individual handlers can be cumbersome. For convenience, Flix offers a
+`App.runAll` function which can handle all effects in the standard library:
 
 ```flix
 def main(): Unit \ IO = 
-    App.run(myFunction)
+    App.runAll(() -> greet("Mr. Bond"))
 ```

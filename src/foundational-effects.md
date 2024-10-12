@@ -41,4 +41,99 @@ the `FileRead`, `FileWrite`, and `Net` effects are dangerous depends on the
 specific application. A `Http` library will probably need the `Net` effect, but
 it probably should not have the `FileRead` effect.
 
+### What is the `IO` Effect?
+
+The `IO` effect is a generic catch-all effect that captures any interaction with
+the outside which is not captured by the other effects. For example, calling
+`System.nanoTime()` has the `IO` effect. 
+
+### Origin of Foundational Effects
+
+Where does foundational effects come from? They come from an analysis of the
+Java Standard Library which assignes one or more foundational effects to every
+class, constructor, and method. For example, Flix assigns the `Exec` effects to
+every constructor and method in the `java.lang.Process`,
+`java.lang.ProcessBuilder`, and `java.lang.ProcessHandle` classes. While it can
+be argued that no `Exec` effect actually happens __until__
+`ProcessBuilder.start` and hence assigning the `Exec` effect to every
+constructor and method in `ProcessBuilder` is imprecise, in practice it works
+well. 
+
+Now, Flix also provides Flix functions that use Java underneath. Such functions
+are not Java constructors or methods, but rather provide a layer on-top-off
+Java. These functions also have foundational effects such as `FileRead`,
+`FileWrite`, and more. 
+
+### How to Program with Foundational Effects
+
+In general, one should not write Java in Flix. That is to say: one should write
+pure programs that may use local mutable state and effects and handlers. But one
+should not write programs that mix Java and Flix code. Instead, one should write
+a program that calls an effect, and then _the handler of that effect can call
+out into Java_. 
+
+We can give an example of this. Imagine that we want to write a guessing game. 
+
+#### A Guessing Game &mdash; The Wrong Way
+
+Consider the following program written in a mixed-style of Flix and Java:
+
+```flix
+import java.lang.System
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.{Random => JRandom}
+
+def getSecretNumber(): Int32 \ IO = 
+    let rnd = new JRandom();
+    rnd.nextInt()
+
+def readGuess(): Result[String, String] \ IO = 
+    let reader = new BufferedReader(new InputStreamReader(System.in));
+    let line = reader.readLine();
+    if (Object.isNull(line)) 
+        Result.Err("no input")
+    else 
+        Result.Ok(line)
+
+def readAndParseGuess(): Result[String, Int32] \ IO = 
+    forM(g <- readGuess(); 
+         n <- Int32.parse(10, g)
+    ) yield n
+
+def gameLoop(secret: Int32): Unit \ IO = {
+    println("Enter a guess:");
+    match readAndParseGuess() {
+        case Result.Ok(g) => 
+            if (secret == g) {
+                println("Correct!")
+            } else {
+                gameLoop(secret)
+            }
+        case Result.Err(_) => 
+            println("Not a number? Goodbye.");
+            println("The secret was: ${secret}")
+    }
+}
+
+def main(): Unit \ IO = 
+    let secret = getSecretNumber();
+    gameLoop(secret)
+
+```
+
+The problem here is that every single function: `getSecretNumber`, `readGuess`,
+`readAndParseGuess`, `gameLoop`, and `main` has the `IO` effect. This means that
+every function can pretty much do anything. Understanding, refactoring, and
+testing this small program is a nightmare. What we should have done is to
+introduce user-defined effects and then only handle these on the boundary; in
+the `main` function.
+
+#### A Guessing Game &mdash; The Right Way
+
+Here is what we should have done:
+
+```flix
+TBD
+```
 

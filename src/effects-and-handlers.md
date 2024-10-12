@@ -75,6 +75,48 @@ tracked through the effect polymorphic call to `List.map`.
 Flix also supports resumable effects. For example:
 
 ```flix
+import java.time.LocalDateTime
+
+eff HourOfDay {
+    pub def getCurrentHour(): Int32
+}
+
+def greeting(): String \ {HourOfDay} = 
+    let h = do HourOfDay.getCurrentHour();
+    if (h <= 12) 
+        "Good morning"
+    else if (h <= 18)
+        "Good afternoon"
+    else 
+        "Good evening"
+
+def main(): Unit \ IO = 
+    try {
+        println(greeting())
+    } with HourOfDay {
+        def getCurrentHour(_, resume) = 
+            let dt = LocalDateTime.now();
+            resume(dt.getHour())
+    }
+```
+
+Here we declare an effect `HourOfDay` with a single operation that returns the
+current hour of the day. Next, we define the `greeting` function which uses the
+`HourOfDay` effect to return a greeting appropriate for the current time.
+Lastly, in `main`, we call `greeting` and print its result. We register a
+handler for `HourOfDay` which uses Java interoperability to get the current
+hour.
+
+What is important is that when the effect `getHourOfDay` is called, Flix
+captures the current continuation finds the closest handler (in `main`) which
+**resumes** the computation from within `greeting` using the current hour of the
+day, as obtained from Java. 
+
+### Multiple Effects and Handlers
+
+We can use and handle multiple effects:
+
+```flix
 eff Ask {
     pub def ask(): String
 }
@@ -107,15 +149,73 @@ effect by printing to the terminal, and then resuming the continuation.
 In this case, the order of handlers does not matter, but in the general case the
 order may matter. 
 
-### Multiple Effects and Handlers
-
-TBD: Random and Print?
-
-
 ### Multiple Resumptions
 
-TBD
+Flix supports multiple resumptions. We can use this to implement backtracking
+search, co-operative multi tasking, and more. 
 
+Here is a simple example:
+
+```flix
+eff Amb {
+    pub def flip(): Bool
+}
+
+eff Exc {
+    pub def raise(m: String): Void
+}
+
+def drunkFlip(): String \ {Amb, Exc} = {
+    if (do Amb.flip()) {
+        let heads = do Amb.flip();
+        if (heads) "heads" else "tails"
+    } else {
+        do Exc.raise("too drunk to flip")
+    }
+}
+
+def handleAmb(f: a -> b \ ef ): a -> List[b] \ ef - Amb =  
+    x -> try {
+        f(x) :: Nil
+    } with Amb {
+        def flip(_, resume) = resume(true) ::: resume(false)
+    }
+
+def handleExc(f: a -> b \ ef): a -> Option[b] \ ef - Exc = 
+    x -> try {
+        Some(f(x))
+    } with Exc {
+        def raise(_, _) = None
+    }
+
+
+def main(): Unit \ IO = {
+    // Prints: Some(heads) :: Some(tails) :: None :: Nil
+    handleAmb(handleExc((drunkFlip)))() |> println;
+
+    // Prints: None
+    handleExc(handleAmb((drunkFlip)))() |> println
+}
+```
+
+We declare two effects `Amb` (short for ambiguous) and `Exc` (short for
+exception). We then define the `drunkFlip` function. The idea is to model a
+drunk man trying to flip a coin. **First** we flip a coin to determine if the
+man is able to flip the or if he drops it. **Second**, if the first flip was
+succesful, we flip the coin again to obtain its actually value. What's important
+is that `drunkFlip` conceptually has three outcomes: "heads", "tails", or "too
+drunk". 
+
+We then define two handlers `handleAmb` and `handleExc`. Starting with the
+latter, the `Exc` handler simply catches the exception and returns `None`. If no
+exception is raised, it returns `Some(x)` of the computed value. The `Amb`
+handler handles the `flip` effect by calling the continuation **twice** with
+`true` and `false`, and collecting the result in a list. In other words, the `Amb` handler explores **both** outcomes of flipping a coin. 
+
+In `main` we use the two handlers. Notably, the *nesting order of handlers
+matters*! If we handle the `Exc` effect "first" then we obtain the list
+`Some(heads) :: Some(tails) :: None :: Nil`. If, on the other hand, we handle
+`Exc` "last" then the whole computation fails with `None`.
 
 ### Polymorphic Effects
 

@@ -32,6 +32,7 @@
   - [Foundational Effects](./foundational-effects.md)
   - [Effect Polymorphism](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
+  - [Library Effects](./library-effects.md)
 - [Modules](./modules.md)
   - [Declaring Modules](./declaring-modules.md)
   - [Using Modules](./using-modules.md)

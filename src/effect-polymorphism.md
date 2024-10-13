@@ -1,46 +1,64 @@
 ## Effect Polymorphism
 
+In Flix, we can express that a function is pure (i.e. has no side-effects): 
+
+```flix
+def inc(x: Int32): Int32 \ { } = x + 1
+                        // ^^^ empty effect set
+```
+
+Here the `inc` function is _pure_ because its effect set is empty. In Flix, a
+pure functions is referentially transparent. In other words, given the same
+arguments is always returns the same value. When a function is pure, we do not
+have to explicitly write the empty effect set `{ }`, instead we can write: 
+
+```flix
+def inc(x: Int32): Int32 = x + 1
+```
+
+In Flix, we can also express that a function has an effect:
+
+```flix
+def incAndPrint(x: Int32): Int32 \ {IO} = 
+    let result = x + 1;         // ^^^^ singleton effect set
+    println(result);
+    result
+```
+
+Here the `incAndPrint` function has the _foundational_ `IO` effect. 
+
+In Flix, we can also express that a function has multiple effects:
+
+```flix
+def copyFile(src: String, dst: String): Unit \ {FileRead, FileWrite} = ...
+                                            // ^^^^^^^^^^^^^^^^^^^^^ multiple effects
+```
+
+Here the `copyFile` function has two foundational effects: `FileRead` and
+`FileWrite`. 
+
+In Flix, we can have a function that has a heap effect:
+
+```flix
+def nth(i: Int32, a: Array[t, r]): Option[a] \ {r} = ....
+                                            // ^^^ heap effect
+```
+
+Here the `nth` function has a _heap effect_ in the region `r`.
+
+In Flix, we can also write functions that mix different effects:
+
+```flix
+def strange(a: Array[t, r]): Unit \ {r, FileRead, Net, Clock} 
+                                 // ^^^^^^^^^^^^^^^^^^^^^^^^^ a mixture of effects
+```
+
+This function has a heap effect `r`, two foundational effects: `FileRead` and
+`Net`, and an algebraic effect `Clock`. 
+
+
 <div style="color:gray">
 
-
-### Pure, Impure, and Effect Polymorphic Functions
-
-In Flix every function is pure, impure, or effect
-polymorphic.
-
-The Flix type and effect system ensures that a pure
-function always returns the same result when given
-the same arguments and that it cannot have
-(observable) side effects.
-
-In Flix every function definition is _implicitly_
-marked as `Pure`.
-For example, the function definition:
-
-```flix
-def add(x: Int32, y: Int32): Int32 = x + y
-```
-
-is actually equivalent to:
-
-```flix
-def add(x: Int32, y: Int32): Int32 \ {} = x + y
-```
-
-Note the annotation for `Pure` is `\ {}`.
-
-A function that prints to the console is `Impure`
-and must be marked with `\ IO`:
-
-```flix
-def addAndPrint(x: Int32, y: Int32): Int32 \ IO =
-    let r = x + y;
-    println(r);
-    r
-```
-
-since the type signature of the library function
-`println` specifies that it is `Impure`.
 
 The purity (or impurity) of a higher-order function
 may depend on the purity of its argument(s).
@@ -239,8 +257,6 @@ In summary, Flix function types are of the form:
 |                                            The type of a _pure_ function from `a` to `b`.                                            |      `a -> b \ {}`      |  `a -> b`  |
 |                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b \ ef`      |    n/a     |
 | The type of an _effect polymorphic_ function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b \ { ef1, ef2 }` |    n/a     |
-
-TODO: Subeffecting
 
 ### Effect Exclusion
 

@@ -1,7 +1,5 @@
 ## Effects and Handlers
 
-> **Note:** User-defined effects and handlers requires Flix 0.53.0
-
 Flix supports user-defined control effects and handlers in the style of
 [Eff](https://www.eff-lang.org/) and [Koka](https://koka-lang.github.io/). 
 

@@ -111,4 +111,21 @@ Here we should read `ef1 + ef2` has the union of the two effects of `f` and `g`.
 
 ### Effect Exclusion
 
+A novel feature of Flix is its support for [polymorphic effect
+exclusion](https://dl.acm.org/doi/abs/10.1145/3607846). In simple terms, effect
+exclusion allows us to write a higher-order function that disallows a specific
+set of effects while allowing all other effects. 
+
+For example, we can write a listener registration function: 
+
+```flix
+def onClick(listener: KeyEvent -> Unit \ {ef - Block}, ...): ... 
+```
+
+Here `onClick` takes a function listener that can have _any_ effect, _except_
+the `Block` effect. Hence a key listener can perform any action, except for an
+action that would block the UI thread.
+
+
+
 ### Sub-Effecting

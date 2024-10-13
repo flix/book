@@ -119,13 +119,97 @@ set of effects while allowing all other effects.
 For example, we can write a listener registration function: 
 
 ```flix
-def onClick(listener: KeyEvent -> Unit \ {ef - Block}, ...): ... 
+def onClick(listener: KeyEvent -> Unit \ (ef - Block), ...): ... 
 ```
 
 Here `onClick` takes a function listener that can have _any_ effect, _except_
 the `Block` effect. Hence a key listener can perform any action, except for an
 action that would block the UI thread.
 
+As another example, we can write an error handler function:
 
+```flix
+def recoverWith(f: Unit -> a \ Throw, h: ErrMsg -> a \ (ef - Throw)): ... = ....
+```
+
+Here the `recoverWith` function takes two function arguments: the function `f`
+that may throw an exception and a handler `h` which can handle the error.
+Notably, the effect system enforces that `h` cannot itself throw. 
 
 ### Sub-Effecting
+
+> **Note:** This feature is not yet generally available.
+
+Flix supports _sub-effecting_ which allows an expression or a function to
+_widen_ its effect set. 
+
+For example, we can write:
+
+```flix
+if (???) { x -> x + 1 } else { x -> {println(x); x + 1}}
+```
+
+Intuively, the first branch should have type `Int32 -> Int32 \ { }` (i.e. it is
+pure) whereas the second branch has type `Int32 -> Int32 \ { IO }`. Normally
+these two types are incompatible because `{ } != { IO }`. However, Flix actually
+gives the first branch the type `Int32 -> Int32 \ ef` for some fresh effect
+variable `ef`. This allows type inference to _widen_ the effect of the first
+branch to `IO`. Hence the compiler is able to type check the expression. 
+
+As another example, if we have the function:
+
+```flix
+def handle(f: Unit -> a \ (ef + Throw)): a = ...
+```
+
+Here `handle` expects a function argument `f` with the throw effect. However,
+due to sub-effecting we can still call the `handle` function with a pure
+function (i.e. a function that has _less_ effects): 
+
+```flix
+def handle(x -> do Throw.throw(x)) // OK, has the `Throw` effect.
+def handle(x -> x)                 // OK, because of sub-effecting.
+def handle(x -> println(x))        // Not OK, handle does not permit `IO`.
+```
+
+Flix allows sub-effect in instance declarations. 
+
+For example, we can define a trait:
+
+```flix
+trait Foo[t] {
+    def f(x: t): Bool \ { IO }
+}
+```
+
+where `f` has the `IO` effect. We can then then implement it: 
+
+```flix
+instace Foo[Int32] {
+    def f(_: Int32): Bool = true // Pure function
+}
+```
+
+Here the implementation is pure, i.e. `f` has no effect, and this is allowed. 
+
+However, for a single function, the inferred effect of the body must match
+declared effect. For example, the following is not allowed:
+
+```flix
+def foo(): Bool \ IO = true
+```
+
+The Flix compiler emits the error message:
+
+```
+❌ -- Type Error ------------------------------
+
+>> Expected type: 'IO' but found type: 'Pure'.
+
+1 | def foo(): Bool \ IO = true
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    expression has unexpected type.
+```
+
+The reason is that there is no legitimate reason for the declaration not to
+match the behavior of the body expression.

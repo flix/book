@@ -17,18 +17,14 @@ What are the benefits of an effect system? There are many:
   be implemented in an imperative style using mutable data structures as long as
   those data structures leave scope when the function ends.
 
-<div style="color:gray">
+- (**Reasoning**) A type and effect system helps programmers understand how
+  their programs work by requiring every function to specify its argument and
+  return types, as well as the side-effects of the function.
 
-- (**Reasoning**) A type and effect system helps programmers reason about the
-    behavior of their programs by requiring each function to specify not only
-    its argument types and return type, but also its actions. 
-
-- (**Modularity and Documentation**) A type and effect system helps enforce
-    modularity by being upfront about the behavior of functions. Moreover,
-    effects serve as compiler-checked documentation on the actions that a
-    function can take. Effects also capture whether evaluation is eager or lazy. 
-
-<div style="color:black">
+- (**Modularity**)  A type and effect system enforces modularity by forcing
+  programmers to consider what side effects are allowed where in the program.
+  Moreover, effects &mdash; like types &mdash; serve as compiler checked
+  documentation.
 
 - (**Effects and Handlers**) A type and effect system is the foundation for
   algebraic effects and handlers. These allow programmers to implement their own

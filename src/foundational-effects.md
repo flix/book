@@ -91,27 +91,13 @@ effect system is that if a function does not have the `FileWrite` effect, it
 cannot write to the file system using the ordinary file APIs available on the
 JVM. 
 
-<div style="color:gray">
+### Where do Foundational Effects Come From?
 
-
-### Origin of Foundational Effects
-
-Where does foundational effects come from? They come from an analysis of the
-Java Standard Library which assignes one or more foundational effects to every
-class, constructor, and method. For example, Flix assigns the `Exec` effects to
-every constructor and method in the `java.lang.Process`,
-`java.lang.ProcessBuilder`, and `java.lang.ProcessHandle` classes. While it can
-be argued that no `Exec` effect actually happens __until__
-`ProcessBuilder.start` and hence assigning the `Exec` effect to every
-constructor and method in `ProcessBuilder` is imprecise, in practice it works
-well. 
-
-Now, Flix also provides Flix functions that use Java underneath. Such functions
-are not Java constructors or methods, but rather provide a layer on-top-off
-Java. These functions also have foundational effects such as `FileRead`,
-`FileWrite`, and more. 
-
-</div>
+The Flix compiler ships with a built-in database that maps classes,
+constructors, and methods in the Java Class Library to foundational effects. For
+example, the database assigns the `Exec` effects to every constructor and method
+in the `java.lang.Process`, `java.lang.ProcessBuilder`, and
+`java.lang.ProcessHandle` classes. 
 
 ### How to Program with Foundational Effects
 

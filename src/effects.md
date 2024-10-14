@@ -34,20 +34,25 @@ What are the benefits of an effect system? There are many:
     allow programmers to implement their own control structures, such as
     exceptions, async, and cooperative multitasking. 
 
-- (**Security**) A type and effect system offers guarantees about the behavior
-    of functions -- which can be used to ensure that untrusted code does not
-    cause unwanted side-effects. For example, if a function is pure, we know
-    that it cannot access the filesystem. 
-
-- (**Purity Reflection**) A type and effect system with support for [purity
-    reflection](./purity-reflection.md) enables higher-order functions to
-    inspect the purity of their function argument. This feature can be used to
-    implement automatic parallelization, among other features. 
-
-- (**Compiler Optimizations**) The Flix compiler uses effect information for
-    more aggressive dead code elimination and inlining. 
-
 <div style="color:black">
+
+- (**Security**) A type and effect system offers iron-clad guarantees about the
+  behavior of functions, allowing programmers to increase their trust in unknown
+  code. For example, if a function is pure, it cannot have any side-effects: it
+  cannot access the file system, the network, etc. A specific benefit is that
+  programs become more resistant to supply chain attacks.
+
+- (**Purity Reflection**) The Flix Standard Library (and other library authors
+  in extension) can use [purity reflection](./purity-reflection.md) to inspect
+  the purity of function arguments passed to higher-order functions. We can
+  exploit this information to implement automatic parallelization while
+  preserving the original semantics of the program. For example, in Flix, the
+  `Set.count` function uses parallel evaluation if (a) the set is sufficiently
+  large and (b) the passed predicate function is pure. 
+
+- (**Optimizations**) The Flix compiler exploits purity information for
+  aggressive dead code elimination and inlining.
+
 
 The Flix type and effect system is quite sophisticated and requires some
 background knowledge to use effectively. In the next couple of sections, we

@@ -2,6 +2,8 @@
 
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
+<div style="color:gray">
+
 Flix comes with a small set of built-in *foundational effects*. A foundational
 effect, unlike a library or user-defined effect, cannot be re-interpreted or
 handled. It simply happens, and when it happens there is no way to get rid of
@@ -76,9 +78,11 @@ out into Java_.
 
 We can give an example of this. Imagine that we want to write a guessing game. 
 
+</div>
+
 #### A Guessing Game &mdash; The Wrong Way
 
-Consider the following program written in a mixed-style of Flix and Java:
+Consider the following program written in a mixed style of Flix and Java:
 
 ```flix
 import java.lang.System
@@ -125,12 +129,19 @@ def main(): Unit \ IO =
 
 ```
 
-The problem here is that every single function: `getSecretNumber`, `readGuess`,
-`readAndParseGuess`, `gameLoop`, and `main` has the `IO` effect. This means that
-every function can pretty much do anything. Understanding, refactoring, and
-testing this small program is a nightmare. What we should have done is to
-introduce user-defined effects and then only handle these on the boundary; in
-the `main` function.
+The problem is that every function: `getSecretNumber`, `readGuess`,
+`readAndParseGuess`, `gameLoop`, and `main` has the `IO` effect. The consequence
+is that every function can do anything. Note how the effectful code responsible
+for interoperability with Java is scattered all over the program. Understanding,
+refactoring, and testing a program written in this style is a nightmare. 
+
+Programming in a style where every function has the `IO` effect is akin to
+programming in a style where every function argument and return type has the
+`Object` type &mdash; it makes the type (or effect) system useless.
+
+Programming in a programming language with algebraic effects means that we
+should define effects for each action or interaction with the outside world. We
+should then _handle_ these effects close to the program's boundary. 
 
 #### A Guessing Game &mdash; The Right Way
 
@@ -196,14 +207,14 @@ def main(): Unit \ IO =
     }
 ```
 
-Notice how we have introduced effects for the three actions the program can
-take: 
+Here, we have introduced three effects: 
 
-1. Creating a secret number.
-2. Reading a number from the user.
-3. Printing to the terminal.
+1. An effect `Secret` that represents the action of picking a secret number. 
+2. An effect `Guess` that represents the action of asking the user for a guess.
+3. An effect `Terminal` that represents the action of printing to the console.
 
-Moreover, notice how each function now specifies its effect(s). 
-
-Importantly, all IO code is now contained within `main` where we actually handle
-the effects. 
+We have written each function to use the relevant effects. For example, the
+`gameLoop` function uses the `Guess` and `Terminal` effects &mdash; and has no
+other effects. Moreover, all effects are now handled in one place: in the `main`
+function. The upshot is that the program's core does not have to worry about
+interoperability.

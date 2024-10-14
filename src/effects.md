@@ -1,10 +1,17 @@
 # Effect System
 
-Flix features a state-of-the-art type and effect system which is fully
-integrated into the language. The Flix effect system supports effect
-polymorphism, sub-effecting, and associated effects. 
+> **Note:** The following text applies to Flix 0.54.0 or later.
+
+Flix features a state-of-the-art type and effect system fully integrated into
+the language. The Flix effect system is powerful and extensive, supporting
+effect polymorphism, sub-effecting, effect exclusion, purity reflection, and
+associated effects.
+
+We will explore these new and exciting features over the coming pages.
 
 What are the benefits of an effect system? There are many:
+
+<div style="color:gray">
 
 - (**Purity**) A type and effect system helps separate pure and impure
     expressions. In Flix, a pure expression is guaranteed to be referentially
@@ -48,8 +55,8 @@ To start with, it is important to know that in Flix there are three types of
 effects:
 
 - [Foundational effects](./foundational-effects.md)
-- [Effects with Handlers](./effects-and-handlers.md)
+- [Algebraic effects and Handlers](./effects-and-handlers.md)
 - [Heap effects](./mutable-data.md) (as discussed in the section on mutable)
 
-For the integration between type classes (traits) and effects, see the section
-on [Associated Effects](./associated-effects.md).
+For the integration between traits and effects, see [Associated
+Effects](./associated-effects.md).

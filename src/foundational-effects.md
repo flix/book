@@ -1,5 +1,7 @@
 ## Foundational Effects
 
+> **Note:** The following text applies to Flix 0.54.0 or later.
+
 Flix comes with a small set of built-in *foundational effects*. A foundational
 effect, unlike a library or user-defined effect, cannot be re-interpreted or
 handled. It simply happens, and when it happens there is no way to get rid of

@@ -1,5 +1,7 @@
 ## Effect Polymorphism
 
+> **Note:** The following text applies to Flix 0.54.0 or later.
+
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
 
 ```flix

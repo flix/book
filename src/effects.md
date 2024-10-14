@@ -11,14 +11,13 @@ We will explore these new and exciting features over the coming pages.
 
 What are the benefits of an effect system? There are many:
 
-<div style="color:gray">
+- (**Purity**) A type and effect system separates pure and impure functions. In
+  Flix, a pure function cannot have any side-effects and must return the same
+  value when given the same arguments. Nevertheless, a pure function can still
+  be implemented in an imperative style using mutable data structures as long as
+  those data structures leave scope when the function ends.
 
-- (**Purity**) A type and effect system helps separate pure and impure
-    expressions. In Flix, a pure expression is guaranteed to be referentially
-    transparent. In particular, a pure function always returns the same value
-    when given the same argument(s) and cannot have any (observable)
-    side-effects. A pure function can still use mutable state and mutation if
-    the mutable memory can be confined to the lifetime of the function.
+<div style="color:gray">
 
 - (**Reasoning**) A type and effect system helps programmers reason about the
     behavior of their programs by requiring each function to specify not only
@@ -29,12 +28,12 @@ What are the benefits of an effect system? There are many:
     effects serve as compiler-checked documentation on the actions that a
     function can take. Effects also capture whether evaluation is eager or lazy. 
 
-- (**Effects and Handlers**) A type and effect system is the foundation that
-    enables user-defined control effects and handlers. Effects and handlers
-    allow programmers to implement their own control structures, such as
-    exceptions, async, and cooperative multitasking. 
-
 <div style="color:black">
+
+- (**Effects and Handlers**) A type and effect system is the foundation for
+  algebraic effects and handlers. These allow programmers to implement their own
+  control structures, such as exceptions, async/await, and cooperative
+  multitasking.
 
 - (**Security**) A type and effect system offers iron-clad guarantees about the
   behavior of functions, allowing programmers to increase their trust in unknown

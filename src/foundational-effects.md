@@ -2,12 +2,30 @@
 
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
+Flix comes with a collection of pre-defined foundational effects. Unlike
+algebraic and heap effects, foundational effects cannot be handled and never go
+out of scope. A foundational effect represents a side-effect that happens on the
+machine. It cannot be undone or reinterpreted.
+
+The most important foundational effect is the `IO` effect.
+
+### The `IO` Effect
+
+The `IO` effect represents any action that interacts with the world outside the
+program. Such actions include printing to the console, creating, reading, and
+writing files, accessing the network, and more. The `IO` represents actions that
+_change_ the outside world (e.g., modifying a file) but also actions that merely
+_access_ the outside world (e.g., retrieving the current time). Unlike a pure
+function, a function with the `IO` effect may change behavior every time it is
+called, even if its arguments are the same. For example, reading the same file
+twice is not guaranteed to return the same result since the file may have
+changed between the two accesses.
+
+
+
 <div style="color:gray">
 
-Flix comes with a small set of built-in *foundational effects*. A foundational
-effect, unlike a library or user-defined effect, cannot be re-interpreted or
-handled. It simply happens, and when it happens there is no way to get rid of
-it. 
+### The Other Foundational Effects
 
 More, concretely foundational effects happen when interacting with the outside
 world through Java interoperability. 
@@ -45,11 +63,7 @@ the `FileRead`, `FileWrite`, and `Net` effects are dangerous depends on the
 specific application. A `Http` library will probably need the `Net` effect, but
 it probably should not have the `FileRead` effect.
 
-### What is the `IO` Effect?
 
-The `IO` effect is a generic catch-all effect that captures any interaction with
-the outside which is not captured by the other effects. For example, calling
-`System.nanoTime()` has the `IO` effect. 
 
 ### Origin of Foundational Effects
 

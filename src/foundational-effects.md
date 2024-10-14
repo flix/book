@@ -49,25 +49,40 @@ effect.
   system &mdash; for example, reading a file, reading its meta-data, or listing
   the contents of a directory.
 
-
 - **FileWrite**: The `FileWrite` effect represents actions that write to the
   file system &mdash; for example, creating a file, writing a file, or deleting
   a file.
 
+- **Net**:  The `Net` effect represents actions that involve network access
+  &mdash; for example, binding to a local port, connecting to a remote socket,
+  or DNS resolution.
+
+- **NonDet**: The `NonDet` effect represents an almost pure computation. For
+  example, a function that flips a coin is virtually pure; it has no
+  side-effects. Yet, it may return different results, even when given the same
+  arguments.
+
+- **Sys**: The `Sys` effect represents actions that interact with the JVM
+  &mdash; for example, using the `Runtime` and `System` classes, class loaders,
+  or reflection.
+
+All of the above effects, except for the `NonDet` effect, always occur together
+with the `IO` effect. In particular, they capture a more precise aspect of the
+`IO` effect. For example, from a security point-of-view, it seems reasonable
+that a web server library should have the `FileRead` and `Net` work effects, but
+it would be worrying if it had the `FileWrite` and `Sys` effects. As another
+example, it seems reasonable that a logging library would have the `FileWrite`
+effect, but it would be a cause for concern if it also had the `Exec` and `Net`
+effects.
+
+The above effects represent dangerous actions except for `IO`, `Env`, and
+`NonDet`, which are relatively harmless. `Exec` allows arbitrary process
+execution, `FileRead` can be used to access sensitive data, `FileWrite` can be
+used to trash the filesystem, `Net` can be used to exfiltrate data, and `Sys`
+via reflection allows access to all of the previous. We should always be
+suspicious if unknown or untrusted code uses any of these effects. 
+
 <div style="color:gray">
-
-- **Net**:  The `Net` effect represents the actions required to communicate over
-  the network. This includes binding to local ports, DNS resolution, and
-  connecting to the outside.
-- **NonDet**:  The `NonDet` effect represents one or more non-deterministic actions.
-- **Sys**:  The `Sys` effect represents actions that interact with the JVM. This includes use of class loaders, the `Runtime` class, and reflection.
-- **IO**: The `IO` effect represents the actions not described by any other effect.
-
-The foundational effects, with the exception of `NonDet`, are all dangerous in
-the sense that they provide raw access to the machine. 
-
-For example, with the `FileRead` effect, a program can ready any file on the
-file system (and any attached devices). 
 
 The foundational effects are not completely disjoint. For example, using `Exec`
 one can start a process that reads files from the file system. Similarly, using

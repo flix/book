@@ -82,19 +82,16 @@ used to trash the filesystem, `Net` can be used to exfiltrate data, and `Sys`
 via reflection allows access to all of the previous. We should always be
 suspicious if unknown or untrusted code uses any of these effects. 
 
+The foundational effects are mostly disjoint, but not entirely. For example, we
+can use the `Exec` effect to indirectly gain access to the file system. The
+`FileRead` effect may allow us to access a mounted network drive, a form of
+network access. Ultimately, whether one effect can emulate another depends on
+what side channels the underlying operating system allows. The point of the
+effect system is that if a function does not have the `FileWrite` effect, it
+cannot write to the file system using the ordinary file APIs available on the
+JVM. 
+
 <div style="color:gray">
-
-The foundational effects are not completely disjoint. For example, using `Exec`
-one can start a process that reads files from the file system. Similarly, using
-`Sys` one can use reflection to access the file system. 
-
-The `Exec` and `Sys` effects are **incredibly dangerous** and once should be
-very suspicious of third-party code that uses them. In contrast, the `NonDet`
-effect is completely harmless and the `IO` effect is mostly harmless. Whether
-the `FileRead`, `FileWrite`, and `Net` effects are dangerous depends on the
-specific application. A `Http` library will probably need the `Net` effect, but
-it probably should not have the `FileRead` effect.
-
 
 
 ### Origin of Foundational Effects

@@ -45,14 +45,17 @@ effect.
   `System.exec`, the `Process` and `ProcessBuilder` classes, and dynamic library
   loading.
 
+- **FileRead**: The `FileRead` effect represents actions that read from the file
+  system &mdash; for example, reading a file, reading its meta-data, or listing
+  the contents of a directory.
+
+
+- **FileWrite**: The `FileWrite` effect represents actions that write to the
+  file system &mdash; for example, creating a file, writing a file, or deleting
+  a file.
+
 <div style="color:gray">
 
-- **FileRead**: The `FileRead` effect represents the actions to required to read
-  from the file system.
-
-
-- **FileWrite**: The `FileWrite` effect represents the actions to required to
-  write to the file system.
 - **Net**:  The `Net` effect represents the actions required to communicate over
   the network. This includes binding to local ports, DNS resolution, and
   connecting to the outside.

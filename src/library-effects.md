@@ -1,7 +1,7 @@
 ## Library Effects
 
-The Flix Standard Library comes with a collection of effects and handlers ready
-for use. 
+The Flix Standard Library comes with a collection of algebraic effects and
+handlers.
 
 ### Clock
 
@@ -21,17 +21,16 @@ mod Clock {
     /// Runs `f` handling the `Clock` effect using `IO`.
     def run(f: Unit -> a \ ef): a \ (ef - {Clock} + IO)
 
-    /// Returns `f` where the `Clock` effect has been handled using `IO`.
+    /// Returns `f` with the `Clock` effect handled using `IO`.
     def handle(f: a -> b \ ef): a -> b \ (ef - {Clock} + IO)
 }
 ```
 
-Every standard library effect defines a companion module with `run` and `handle`
-functions.
+Every standard library effect comes with `run` and `handle` functions.
 
 ### Console
 
-Flix defines a `Console` effect to read from and write to the user's shell:
+Flix defines a `Console` effect to read from and write to shell:
 
 ```flix
 eff Console {
@@ -86,7 +85,7 @@ mod Logger {
 
 ### Process
 
-Flix defines a `Process` effect for execution of commands outside of the JVM:
+Flix defines a `Process` effect for running commands outside of the JVM:
 
 ```flix
 eff Process {
@@ -97,7 +96,7 @@ eff Process {
 
 ### Random
 
-Flix defines a `Random` effect for the creation of random values:
+Flix defines a `Random` effect for the generation of random values:
 
 ```flix
 eff Random {
@@ -121,11 +120,11 @@ eff Random {
 }
 ```
 
-### Running Functions with Effects
+### Running Functions with Algebraic Effects
 
-As discussed, every Flix Standard Library effect provides two functions: `run`
-and `handle` for re-interpreting the effect in `IO`. In other words, for
-**making the effect happen**. 
+Every Flix Standard Library effects defines two functions: `run` and `handle` in
+the companion module of the effect. We can use these functions to re-interpret
+the effect in `IO`. That is, **to make the effect happen.**
 
 For example, if a we have a function that uses the `Clock` effect:
 
@@ -154,7 +153,9 @@ If a function has multiple effects:
 def greet(name: String): Unit \ {Clock, Console} = ...
 ```
 
-We cannot easily use `run`, but we can use `Clock.handle` and `Console.handle`:
+If a function has more than one effect we cannot use `run`. Instead, we must
+handle each effect, and call the result. For example, we can use `Clock.handle`
+and `Console.handle`:
 
 ```flix
 def main(): Unit \ IO = 
@@ -164,13 +165,14 @@ def main(): Unit \ IO =
     println(f())
 ```
 
-We had to write `() -> greet("Mr. Bond")` because `handle` takes a function as
-its argument.
+We have to write `() -> greet("Mr. Bond")` because `handle` expects a function. 
 
 ### Using App
 
-Using individual handlers can be cumbersome. For convenience, Flix offers a
-`App.runAll` function which can handle all effects in the standard library:
+We have seen how to handle multiple effects using the library defined handlers.
+While being explicit about which handlers are used is good programming style, it
+can become cumbersome. Hence, for convenience, Flix has a `App.runAll` function
+which can handle all effects in the standard library:
 
 ```flix
 def main(): Unit \ IO = 

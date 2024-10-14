@@ -68,17 +68,18 @@ are not Java constructors or methods, but rather provide a layer on-top-off
 Java. These functions also have foundational effects such as `FileRead`,
 `FileWrite`, and more. 
 
+</div>
+
 ### How to Program with Foundational Effects
 
-In general, one should not write Java in Flix. That is to say: one should write
-pure programs that may use local mutable state and effects and handlers. But one
-should not write programs that mix Java and Flix code. Instead, one should write
-a program that calls an effect, and then _the handler of that effect can call
-out into Java_. 
+In Flix, we can call Java code when and wherever we want, but it is considered
+bad programming style. A proper program architecture consists of a functional
+core, which may use [algebraic effects and handlers](./effects-and-handlers.md),
+surrounded by an imperative shell that may call into Java. Such a design is
+modular, debuggable, and testable. 
 
-We can give an example of this. Imagine that we want to write a guessing game. 
-
-</div>
+Simply put code with foundational effects should be _close_ to the `main`
+function.
 
 #### A Guessing Game &mdash; The Wrong Way
 

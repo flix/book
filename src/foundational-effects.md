@@ -21,22 +21,36 @@ called, even if its arguments are the same. For example, reading the same file
 twice is not guaranteed to return the same result since the file may have
 changed between the two accesses.
 
-
-
-<div style="color:gray">
+The `IO` effect, and all other foundational effects, are _viral_. If a function
+has a foundational effect, all its callers will also have that foundational
+effect. That is to say, once you have tainted yourself with impurity, you remain
+tainted. 
 
 ### The Other Foundational Effects
 
-More, concretely foundational effects happen when interacting with the outside
-world through Java interoperability. 
+In addition to the all-important `IO` effect, Flix has a small collection of
+pre-defined foundational effects. The point of these foundational effects is to
+provide more information about the specific actions a function can take. Except
+for the `NonDet` effect, all of effects below always come together with the `IO`
+effect. 
 
-In Flix, the foundational effects are:
+- **Env**: The `Env` effect represents actions that involve access to
+  information about the environment, including information from the operating
+  system (e.g., the name of the current user, the current working directory, and
+  so on), as well as information about the hardware (e.g., the number of
+  processors in the machine, the total amount of memory, and so on).
 
-- **Exec**: The `Exec` effect represents the actions required to start (i.e.
-  run) a new process outside the JVM. This includes use of `System.exec`, the
-  `Process` class, and the `ProcessBuilder` class.
+- **Exec**: The `Exec` effect represents actions that involve process creation
+  (i.e., spawning new processes that run outside the JVM), including using
+  `System.exec`, the `Process` and `ProcessBuilder` classes, and dynamic library
+  loading.
+
+<div style="color:gray">
+
 - **FileRead**: The `FileRead` effect represents the actions to required to read
   from the file system.
+
+
 - **FileWrite**: The `FileWrite` effect represents the actions to required to
   write to the file system.
 - **Net**:  The `Net` effect represents the actions required to communicate over

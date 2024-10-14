@@ -53,7 +53,7 @@ background knowledge to use effectively. In the next couple of sections, we
 gradually introduce the features of the type and effect system and give several
 examples of its use. 
 
-To start, it is important to understand that Flix has three types of effects: 
+Before we continue, it is important to understand that Flix has three types of effects: 
 
 - [foundational effects](./foundational-effects.md)
 - [algebraic effects](./effects-and-handlers.md)

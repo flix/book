@@ -39,24 +39,26 @@ What are the benefits of an effect system? There are many:
     cause unwanted side-effects. For example, if a function is pure, we know
     that it cannot access the filesystem. 
 
-- (**Compiler Optimizations**) The Flix compiler uses effect information for
-    more aggressive dead code elimination and inlining. 
-
 - (**Purity Reflection**) A type and effect system with support for [purity
     reflection](./purity-reflection.md) enables higher-order functions to
     inspect the purity of their function argument. This feature can be used to
     implement automatic parallelization, among other features. 
 
-The Flix type and effect is quiet sophisticated and requires some knowledge to
-use effectively. In the next sections, we will gradually introduce the system
-and discuss how to use it. 
+- (**Compiler Optimizations**) The Flix compiler uses effect information for
+    more aggressive dead code elimination and inlining. 
 
-To start with, it is important to know that in Flix there are three types of
-effects:
+<div style="color:black">
 
-- [Foundational effects](./foundational-effects.md)
-- [Algebraic effects and Handlers](./effects-and-handlers.md)
-- [Heap effects](./mutable-data.md) (as discussed in the section on mutable)
+The Flix type and effect system is quite sophisticated and requires some
+background knowledge to use effectively. In the next couple of sections, we
+gradually introduce the features of the type and effect system and give several
+examples of its use. 
 
-For the integration between traits and effects, see [Associated
+To start, it is important to understand that Flix has three types of effects: 
+
+- [foundational effects](./foundational-effects.md)
+- [algebraic effects](./effects-and-handlers.md)
+- [heap effects](./mutable-data.md)
+
+We describe how traits and effects interact in the section on [Associated
 Effects](./associated-effects.md).

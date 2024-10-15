@@ -1,5 +1,7 @@
 ## Effect Polymorphism
 
+<div style="color:gray">
+
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
@@ -138,35 +140,39 @@ Here the `recoverWith` function takes two function arguments: the function `f`
 that may throw an exception and a handler `h` which can handle the error.
 Notably, the effect system enforces that `h` cannot itself throw. 
 
+<div style="color: black">
+
+
 ### Sub-Effecting
 
-> **Note:** This feature is not yet generally available.
+> **Note:** This feature is not yet enabled by default.
 
 Flix supports _sub-effecting_ which allows an expression or a function to
 _widen_ its effect set. 
 
-For example, we can write:
+For example, if we write:
 
 ```flix
 if (???) { x -> x + 1 } else { x -> {println(x); x + 1}}
 ```
 
-Intuively, the first branch should have type `Int32 -> Int32 \ { }` (i.e. it is
-pure) whereas the second branch has type `Int32 -> Int32 \ { IO }`. Normally
-these two types are incompatible because `{ } != { IO }`. However, Flix actually
-gives the first branch the type `Int32 -> Int32 \ ef` for some fresh effect
-variable `ef`. This allows type inference to _widen_ the effect of the first
-branch to `IO`. Hence the compiler is able to type check the expression. 
+The first branch should have type `Int32 -> Int32 \ { }` (i.e. it is pure)
+whereas the second branch has type `Int32 -> Int32 \ { IO }`. Without
+sub-effecting these two types are incompatible because `{ } != { IO }`. However,
+because of sub-effecting, Flix gives the first branch the type `Int32 -> Int32 \
+ef` for some fresh effect variable `ef`. This allows type inference to _widen_
+the effect of the first branch to `IO`. Hence the compiler is able to type check
+the whole expression. 
 
-As another example, if we have the function:
+As another example:
 
 ```flix
 def handle(f: Unit -> a \ (ef + Throw)): a = ...
 ```
 
-Here `handle` expects a function argument `f` with the throw effect. However,
-due to sub-effecting we can still call the `handle` function with a pure
-function (i.e. a function that has _less_ effects): 
+Here the `handle` function expects a function argument `f` with the `Throw`
+effect. However, due to sub-effecting, we can still call the `handle` function
+with a pure function, i.e.:
 
 ```flix
 def handle(x -> do Throw.throw(x)) // OK, has the `Throw` effect.
@@ -174,9 +180,9 @@ def handle(x -> x)                 // OK, because of sub-effecting.
 def handle(x -> println(x))        // Not OK, handle does not permit `IO`.
 ```
 
-Flix allows sub-effect in instance declarations. 
+Flix also allows sub-effect in instance declarations. 
 
-For example, we can define a trait:
+For example, we can define the trait:
 
 ```flix
 trait Foo[t] {
@@ -184,18 +190,21 @@ trait Foo[t] {
 }
 ```
 
-where `f` has the `IO` effect. We can then then implement it: 
+where `f` has the `IO` effect. We can implement it: 
 
 ```flix
-instace Foo[Int32] {
-    def f(_: Int32): Bool = true // Pure function
+instance Foo[Int32] {
+    def f(x: Int32): Bool = x == 0 // Pure function
 }
 ```
 
-Here the implementation is pure, i.e. `f` has no effect, and this is allowed. 
+The declared effect of `f` is `IO`, but here the implementation of `f` is pure
+(i.e., it has the empty effect set `{ }`). The program still type checks because
+`{ }` can be widened to `IO`.
 
-However, for a single function, the inferred effect of the body must match
-declared effect. For example, the following is not allowed:
+Flix, however, does not allow sub-effecting for top-level functions.
+
+For example, if we declare the function:
 
 ```flix
 def foo(): Bool \ IO = true
@@ -213,5 +222,6 @@ The Flix compiler emits the error message:
     expression has unexpected type.
 ```
 
-The reason is that there is no legitimate reason for the declaration not to
-match the behavior of the body expression.
+In summary, Flix allows effect widening in two cases: for (a) lambda expressions
+and (b) instance definitions. We say that Flix supports _abstraction site
+sub-effecting_ and _instance definition sub-effecting_. 

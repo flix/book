@@ -21,7 +21,7 @@ We can use effects and handlers to implement exceptions. For example:
 
 ```flix
 eff DivByZero {
-    def divByZero(): Void
+    pub def divByZero(): Void
 }
 
 def divide(x: Int32, y: Int32): Int32 \ DivByZero = 

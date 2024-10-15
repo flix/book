@@ -113,6 +113,8 @@ def >>(f: a -> b \ ef1, g: b -> c \ ef2): a -> c \ (ef1 + ef2) = x -> g(f(x))
 
 Here we should read `ef1 + ef2` has the union of the two effects of `f` and `g`.
 
+<div style="color: black">
+
 ### Effect Exclusion
 
 A novel feature of Flix is its support for [effect
@@ -138,10 +140,7 @@ def recoverWith(f: Unit -> a \ Throw, h: ErrMsg -> a \ (ef - Throw)): a = ...
 
 Here the `recoverWith` function takes two function arguments: the function `f`
 that may throw an exception and a handler `h` which can handle the error.
-Notably, the effect system enforces that `h` cannot itself throw. 
-
-<div style="color: black">
-
+Notably, the effect system enforces that `h` cannot itself throw an exception.
 
 ### Sub-Effecting
 

@@ -63,18 +63,25 @@ the following works without issue:
 
 ```flix
 def main(): Unit \ IO = 
-    let l = List#{3, 2, 1, 0};
+    let l = List#{1, 2, 0};
     try {
-        List.map(x -> divide(42, x), l) |> println
+        List.map(x -> println(divide(42, x)), l)
     } with DivByZero {
         def divByZero(_) = println("Oops: Division by Zero!")
     }
 ```
 
-Here we map over the list `List#{3, 2, 1, 0}`. The last call to `divide` will
-raise a `DivByZero` exception, hence the program prints `Oops: Division by
-Zero!` and nothing else. Importantly, the `DivByZero` effect is precisely
-tracked through the effect polymorphic call to `List.map`. 
+This program will print:
+
+```
+42
+21
+Oops: Division by Zero!
+```
+
+Because the first two calls to `divide` succeed, whereas the last call will
+raise a `DivByZero` exception. Notably, the Flix type and effect system can
+track the exception effect through the effect polymorphic call to `List.map`.
 
 ### Resumable Effects
 

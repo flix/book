@@ -228,22 +228,21 @@ handlers matters*! If we handle the `Exc` effect first then we obtain the list
 `Some(heads) :: Some(tails) :: None :: Nil`. If, on the other hand, we handle
 `Exc` last then the whole computation fails with `None`.
 
-### Effect Handlers and Monads
+### Algebraic Effects and Monads
 
-Flix supports effect handlers and [monads](./monadic-for-yield.md) because we
-want to support both styles of programming: 
+Flix supports algebraic effect handlers and [monads](./monadic-for-yield.md)
+because we want to support both styles of programming: 
 
-- If you want to program with pure data using `Option`s, `Result`s, and
-  `Validation`s using monadic syntax, you can do that. 
-- If you prefer to program with effect handlers, you can do that. 
+- If you want to program with effect handlers, you can do that. 
 
-Flix gives you the power to define your own applicative functors and monads, and
-to use syntactic sugar for them. But Flix also gives you the power to define
-your own effects and handlers, and use that instead. The choice is yours.
+- If you want to program with functors, applicative functors, and monads, you can do that.
 
-That said, the Flix Standard Library is biased towards using `Option`s and
-`Result`s over effects. On the other hand, Flix has no built in `IO` monad, and
-instead uses effects for interoperability with Java. 
+Flix does not (yet) define an `IO` monad, but you can roll your own.
+
+The Flix Standard Library is biased towards a hybrid. We use algebraic effects
+to model interaction with the outside world but prefer the `Option` and `Result`
+data types for simple error handling. Working with `Option`s and `Result`s is
+more pleasant with [monadic syntax](./monadic-for-yield.md).
 
 ### Polymorphic Effects
 

@@ -2,18 +2,18 @@
 
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
-Flix supports user-defined control effects and handlers in the style of
+Flix supports algebraic effects and handlers in the style of
 [Eff](https://www.eff-lang.org/) and [Koka](https://koka-lang.github.io/). 
 
 Flix effect handlers use dynamic scope, shallow handlers, and support multiple
 resumptions.
 
-We gradually introduce effects and handlers, but we recommend the reader also
-take a look at: 
+In this section, we introduce effects and handlers, but we also recommend the
+reader take a look at: 
 
 - [An Introduction to Algebraic Effects and Handlers](https://www.eff-lang.org/handlers-tutorial.pdf) &mdash; Matija Pretnar
 
-We begin an effect most programmers are familiar with: *exceptions*.
+We begin a type of effect most programmers are familiar with: *exceptions*.
 
 ### Non-Resumable Effects: Exceptions
 
@@ -21,7 +21,7 @@ We can use effects and handlers to implement exceptions. For example:
 
 ```flix
 eff DivByZero {
-    pub def divByZero(): Void
+    def divByZero(): Void
 }
 
 def divide(x: Int32, y: Int32): Int32 \ DivByZero = 
@@ -36,21 +36,27 @@ def main(): Unit \ IO =
         println(divide(3, 2));
         println(divide(3, 0))
     } with DivByZero {
-        def divByZero(_) = println("Oops: Division by Zero!")
+        def divByZero(_resume) = println("Oops: Division by Zero!")
     }
 ```
 
 Here we declare the effect `DivByZero` and use it inside the `divide` function.
-In `main` we perform two divisions. The first succeeds and prints `1`. The
-second fails and the error message is printed. The continuation `_k` is unused
-(and in fact cannot be used because it requires an argument of type `Void`). The
-`main` function has the `IO` effect since we use `println` in the handler, but
-it does _not_ have the `DivByZero` effect since that has been handled.
+Hence the `divide` function has the `DivByZero` effect. In `main` we perform two
+divisions. The first succeeds and prints `1`. The second fails and prints an
+error message. The continuation, `_resume`, is unused and cannot be used because
+its argument type is `Void`. The `main` function has the `IO` effect since we
+use `println` in the handler, but it does _not_ have the `DivByZero` effect
+since that has been handled.
 
-> **Note:** `Void` is an empty (uninhabited) type built-in to Flix. The `Void`
-> type, in combination with an effect operation, can be used everywhere a normal
-> type is required. But notably a function, e.g. a continuation, which requires
-> an argument of type `Void` cannot be called. 
+Exceptions are non-resumable because once an exception has been raised, we
+cannot resume execution from where the exception was thrown. We can only handle
+the exception and do something else. We know that `DivByZero` is an exception
+because its effect operation has the `Void` return type. 
+
+> **Note:** The `Void` type is an empty, i.e., uninhabited, type built into
+> Flix. A function with the return type `Void` cannot return normally; it only
+> returns abnormally (e.g., by throwing an exception). Similarly, a function
+> that takes an argument of type `Void` cannot be called. 
 
 Recall that Flix supports [effect polymorphism](./effect-polymorphism.md), hence
 the following works without issue:

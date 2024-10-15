@@ -244,7 +244,7 @@ to model interaction with the outside world but prefer the `Option` and `Result`
 data types for simple error handling. Working with `Option`s and `Result`s is
 more pleasant with [monadic syntax](./monadic-for-yield.md).
 
-### Polymorphic Effects
+### Limitation: Polymorphic Effects
 
 The Flix type and effect system does not yet support polymorphic effects.[^1] 
 
@@ -256,7 +256,7 @@ eff Throw[a] {
 }
 ```
 
-the Flix compiler reports:
+The Flix compiler emits the error message:
 
 ```
 ❌ -- Syntax Error --
@@ -315,5 +315,4 @@ The Flix compiler emits the error message:
                   illegal effect.
 ```
 
-[^1]: We are currently working on lifting this restrction, but it requires
-    further research. 
+[^1]: We are currently investigating how to lift this restriction.

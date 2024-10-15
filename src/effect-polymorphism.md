@@ -1,7 +1,5 @@
 ## Effect Polymorphism
 
-<div style="color:gray">
-
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
@@ -11,16 +9,18 @@ def inc(x: Int32): Int32 \ { } = x + 1
                         // ^^^ empty effect set
 ```
 
-Here the `inc` function is _pure_ because its effect set is empty. In Flix, a
-pure functions is referentially transparent. In other words, given the same
-arguments is always returns the same value. When a function is pure, we do not
-have to explicitly write the empty effect set `{ }`, instead we can write: 
+The `inc` function is _pure_ because its effect set is empty. When a function is
+pure, we know that the function must return the same value when given the same
+arguments. Moreover, the function cannot have any side-effect on the outside
+world. 
+
+We do not have to write the empty effect set. We can simply write:
 
 ```flix
 def inc(x: Int32): Int32 = x + 1
 ```
 
-In Flix, we can also express that a function has an effect:
+In Flix, we can express that a function has a single effect:
 
 ```flix
 def incAndPrint(x: Int32): Int32 \ {IO} = 
@@ -29,17 +29,20 @@ def incAndPrint(x: Int32): Int32 \ {IO} =
     result
 ```
 
-Here the `incAndPrint` function has the _foundational_ `IO` effect. 
 
-In Flix, we can also express that a function has multiple effects:
+Here the `incAndPrint` function has the foundational `IO` effect. 
+
+We can also express that a function has multiple effects:
 
 ```flix
-def copyFile(src: String, dst: String): Unit \ {FileRead, FileWrite} = ...
-                                            // ^^^^^^^^^^^^^^^^^^^^^ multiple effects
+def copyFile(src: File, dst: File): Unit \ {FileRead, FileWrite, IO} = ...
+                                         // ^^^^^^^^^^^^^^^^^^^^^^^^^ multiple effects
 ```
 
-Here the `copyFile` function has two foundational effects: `FileRead` and
-`FileWrite`. 
+Here the `copyFile` function has three foundational effects: `FileRead`,
+`FileWrite`, and `IO`.
+
+<div style="color:gray">
 
 In Flix, we can have a function that has a heap effect:
 

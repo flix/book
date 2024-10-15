@@ -283,10 +283,10 @@ eff ThrowInt32 {
 }
 ```
 
-### Control Effects in New Object and Spawn Expressions
+### Unhandled Effects in New Object and Spawn Expressions
 
-Flix does not permit unhandled control effects in new object expressions nor in
-spawn expressions. 
+Flix does not permit unhandled effects in new object expressions nor in spawn
+expressions. 
 
 For example, if we write:
 
@@ -308,7 +308,7 @@ The Flix compiler emits the error message:
 
 >> Illegal spawn effect: 'Ask'. 
 
->> A spawn expression must be pure or have a base effect.
+>> A spawn expression must be pure or have a foundational effect.
 
 7 |         spawn do Ask.ask() @ rc
                   ^^^^^^^^^^^^

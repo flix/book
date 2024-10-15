@@ -114,20 +114,19 @@ def main(): Unit \ IO =
 ```
 
 Here we declare an effect `HourOfDay` with a single operation that returns the
-current hour of the day. Next, we define the `greeting` function which uses the
+current hour of the day. Next, we define the `greeting` function, which uses the
 `HourOfDay` effect to return a greeting appropriate for the current time.
-Lastly, in `main`, we call `greeting` and print its result. We register a
-handler for `HourOfDay` which uses Java interoperability to get the current
-hour.
+Lastly, in `main`, we call `greeting` and print its result. In particular, the
+handler for `HourOfDay` uses Java interoperability to obtain the current hour.
 
 What is important is that when the effect `getHourOfDay` is called, Flix
-captures the current continuation finds the closest handler (in `main`) which
-**resumes** the computation from within `greeting` using the current hour of the
-day, as obtained from Java. 
+captures the current continuation and finds the closest handler (in `main`),
+which **resumes** the computation from within `greeting` using the current hour
+of the day, as obtained from system clock. 
 
 ### Multiple Effects and Handlers
 
-We can use and handle multiple effects:
+We can write functions that use multiple effects:
 
 ```flix
 eff Ask {
@@ -154,18 +153,16 @@ def main(): Unit \ IO =
 
 Here we declare two effects: `Ask` and `Say`. The `Ask` effect is a consumer: it
 needs a string from the environment. The `Say` effect is a producer: it passes a
-string to the environment. We use both effects in `greeting`. In `main` we call
+string to the environment. We use both effects in `greeting`. In `main`, we call
 `greeting` and handle each effect. We handle the `Ask` effect by always resuming
 the continuation with the string `"Bond, James Bond"`. We handle the `Say`
-effect by printing to the terminal, and then resuming the continuation.
-
-In this case, the order of handlers does not matter, but in the general case the
-order may matter. 
+effect by printing to the console and resuming the continuation.
 
 ### Multiple Resumptions
 
-Flix supports multiple resumptions. We can use this to implement backtracking
-search, co-operative multi tasking, and more. 
+Flix supports algebraic effects with multiple resumptions. We can use such
+effects to implement async/await, backtracking search, cooperative
+multi-tasking, and more. 
 
 Here is a simple example:
 
@@ -187,7 +184,7 @@ def drunkFlip(): String \ {Amb, Exc} = {
     }
 }
 
-def handleAmb(f: a -> b \ ef ): a -> List[b] \ ef - Amb =  
+def handleAmb(f: a -> b \ ef): a -> List[b] \ ef - Amb =  
     x -> try {
         f(x) :: Nil
     } with Amb {
@@ -211,24 +208,25 @@ def main(): Unit \ IO = {
 }
 ```
 
-We declare two effects `Amb` (short for ambiguous) and `Exc` (short for
+Here we declare two effects: `Amb` (short for ambiguous) and `Exc` (short for
 exception). We then define the `drunkFlip` function. The idea is to model a
-drunk man trying to flip a coin. **First** we flip a coin to determine if the
-man is able to flip the or if he drops it. **Second**, if the first flip was
-succesful, we flip the coin again to obtain its actually value. What's important
-is that `drunkFlip` conceptually has three outcomes: "heads", "tails", or "too
+drunk man trying to flip a coin. **First**, we flip a coin to determine if the
+man can flip the coin or if he drops it. **Second**, if the flip was successful,
+we flip the coin again to obtain either heads or tails. What is important is
+that `drunkFlip` conceptually has three outcomes: "heads", "tails", or "too
 drunk". 
 
-We then define two handlers `handleAmb` and `handleExc`. Starting with the
-latter, the `Exc` handler simply catches the exception and returns `None`. If no
+Next, we define two effect handlers: `handleAmb` and `handleExc`. Starting with
+the latter, the `Exc` handler catches the exception and returns `None`. If no
 exception is raised, it returns `Some(x)` of the computed value. The `Amb`
 handler handles the `flip` effect by calling the continuation **twice** with
-`true` and `false`, and collecting the result in a list. In other words, the `Amb` handler explores **both** outcomes of flipping a coin. 
+`true` and `false`, and collecting the result in a list. In other words, the
+`Amb` handler explores **both** outcomes of flipping a coin. 
 
-In `main` we use the two handlers. Notably, the *nesting order of handlers
-matters*! If we handle the `Exc` effect "first" then we obtain the list
+In `main`, we use the two effect handlers. Notably, the *nesting order of
+handlers matters*! If we handle the `Exc` effect first then we obtain the list
 `Some(heads) :: Some(tails) :: None :: Nil`. If, on the other hand, we handle
-`Exc` "last" then the whole computation fails with `None`.
+`Exc` last then the whole computation fails with `None`.
 
 ### Effect Handlers and Monads
 

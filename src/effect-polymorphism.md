@@ -42,28 +42,28 @@ def copyFile(src: File, dst: File): Unit \ {FileRead, FileWrite, IO} = ...
 Here the `copyFile` function has three foundational effects: `FileRead`,
 `FileWrite`, and `IO`.
 
-<div style="color:gray">
-
-In Flix, we can have a function that has a heap effect:
+In Flix, we can express a function that has a heap effect:
 
 ```flix
 def nth(i: Int32, a: Array[t, r]): Option[a] \ {r} = ....
                                             // ^^^ heap effect
 ```
 
-Here the `nth` function has a _heap effect_ in the region `r`.
+Here the `nth` function has a heap effect in the region `r`.
 
-In Flix, we can also write functions that mix different effects:
+We can also write functions that mix different effects:
 
 ```flix
-def strange(a: Array[t, r]): Unit \ {r, FileRead, Net, Clock} 
-                                 // ^^^^^^^^^^^^^^^^^^^^^^^^^ a mixture of effects
+def strange(a: Array[t, r]): Unit \ {r, Clock, Net, IO} 
+                                 // ^^^^^^^^^^^^^^^^^^^ a mixture of effects
 ```
 
-This function has a heap effect `r`, two foundational effects: `FileRead` and
-`Net`, and an algebraic effect `Clock`. 
+This function has a heap effect `r` and three foundational effects: `Clock`,
+`Net`, and `IO`.
 
 ### Higher-Order Functions
+
+<div style="color:gray">
 
 When we write higher-order functions, we must think about their effect behavior. 
 

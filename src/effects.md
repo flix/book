@@ -1,183 +1,63 @@
 # Effect System
 
-The Flix type and effect system separates pure and
-impure expressions.
-A pure expression is guaranteed to be referentially
-transparent.
-A pure function always returns the same value when
-given the same argument(s) and cannot have any
-(observable) side-effects.
+> **Note:** The following text applies to Flix 0.54.0 or later.
 
-For example, the following expression is of type
-`Int32` and is pure (marked with `\ {}`):
+Flix features a state-of-the-art type and effect system fully integrated into
+the language. The Flix effect system is powerful and extensive, supporting
+effect polymorphism, sub-effecting, effect exclusion, purity reflection, and
+associated effects.
 
-```flix
-1 + 2 : Int32 \ {}
-```
+We will explore these new and exciting features over the coming pages.
 
-whereas the following expression is impure (marked with `\ IO`):
+What are the benefits of an effect system? There are many:
 
-```flix
-println("Hello World") : Unit \ IO
-```
+- **(Purity)** A type and effect system separates pure and impure functions. In
+  Flix, a pure function cannot have any side-effects and must return the same
+  value when given the same arguments. Nevertheless, a pure function can still
+  be implemented in an imperative style using mutable data structures as long as
+  those data structures leave scope when the function ends.
 
-A higher-order function can specify that a function
-argument must be pure, impure, or that it is effect
-polymorphic.
+- **(Reasoning)** A type and effect system helps programmers understand how
+  their programs work by requiring every function to specify its argument and
+  return types, as well as the side-effects of the function.
 
-For example, the definition of `Set.exists` requires
-that its function argument `f` is pure:
+- **(Modularity)**  A type and effect system enforces modularity by forcing
+  programmers to consider what side effects are allowed where in the program.
+  Moreover, effects &mdash; like types &mdash; serve as compiler checked
+  documentation.
 
-```flix
-// The syntax a -> Bool is short-hand for a -> Bool \ {}
-def exists(f: a -> Bool, s: Set[a]): Bool = ???
-```
+- **(Effects and Handlers)** A type and effect system is the foundation for
+  algebraic effects and handlers. These allow programmers to implement their own
+  control structures, such as exceptions, async/await, and cooperative
+  multitasking.
 
-The requirement that `f` must be pure ensures that
-implementation details do not leak.
-For example, since `f` is pure it cannot be used to
-determine in what order the elements of the set are
-traversed.
-If `f` was impure such details could leak, e.g. by
-passing a function that also prints the current
-element, revealing the internal element order inside
-the set.
+- **(Security)** A type and effect system offers iron-clad guarantees about the
+  behavior of functions, allowing programmers to increase their trust in unknown
+  code. For example, if a function is pure, it cannot have any side-effects: it
+  cannot access the file system, the network, etc. A specific benefit is that
+  programs become more resistant to supply chain attacks.
 
-The type and effect system is sound, but not
-complete.
-That is, if a function is pure then it cannot cause
-an effect, whereas if a function is impure then it
-may, but does not necessarily, cause an effect.
-For example, the following expression is impure even
-though it cannot produce an effect at run-time:
+- **(Purity Reflection)** The Flix Standard Library (and other library authors
+  in extension) can use [purity reflection](./purity-reflection.md) to inspect
+  the purity of function arguments passed to higher-order functions. We can
+  exploit this information to implement automatic parallelization while
+  preserving the original semantics of the program. For example, in Flix, the
+  `Set.count` function uses parallel evaluation if (a) the set is sufficiently
+  large and (b) the passed predicate function is pure. 
 
-```flix
-if (1 == 2) println("Hello World!") else ()
-```
+- **(Optimizations)** The Flix compiler exploits purity information for
+  aggressive dead code elimination and inlining.
 
-A higher-order function can also be effect
-polymorphic: its effect(s) can depend on its
-argument(s).
+The Flix type and effect system is quite sophisticated and requires some
+background knowledge to use effectively. In the next couple of sections, we
+gradually introduce the features of the type and effect system and give several
+examples of its use. 
 
-For example, the standard library definition of
-`List.map` is effect polymorphic:
+Before we continue, it is important to understand that Flix has three types of effects: 
 
-```flix
-def map(f: a -> b \ ef, xs: List[a]): List[b] \ ef
-```
+- [foundational effects](./foundational-effects.md)
+- [algebraic effects](./effects-and-handlers.md)
+- [heap effects](./mutable-data.md)
 
-The `List.map` function takes a function `f` from
-elements of type `a` to `b` with effect `ef`.
-The effect of the function itself is `ef`.
-Consequently, if `List.map` is invoked with a pure
-function then the entire expression is pure whereas
-if it is invoked with an impure function then the
-entire expression is impure.
-
-A higher-order function that takes multiple function
-arguments may combine their effects.
-
-For example, the standard library definition of
-forward function composition `>>` is pure if both its
-function arguments are pure:
-
-```flix
-def >>(f: a -> b \ ef1, g: b -> c \ ef2): a -> c \ { ef1, ef2 } = x -> g(f(x))
-```
-
-The type and effect signature can be understood as
-follows: The `>>` function takes two function
-arguments: `f` with effect `ef1` and `g` with
-effect `ef2`.
-The effect of `>>` is effect polymorphic in the
-conjunction of `ef1` and `ef2`.
-If both are pure (their effect is `true`) then the
-overall expression is pure (`true`).
-Otherwise it is impure.
-
-The type and effect system allows arbitrary boolean
-expressions to control the purity of function
-arguments.
-
-For example, it is possible to express a higher-order
-function `h` that accepts two function arguments `f`
-and `g` of which at most one is impure:
-
-```flix
-def h(f: a -> b \ ef1, g: b -> c \ { (not ef1) or ef2 }): Unit
-```
-
-Note that here `ef1` and `ef2` are arbitrary boolean
-variables which are not directly associated with the
-effect of `f` or `g` (like it was the case in the
-simpler example above).
-In general, the possible effects for argument
-functions and the to-be-defined function are described
-by arbitrary boolean expressions.
-Here the possible effects of `g` (whether it can be
-pure or impure) are specified by the boolean
-`not ef1 or ef2`.
-For a specific combination of pure and impure to be
-accepted, there must be an assignment of the boolean
-variables `ef1` and `ef2` to true and false such that
-the boolean expressions for _pure_ arguments evaluate
-to `true` and those for _impure_ arguments evaluate to
-`false`.
-
-If in this example `h` is called with a function
-argument `f` which is impure, then the variable `ef1`
-must be false and thus the second argument must be
-pure (because `not ef1 or ef2` will always be true,
-no matter how we choose `ef2`).
-Conversely, if `f` is pure, then `ef1` must be true
-and `g` may be pure (`ef2 = true`) or impure
-(`ef2 = false`).
-It is a compile-time error to call `h` with two impure
-functions.
-
-The type and effect system can be used to ensure that
-statement expressions are useful, i.e. that if an
-expression or function is evaluated and its result is
-discarded then it must have a side-effect.
-For example, compiling the program fragment below:
-
-```flix
-List.map(x -> x + 1, 1 :: 2 :: Nil);
-123
-```
-
-causes a compiler error:
-
-```
--- Redundancy Error -------------------------------------------------- ???
-
->> Useless expression: It has no side-effect(s) and its result is discarded.
-
-2 |     List.map(x -> x + 1, 1 :: 2 :: Nil);
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-useless expression.
-
-
-Possible fixes:
-
-(1)  Use the result computed by the expression.
-(2)  Remove the expression statement.
-(3)  Introduce a let-binding with a wildcard name.
-```
-
-because it is non-sensical to evaluate the pure
-expression
-`List.map(x -> 2 * x, 1 :: 2 :: Nil)` and then to
-discard its result.
-Most likely the programmer wanted to use the result
-(or alternatively the expression is redundant and
-could be deleted).
-Consequently, Flix rejects such programs.
-
-In summary, Flix function types are of the form:
-
-|                                                            Function Type                                                             |         Syntax          | Short Hand |
-| :----------------------------------------------------------------------------------------------------------------------------------: | :---------------------: | :--------: |
-|                                            The type of a _pure_ function from `a` to `b`.                                            |      `a -> b \ {}`      |  `a -> b`  |
-|                            The type of an _effect polymorphic_ function from `a` to `b` with effect `ef`.                            |      `a -> b \ ef`      |    n/a     |
-| The type of an _effect polymorphic_ function from `a` to `b` with effect `ef1 and ef2` (i.e. pure if both `ef1` and `ef2` are true.) | `a -> b \ { ef1, ef2 }` |    n/a     |
+We describe how traits and effects interact in the section on [Associated
+Effects](./associated-effects.md).

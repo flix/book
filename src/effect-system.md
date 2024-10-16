@@ -61,3 +61,15 @@ Before we continue, it is important to understand that Flix has three types of e
 
 We describe how traits and effects interact in the section on [Associated
 Effects](./associated-effects.md).
+
+### Direct Style
+
+Flix is a so-called _direct-style_ programming language with a traditional type
+and effect system. This is in contrast to so-called _functional effect systems_
+like [Cats Effect](https://typelevel.org/cats-effect/),
+[Kyo](https://getkyo.io/#/), and [ZIO](https://zio.dev/). These systems offer a
+library-level effect system, essentially a custom `IO` monad. While this
+approach has some advantages, the downsides are at least twofold (a) we do not
+get any of the guarantees offered by a traditional type and effect system (e.g.,
+we cannot know when a function is pure), and (b) we must write our program in a
+monadic-style which is burdensome.

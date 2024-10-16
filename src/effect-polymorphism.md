@@ -63,27 +63,24 @@ This function has a heap effect `r` and three foundational effects: `Clock`,
 
 ### Higher-Order Functions
 
-<div style="color:gray">
+When we write higher-order functions, we must think carefully about their effect behavior. 
 
-When we write higher-order functions, we must think about their effect behavior. 
-
-For example, we can write a higher-order function `List.exists`:
+For example, we can write a higher-order function `Set.exists`:
 
 ```flix
 def exists(f: a -> Bool \ { }, s: Set[a]): Bool = ...
                           ^^^
 ```
 
-which enforces that the predicate function `f` is pure. Why would we do this?
-For at least two reasons: (a) it allows us to hide the iteration inside the set
-and (b) it allows us to safely perform the counting in parallel. 
+Here the `exists` function enforces the predicate function `f` to be pure. Why
+would we do this? For at least two reasons: (a) it allows us to hide the
+iteration order used in the set, and (b) it allows us to perform the counting in
+parallel. 
 
-Nevertheless, requring function arguments to be pure is goes against the spirit
-of Flix, and should only be used sparingly. 
-
-More common, and more appropriate, is to write _effect polymorphic_ functions.
-That is higher-order functions whose effect(s) depend on the effect(s) of their
-function arguments. 
+Nevertheless, requiring a function to be pure unless necessary is considered a
+bad programming style. Instead, we should write _effect polymorphic_ functions.
+An effect polymorphic function is a higher-order function whose effects depend
+on the effects of its function arguments. 
 
 For example, we can write an effect polymorphic map function:
 
@@ -92,31 +89,43 @@ def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = ...
                     ^^ // effect variable      ^^ effect variable
 ```
 
-The type and effect signature of `map` essentialy says: If `map` is given a
-function `f` with effect(s) `ef` then calling `map` has the effect(s) `ef`. That
-is, if `f` is pure (i.e. has no effects) then the call to `map` will be pure. If
-`f` has the `IO` effect then the call to `map` will have the `IO` effect: 
+The type and effect signature of `map` states: If `map` is given a function `f`
+with effects `ef` then calling `map` has the effects `ef`. That is, if `f` is
+pure (i.e. has no effects) then the call to `map` will be pure. If `f` has the
+`IO` effect then the call to `map` will have the `IO` effect: 
 
 
 ```flix
-List.map(x -> x + 1, l)               // is pure
-List.map(x -> {println(x); x + 1}, l) // has IO effect
+List.map(x -> x + 1, l)               // has the { } effect (i.e., is pure)
+List.map(x -> {println(x); x + 1}, l) // has the { IO } effect
 ```
 
 A higher-order function that takes multiple function arguments may combine their
 effects.
 
-For example, the standard library definition of
-forward function composition `>>` is pure if both its
-function arguments are pure:
+For example, the Flix Standard Library definition of forward function
+composition `>>`takes two functions `f` and `g`, and composes them: 
 
 ```flix
 def >>(f: a -> b \ ef1, g: b -> c \ ef2): a -> c \ (ef1 + ef2) = x -> g(f(x))
 ```
 
-Here we should read `ef1 + ef2` has the union of the two effects of `f` and `g`.
+The type and effect signature of `>>` states: If `map` is given two functions
+`f` with effects `ef1` and `g` with effects `ef2` then it returns a new function
+which has the union of effects `ef1 + ef2`. 
 
-<div style="color: black">
+In Flix, the language of effects is based on set formulas:
+
+- The *complement* of `ef` is written `~ef`.
+- The *union* of `ef1` and `ef2` is written `ef1 + ef2`.
+- The *intersection* of `ef1` and `ef2` is written `ef1 & ef2`.
+- The *difference* of `ef1` and `ef2` is written `ef1 - ef2`.
+
+By far the most common operation is to compute the union of effects.
+
+Its important to understand that there can be several ways to write the same
+effect set. For example, `ef1 + ef2` is equivalent to `ef2 + ef1`, as one would
+expect. 
 
 ### Effect Exclusion
 

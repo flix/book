@@ -26,7 +26,7 @@ eff DivByZero {
 
 def divide(x: Int32, y: Int32): Int32 \ DivByZero = 
     if (y == 0) {
-        do DivByZero.divByZero()
+        DivByZero.divByZero()
     } else {
         x / y
     }
@@ -95,7 +95,7 @@ eff HourOfDay {
 }
 
 def greeting(): String \ {HourOfDay} = 
-    let h = do HourOfDay.getCurrentHour();
+    let h = HourOfDay.getCurrentHour();
     if (h <= 12) 
         "Good morning"
     else if (h <= 18)
@@ -138,8 +138,8 @@ eff Say {
 }
 
 def greeting(): Unit \ {Ask, Say} = 
-    let name = do Ask.ask();
-    do Say.say("Hello Mr. ${name}")
+    let name = Ask.ask();
+    Say.say("Hello Mr. ${name}")
 
 def main(): Unit \ IO = 
     try {
@@ -176,11 +176,11 @@ eff Exc {
 }
 
 def drunkFlip(): String \ {Amb, Exc} = {
-    if (do Amb.flip()) {
-        let heads = do Amb.flip();
+    if (Amb.flip()) {
+        let heads = Amb.flip();
         if (heads) "heads" else "tails"
     } else {
-        do Exc.raise("too drunk to flip")
+        Exc.raise("too drunk to flip")
     }
 }
 
@@ -297,7 +297,7 @@ eff Ask {
 
 def main(): Unit \ IO = 
     region rc {
-        spawn do Ask.ask() @ rc
+        spawn Ask.ask() @ rc
     }
 ```
 

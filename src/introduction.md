@@ -116,11 +116,11 @@ eff MyTime {
 }
 
 def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
-    let hour = do MyTime.getCurrentHour();
+    let hour = MyTime.getCurrentHour();
     if (hour < 12)
-        do MyPrint.println("Good morning, ${name}")
+        MyPrint.println("Good morning, ${name}")
     else 
-        do MyPrint.println("Good afternoon, ${name}")
+        MyPrint.println("Good afternoon, ${name}")
 }
 
 def main(): Unit \ IO = 

@@ -36,7 +36,7 @@ pub eff DivByZero {
 
 instance Dividable[Int32] {
     pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
-        if (y == 0) do DivByZero.throw() else x / y
+        if (y == 0) DivByZero.throw() else x / y
 }
 ````
 
@@ -80,7 +80,7 @@ instance Dividable[Float32] {
 instance Dividable[Int32] {
     type Aef = { DivByZero }
     pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
-        if (y == 0) do DivByZero.throw() else x / y
+        if (y == 0) DivByZero.throw() else x / y
 }
 ```
 

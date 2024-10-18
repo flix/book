@@ -186,7 +186,7 @@ effect. However, due to sub-effecting, we can still call the `handle` function
 with a pure function, i.e.:
 
 ```flix
-def handle(x -> do Throw.throw(x)) // OK, has the `Throw` effect.
+def handle(x -> Throw.throw(x))    // OK, has the `Throw` effect.
 def handle(x -> x)                 // OK, because of sub-effecting.
 def handle(x -> println(x))        // Not OK, handle does not permit `IO`.
 ```

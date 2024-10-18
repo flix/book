@@ -104,29 +104,29 @@ eff Terminal {
 }
 
 def readAndParseGuess(): Result[String, Int32] \ {Guess} = 
-    forM(g <- do Guess.readGuess(); 
+    forM(g <- Guess.readGuess(); 
          n <- Int32.parse(10, g)
     ) yield n
 
 def gameLoop(secret: Int32): Unit \ {Guess, Terminal} = {
-    do Terminal.println("Enter a guess:");
+    Terminal.println("Enter a guess:");
     match readAndParseGuess() {
         case Result.Ok(g) => 
             if (secret == g) {
-                do Terminal.println("Correct!")
+                Terminal.println("Correct!")
             } else {
-                do Terminal.println("Incorrect!");
+                Terminal.println("Incorrect!");
                 gameLoop(secret)
             }
         case Result.Err(_) => 
-            do Terminal.println("Not a number? Goodbye.");
-            do Terminal.println("The secret was: ${secret}")
+            Terminal.println("Not a number? Goodbye.");
+            Terminal.println("The secret was: ${secret}")
     }
 }
 
 def main(): Unit \ IO = 
     try {
-        let secret = do Secret.getSecret();
+        let secret = Secret.getSecret();
         gameLoop(secret)
     } with Secret {
         def getSecret(_, resume) = 

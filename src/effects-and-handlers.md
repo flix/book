@@ -308,7 +308,7 @@ The Flix compiler emits the error message:
 
 >> Illegal spawn effect: 'Ask'. 
 
->> A spawn expression must be pure or have a foundational effect.
+>> A spawn expression must be pure or have a primitive effect.
 
 7 |         spawn do Ask.ask() @ rc
                   ^^^^^^^^^^^^

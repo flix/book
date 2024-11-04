@@ -55,7 +55,7 @@ examples of its use.
 
 Before we continue, it is important to understand that Flix has three types of effects: 
 
-- [foundational effects](./foundational-effects.md)
+- [primitive effects](./primitive-effects.md)
 - [algebraic effects](./effects-and-handlers.md)
 - [heap effects](./mutable-data.md)
 

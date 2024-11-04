@@ -1,13 +1,13 @@
-## Foundational Effects
+## Primitive Effects
 
 > **Note:** The following text applies to Flix 0.54.0 or later.
 
-Flix comes with a collection of pre-defined foundational effects. Unlike
-algebraic and heap effects, foundational effects cannot be handled and never go
-out of scope. A foundational effect represents a side-effect that happens on the
-machine. It cannot be undone or reinterpreted.
+Flix comes with a collection of pre-defined primitive effects. Unlike algebraic
+and heap effects, primitive effects cannot be handled and never go out of scope.
+A primitive effect represents a side-effect that happens on the machine. It
+cannot be undone or reinterpreted.
 
-The most important foundational effect is the `IO` effect.
+The most important primitive effect is the `IO` effect.
 
 ### The `IO` Effect
 
@@ -21,15 +21,14 @@ called, even if its arguments are the same. For example, reading the same file
 twice is not guaranteed to return the same result since the file may have
 changed between the two accesses.
 
-The `IO` effect, and all other foundational effects, are _viral_. If a function
-has a foundational effect, all its callers will also have that foundational
-effect. That is to say, once you have tainted yourself with impurity, you remain
-tainted. 
+The `IO` effect, and all other primitive effects, are _viral_. If a function has
+a primitive effect, all its callers will also have that primitive effect. That
+is to say, once you have tainted yourself with impurity, you remain tainted. 
 
-### The Other Foundational Effects
+### The Other Primitive Effects
 
 In addition to the all-important `IO` effect, Flix has a small collection of
-pre-defined foundational effects. The point of these foundational effects is to
+pre-defined primitive effects. The point of these primitive effects is to
 provide more information about the specific actions a function can take. Except
 for the `NonDet` effect, all of effects below always come together with the `IO`
 effect. 
@@ -82,8 +81,8 @@ used to trash the filesystem, `Net` can be used to exfiltrate data, and `Sys`
 via reflection allows access to all of the previous. We should always be
 suspicious if unknown or untrusted code uses any of these effects. 
 
-The foundational effects are mostly disjoint, but not entirely. For example, we
-can use the `Exec` effect to indirectly gain access to the file system. The
+The primitive effects are mostly disjoint, but not entirely. For example, we can
+use the `Exec` effect to indirectly gain access to the file system. The
 `FileRead` effect may allow us to access a mounted network drive, a form of
 network access. Ultimately, whether one effect can emulate another depends on
 what side channels the underlying operating system allows. The point of the
@@ -91,10 +90,10 @@ effect system is that if a function does not have the `FileWrite` effect, it
 cannot write to the file system using the ordinary file APIs available on the
 JVM. 
 
-### Where do Foundational Effects Come From?
+### Where do Primitive Effects Come From?
 
 The Flix compiler ships with a built-in database that maps classes,
-constructors, and methods in the Java Class Library to foundational effects. For
+constructors, and methods in the Java Class Library to primitive effects. For
 example, the database assigns the `Exec` effects to every constructor and method
 in the `java.lang.Process`, `java.lang.ProcessBuilder`, and
 `java.lang.ProcessHandle` classes. 

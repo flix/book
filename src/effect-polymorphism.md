@@ -30,7 +30,7 @@ def incAndPrint(x: Int32): Int32 \ {IO} =
 ```
 
 
-Here the `incAndPrint` function has the foundational `IO` effect. 
+Here the `incAndPrint` function has the primitive `IO` effect. 
 
 We can also express that a function has multiple effects:
 
@@ -39,7 +39,7 @@ def copyFile(src: File, dst: File): Unit \ {FileRead, FileWrite, IO} = ...
                                          // ^^^^^^^^^^^^^^^^^^^^^^^^^ multiple effects
 ```
 
-Here the `copyFile` function has three foundational effects: `FileRead`,
+Here the `copyFile` function has three primitive effects: `FileRead`,
 `FileWrite`, and `IO`.
 
 In Flix, we can express a function that has a heap effect:
@@ -58,7 +58,7 @@ def strange(a: Array[t, r]): Unit \ {r, Clock, Net, IO}
                                  // ^^^^^^^^^^^^^^^^^^^ a mixture of effects
 ```
 
-This function has a heap effect `r` and three foundational effects: `Clock`,
+This function has a heap effect `r` and three primitive effects: `Clock`,
 `Net`, and `IO`.
 
 ### Higher-Order Functions

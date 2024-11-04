@@ -29,7 +29,7 @@
   - [Monadic For-Yield](./monadic-for-yield.md)
   - [Applicative For-Yield](./applicative-for-yield.md)
 - [Effect System](./effect-system.md)
-  - [Foundational Effects](./foundational-effects.md)
+  - [Primitive Effects](./primitive-effects.md)
   - [Effect Polymorphism](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
   - [Library Effects](./library-effects.md)

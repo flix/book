@@ -35,12 +35,12 @@ Here the `incAndPrint` function has the primitive `IO` effect.
 We can also express that a function has multiple effects:
 
 ```flix
-def copyFile(src: File, dst: File): Unit \ {FileRead, FileWrite, IO} = ...
-                                         // ^^^^^^^^^^^^^^^^^^^^^^^^^ multiple effects
+def copyFile(src: File, dst: File): Unit \ {FsRead, FsWrite, IO} = ...
+                                         // ^^^^^^^^^^^^^^^^^^^^ multiple effects
 ```
 
-Here the `copyFile` function has three primitive effects: `FileRead`,
-`FileWrite`, and `IO`.
+Here the `copyFile` function has three primitive effects: `FsRead`, `FsWrite`,
+and `IO`.
 
 In Flix, we can express a function that has a heap effect:
 

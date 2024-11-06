@@ -21,7 +21,7 @@ We can use effects and handlers to implement exceptions. For example:
 
 ```flix
 eff DivByZero {
-    pub def divByZero(): Void
+    def divByZero(): Void
 }
 
 def divide(x: Int32, y: Int32): Int32 \ DivByZero = 
@@ -91,7 +91,7 @@ Flix also supports resumable effects. For example:
 import java.time.LocalDateTime
 
 eff HourOfDay {
-    pub def getCurrentHour(): Int32
+    def getCurrentHour(): Int32
 }
 
 def greeting(): String \ {HourOfDay} = 
@@ -130,11 +130,11 @@ We can write functions that use multiple effects:
 
 ```flix
 eff Ask {
-    pub def ask(): String
+    def ask(): String
 }
 
 eff Say {
-    pub def say(s: String): Unit
+    def say(s: String): Unit
 }
 
 def greeting(): Unit \ {Ask, Say} = 
@@ -168,11 +168,11 @@ Here is a simple example:
 
 ```flix
 eff Amb {
-    pub def flip(): Bool
+    def flip(): Bool
 }
 
 eff Exc {
-    pub def raise(m: String): Void
+    def raise(m: String): Void
 }
 
 def drunkFlip(): String \ {Amb, Exc} = {
@@ -252,7 +252,7 @@ For example, we *cannot* declare a polymorphic `Throw[a]` effect:
 
 ```flix
 eff Throw[a] {
-    pub def throw(x: a): Void
+    def throw(x: a): Void
 }
 ```
 
@@ -275,11 +275,11 @@ For example:
 
 ```flix
 eff ThrowBool {
-    pub def throw(x: Bool): Void
+    def throw(x: Bool): Void
 }
 
 eff ThrowInt32 {
-    pub def throw(x: Int32): Void
+    def throw(x: Int32): Void
 }
 ```
 
@@ -292,7 +292,7 @@ For example, if we write:
 
 ```flix
 eff Ask {
-    pub def ask(): String
+    def ask(): String
 }
 
 def main(): Unit \ IO = 

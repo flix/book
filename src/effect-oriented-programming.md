@@ -92,15 +92,15 @@ import java.io.InputStreamReader;
 import java.util.{Random => JRandom}
 
 eff Guess {
-    pub def readGuess(): Result[String, String]
+    def readGuess(): Result[String, String]
 }
 
 eff Secret {
-    pub def getSecret(): Int32
+    def getSecret(): Int32
 }
 
 eff Terminal {
-    pub def println(s: String): Unit    
+    def println(s: String): Unit    
 }
 
 def readAndParseGuess(): Result[String, Int32] \ {Guess} = 

@@ -44,13 +44,13 @@ effect.
   `System.exec`, the `Process` and `ProcessBuilder` classes, and dynamic library
   loading.
 
-- **FileRead**: The `FileRead` effect represents actions that read from the file
+- **FsRead**: The `FsRead` effect represents actions that read from the file
   system &mdash; for example, reading a file, reading its meta-data, or listing
   the contents of a directory.
 
-- **FileWrite**: The `FileWrite` effect represents actions that write to the
-  file system &mdash; for example, creating a file, writing a file, or deleting
-  a file.
+- **FsWrite**: The `FsWrite` effect represents actions that write to the file
+  system &mdash; for example, creating a file, writing a file, or deleting a
+  file.
 
 - **Net**:  The `Net` effect represents actions that involve network access
   &mdash; for example, binding to a local port, connecting to a remote socket,
@@ -68,27 +68,26 @@ effect.
 All of the above effects, except for the `NonDet` effect, always occur together
 with the `IO` effect. In particular, they capture a more precise aspect of the
 `IO` effect. For example, from a security point-of-view, it seems reasonable
-that a web server library should have the `FileRead` and `Net` work effects, but
-it would be worrying if it had the `FileWrite` and `Sys` effects. As another
-example, it seems reasonable that a logging library would have the `FileWrite`
+that a web server library should have the `FsRead` and `Net` work effects, but
+it would be worrying if it had the `FsWrite` and `Sys` effects. As another
+example, it seems reasonable that a logging library would have the `FsWrite`
 effect, but it would be a cause for concern if it also had the `Exec` and `Net`
 effects.
 
 The above effects represent dangerous actions except for `IO`, `Env`, and
 `NonDet`, which are relatively harmless. `Exec` allows arbitrary process
-execution, `FileRead` can be used to access sensitive data, `FileWrite` can be
-used to trash the filesystem, `Net` can be used to exfiltrate data, and `Sys`
-via reflection allows access to all of the previous. We should always be
-suspicious if unknown or untrusted code uses any of these effects. 
+execution, `FsRead` can be used to access sensitive data, `FsWrite` can be used
+to trash the filesystem, `Net` can be used to exfiltrate data, and `Sys` via
+reflection allows access to all of the previous. We should always be suspicious
+if unknown or untrusted code uses any of these effects. 
 
 The primitive effects are mostly disjoint, but not entirely. For example, we can
-use the `Exec` effect to indirectly gain access to the file system. The
-`FileRead` effect may allow us to access a mounted network drive, a form of
-network access. Ultimately, whether one effect can emulate another depends on
-what side channels the underlying operating system allows. The point of the
-effect system is that if a function does not have the `FileWrite` effect, it
-cannot write to the file system using the ordinary file APIs available on the
-JVM. 
+use the `Exec` effect to indirectly gain access to the file system. The `FsRead`
+effect may allow us to access a mounted network drive, a form of network access.
+Ultimately, whether one effect can emulate another depends on what side channels
+the underlying operating system allows. The point of the effect system is that
+if a function does not have the `FsWrite` effect, it cannot write to the file
+system using the ordinary file APIs available on the JVM. 
 
 ### Where do Primitive Effects Come From?
 

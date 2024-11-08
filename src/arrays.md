@@ -172,11 +172,11 @@ which prints `3` when run.
 
 > **Note**: We advise against indexed-based iteration through arrays. Instead,
 > we recommend to use functions such as `Array.count`, `Array.forEach`, and
-> `Array.transform!`.
+> `Array.transform`.
 
 ### Additional Array Operations
 
 The `Array` module offers an extensive collection of functions for working with
 arrays. For example, `Array.append`, `Array.copyOfRange`, `Array.findLeft`,
-`Array.findRight`, `Array.sortWith!`, and `Array.sortBy!` to name a few. In
+`Array.findRight`, `Array.sortWith`, and `Array.sortBy` to name a few. In
 total, the module offers more than 100 functions ready for use.

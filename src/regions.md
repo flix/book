@@ -22,14 +22,14 @@ We can use regions to implement a pure `sort` function that internally uses muta
 def sort(l: List[a]): List[a] with Order[a] =
     region rc {
         let arr = List.toArray(rc, l);
-        Array.sort!(arr);
+        Array.sort(arr);
         Array.toList(arr)
     }
 ```
 
 Here we introduce a region named `rc`. We use the function `List.toArray` to
 convert the list `l` to a mutable array `arr` associated with the region `rc`.
-We then sort `arr` using `Array.sort!` which uses an efficient in-place sorting
+We then sort `arr` using `Array.sort` which uses an efficient in-place sorting
 algorithm. Finally, we convert the sorted array back to a list and return it.
 The `sort` function is pure, even though it internally uses mutation.
 
@@ -57,7 +57,7 @@ efficiently. For example, here is a fast implementation of `List.flatMap`:
 def flatMap(f: a -> List[b] \ ef, l: List[a]): List[b] \ ef =
     region rc {
         let ml = MutList.empty(rc);
-        l |> List.forEach(x -> MutList.append!(f(x), ml));
+        l |> List.forEach(x -> MutList.append(f(x), ml));
         MutList.toList(ml)
     }
 ```

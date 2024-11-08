@@ -5,7 +5,7 @@ Flix has several types of identifiers:
 * **Uppercase name:** An identifier that starts with an uppercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `String`, `ALL_UPPER`, `Shriek!`
   * Can be used to name: namespaces, annotations, traits, effects, predicates (within datalog), tags (within enums), types
-* **Lowercase name:** An identifier that starts with aa lowercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
+* **Lowercase name:** An identifier that starts with a lowercase letter followed by any number of uppercase and lowercase letters, underscore, and exclamation mark (`A`…`Z`, `a`…`z`, `_`, `!`).
   * e.g. `anIdentifier`, `x`, `this_and_that`
   * Can be used to name: annotations, attributes (within datalog), functions, labels (within records), variables
 * **Greek name:** An identifier consisting of any combination of letters from the Greek alphabet (the unicode range U+0370 to U+03FF).

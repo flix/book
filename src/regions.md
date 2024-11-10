@@ -40,8 +40,8 @@ is pure but internally uses a mutable `StringBuilder`:
 def toString(l: List[a]): String with ToString[a] =
     region rc {
         let sb = StringBuilder.empty(rc);
-        List.forEach(x -> StringBuilder.appendString!("${x} :: ", sb), l);
-        StringBuilder.appendString!("Nil", sb);
+        List.forEach(x -> StringBuilder.appendString("${x} :: ", sb), l);
+        StringBuilder.appendString("Nil", sb);
         StringBuilder.toString(sb)
     } // scope of rc ends, the entire expression is pure.
 ```

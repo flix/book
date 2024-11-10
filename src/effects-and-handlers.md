@@ -202,10 +202,10 @@ def handleExc(f: a -> b \ ef): a -> Option[b] \ ef - Exc =
 
 def main(): Unit \ IO = {
     // Prints: Some(heads) :: Some(tails) :: None :: Nil
-    handleAmb(handleExc((drunkFlip)))() |> println;
+    handleAmb(handleExc(drunkFlip))() |> println;
 
     // Prints: None
-    handleExc(handleAmb((drunkFlip)))() |> println
+    handleExc(handleAmb(drunkFlip))() |> println
 }
 ```
 

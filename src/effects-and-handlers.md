@@ -65,7 +65,8 @@ the following works without issue:
 def main(): Unit \ IO = 
     let l = List#{1, 2, 0};
     try {
-        List.map(x -> println(divide(42, x)), l)
+        List.map(x -> println(divide(42, x)), l);
+        ()
     } with DivByZero {
         def divByZero(_) = println("Oops: Division by Zero!")
     }

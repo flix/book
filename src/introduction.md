@@ -124,7 +124,7 @@ def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
 }
 
 def main(): Unit \ IO = 
-    try {
+    run {
         (sayGreeting("Mr. Bond, James Bond"): Unit)
     } with MyPrint {
         def println(s, k) = { println(s); k() }

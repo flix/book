@@ -32,7 +32,7 @@ def divide(x: Int32, y: Int32): Int32 \ DivByZero =
     }
 
 def main(): Unit \ IO = 
-    try {
+    run {
         println(divide(3, 2));
         println(divide(3, 0))
     } with DivByZero {
@@ -64,7 +64,7 @@ the following works without issue:
 ```flix
 def main(): Unit \ IO = 
     let l = List#{1, 2, 0};
-    try {
+    run {
         List.map(x -> println(divide(42, x)), l);
         ()
     } with DivByZero {
@@ -105,7 +105,7 @@ def greeting(): String \ {HourOfDay} =
         "Good evening"
 
 def main(): Unit \ IO = 
-    try {
+    run {
         println(greeting())
     } with HourOfDay {
         def getCurrentHour(_, resume) = 
@@ -143,7 +143,7 @@ def greeting(): Unit \ {Ask, Say} =
     Say.say("Hello Mr. ${name}")
 
 def main(): Unit \ IO = 
-    try {
+    run {
         greeting()
     } with Ask {
         def ask(_, resume) = resume("Bond, James Bond")
@@ -186,14 +186,14 @@ def drunkFlip(): String \ {Amb, Exc} = {
 }
 
 def handleAmb(f: a -> b \ ef): a -> List[b] \ ef - Amb =  
-    x -> try {
+    x -> run {
         f(x) :: Nil
     } with Amb {
         def flip(_, resume) = resume(true) ::: resume(false)
     }
 
 def handleExc(f: a -> b \ ef): a -> Option[b] \ ef - Exc = 
-    x -> try {
+    x -> run {
         Some(f(x))
     } with Exc {
         def raise(_, _) = None

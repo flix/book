@@ -125,7 +125,7 @@ def gameLoop(secret: Int32): Unit \ {Guess, Terminal} = {
 }
 
 def main(): Unit \ IO = 
-    try {
+    run {
         let secret = Secret.getSecret();
         gameLoop(secret)
     } with Secret {

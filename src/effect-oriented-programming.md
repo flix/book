@@ -1,7 +1,5 @@
 ## Effect-Oriented Programming
 
-> **Note:** The following text applies to Flix 0.54.0 or later.
-
 Programming with effects requires a new mindset, _an effect-oriented mindset_.
 
 Imagine a programmer coming from JavaScript or Python to a statically-typed

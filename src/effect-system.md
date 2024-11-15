@@ -1,7 +1,5 @@
 # Effect System
 
-> **Note:** The following text applies to Flix 0.54.0 or later.
-
 Flix features a state-of-the-art type and effect system fully integrated into
 the language. The Flix effect system is powerful and extensive, supporting
 effect polymorphism, sub-effecting, effect exclusion, purity reflection, and

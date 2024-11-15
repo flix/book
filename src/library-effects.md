@@ -1,7 +1,5 @@
 ## Library Effects
 
-> **Note:** The following text applies to Flix 0.54.0 or later.
-
 The Flix Standard Library comes with a collection of algebraic effects and
 handlers.
 

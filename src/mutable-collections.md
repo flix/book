@@ -19,9 +19,9 @@ Here is an example of how to use `MutList[t]`:
 def main(): Unit \ IO =
     region rc {
         let fruits = MutList.empty(rc);
-        MutList.push!("Apple", fruits);
-        MutList.push!("Pear", fruits);
-        MutList.push!("Mango", fruits);
+        MutList.push("Apple", fruits);
+        MutList.push("Pear", fruits);
+        MutList.push("Mango", fruits);
         MutList.forEach(println, fruits)
     }
 ```
@@ -37,9 +37,9 @@ def main(): Unit \ IO =
     region rc {
         let fruits =
             MutList.empty(rc) !>
-            MutList.push!("Apple") !>
-            MutList.push!("Pear") !>
-            MutList.push!("Mango");
+            MutList.push("Apple") !>
+            MutList.push("Pear") !>
+            MutList.push("Mango");
         MutList.forEach(println, fruits)
     }
 ```
@@ -55,9 +55,9 @@ def main(): Unit \ IO =
 
 def sweetFruits(rc: Region[r]): MutList[String, r] \ r =
     MutList.empty(rc) !>
-    MutList.push!("Apple") !>
-    MutList.push!("Pear") !>
-    MutList.push!("Mango")
+    MutList.push("Apple") !>
+    MutList.push("Pear") !>
+    MutList.push("Mango")
 
 def printFruits(fruits: MutList[String, r]): Unit \ {r, IO} =
     MutList.forEach(println, fruits)

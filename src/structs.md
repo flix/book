@@ -247,7 +247,7 @@ However, since a `MutList` can be changed, we can write:
 ```flix
 mod Book {
     pub def addAuthor(a: String, b: Book[r]): Unit \ r =
-        MutList.push!(a, b->authors)
+        MutList.push(a, b->authors)
 }
 ```
 

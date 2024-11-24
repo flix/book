@@ -11,7 +11,7 @@ For example, we can create an object that implements the `java.lang.Runnable` in
 import java.lang.Runnable
 
 def newRunnable(): Runnable \ IO = new Runnable {
-    def run(_this: Runnable): Unit \ IO = 
+    def $run(_this: Runnable): Unit \ IO = 
         println("I am running!")
 }
 ```

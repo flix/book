@@ -31,12 +31,12 @@ it tracked by the type and effect system. We would like to write:
 
 ```flix
 pub eff DivByZero {
-    pub def throw(): Void
+    pub def raise(): Void
 }
 
 instance Dividable[Int32] {
     pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
-        if (y == 0) DivByZero.throw() else x / y
+        if (y == 0) DivByZero.raise() else x / y
 }
 ````
 
@@ -80,7 +80,7 @@ instance Dividable[Float32] {
 instance Dividable[Int32] {
     type Aef = { DivByZero }
     pub def div(x: Int32, y: Int32): Int32 \ DivByZero = 
-        if (y == 0) DivByZero.throw() else x / y
+        if (y == 0) DivByZero.raise() else x / y
 }
 ```
 

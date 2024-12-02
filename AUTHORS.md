@@ -8,3 +8,4 @@ By adding your name to this document, you agree to release all your contribution
 - [Herluf Baggesen](https://github.com/herluf-ba)
 - [Rutvik Patel](https://github.com/heyrutvik)
 - [Stephen Bastians](https://github.com/stetimi)
+- [Jonathan Lindegaard Starup](https://github.com/JonathanStarup)

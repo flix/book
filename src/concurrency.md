@@ -63,8 +63,8 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def main(): Int32 \ IO = region rc {
-    let (tx, rx) = Channel.unbuffered(rc);
+def main(): Int32 \ {Chan, NonDet, IO} = region rc {
+    let (tx, rx) = Channel.unbuffered();
     spawn Channel.send(42, tx) @ rc;
     Channel.recv(rx)
 }
@@ -87,15 +87,15 @@ message from a collection of channels.
 For example:
 
 ```flix
-def meow(tx: Sender[String, r]): Unit \ r =
+def meow(tx: Sender[String]): Unit \ Chan =
     Channel.send("Meow!", tx)
 
-def woof(tx: Sender[String, r]): Unit \ r =
+def woof(tx: Sender[String]): Unit \ Chan =
     Channel.send("Woof!", tx)
 
-def main(): Unit \ IO = region rc {
-    let (tx1, rx1) = Channel.buffered(rc, 1);
-    let (tx2, rx2) = Channel.buffered(rc, 1);
+def main(): Unit \ {Chan, NonDet, IO} = region rc {
+    let (tx1, rx1) = Channel.buffered(1);
+    let (tx2, rx2) = Channel.buffered(1);
     spawn meow(tx1) @ rc;
     spawn woof(tx2) @ rc;
     select {
@@ -119,9 +119,9 @@ We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): String = region rc {
-    let (_, rx1) = Channel.buffered(rc, 1);
-    let (_, rx2) = Channel.buffered(rc, 1);
+def main(): String \ {Chan, NonDet} = region rc {
+    let (_, rx1) = Channel.buffered(1);
+    let (_, rx2) = Channel.buffered(1);
     select {
         case _ <- recv(rx1) => "one"
         case _ <- recv(rx2) => "two"
@@ -150,12 +150,12 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(tx: Sender[String, r]): Unit \ { r, IO } =
+def slow(tx: Sender[String]): Unit \ {Chan, IO} =
     Thread.sleep(Time.Duration.fromSeconds(60));
     Channel.send("I am very slow", tx)
 
-def main(): Unit \ IO = region rc {
-    let (tx, rx) = Channel.buffered(rc, 1);
+def main(): Unit \ {Chan, NonDet, IO} = region rc {
+    let (tx, rx) = Channel.buffered(1);
     spawn slow(tx) @ rc;
     let timeout = Channel.timeout(rc, Time.Duration.fromSeconds(5));
     select {
@@ -167,3 +167,20 @@ def main(): Unit \ IO = region rc {
 
 This program prints the string `"timeout"` after five
 seconds.
+
+### The Effects of Channels
+
+As you might have noticed, the effects `Chan` and `NonDet`
+shows up when using channels. 
+
+Any operation on channels has the `Chan` effect. This effect
+says that the program is either modifying or accessing the global
+state of channels.
+
+The `recv` operation on a channel has the `NonDet` effect. This
+is because the value you receive will, in the general case, be
+non-deterministic, depending on the choices of the thread scheduler.
+Two threads might be ready to send a value on a channel at the same
+time, and it is up to the scheduler which one gets to send first. 
+
+

@@ -21,7 +21,7 @@ jobs:
           bin/mdbook build
       - name: Install the latest Flix version
         run: |
-          gh release download --repo flix/flix
+          gh release download --repo flix/flix --pattern flix.jar
       - name: Test snippets
         run: |
           python3 test/test_snippets.py

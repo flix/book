@@ -19,6 +19,11 @@ jobs:
           mkdir bin
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.19/mdbook-v0.4.19-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           bin/mdbook build
+      - name: Install JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
       - name: Install the latest Flix version
         run: |
           gh release download --repo flix/flix --pattern flix.jar

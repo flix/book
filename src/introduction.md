@@ -126,9 +126,9 @@ def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
 def main(): Unit \ IO = 
     run {
         (sayGreeting("Mr. Bond, James Bond"): Unit)
-    } with MyPrint {
+    } with handler MyPrint {
         def println(s, k) = { println(s); k() }
-    } with MyTime {
+    } with handler MyTime {
         def getCurrentHour(_, k) = k(11)
     }
 ```

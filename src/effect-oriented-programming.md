@@ -138,7 +138,7 @@ def main(): Unit \ IO =
                 resume(Result.Err("no input"))
             else 
                 resume(Result.Ok(line))
-    } with Terminal {
+    } with handler Terminal {
         def println(s, resume) = { println(s); resume() }
     }
 ```

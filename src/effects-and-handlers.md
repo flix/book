@@ -33,7 +33,7 @@ def main(): Unit \ IO =
     run {
         println(divide(3, 2));
         println(divide(3, 0))
-    } with DivByZero {
+    } with handler DivByZero {
         def divByZero(_resume) = println("Oops: Division by Zero!")
     }
 ```
@@ -65,7 +65,7 @@ def main(): Unit \ IO =
     run {
         List.map(x -> println(divide(42, x)), l);
         ()
-    } with DivByZero {
+    } with handler DivByZero {
         def divByZero(_) = println("Oops: Division by Zero!")
     }
 ```
@@ -105,7 +105,7 @@ def greeting(): String \ {HourOfDay} =
 def main(): Unit \ IO = 
     run {
         println(greeting())
-    } with HourOfDay {
+    } with handler HourOfDay {
         def getCurrentHour(_, resume) = 
             let dt = LocalDateTime.now();
             resume(dt.getHour())
@@ -143,9 +143,9 @@ def greeting(): Unit \ {Ask, Say} =
 def main(): Unit \ IO = 
     run {
         greeting()
-    } with Ask {
+    } with handler Ask {
         def ask(_, resume) = resume("Bond, James Bond")
-    } with Say {
+    } with handler Say {
         def say(s, resume) = { println(s); resume() }
     }
 ```
@@ -186,14 +186,14 @@ def drunkFlip(): String \ {Amb, Exc} = {
 def handleAmb(f: a -> b \ ef): a -> List[b] \ ef - Amb =  
     x -> run {
         f(x) :: Nil
-    } with Amb {
+    } with handler Amb {
         def flip(_, resume) = resume(true) ::: resume(false)
     }
 
 def handleExc(f: a -> b \ ef): a -> Option[b] \ ef - Exc = 
     x -> run {
         Some(f(x))
-    } with Exc {
+    } with handler Exc {
         def raise(_, _) = None
     }
 

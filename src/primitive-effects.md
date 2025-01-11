@@ -1,8 +1,5 @@
 ## Primitive Effects
 
-> **Note:** The following text partially applies to Flix 0.53.0. It will not
-> fully apply until Flix 0.54.0
-
 Flix comes with a collection of pre-defined primitive effects. Unlike algebraic
 and heap effects, primitive effects cannot be handled and never go out of scope.
 A primitive effect represents a side-effect that happens on the machine. It

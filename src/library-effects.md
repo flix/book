@@ -14,19 +14,20 @@ eff Clock {
 }
 ```
 
-The `Clock` companion module also defines the functions `run` and `handle`:
+The `Clock` companion module also defines the functions `runWithIO` and
+`handle`:
 
 ```flix
 mod Clock {
     /// Runs `f` handling the `Clock` effect using `IO`.
-    def run(f: Unit -> a \ ef): a \ (ef - {Clock} + IO)
+    def runWithIO(f: Unit -> a \ ef): a \ (ef - {Clock} + IO)
 
     /// Returns `f` with the `Clock` effect handled using `IO`.
     def handle(f: a -> b \ ef): a -> b \ (ef - {Clock} + IO)
 }
 ```
 
-Every standard library effect comes with `run` and `handle` functions.
+Every standard library effect comes with `runWith` and `handle` functions.
 
 ### Console
 
@@ -89,9 +90,22 @@ Flix defines a `Process` effect for running commands outside of the JVM:
 
 ```flix
 eff Process {
-    /// Immediately executes the command `cmd` passing the arguments `args`.
-    def exec(cmd: String, args: List[String]): Unit
+    /// Executes the command `cmd` with the arguments `args`, by the path `cwd` and with the environmental `env`.
+    def execWithCwdAndEnv(cmd: String, args: List[String], cwd: Option[String], env: Map[String, String]): ProcessHandle
 }
+```
+
+The `Process` companion module provides several convenience functions:
+
+```flix
+/// Executes the command `cmd` with the arguments `args`.
+pub def exec(cmd: String, args: List[String]): ProcessHandle \ Process
+
+/// Executes the command `cmd` with the arguments `args`, by the path `cwd`.
+def execWithCwd(cmd: String, args: List[String], cwd: Option[String]): ProcessHandle \ Process
+
+/// Executes the command `cmd` with the arguments `args` and with the environmental `env`.
+def execWithEnv(cmd: String, args: List[String], env: Map[String, String]): ProcessHandle \ Process
 ```
 
 ### Random

@@ -3,6 +3,8 @@
 The Flix Standard Library comes with a collection of algebraic effects and
 handlers.
 
+We give an overview of the most important to illustrate their use.
+
 ### Clock
 
 Flix defines a `Clock` effect to access the time since the [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time):
@@ -14,9 +16,6 @@ eff Clock {
 }
 ```
 
-The `Clock` companion module also defines the functions `runWithIO` and
-`handle`:
-
 ```flix
 mod Clock {
     /// Runs `f` handling the `Clock` effect using `IO`.
@@ -27,7 +26,17 @@ mod Clock {
 }
 ```
 
-Every standard library effect comes with `runWith` and `handle` functions.
+Every effect in the standard library comes with `handle` and `runWithIO`
+functions.
+
+#### Example: Using `Clock`
+
+```flix
+def main(): Unit \ IO = 
+    run {
+        println(Clock.currentTime(TimeUnit.Milliseconds))
+    } with Clock.runWithIO
+```
 
 ### Console
 
@@ -51,6 +60,8 @@ eff Console {
     def eprintln(s: String): Unit
 }
 ```
+
+
 
 ### FileReadWithResult
 

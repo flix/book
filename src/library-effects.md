@@ -122,9 +122,9 @@ eff Random {
 
 ### Running Functions with Algebraic Effects
 
-Every Flix Standard Library effects defines two functions: `run` and `handle` in
-the companion module of the effect. We can use these functions to re-interpret
-the effect in `IO`. That is, **to make the effect happen.**
+Every Flix Standard Library effects defines two functions: `runWith` and
+`handle` in the companion module of the effect. We can use these functions to
+re-interpret the effect in `IO`. That is, **to make the effect happen.**
 
 For example, if a we have a function that uses the `Clock` effect:
 
@@ -167,14 +167,22 @@ def main(): Unit \ IO =
 
 We have to write `() -> greet("Mr. Bond")` because `handle` expects a function. 
 
-### Using App
+### Using Pre-defined Handlers
 
-We have seen how to handle multiple effects using the library defined handlers.
-While being explicit about which handlers are used is good programming style, it
-can become cumbersome. Hence, for convenience, Flix has a `App.runAll` function
-which can handle all effects in the standard library:
+As the above examples show, it can be cumbersome to use the library provided
+`handle` functions. A simpler approach is to use the provided `runWith`
+functions. 
+
+For example, we can write:
 
 ```flix
+def greet(name: String): Unit \ {Clock, Console} = 
+    let h = Clock.now();
+    Console.println("Hello ${name}. The current time is: ${h}")
+
 def main(): Unit \ IO = 
-    App.runAll(() -> greet("Mr. Bond"))
+    run {
+        greet("James Bond")
+    } with Clock.runWithIO
+      with Console.runWithIO
 ```

@@ -20,7 +20,7 @@ def wordCount(file: String): Unit \ {Console, FileReadWithResult} = {
                 let totalWords = List.sumWith(numberOfWords, lines);
                 Console.println("Lines: ${totalLines}, Words: ${totalWords}")
         case Err(_) => 
-                Console.println("Unable to read: ${file}")
+                Console.println("Unable to read file: ${file}")
         }
 }
 
@@ -37,27 +37,28 @@ def main(): Unit \ IO =
 
 The program works as follows:
 
-We define a `wordCount` function that takes a file name. The function reads all
-lines from the file using the algebraic effect `FileReadWithResult`.
+We define a `wordCount` function that takes a filename and reads all lines from
+the file using the algebraic effect `FileReadWithResult`.
 
-If the file can be opened and read successfully, we count the number of lines
-using `List.length` and we count the number of words by computing the number of
-words on each line and summing the result. In particular, we use the
-`numberOfWords` helper function to compute how many words are on one line. We
-then print the information to the terminal using the `Console` algebraic effect. 
+If the file is successfully read, we calculate:
 
-If the file cannot be opened or read we print an error message to the terminal,
-again using the `Console` algebraic effect. 
+- The number of lines using `List.length`.
+- The number of words by summing the results of applying the `numberOfWords`
+  helper function to each line. This function computes the number of words in a
+  given string.
 
-The type and effect signature of the `wordCount` function has the effect set:
-`{Console, FileReadWithResult}` since those two effects are used within the
-function. We should think of `wordCount` as a _pure_ function modulo these two
-effects whose details must be filled in later. 
+The results are printed to the terminal using the `Console` algebraic effect.
 
-Lastly, we define the `main` function. In `main` we call the `wordCount`
-function fixing the filename. More importantly, since `wordCount` uses the
-`Console` and `FileReadWithResult` effects we must supply implementations of
-these. We achieve that using the `run-with` construct where we specify the both
-`Console` and `FileReadWithResult` should be _handled_ using the default
-implementations provided by `Console.runWithIO` and
-`FileReadWithResult.runWithIO`. 
+If the file cannot be read, an error message is printed to the terminal using
+the same effect.
+
+The `wordCount` function's type and effect signature specifies the `{Console,
+FileReadWithResult}` effect set, indicating these effects are required.
+Conceptually, the function is pure except for these specified effects, which
+must be handled by the caller. 
+
+Finally, the `main` function calls `wordCount` with a fixed filename. Since
+`wordCount` uses the `Console` and `FileReadWithResult` effects, we must provide
+their implementations. This is achieved using the `run-with` construct, where we
+specify the default handlers `Console.runWithIO` and
+`FileReadWithResult.runWithIO`.

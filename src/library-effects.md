@@ -157,23 +157,14 @@ The `HttpWithResult` companion module provides several convenience functions:
 
 ```flix
 mod HttpWithResult {
-    ///
     /// Send a `GET` request to the given `url` with the given `headers` and wait for the response.
-    ///
-    pub def get(url: String, headers: Map[String, List[String]]): Result[IoError, Http.Response] \ HttpWithResult =
-        HttpWithResult.request("GET", url, headers, None)
+    def get(url: String, headers: Map[String, List[String]]): Result[IoError, Http.Response] \ HttpWithResult
 
-    ///
     /// Send a `POST` request to the given `url` with the given `headers` and `body` and wait for the response.
-    ///
-    pub def post(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult =
-        HttpWithResult.request("POST", url, headers, Some(body))
+    def post(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult
 
-    ///
     /// Send a `PUT` request to the given `url` with the given `headers` and `body` and wait for the response.
-    ///
-    pub def put(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult =
-        HttpWithResult.request("PUT", url, headers, Some(body))
+    def put(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult
 }
 ```
 

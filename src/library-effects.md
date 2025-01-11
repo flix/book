@@ -52,6 +52,131 @@ eff Console {
 }
 ```
 
+### FileReadWithResult
+
+Flix defines a `FileReadWithResult` effect to read from the file system:
+
+```flix
+eff FileReadWithResult {
+    /// Returns `true` if the given file `f` exists.
+    def exists(f: String): Result[IoError, Bool]
+
+    /// Returns `true` is the given file `f` is a directory.
+    def isDirectory(f: String): Result[IoError, Bool]
+
+    /// Returns `true` if the given file `f` is a regular file.
+    def isRegularFile(f: String): Result[IoError, Bool]
+
+    /// Returns `true` if the given file `f` is readable.
+    def isReadable(f: String): Result[IoError, Bool]
+
+    /// Returns `true` if the given file `f` is a symbolic link.
+    def isSymbolicLink(f: String): Result[IoError, Bool]
+
+    /// Returns `true` if the given file `f` is writable.
+    def isWritable(f: String): Result[IoError, Bool]
+
+    /// Returns `true` if the given file `f` is executable.
+    def isExecutable(f: String): Result[IoError, Bool]
+
+    /// Returns the last access time of the given file `f` in milliseconds since the epoch.
+    def accessTime(f: String): Result[IoError, Int64]
+
+    /// Returns the creation time of the given file `f` in milliseconds since the epoch.
+    def creationTime(f: String): Result[IoError, Int64]
+
+    /// Returns the last-modified timestamp of the given file `f` in milliseconds since the epoch.
+    def modificationTime(f: String): Result[IoError, Int64]
+
+    /// Returns the size of the given file `f` in bytes.
+    def size(f: String): Result[IoError, Int64]
+
+    /// Returns a string of all lines in the given file `f`.
+    def read(f: String): Result[IoError, String]
+
+    /// Returns a list of all lines in the given file `f`.
+    def readLines(f: String): Result[IoError, List[String]]
+
+    /// Returns a vector of all the bytes in the given file `f`.
+    def readBytes(f: String): Result[IoError, Vector[Int8]]
+
+    /// Returns a list with the names of all files and directories in the given directory `d`.
+    def list(f: String): Result[IoError, List[String]]
+}
+```
+
+### FileWriteWithResult
+
+Flix defines a `FileWriteWithResult` effect to write to the file system:
+
+```flix
+eff FileWriteWithResult {
+    /// Writes `str` to the given file `f`.
+    def write(data: {str = String}, f: String): Result[IoError, Unit]
+
+    /// Writes `lines` to the given file `f`.
+    def writeLines(data: {lines = List[String]}, f: String): Result[IoError, Unit]
+
+    /// Writes `data` to the given file `f`.
+    def writeBytes(data: Vector[Int8], f: String): Result[IoError, Unit]
+
+    /// Appends `str` to the given file `f`.
+    def append(data: {str = String}, f: String): Result[IoError, Unit]
+
+    /// Appends `lines` to the given file `f`.
+    def appendLines(data: {lines = List[String]}, f: String): Result[IoError, Unit]
+
+    /// Appends `data` to the given file `f`.
+    def appendBytes(data: Vector[Int8], f: String): Result[IoError, Unit]
+
+    /// Truncates the given file `f`.
+    def truncate(f: String): Result[IoError, Unit]
+
+    /// Creates the directory `d`.
+    def mkDir(d: String): Result[IoError, Unit]
+
+    /// Creates the directory `d` and all its parent directories.
+    def mkDirs(d: String): Result[IoError, Unit]
+
+    /// Creates a new temporary directory with the given prefix.
+    def mkTempDir(prefix: String): Result[IoError, String]
+}
+```
+
+### HttpWithResult
+
+Flix defines a `HttpWithResult` effect to communicate over HTTP:
+
+```flix
+eff HttpWithResult {
+    def request(method: String, url: String, headers: Map[String, List[String]], body: Option[String]): Result[IoError, Http.Response]
+}
+```
+
+The `HttpWithResult` companion module provides several convenience functions:
+
+```flix
+mod HttpWithResult {
+    ///
+    /// Send a `GET` request to the given `url` with the given `headers` and wait for the response.
+    ///
+    pub def get(url: String, headers: Map[String, List[String]]): Result[IoError, Http.Response] \ HttpWithResult =
+        HttpWithResult.request("GET", url, headers, None)
+
+    ///
+    /// Send a `POST` request to the given `url` with the given `headers` and `body` and wait for the response.
+    ///
+    pub def post(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult =
+        HttpWithResult.request("POST", url, headers, Some(body))
+
+    ///
+    /// Send a `PUT` request to the given `url` with the given `headers` and `body` and wait for the response.
+    ///
+    pub def put(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult =
+        HttpWithResult.request("PUT", url, headers, Some(body))
+}
+```
+
 ### Logger
 
 Flix defines a `Logger` effect for logging messages:

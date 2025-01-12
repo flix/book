@@ -61,7 +61,16 @@ eff Console {
 }
 ```
 
+#### Example: Using `Console`
 
+```flix
+def main(): Unit \ IO = 
+    run {
+        Console.println("Please enter your name: ");
+        let name = Console.readln();
+        Console.println("Hello ${name}")
+    } with Console.runWithIO
+```
 
 ### FileReadWithResult
 
@@ -116,6 +125,20 @@ eff FileReadWithResult {
 }
 ```
 
+#### Example: Using `FileReadWithResult`
+
+```flix
+def main(): Unit \ IO = 
+    run {
+        match FileReadWithResult.readLines("Main.flix") {
+            case Result.Ok(lines) => 
+                lines |> List.forEach(println)
+            case Result.Err(err) => 
+                println("Unable to read file. Error: ${err}")
+        }
+    } with FileReadWithResult.runWithIO
+```
+
 ### FileWriteWithResult
 
 Flix defines a `FileWriteWithResult` effect to write to the file system:
@@ -152,6 +175,20 @@ eff FileWriteWithResult {
     /// Creates a new temporary directory with the given prefix.
     def mkTempDir(prefix: String): Result[IoError, String]
 }
+```
+
+#### Example: Using `FileWriteWithResult`
+
+```flix
+def main(): Unit \ IO = 
+    run {
+        let data = List#{"Hello", "World"};
+        match FileWriteWithResult.writeLines(lines = data, "data.txt"){
+            case Result.Ok(_)    => ()
+            case Result.Err(err) => 
+                println("Unable to write file. Error: ${err}")
+        }
+    } with FileWriteWithResult.runWithIO
 ```
 
 ### HttpWithResult

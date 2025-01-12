@@ -130,7 +130,7 @@ def main(): Unit \ {Net, IO} =
       with Logger.runWithIO
 ```
 
-Here is an example that uses **defines its own effects and handlers**:
+Here is an example that **defines its own effects and handlers**:
 
 ```flix
 eff MyPrint {

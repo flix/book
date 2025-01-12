@@ -28,7 +28,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.{Random => JRandom}
 
-def getSecretNumber(): Int32 \ IO = 
+def getSecretNumber(): Int32 \ {NonDet, IO} = 
     let rnd = new JRandom();
     rnd.nextInt()
 
@@ -61,10 +61,9 @@ def gameLoop(secret: Int32): Unit \ IO = {
     }
 }
 
-def main(): Unit \ IO = 
+def main(): Unit \ {NonDet, IO} = 
     let secret = getSecretNumber();
     gameLoop(secret)
-
 ```
 
 Here every function, i.e. `getSecretNumber`, `readGuess`, `readAndParseGuess`,
@@ -122,15 +121,15 @@ def gameLoop(secret: Int32): Unit \ {Guess, Terminal} = {
     }
 }
 
-def main(): Unit \ IO = 
+def main(): Unit \ {NonDet, IO} = 
     run {
         let secret = Secret.getSecret();
         gameLoop(secret)
-    } with Secret {
+    } with handler Secret {
         def getSecret(_, resume) = 
             let rnd = new JRandom();
             resume(rnd.nextInt())
-    } with Guess {
+    } with handler Guess {
         def readGuess(_, resume) = 
             let reader = new BufferedReader(new InputStreamReader(System.in));
             let line = reader.readLine();

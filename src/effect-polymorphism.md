@@ -154,7 +154,7 @@ Notably, the effect system enforces that `h` cannot itself throw an exception.
 
 ### Sub-Effecting
 
-> **Note:** This feature is not yet enabled by default.
+> **Note:** This feature is not yet enabled.
 
 Flix supports _sub-effecting_ which allows an expression or a function to
 _widen_ its effect set. 

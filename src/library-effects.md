@@ -32,7 +32,8 @@ functions.
 ```flix
 def main(): Unit \ IO = 
     run {
-        println(Clock.currentTime(TimeUnit.Milliseconds))
+        let timestamp = Clock.currentTime(TimeUnit.Milliseconds);
+        println("${timestamp} ms since the epoc")
     } with Clock.runWithIO
 ```
 

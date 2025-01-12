@@ -104,15 +104,41 @@ def deduplicate(l: List[a]): List[a] with Order[a] =
     }
 ```
 
-Here is an example that uses **user-defined effects and handlers**:
+Here is an example that uses built-in **effects and handlers**:
+
+```flix
+def main(): Unit \ {Net, IO} =
+    run {
+        let url = "http://example.com/";
+        Logger.info("Downloading URL: '${url}'");
+        match HttpWithResult.get(url, Map.empty()) {
+            case Result.Ok(response) =>
+                let file = "data.txt";
+                Logger.info("Saving response to file: '${file}'");
+                let body = Http.Response.body(response);
+                match FileWriteWithResult.write(str = body, file) {
+                    case Result.Ok(_) => 
+                        Logger.info("Response saved to file: '${file}'")
+                    case Result.Err(err) => 
+                        Logger.fatal("Unable to write file: '${err}'")
+                }
+            case Result.Err(err) => 
+                Logger.fatal("Unable to download URL: '${err}'")
+        }
+    } with FileWriteWithResult.runWithIO
+      with HttpWithResult.runWithIO
+      with Logger.runWithIO
+```
+
+Here is an example that uses **defines its own effects and handlers**:
 
 ```flix
 eff MyPrint {
-    pub def println(s: String): Unit
+    def println(s: String): Unit
 }
 
 eff MyTime {
-    pub def getCurrentHour(): Int32
+    def getCurrentHour(): Int32
 }
 
 def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
@@ -167,7 +193,7 @@ def recvN(n: Int32, rx: Receiver[Int32]): List[Int32] \ {Chan, NonDet} =
     }
 
 /// A function that calls receive and sends the result on d.
-def wait(rx: Receiver[Int32], n: Int32, tx: Sender[List[Int32]]): Unit \ {Chan, NonDet, IO} =
+def wait(rx: Receiver[Int32], n: Int32, tx: Sender[List[Int32]]): Unit \ {Chan, NonDet} =
     Channel.send(recvN(n, rx), tx)
 
 /// Spawn a process for send and wait, and print the result.

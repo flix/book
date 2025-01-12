@@ -3,8 +3,6 @@
 The Flix Standard Library comes with a collection of algebraic effects and
 handlers.
 
-We give an overview of the most important to illustrate their use.
-
 ### Clock
 
 Flix defines a `Clock` effect to access the time since the [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time):
@@ -347,69 +345,20 @@ def main(): Unit \ {NonDet, IO} =
     } with Random.runWithIO
 ```
 
-### Running Functions with Algebraic Effects
+### Running Multiple Effects
 
-Every Flix Standard Library effects defines two functions: `runWith` and
-`handle` in the companion module of the effect. We can use these functions to
-re-interpret the effect in `IO`. That is, **to make the effect happen.**
-
-For example, if a we have a function that uses the `Clock` effect:
+We can easily combine multiple effects and run them:
 
 ```flix
-def getEpoch(): Int64 \ Clock = Clock.now()
-```
-
-We can run it by writing:
-
-```flix
-def main(): Unit \ IO = 
-    println(Clock.run(getEpoch))
-```
-
-Or we can handle it and then run the returned function:
-
-```flix
-def main(): Unit \ IO = 
-    let f = Clock.handle(getEpoch);
-    println(f())
-```
-
-If a function has multiple effects:
-
-```flix
-def greet(name: String): Unit \ {Clock, Console} = ...
-```
-
-If a function has more than one effect we cannot use `run`. Instead, we must
-handle each effect, and call the result. For example, we can use `Clock.handle`
-and `Console.handle`:
-
-```flix
-def main(): Unit \ IO = 
-    let f = Clock.handle(
-                Console.handle(
-                    () -> greet("Mr. Bond")));
-    println(f())
-```
-
-We have to write `() -> greet("Mr. Bond")` because `handle` expects a function. 
-
-### Using Pre-defined Handlers
-
-As the above examples show, it can be cumbersome to use the library provided
-`handle` functions. A simpler approach is to use the provided `runWith`
-functions. 
-
-For example, we can write:
-
-```flix
-def greet(name: String): Unit \ {Clock, Console} = 
-    let h = Clock.now();
-    Console.println("Hello ${name}. The current time is: ${h}")
-
-def main(): Unit \ IO = 
+def main(): Unit \ {NonDet, IO} =
     run {
-        greet("James Bond")
-    } with Clock.runWithIO
-      with Console.runWithIO
+        Console.println("Please enter your name:");
+        let name = Console.readln();
+        let flip = Random.randomBool();
+        if (flip) 
+            Console.println("Pleased to meet you, ${name}")
+        else 
+            Console.println("Oh no, not you, ${name}")
+    } with Console.runWithIO
+      with Random.runWithIO
 ```

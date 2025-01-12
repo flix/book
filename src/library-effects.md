@@ -196,7 +196,11 @@ Flix defines a `HttpWithResult` effect to communicate over HTTP:
 
 ```flix
 eff HttpWithResult {
-    def request(method: String, url: String, headers: Map[String, List[String]], body: Option[String]): Result[IoError, Http.Response]
+    def request(method: String, 
+                url: String, 
+                headers: Map[String, List[String]], 
+                body: Option[String])
+        : Result[IoError, Http.Response]
 }
 ```
 
@@ -204,14 +208,20 @@ The `HttpWithResult` companion module provides several convenience functions:
 
 ```flix
 mod HttpWithResult {
-    /// Send a `GET` request to the given `url` with the given `headers` and wait for the response.
-    def get(url: String, headers: Map[String, List[String]]): Result[IoError, Http.Response] \ HttpWithResult
+    /// Send a `GET` request to the given `url` with the given `headers` 
+    /// and wait for the response.
+    def get(url: String, headers: Map[String, List[String]])
+        : Result[IoError, Http.Response] \ HttpWithResult
 
-    /// Send a `POST` request to the given `url` with the given `headers` and `body` and wait for the response.
-    def post(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult
+    /// Send a `POST` request to the given `url` with the given `headers` 
+    /// and `body` and wait for the response.
+    def post(url: String, headers: Map[String, List[String]], body: String)
+        : Result[IoError, Http.Response] \ HttpWithResult
 
-    /// Send a `PUT` request to the given `url` with the given `headers` and `body` and wait for the response.
-    def put(url: String, headers: Map[String, List[String]], body: String): Result[IoError, Http.Response] \ HttpWithResult
+    /// Send a `PUT` request to the given `url` with the given `headers` 
+    /// and `body` and wait for the response.
+    def put(url: String, headers: Map[String, List[String]], body: String)
+        : Result[IoError, Http.Response] \ HttpWithResult
 }
 ```
 
@@ -277,8 +287,11 @@ Flix defines a `ProcessWithResult` effect for running commands outside of the JV
 
 ```flix
 eff ProcessWithResult {
-    /// Executes the command `cmd` with the arguments `args`, by the path `cwd` and with the environmental `env`.
-    def execWithCwdAndEnv(cmd: String, args: List[String], cwd: Option[String], env: Map[String, String]): ProcessHandle
+    /// Executes the command `cmd` with the arguments `args`, by the path `cwd` 
+    /// and with the environment `env`.
+    def execWithCwdAndEnv(cmd: String, args: List[String], 
+                          cwd: Option[String], 
+                          env: Map[String, String]): ProcessHandle
 }
 ```
 
@@ -286,13 +299,17 @@ The `Process` companion module provides several convenience functions:
 
 ```flix
 /// Executes the command `cmd` with the arguments `args`.
-pub def exec(cmd: String, args: List[String]): Result[IoError, ProcessHandle] \ ProcessWithResult
+pub def exec(cmd: String, args: List[String])
+    : Result[IoError, ProcessHandle] \ ProcessWithResult
 
 /// Executes the command `cmd` with the arguments `args`, by the path `cwd`.
-def execWithCwd(cmd: String, args: List[String], cwd: Option[String]): Result[IoError, ProcessHandle] \ ProcessWithResult
+def execWithCwd(cmd: String, args: List[String], cwd: Option[String])
+    : Result[IoError, ProcessHandle] \ ProcessWithResult
 
-/// Executes the command `cmd` with the arguments `args` and with the environmental `env`.
-def execWithEnv(cmd: String, args: List[String], env: Map[String, String]): Result[IoError, ProcessHandle] \ ProcessWithResult
+/// Executes the command `cmd` with the arguments `args` and with 
+/// the environment `env`.
+def execWithEnv(cmd: String, args: List[String], env: Map[String, String])
+    : Result[IoError, ProcessHandle] \ ProcessWithResult
 ```
 
 #### Example: Using `ProcessWithResult`

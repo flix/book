@@ -271,12 +271,12 @@ def main(): Unit \ IO =
     } with Logger.runWithIO
 ```
 
-### Process
+### ProcessWithResult
 
-Flix defines a `Process` effect for running commands outside of the JVM:
+Flix defines a `ProcessWithResult` effect for running commands outside of the JVM:
 
 ```flix
-eff Process {
+eff ProcessWithResult {
     /// Executes the command `cmd` with the arguments `args`, by the path `cwd` and with the environmental `env`.
     def execWithCwdAndEnv(cmd: String, args: List[String], cwd: Option[String], env: Map[String, String]): ProcessHandle
 }
@@ -286,16 +286,16 @@ The `Process` companion module provides several convenience functions:
 
 ```flix
 /// Executes the command `cmd` with the arguments `args`.
-pub def exec(cmd: String, args: List[String]): ProcessHandle \ Process
+pub def exec(cmd: String, args: List[String]): Result[IoError, ProcessHandle] \ ProcessWithResult
 
 /// Executes the command `cmd` with the arguments `args`, by the path `cwd`.
-def execWithCwd(cmd: String, args: List[String], cwd: Option[String]): ProcessHandle \ Process
+def execWithCwd(cmd: String, args: List[String], cwd: Option[String]): Result[IoError, ProcessHandle] \ ProcessWithResult
 
 /// Executes the command `cmd` with the arguments `args` and with the environmental `env`.
-def execWithEnv(cmd: String, args: List[String], env: Map[String, String]): ProcessHandle \ Process
+def execWithEnv(cmd: String, args: List[String], env: Map[String, String]): Result[IoError, ProcessHandle] \ ProcessWithResult
 ```
 
-#### Example: Using `Process`
+#### Example: Using `ProcessWithResult`
 
 ```flix
 def main(): Unit \ {Exec, IO} =

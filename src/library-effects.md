@@ -216,6 +216,20 @@ mod HttpWithResult {
 }
 ```
 
+#### Example: Using `HttpWithResult`
+
+```flix
+def main(): Unit \ {Net, IO} =
+    run {
+        match HttpWithResult.get("http://example.com/", Map.empty()) {
+            case Result.Ok(response) =>
+                let body = Http.Response.body(response);
+                println(body)
+            case Result.Err(e) => println(e)
+        }
+    } with HttpWithResult.runWithIO
+```
+
 ### Logger
 
 Flix defines a `Logger` effect for logging messages:
@@ -248,6 +262,16 @@ mod Logger {
 }
 ```
 
+#### Example: Using `Logger`
+
+```flix
+def main(): Unit \ IO =
+    run {
+        Logger.info("Hello");
+        Logger.warn("World")
+    } with Logger.runWithIO
+```
+
 ### Process
 
 Flix defines a `Process` effect for running commands outside of the JVM:
@@ -270,6 +294,18 @@ def execWithCwd(cmd: String, args: List[String], cwd: Option[String]): ProcessHa
 
 /// Executes the command `cmd` with the arguments `args` and with the environmental `env`.
 def execWithEnv(cmd: String, args: List[String], env: Map[String, String]): ProcessHandle \ Process
+```
+
+#### Example: Using `Process`
+
+```flix
+def main(): Unit \ {Exec, IO} =
+    run {
+        match ProcessWithResult.exec("ls", Nil) {
+            case Result.Ok(_)    => ()
+            case Result.Err(err) => println("Unable to execute process: ${err}")
+        }
+    } with ProcessWithResult.runWithIO
 ```
 
 ### Random

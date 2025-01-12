@@ -334,6 +334,19 @@ eff Random {
 }
 ```
 
+#### Example: Using `Random`
+
+```flix
+def main(): Unit \ {NonDet, IO} =
+    run {
+        let flip = Random.randomBool();
+        if (flip) 
+            println("heads")
+        else 
+            println("tails")
+    } with Random.runWithIO
+```
+
 ### Running Functions with Algebraic Effects
 
 Every Flix Standard Library effects defines two functions: `runWith` and

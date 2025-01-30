@@ -157,7 +157,7 @@ def slow(tx: Sender[String]): Unit \ {Chan, IO} =
 def main(): Unit \ {Chan, NonDet, IO} = region rc {
     let (tx, rx) = Channel.buffered(1);
     spawn slow(tx) @ rc;
-    let timeout = Channel.timeout(rc, Time.Duration.fromSeconds(5));
+    let timeout = Channel.timeout(Time.Duration.fromSeconds(5));
     select {
         case m <- recv(rx)       => m
         case _ <- recv(timeout)  => "timeout"

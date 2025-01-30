@@ -26,5 +26,7 @@ def isSquare(s: Shape): Bool = match s {
 We can use an `if`-guard in a Datalog rule:
 
 ```flix
-Path(x, z) :- Path(x, y), Edge(y, z), if x != z.
+Path(x, z) :- Path(x, y), Edge(y, z), if (x != z).
 ```
+
+Note that the parentheses around the guard are mandatory.

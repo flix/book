@@ -23,8 +23,7 @@ as `123.0` and `123i32` can be written as `123`.
 
 ### Built-in Literals
 
-Flix has built-in syntactic sugar for lists, sets, and
-maps.
+Flix has built-in syntactic sugar for lists, sets, maps and regex.
 
 #### List Literals
 
@@ -79,3 +78,18 @@ Map.insert(2, "World", Map.insert(1, "Hello", Map.empty()))
 ```
 
 Note that similar to sets above, the entries are inserted left to right. In particular, if multiple entries share the same key, the rightmost one overwrites the previous values.
+
+#### Regex Literals
+
+A regex literal is written using the notation `regex"..."`. For example:
+
+```flix
+Regex.isMatch(regex"abc", "abc")
+```
+
+Additionally, regex literals support regex escape sequences with the following notation `regex"\\..."`. For example:
+
+```flix
+Regex.isMatch(regex"\\w", "W")
+```
+

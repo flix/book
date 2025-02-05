@@ -41,6 +41,63 @@ A screenshot of the Flix Visual Studio Code extension in action:
 
 ![Visual Studio Code1](images/vscode1.png)
 
+### Using Flix from Neovim
+
+Flix can also be used from Neovim. Follow these steps to make it work:
+- Install neovim
+- Add plugin `lspconfig` to your neovim through your favorite neovim plugin manager or run this command if you are not using any plugin manager(assuming you have `~/.config/nvim` as your neovim config directory):
+    ```shell
+    git clone https://github.com/neovim/nvim-lspconfig ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+    ```
+- Add the following minimal configuration with necessary key bindings to your `init.lua`:
+    ```lua
+        local lspconfig = require("lspconfig")
+        local configs = require("lspconfig.configs")
+
+        -- Setup the flix filetype
+        vim.filetype.add({
+            extension = {
+                flix = "flix",
+            },
+        })
+
+        -- Add the flix language server
+        if not configs.flix then
+            configs.flix = {
+                default_config = {
+                    cmd = { "java", "-jar", "flix.jar", "lsp" }, -- Replace with the actual path to your Flix jar
+                    filetypes = { "flix" },
+                    root_dir = function(fname)
+                        return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1]) or vim.loop.cwd()
+                    end,
+                    settings = {},
+                },
+            }
+        end
+
+        -- Setup the flix server
+        lspconfig.flix.setup({
+            capabilities = vim.lsp.protocol.make_client_capabilities(),
+            on_attach = function(_, bufnr)
+                print("Flix LSP attached to buffer " .. bufnr)
+                local bufopts = { noremap = true, silent = true, buffer = bufnr }
+                vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+                vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, bufopts)
+                vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+                vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+                vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, bufopts)
+                vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+                vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
+            end,
+            flags = {},
+        })
+    ```
+- You should see `Flix LSP attached to buffer <buffer_number>` in the neovim status line when you open a `.flix` file. And you are good to go!
+
+
+
 ### Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:

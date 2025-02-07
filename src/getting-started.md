@@ -47,60 +47,70 @@ Flix can also be used from [Neovim](https://neovim.io/).
 
 Follow these steps to get started:
 
-- Install neovim 0.9 above.
-- Add plugin `lspconfig` to your neovim through your favorite neovim plugin manager or run this command if you are not using any plugin manager(assuming you have `~/.config/nvim` as your neovim config directory):
-    ```shell
-    git clone https://github.com/neovim/nvim-lspconfig ~/.config/nvim/pack/nvim/start/nvim-lspconfig
-    ```
-- Add the following minimal configuration with necessary key bindings to your `~/.config/nvim/init.lua`:
-    ```lua
-        local lspconfig = require("lspconfig")
-        local configs = require("lspconfig.configs")
-        local start_cmd = { "java", "-jar", "flix.jar", "lsp" } -- Replace with the actual path to your Flix jar
+#### Step 1: Install Neovim (v0.9 +)
 
-        -- Set Flix as the filetype for *.flix files
-        vim.filetype.add({
-            extension = {
-                flix = "flix",
-            },
-        })
+Install Neovim using your preferred package manager or follow the [official installation guide](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-        -- Add the flix language server
-        if not configs.flix then
-            configs.flix = {
-                default_config = {
-                    cmd = start_cmd,
-                    filetypes = { "flix" },
-                    root_dir = function(fname)
-                        return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1]) or vim.loop.cwd()
-                    end,
-                    settings = {},
-                },
-            }
-        end
+#### Step 2: Add nvim-lspconfig plugin to your Neovim
 
-        -- Setup the flix server
-        lspconfig.flix.setup({
-            capabilities = vim.lsp.protocol.make_client_capabilities(),
-            on_attach = function(_, bufnr)
-                print("Flix LSP attached to buffer " .. bufnr)
-                local bufopts = { noremap = true, silent = true, buffer = bufnr }
-                vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-                vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, bufopts)
-                vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-                vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, bufopts)
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-                vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
-            end,
-            flags = {},
-        })
-    ```
-- 	When you open a .flix file in Neovim(with flix.jar in the same folder), you should see the message “Flix LSP attached to buffer <buffer_number>” in the status line. This confirms that the LSP is running correctly.
-- At this point, syntax highlighting and LSP features should work as expected. You can access all LSP functionalities using the predefined key bindings in normal mode, with \ as the default leader key.
+Install the `nvim-lspconfig` plugin using your preferred Neovim plugin manager. If you are not using a plugin manager, you can install it manually by running the following command (assuming your Neovim configuration directory is `~/.config/nvim`):
 
+```shell
+git clone https://github.com/neovim/nvim-lspconfig ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+```
+
+#### Step 3: Configure Flix LSP in Neovim
+
+Add the following minimal configuration along with essential key bindings to your `~/.config/nvim/init.lua`:
+
+```lua
+local lspconfig = require("lspconfig")
+local configs = require("lspconfig.configs")
+local start_cmd = { "java", "-jar", "flix.jar", "lsp" } -- Replace with the actual path to your Flix jar
+
+-- Set Flix as the filetype for *.flix files
+vim.filetype.add({
+    extension = {
+        flix = "flix",
+    },
+})
+
+-- Add the flix language server
+if not configs.flix then
+    configs.flix = {
+        default_config = {
+            cmd = start_cmd,
+            filetypes = { "flix" },
+            root_dir = vim.loop.cwd(),
+            settings = {},
+        },
+    }
+end
+
+-- Setup the flix server
+lspconfig.flix.setup({
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+    on_attach = function(_, bufnr)
+        print("Flix LSP attached to buffer " .. bufnr)
+        local bufopts = { noremap = true, silent = true, buffer = bufnr }
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, bufopts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+        vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, bufopts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
+    end,
+    flags = {},
+})
+```
+#### Step 4: Validate the Configuration
+
+When you open a `*.flix` file in Neovim (with `flix.jar` in the same directory), you should see the message “Flix LSP attached to buffer <buffer_number>” in the status line. This indicates that the language server is running correctly.
+
+At this stage, syntax highlighting and LSP features should function as expected. You can access all LSP functionalities using the predefined key bindings in normal mode, with `\` as the default leader key.
 
 ### Using Flix from the Command Line
 

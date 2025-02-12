@@ -65,13 +65,20 @@ the following command (assuming your Neovim configuration directory is
 `~/.config/nvim`):
 
 ```shell
-git clone https://github.com/neovim/nvim-lspconfig ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+git clone https://github.com/neovim/nvim-lspconfig \ 
+          ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+```
+
+If you are on Windows, you can run:
+
+```shell
+cd C:/Users/<USER>/AppData/Local/nvim/pack/nvim/start
+git clone https://github.com/neovim/nvim-lspconfig
 ```
 
 #### Step 3: Configure Flix LSP in Neovim
 
-Add the following minimal configuration along with essential key bindings to
-your `~/.config/nvim/init.lua`:
+Add the following minimal configuration to your `~/.config/nvim/init.lua`:
 
 ```lua
 local lspconfig = require("lspconfig")
@@ -117,15 +124,38 @@ lspconfig.flix.setup({
     flags = {},
 })
 ```
-#### Step 4: Validate the Configuration
 
-When you open a `*.flix` file in Neovim (with `flix.jar` in the same directory),
-you should see the message “Flix LSP attached to buffer <buffer_number>” in the
-status line. This indicates that the language server is running correctly.
+If you are on Windows, the file should be stored at:
 
-At this stage, syntax highlighting and LSP features should function as expected.
-You can access all LSP functionalities using the predefined key bindings in
-normal mode, with `\` as the default leader key.
+```shell
+C:/Users/<USER>/AppData/Local/nvim/init.lua
+```
+
+You can verify that `nvim-lspconfig` and the Flix language server is installed
+correctly by running: `nvim` and then running the command `:LspInfo`.
+
+#### Step 4: Programming with Flix with Neovim
+
+You can now open any `*.flix` file provided that the Flix compiler jar
+(`flix.jar`) is located in the same directory as the Flix. 
+
+When you open a Flix, you should see message "Flix LSP attached to buffer
+<buffer_number>" in the status line. Moreover, the opened file should be syntax
+highlighted. 
+
+The default Flix LSP configuration includes the following keybindings:
+
+| Keybinding   | Action                |
+|--------------|-----------------------|
+| `shift+k`    | Hover                 |
+| `gd`         | Go to definition      |
+| `gD`         | Go to declaration     |
+| `gi`         | Go to implementation  | 
+| `gr`         | Find references       | 
+| `gy`         | Go to type definition | 
+| `<leader>rn` | Rename symbol         |
+| `<leader>ca` | Code actions          | 
+| `<leader>e`  | Show diagnostics      |
 
 ### Using Flix from the Command Line
 

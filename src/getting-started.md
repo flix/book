@@ -145,17 +145,18 @@ highlighted.
 
 The default Flix LSP configuration includes the following keybindings:
 
-| Keybinding   | Action                |
-|--------------|-----------------------|
-| `shift+k`    | Hover                 |
-| `gd`         | Go to definition      |
-| `gD`         | Go to declaration     |
-| `gi`         | Go to implementation  | 
-| `gr`         | Find references       | 
-| `gy`         | Go to type definition | 
-| `<leader>rn` | Rename symbol         |
-| `<leader>ca` | Code actions          | 
-| `<leader>e`  | Show diagnostics      |
+| Keybinding      | Action                |
+|-----------------|-----------------------|
+| `gd`            | Go to definition      |
+| `gD`            | Go to declaration     |
+| `gi`            | Go to implementation  | 
+| `gr`            | Find references       | 
+| `gy`            | Go to type definition | 
+| `ctrl+x,ctrl+o` | Trigger auto-complete |
+| `shift+k`       | Hover                 |
+| `<leader>rn`    | Rename symbol         |
+| `<leader>ca`    | Code actions          | 
+| `<leader>e`     | Show diagnostics      |
 
 ### Using Flix from the Command Line
 

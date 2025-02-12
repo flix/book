@@ -43,30 +43,48 @@ A screenshot of the Flix Visual Studio Code extension in action:
 
 ### Using Flix from Neovim
 
-Flix can also be used from [Neovim](https://neovim.io/).
-
-Follow these steps to get started:
+Flix can also be used from [Neovim](https://neovim.io/). Follow these steps to
+get started:
 
 #### Step 1: Install Neovim (v0.9 +)
 
 Install Neovim using your preferred package manager or follow the [official installation guide](https://github.com/neovim/neovim/blob/master/INSTALL.md).
 
-#### Step 2: Add nvim-lspconfig plugin to your Neovim
-
-Install the `nvim-lspconfig` plugin using your preferred Neovim plugin manager. If you are not using a plugin manager, you can install it manually by running the following command (assuming your Neovim configuration directory is `~/.config/nvim`):
+You can check if Neovim is installed and its version by running:
 
 ```shell
-git clone https://github.com/neovim/nvim-lspconfig ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+nvim --version
+```
+
+#### Step 2: Add nvim-lspconfig plugin to your Neovim
+
+Install the `nvim-lspconfig` plugin using your preferred Neovim plugin manager.
+
+If you are not using a plugin manager, you can install it manually by running
+the following command (assuming your Neovim configuration directory is
+`~/.config/nvim`):
+
+```shell
+git clone https://github.com/neovim/nvim-lspconfig \ 
+          ~/.config/nvim/pack/nvim/start/nvim-lspconfig
+```
+
+If you are on Windows, you can run:
+
+```shell
+cd C:/Users/<USER>/AppData/Local/nvim/pack/nvim/start
+git clone https://github.com/neovim/nvim-lspconfig
 ```
 
 #### Step 3: Configure Flix LSP in Neovim
 
-Add the following minimal configuration along with essential key bindings to your `~/.config/nvim/init.lua`:
+Add the following minimal configuration to your `~/.config/nvim/init.lua`:
 
 ```lua
 local lspconfig = require("lspconfig")
 local configs = require("lspconfig.configs")
-local start_cmd = { "java", "-jar", "flix.jar", "lsp" } -- Replace with the actual path to your Flix jar
+ -- Replace with the actual path to your Flix jar
+local start_cmd = { "java", "-jar", "flix.jar", "lsp" }
 
 -- Set Flix as the filetype for *.flix files
 vim.filetype.add({
@@ -106,11 +124,39 @@ lspconfig.flix.setup({
     flags = {},
 })
 ```
-#### Step 4: Validate the Configuration
 
-When you open a `*.flix` file in Neovim (with `flix.jar` in the same directory), you should see the message “Flix LSP attached to buffer <buffer_number>” in the status line. This indicates that the language server is running correctly.
+If you are on Windows, the file should be stored at:
 
-At this stage, syntax highlighting and LSP features should function as expected. You can access all LSP functionalities using the predefined key bindings in normal mode, with `\` as the default leader key.
+```shell
+C:/Users/<USER>/AppData/Local/nvim/init.lua
+```
+
+You can verify that `nvim-lspconfig` and the Flix language server is installed
+correctly by running: `nvim` and then running the command `:LspInfo`.
+
+#### Step 4: Programming with Flix with Neovim
+
+You can now open any `*.flix` file provided that the Flix compiler jar
+(`flix.jar`) is located in the same directory as the Flix. 
+
+When you open a Flix, you should see message "Flix LSP attached to buffer
+<buffer_number>" in the status line. Moreover, the opened file should be syntax
+highlighted. 
+
+The default Flix LSP configuration includes the following keybindings:
+
+| Keybinding      | Action                |
+|-----------------|-----------------------|
+| `gd`            | Go to definition      |
+| `gD`            | Go to declaration     |
+| `gi`            | Go to implementation  | 
+| `gr`            | Find references       | 
+| `gy`            | Go to type definition | 
+| `ctrl+x,ctrl+o` | Trigger auto-complete |
+| `shift+k`       | Hover                 |
+| `<leader>rn`    | Rename symbol         |
+| `<leader>ca`    | Code actions          | 
+| `<leader>e`     | Show diagnostics      |
 
 ### Using Flix from the Command Line
 

@@ -99,7 +99,17 @@ if not configs.flix then
         default_config = {
             cmd = start_cmd,
             filetypes = { "flix" },
-            root_dir = vim.loop.cwd(),
+            root_dir = function(fname)
+                local root_dir = vim.fs.dirname(vim.fs.find("flix.toml", { path = fname, upward = true })[1])
+                or vim.loop.cwd()
+                -- Check if flix.jar exists
+                local flix_jar_path = root_dir .. "/flix.jar"
+                if vim.loop.fs_stat(flix_jar_path) == nil then
+                print("Failed to start the lsp server: flix.jar not found in project root (" .. root_dir .. ")!")
+                return nil -- Prevents LSP from starting
+                end
+                return root_dir
+            end,
             settings = {},
         },
     }

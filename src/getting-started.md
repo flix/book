@@ -120,6 +120,8 @@ lspconfig.flix.setup({
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
+        vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, bufopts)
+        vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, bufopts)
     end,
     flags = {},
 })

@@ -118,8 +118,26 @@ end
 -- Setup the flix server
 lspconfig.flix.setup({
     capabilities = vim.lsp.protocol.make_client_capabilities(),
-    on_attach = function(_, bufnr)
+    on_attach = function(client , bufnr)
         print("Flix LSP attached to buffer " .. bufnr)
+
+        -- Automatically refresh LSP codelens on certain events
+        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+          pattern = "<buffer>",
+          callback = function()
+            vim.lsp.codelens.refresh({ bufnr = bufnr })
+          end,
+        })
+
+        -- Function to run the Flix program using a Java command
+        local runMain = function(command, context)
+          vim.cmd("split | terminal java -jar flix.jar run")
+        end
+
+        -- Register the function as an LSP command for Flix
+        client.commands["flix.runMain"] = runMain
+
+        -- Setup shortcuts
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
         vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, bufopts)

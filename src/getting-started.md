@@ -80,6 +80,12 @@ git clone https://github.com/neovim/nvim-lspconfig
 
 Add the following minimal configuration to your `~/.config/nvim/init.lua`:
 
+If you are on Windows, the file should be stored at:
+
+```shell
+C:/Users/<USER>/AppData/Local/nvim/init.lua
+```
+
 ```lua
 local lspconfig = require("lspconfig")
 local configs = require("lspconfig.configs")
@@ -155,12 +161,6 @@ lspconfig.flix.setup({
     end,
     flags = {},
 })
-```
-
-If you are on Windows, the file should be stored at:
-
-```shell
-C:/Users/<USER>/AppData/Local/nvim/init.lua
 ```
 
 You can verify that `nvim-lspconfig` and the Flix language server is installed

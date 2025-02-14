@@ -65,14 +65,14 @@ the following command (assuming your Neovim configuration directory is
 `~/.config/nvim`):
 
 ```shell
-git clone https://github.com/neovim/nvim-lspconfig \ 
+git clone https://github.com/neovim/nvim-lspconfig \
           ~/.config/nvim/pack/nvim/start/nvim-lspconfig
 ```
 
 If you are on Windows, you can run:
 
 ```shell
-cd C:/Users/<USER>/AppData/Local/nvim/pack/nvim/start
+cd %LOCALAPPDATA%/nvim/pack/nvim/start
 git clone https://github.com/neovim/nvim-lspconfig
 ```
 
@@ -99,14 +99,15 @@ if not configs.flix then
         default_config = {
             cmd = start_cmd,
             filetypes = { "flix" },
-            root_dir = function(fname)
-                local root_dir = vim.fs.dirname(vim.fs.find("flix.toml", { path = fname, upward = true })[1])
-                or vim.loop.cwd()
-                -- Check if flix.jar exists
-                local flix_jar_path = root_dir .. "/flix.jar"
+			root_dir = function(fname)
+                -- Search for flix.toml/flix.jar upwards recursively, with a fallback to the current directory
+                local root_dir = vim.fs.dirname(vim.fs.find({"flix.toml", "flix.jar"}, { path = fname, upward = true })[1])
+                    or vim.loop.cwd()
+                local flix_jar_path = vim.fs.joinpath(root_dir, config.flix_jar_path)
+                -- Make sure flix.jar is found in the root directory, otherwise return nil to prevent the LSP server from starting
                 if vim.loop.fs_stat(flix_jar_path) == nil then
-                print("Failed to start the lsp server: flix.jar not found in project root (" .. root_dir .. ")!")
-                return nil -- Prevents LSP from starting
+                    print("Failed to start the LSP server: flix.jar not found in project root (" .. root_dir .. ")!\n")
+                    return nil
                 end
                 return root_dir
             end,
@@ -146,6 +147,7 @@ lspconfig.flix.setup({
         vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, bufopts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set('i', '<C-a>', '<C-x><C-o>', bufopts)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
         vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, bufopts)
@@ -167,7 +169,7 @@ correctly by running: `nvim` and then running the command `:LspInfo`.
 #### Step 4: Programming with Flix with Neovim
 
 You can now open any `*.flix` file provided that the Flix compiler jar
-(`flix.jar`) is located in the same directory as the Flix. 
+(`flix.jar`) is located in the same directory as the Flix.
 
 When you open a Flix, you should see message "Flix LSP attached to buffer
 <buffer_number>" in the status line. Moreover, the opened file should be syntax
@@ -175,18 +177,20 @@ highlighted.
 
 The default Flix LSP configuration includes the following keybindings:
 
-| Keybinding      | Action                |
-|-----------------|-----------------------|
-| `gd`            | Go to definition      |
-| `gD`            | Go to declaration     |
-| `gi`            | Go to implementation  | 
-| `gr`            | Find references       | 
-| `gy`            | Go to type definition | 
-| `ctrl+x,ctrl+o` | Trigger auto-complete |
-| `shift+k`       | Hover                 |
-| `<leader>rn`    | Rename symbol         |
-| `<leader>ca`    | Code actions          | 
-| `<leader>e`     | Show diagnostics      |
+| Keybinding      | Action                   |
+|-----------------|--------------------------|
+| `gd`            | Go to definition         |
+| `gi`            | Go to implementation     | 
+| `gr`            | Find references          | 
+| `ctrl+a`        | Trigger auto-complete    |
+| `shift+k`       | Hover                    |
+| `<leader>rn`    | Rename symbol            |
+| `<leader>ca`    | Code actions             | 
+| `<leader>cl`    | Run Code lens            | 
+| `<leader>ws`    | Show workspace symbols   | 
+| `<leader>ds`    | Show document symbols    | 
+| `<leader>d`     | Show diagnostics         |
+| `<leader>h`     | Show document highlight  |
 
 ### Using Flix from the Command Line
 

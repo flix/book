@@ -188,6 +188,8 @@ The default Flix LSP configuration includes the following keybindings:
 | `<leader>ca`    | Code actions          | 
 | `<leader>e`     | Show diagnostics      |
 
+![Visual Studio Code1](images/neovim.png)
+
 ### Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:

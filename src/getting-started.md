@@ -83,7 +83,7 @@ Add the following minimal configuration to your `~/.config/nvim/init.lua`:
 If you are on Windows, the file should be stored at:
 
 ```shell
-C:/Users/<USER>/AppData/Local/nvim/init.lua
+%LOCALAPPDATA%/nvim/init.lua
 ```
 
 ```lua
@@ -109,7 +109,7 @@ if not configs.flix then
                 -- Search for flix.toml/flix.jar upwards recursively, with a fallback to the current directory
                 local root_dir = vim.fs.dirname(vim.fs.find({"flix.toml", "flix.jar"}, { path = fname, upward = true })[1])
                     or vim.loop.cwd()
-                local flix_jar_path = vim.fs.joinpath(root_dir, config.flix_jar_path)
+                local flix_jar_path = vim.fs.joinpath(root_dir, "flix.jar")
                 -- Make sure flix.jar is found in the root directory, otherwise return nil to prevent the LSP server from starting
                 if vim.loop.fs_stat(flix_jar_path) == nil then
                     print("Failed to start the LSP server: flix.jar not found in project root (" .. root_dir .. ")!\n")

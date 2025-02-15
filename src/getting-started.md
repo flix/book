@@ -169,8 +169,7 @@ correctly by running: `nvim` and then running the command `:LspInfo`.
 #### Step 4: Programming with Flix with Neovim
 
 You can now open any `*.flix` file provided that the Flix compiler jar
-(`flix.jar`) is located in the same directory as the Flix.
-
+(`flix.jar`) is located in the same directory as the file or in one of its parent directories.
 When you open a Flix, you should see message "Flix LSP attached to buffer
 <buffer_number>" in the status line. Moreover, the opened file should be syntax
 highlighted. 
@@ -192,6 +191,28 @@ The default Flix LSP configuration includes the following keybindings:
 | `<leader>d`     | Show diagnostics         |
 | `<leader>h`     | Show document highlight  |
 
+#### Step 5: Integrating with other Neovim plugins
+
+There are many other neovim plugins that can enhance your Flix programming experience. We recommend the following:
+- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): which will trigger auto-completion as you typing. Just remember to add lsp to the sources of completions:
+   ```lua
+    cmp.setup({
+      sources = cmp.config.sources({
+        { name = "nvim_lsp" }, -- lsp
+        ...
+      }),
+    })
+    ```
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): which is a fuzzy finder that can be used to view and search for symbols, references, and definitions in your Flix project. Just call Telescope over the LSP commands:
+    ```lua
+    keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) 
+    keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) 
+    keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) 
+    keymap.set("n", "<leader>d", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) 
+    keymap.set("n", "<leader>ds", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+    keymap.set("n", "<leader>ws", "<cmd>Telescope lsp_workspace_symbols<CR>", opts)
+    ```
+
 ### Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:
@@ -200,6 +221,7 @@ Flix can also be used from the command line. Follow these steps:
 > 2. Download the latest `flix.jar` from [https://github.com/flix/flix/releases/latest](https://github.com/flix/flix/releases/latest) and put it into the folder.
 > 3. Enter the created directory (e.g. `cd my-flix-project`) and run `java -jar flix.jar init` to create an empty Flix project.
 > 4. Run `java -jar flix.jar run` to compile and run the project.
+
 
 ### Using nix
 

@@ -108,7 +108,7 @@ if not configs.flix then
 			root_dir = function(fname)
                 -- Search for flix.toml/flix.jar upwards recursively, with a fallback to the current directory
                 local root_dir = vim.fs.dirname(vim.fs.find({"flix.toml", "flix.jar"}, { path = fname, upward = true })[1])
-                    or vim.loop.cwd()
+                    or vim.fs.dirname(fname)
                 local flix_jar_path = vim.fs.joinpath(root_dir, "flix.jar")
                 -- Make sure flix.jar is found in the root directory, otherwise return nil to prevent the LSP server from starting
                 if vim.loop.fs_stat(flix_jar_path) == nil then
@@ -203,7 +203,7 @@ There are many other neovim plugins that can enhance your Flix programming exper
       }),
     })
     ```
-- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): which is a fuzzy finder that can be used to view and search for symbols, references, and definitions in your Flix project. Just call Telescope over the LSP commands:
+- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): which is a  fuzzy finder over lists. It can be used to view and search for symbols, references, and definitions in your Flix project. Just call Telescope over the LSP commands:
     ```lua
     keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) 
     keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) 

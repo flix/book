@@ -215,6 +215,10 @@ There are many other neovim plugins that can enhance your Flix programming exper
 
 ![Visual Studio Code1](images/neovim.png)
 
+### Using Flix from Emacs
+
+Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs. 
+
 ### Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:

@@ -1,6 +1,6 @@
 /*!
-  Highlight.js v11.10.0 (git: 07ee3517ec)
-  (c) 2006-2024 Josh Goebel <hello@joshgoebel.com> and other contributors
+  Highlight.js v11.11.1 (git: 85b20421a2)
+  (c) 2006-2025 Josh Goebel <hello@joshgoebel.com> and other contributors
   License: BSD-3-Clause
  */
 var hljs=function(){function e(t){
@@ -97,31 +97,31 @@ void 0===e.relevance&&(e.relevance=1)}const D=(e,t)=>{if(!e.beforeMatch)return
 })),e.keywords=n.keywords,e.begin=h(n.beforeMatch,g(n.begin)),e.starts={
 relevance:0,contains:[Object.assign(n,{endsParent:!0})]
 },e.relevance=0,delete n.beforeMatch
-},P=["of","and","for","in","not","or","if","then","parent","list","value"],H="keyword"
-;function $(e,t,n=H){const i=Object.create(null)
+},P=["of","and","for","in","not","or","if","then","parent","list","value"]
+;function H(e,t,n="keyword"){const i=Object.create(null)
 ;return"string"==typeof e?r(n,e.split(" ")):Array.isArray(e)?r(n,e):Object.keys(e).forEach((n=>{
-Object.assign(i,$(e[n],t,n))})),i;function r(e,n){
+Object.assign(i,H(e[n],t,n))})),i;function r(e,n){
 t&&(n=n.map((e=>e.toLowerCase()))),n.forEach((t=>{const n=t.split("|")
-;i[n[0]]=[e,U(n[0],n[1])]}))}}function U(e,t){
-return t?Number(t):(e=>P.includes(e.toLowerCase()))(e)?0:1}const z={},K=e=>{
-console.error(e)},W=(e,...t)=>{console.log("WARN: "+e,...t)},F=(e,t)=>{
-z[`${e}/${t}`]||(console.log(`Deprecated as of ${e}. ${t}`),z[`${e}/${t}`]=!0)
-},G=Error();function X(e,t,{key:n}){let i=0;const r=e[n],s={},o={}
+;i[n[0]]=[e,$(n[0],n[1])]}))}}function $(e,t){
+return t?Number(t):(e=>P.includes(e.toLowerCase()))(e)?0:1}const U={},z=e=>{
+console.error(e)},K=(e,...t)=>{console.log("WARN: "+e,...t)},W=(e,t)=>{
+U[`${e}/${t}`]||(console.log(`Deprecated as of ${e}. ${t}`),U[`${e}/${t}`]=!0)
+},F=Error();function G(e,t,{key:n}){let i=0;const r=e[n],s={},o={}
 ;for(let e=1;e<=t.length;e++)o[e+i]=r[e],s[e+i]=!0,i+=p(t[e-1])
-;e[n]=o,e[n]._emit=s,e[n]._multi=!0}function Z(e){(e=>{
+;e[n]=o,e[n]._emit=s,e[n]._multi=!0}function X(e){(e=>{
 e.scope&&"object"==typeof e.scope&&null!==e.scope&&(e.beginScope=e.scope,
 delete e.scope)})(e),"string"==typeof e.beginScope&&(e.beginScope={
 _wrap:e.beginScope}),"string"==typeof e.endScope&&(e.endScope={_wrap:e.endScope
 }),(e=>{if(Array.isArray(e.begin)){
-if(e.skip||e.excludeBegin||e.returnBegin)throw K("skip, excludeBegin, returnBegin not compatible with beginScope: {}"),
-G
-;if("object"!=typeof e.beginScope||null===e.beginScope)throw K("beginScope must be object"),
-G;X(e,e.begin,{key:"beginScope"}),e.begin=m(e.begin,{joinWith:""})}})(e),(e=>{
+if(e.skip||e.excludeBegin||e.returnBegin)throw z("skip, excludeBegin, returnBegin not compatible with beginScope: {}"),
+F
+;if("object"!=typeof e.beginScope||null===e.beginScope)throw z("beginScope must be object"),
+F;G(e,e.begin,{key:"beginScope"}),e.begin=m(e.begin,{joinWith:""})}})(e),(e=>{
 if(Array.isArray(e.end)){
-if(e.skip||e.excludeEnd||e.returnEnd)throw K("skip, excludeEnd, returnEnd not compatible with endScope: {}"),
-G
-;if("object"!=typeof e.endScope||null===e.endScope)throw K("endScope must be object"),
-G;X(e,e.end,{key:"endScope"}),e.end=m(e.end,{joinWith:""})}})(e)}function q(e){
+if(e.skip||e.excludeEnd||e.returnEnd)throw z("skip, excludeEnd, returnEnd not compatible with endScope: {}"),
+F
+;if("object"!=typeof e.endScope||null===e.endScope)throw z("endScope must be object"),
+F;G(e,e.end,{key:"endScope"}),e.end=m(e.end,{joinWith:""})}})(e)}function Z(e){
 function t(t,n){
 return RegExp(l(t),"m"+(e.case_insensitive?"i":"")+(e.unicodeRegex?"u":"")+(n?"g":""))
 }class n{constructor(){
@@ -151,27 +151,27 @@ if(e.compilerExtensions||(e.compilerExtensions=[]),
 e.contains&&e.contains.includes("self"))throw Error("ERR: contains `self` is not supported at the top-level of a language.  See documentation.")
 ;return e.classNameAliases=i(e.classNameAliases||{}),function n(s,o){const a=s
 ;if(s.isCompiled)return a
-;[I,B,Z,D].forEach((e=>e(s,o))),e.compilerExtensions.forEach((e=>e(s,o))),
+;[I,B,X,D].forEach((e=>e(s,o))),e.compilerExtensions.forEach((e=>e(s,o))),
 s.__beforeBegin=null,[T,L,C].forEach((e=>e(s,o))),s.isCompiled=!0;let c=null
 ;return"object"==typeof s.keywords&&s.keywords.$pattern&&(s.keywords=Object.assign({},s.keywords),
 c=s.keywords.$pattern,
-delete s.keywords.$pattern),c=c||/\w+/,s.keywords&&(s.keywords=$(s.keywords,e.case_insensitive)),
+delete s.keywords.$pattern),c=c||/\w+/,s.keywords&&(s.keywords=H(s.keywords,e.case_insensitive)),
 a.keywordPatternRe=t(c,!0),
 o&&(s.begin||(s.begin=/\B|\b/),a.beginRe=t(a.begin),s.end||s.endsWithParent||(s.end=/\B|\b/),
 s.end&&(a.endRe=t(a.end)),
 a.terminatorEnd=l(a.end)||"",s.endsWithParent&&o.terminatorEnd&&(a.terminatorEnd+=(s.end?"|":"")+o.terminatorEnd)),
 s.illegal&&(a.illegalRe=t(s.illegal)),
 s.contains||(s.contains=[]),s.contains=[].concat(...s.contains.map((e=>(e=>(e.variants&&!e.cachedVariants&&(e.cachedVariants=e.variants.map((t=>i(e,{
-variants:null},t)))),e.cachedVariants?e.cachedVariants:V(e)?i(e,{
+variants:null},t)))),e.cachedVariants?e.cachedVariants:q(e)?i(e,{
 starts:e.starts?i(e.starts):null
 }):Object.isFrozen(e)?i(e):e))("self"===e?s:e)))),s.contains.forEach((e=>{n(e,a)
 })),s.starts&&n(s.starts,o),a.matcher=(e=>{const t=new r
 ;return e.contains.forEach((e=>t.addRule(e.begin,{rule:e,type:"begin"
 }))),e.terminatorEnd&&t.addRule(e.terminatorEnd,{type:"end"
-}),e.illegal&&t.addRule(e.illegal,{type:"illegal"}),t})(a),a}(e)}function V(e){
-return!!e&&(e.endsWithParent||V(e.starts))}class J extends Error{
+}),e.illegal&&t.addRule(e.illegal,{type:"illegal"}),t})(a),a}(e)}function q(e){
+return!!e&&(e.endsWithParent||q(e.starts))}class V extends Error{
 constructor(e,t){super(e),this.name="HTMLInjectionError",this.html=t}}
-const Y=n,Q=i,ee=Symbol("nomatch"),te=n=>{
+const J=n,Y=i,Q=Symbol("nomatch"),ee=n=>{
 const i=Object.create(null),r=Object.create(null),s=[];let o=!0
 ;const a="Could not find the language '{}', did you forget to load/include a language module?",l={
 disableAutodetect:!0,name:"Plain text",contains:[]};let p={
@@ -180,8 +180,8 @@ languageDetectRe:/\blang(?:uage)?-([\w-]+)\b/i,classPrefix:"hljs-",
 cssSelector:"pre code",languages:null,__emitter:c};function b(e){
 return p.noHighlightRe.test(e)}function m(e,t,n){let i="",r=""
 ;"object"==typeof t?(i=e,
-n=t.ignoreIllegals,r=t.language):(F("10.7.0","highlight(lang, code, ...args) has been deprecated."),
-F("10.7.0","Please use highlight(code, options) instead.\nhttps://github.com/highlightjs/highlight.js/issues/2277"),
+n=t.ignoreIllegals,r=t.language):(W("10.7.0","highlight(lang, code, ...args) has been deprecated."),
+W("10.7.0","Please use highlight(code, options) instead.\nhttps://github.com/highlightjs/highlight.js/issues/2277"),
 r=e,i=t),void 0===n&&(n=!0);const s={code:i,language:r};k("before:highlight",s)
 ;const o=s.result?s.result:E(s.language,s.code,n)
 ;return o.code=s.code,k("after:highlight",o),o}function E(e,n,r,s){
@@ -213,7 +213,7 @@ value:k}}),k}function f(e,n,i){let r=((e,t)=>{const n=e&&e.exec(t)
 for(;e.endsParent&&e.parent;)e=e.parent;return e}}
 if(e.endsWithParent)return f(e.parent,n,i)}function b(e){
 return 0===k.matcher.regexIndex?(R+=e[0],1):(T=!0,0)}function m(e){
-const t=e[0],i=n.substring(e.index),r=f(k,e,i);if(!r)return ee;const s=k
+const t=e[0],i=n.substring(e.index),r=f(k,e,i);if(!r)return Q;const s=k
 ;k.endScope&&k.endScope._wrap?(g(),
 u(t,k.endScope._wrap)):k.endScope&&k.endScope._multi?(g(),
 d(k.endScope,e)):s.skip?R+=t:(s.returnEnd||s.excludeEnd||(R+=t),
@@ -231,12 +231,12 @@ const n=e[0],i=e.rule,r=new t(i),s=[i.__beforeBegin,i["on:begin"]]
 g(),i.returnBegin||i.excludeBegin||(R=n)),h(i,e),i.returnBegin?0:n.length})(s)
 ;if("illegal"===s.type&&!r){
 const e=Error('Illegal lexeme "'+a+'" for mode "'+(k.scope||"<unnamed>")+'"')
-;throw e.mode=k,e}if("end"===s.type){const e=m(s);if(e!==ee)return e}
-if("illegal"===s.type&&""===a)return 1
+;throw e.mode=k,e}if("end"===s.type){const e=m(s);if(e!==Q)return e}
+if("illegal"===s.type&&""===a)return s.index===n.length||(R+="\n"),1
 ;if(I>1e5&&I>3*s.index)throw Error("potential infinite loop, way more iterations than matches")
 ;return R+=a,a.length}const w=O(e)
-;if(!w)throw K(a.replace("{}",e)),Error('Unknown language: "'+e+'"')
-;const M=q(w);let N="",k=s||M;const S={},v=new p.__emitter(p);(()=>{const e=[]
+;if(!w)throw z(a.replace("{}",e)),Error('Unknown language: "'+e+'"')
+;const M=Z(w);let N="",k=s||M;const S={},v=new p.__emitter(p);(()=>{const e=[]
 ;for(let t=k;t!==w;t=t.parent)t.scope&&e.unshift(t.scope)
 ;e.forEach((e=>v.openNode(e)))})();let R="",j=0,A=0,I=0,T=!1;try{
 if(w.__emitTokens)w.__emitTokens(n,v);else{for(k.matcher.considerAll();;){
@@ -244,12 +244,12 @@ I++,T?T=!1:k.matcher.considerAll(),k.matcher.lastIndex=A
 ;const e=k.matcher.exec(n);if(!e)break;const t=y(n.substring(A,e.index),e)
 ;A=e.index+t}y(n.substring(A))}return v.finalize(),N=v.toHTML(),{language:e,
 value:N,relevance:j,illegal:!1,_emitter:v,_top:k}}catch(t){
-if(t.message&&t.message.includes("Illegal"))return{language:e,value:Y(n),
+if(t.message&&t.message.includes("Illegal"))return{language:e,value:J(n),
 illegal:!0,relevance:0,_illegalBy:{message:t.message,index:A,
 context:n.slice(A-100,A+100),mode:t.mode,resultSoFar:N},_emitter:v};if(o)return{
-language:e,value:Y(n),illegal:!1,relevance:0,errorRaised:t,_emitter:v,_top:k}
+language:e,value:J(n),illegal:!1,relevance:0,errorRaised:t,_emitter:v,_top:k}
 ;throw t}}function _(e,t){t=t||p.languages||Object.keys(i);const n=(e=>{
-const t={value:Y(e),illegal:!1,relevance:0,_top:l,_emitter:new p.__emitter(p)}
+const t={value:J(e),illegal:!1,relevance:0,_top:l,_emitter:new p.__emitter(p)}
 ;return t._emitter.addText(e),t})(e),r=t.filter(O).filter(N).map((t=>E(t,e,!1)))
 ;r.unshift(n);const s=r.sort(((e,t)=>{
 if(e.relevance!==t.relevance)return t.relevance-e.relevance
@@ -258,15 +258,15 @@ if(e.relevance!==t.relevance)return t.relevance-e.relevance
 ;return c.secondBest=a,c}function x(e){let t=null;const n=(e=>{
 let t=e.className+" ";t+=e.parentNode?e.parentNode.className:""
 ;const n=p.languageDetectRe.exec(t);if(n){const t=O(n[1])
-;return t||(W(a.replace("{}",n[1])),
-W("Falling back to no-highlight mode for this block.",e)),t?n[1]:"no-highlight"}
+;return t||(K(a.replace("{}",n[1])),
+K("Falling back to no-highlight mode for this block.",e)),t?n[1]:"no-highlight"}
 return t.split(/\s+/).find((e=>b(e)||O(e)))})(e);if(b(n))return
 ;if(k("before:highlightElement",{el:e,language:n
 }),e.dataset.highlighted)return void console.log("Element previously highlighted. To highlight again, first unset `dataset.highlighted`.",e)
 ;if(e.children.length>0&&(p.ignoreUnescapedHTML||(console.warn("One of your code blocks includes unescaped HTML. This is a potentially serious security risk."),
 console.warn("https://github.com/highlightjs/highlight.js/wiki/security"),
 console.warn("The element with unescaped HTML:"),
-console.warn(e)),p.throwUnescapedHTML))throw new J("One of your code blocks includes unescaped HTML.",e.innerHTML)
+console.warn(e)),p.throwUnescapedHTML))throw new V("One of your code blocks includes unescaped HTML.",e.innerHTML)
 ;t=e;const i=t.textContent,s=n?m(i,{language:n,ignoreIllegals:!0}):_(i)
 ;e.innerHTML=s.value,e.dataset.highlighted="yes",((e,t,n)=>{const i=t&&r[t]||n
 ;e.classList.add("hljs"),e.classList.add("language-"+i)
@@ -282,29 +282,29 @@ r[e.toLowerCase()]=t}))}function N(e){const t=O(e)
 ;return t&&!t.disableAutodetect}function k(e,t){const n=e;s.forEach((e=>{
 e[n]&&e[n](t)}))}Object.assign(n,{highlight:m,highlightAuto:_,highlightAll:w,
 highlightElement:x,
-highlightBlock:e=>(F("10.7.0","highlightBlock will be removed entirely in v12.0"),
-F("10.7.0","Please use highlightElement now."),x(e)),configure:e=>{p=Q(p,e)},
+highlightBlock:e=>(W("10.7.0","highlightBlock will be removed entirely in v12.0"),
+W("10.7.0","Please use highlightElement now."),x(e)),configure:e=>{p=Y(p,e)},
 initHighlighting:()=>{
-w(),F("10.6.0","initHighlighting() deprecated.  Use highlightAll() now.")},
+w(),W("10.6.0","initHighlighting() deprecated.  Use highlightAll() now.")},
 initHighlightingOnLoad:()=>{
-w(),F("10.6.0","initHighlightingOnLoad() deprecated.  Use highlightAll() now.")
+w(),W("10.6.0","initHighlightingOnLoad() deprecated.  Use highlightAll() now.")
 },registerLanguage:(e,t)=>{let r=null;try{r=t(n)}catch(t){
-if(K("Language definition for '{}' could not be registered.".replace("{}",e)),
-!o)throw t;K(t),r=l}
+if(z("Language definition for '{}' could not be registered.".replace("{}",e)),
+!o)throw t;z(t),r=l}
 r.name||(r.name=e),i[e]=r,r.rawDefinition=t.bind(null,n),r.aliases&&M(r.aliases,{
 languageName:e})},unregisterLanguage:e=>{delete i[e]
 ;for(const t of Object.keys(r))r[t]===e&&delete r[t]},
 listLanguages:()=>Object.keys(i),getLanguage:O,registerAliases:M,
-autoDetection:N,inherit:Q,addPlugin:e=>{(e=>{
+autoDetection:N,inherit:Y,addPlugin:e=>{(e=>{
 e["before:highlightBlock"]&&!e["before:highlightElement"]&&(e["before:highlightElement"]=t=>{
 e["before:highlightBlock"](Object.assign({block:t.el},t))
 }),e["after:highlightBlock"]&&!e["after:highlightElement"]&&(e["after:highlightElement"]=t=>{
 e["after:highlightBlock"](Object.assign({block:t.el},t))})})(e),s.push(e)},
 removePlugin:e=>{const t=s.indexOf(e);-1!==t&&s.splice(t,1)}}),n.debugMode=()=>{
-o=!1},n.safeMode=()=>{o=!0},n.versionString="11.10.0",n.regex={concat:h,
+o=!1},n.safeMode=()=>{o=!0},n.versionString="11.11.1",n.regex={concat:h,
 lookahead:g,either:f,optional:d,anyNumberOfTimes:u}
 ;for(const t in j)"object"==typeof j[t]&&e(j[t]);return Object.assign(n,j),n
-},ne=te({});ne.newInstance=()=>te({});var ie=Object.freeze({__proto__:null,
+},te=ee({});te.newInstance=()=>ee({});var ne=Object.freeze({__proto__:null,
 grmr_flix:e=>{const t={scope:"number",
 begin:e.C_NUMBER_RE+"(f(32|64)|i(8|16|32|64)|ii)?",relevance:0},n={
 scope:"string",begin:'"',end:'"',illegal:"\\n",contains:[e.BACKSLASH_ESCAPE,{
@@ -316,12 +316,12 @@ contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,i]},s={
 scope:"title.function",beginKeywords:"def",end:/[(\[]/,excludeEnd:!0,
 contains:[i]},o={scope:"literal",variants:[{begin:/\?\?\?/},{begin:/\?/,
 contains:[i]}]};return{name:"Flix",keywords:{$pattern:e.IDENT_RE+"!?",
-keyword:["alias","as","case","catch","checked_cast","checked_ecast","default","def","do","eff","else","enum","for","forA","forM","force","foreach","from","if","import","inject","inline","instance","into","law","lawful","lazy","let","match","mod","new","object","par","project","pub","query","redef","region","resume","sealed","select","solve","struct","throw","trait","try","type","typematch","unchecked_cast","unchecked_ecast","unsafe","use","where","with","without","yield"],
+keyword:["alias","as","case","catch","checked_cast","checked_ecast","default","def","eff","else","enum","for","forA","forM","force","foreach","from","handler","if","import","inject","inline","instance","into","law","lawful","lazy","let","match","mod","new","object","par","project","pub","query","redef","region","resume","run","sealed","select","solve","struct","throw","trait","try","type","typematch","unchecked_cast","unchecked_ecast","unsafe","use","where","with","without","yield"],
 literal:["()","true","false","Nil","Some","None","LessThan","EqualTo","GreaterThan","Ok","Err","null","static"],
 type:["Unit","Bool","Char","Float32","Float64","Int8","Int16","Int32","Int64","String","BigInt"],
-built_in:["debug","debug!","debug!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!","and","or","not","ref","deref"]
+built_in:["dbg","dbg!","dbg!!","IO","ef","ef1","ef2","Read","Write","Channel","Eq","PartialOrder","Order","Cmp","List","Map","Set","RedBlackTree","Result","Array","ToString","toString","flip","on","identity","fst","snd","swap",">>","|>","||>","!>","print","println","bug!","unreachable!","and","or","not","ref","deref"]
 },contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,n,t,s,r,{scope:"meta",
-begin:"@[A-Za-z]+"},o]}}});const re=ne;for(const e of Object.keys(ie)){
-const t=e.replace("grmr_","").replace("_","-");re.registerLanguage(t,ie[e])}
-return re}()
+begin:"@[A-Za-z]+"},o]}}});const ie=te;for(const e of Object.keys(ne)){
+const t=e.replace("grmr_","").replace("_","-");ie.registerLanguage(t,ne[e])}
+return ie}()
 ;"object"==typeof exports&&"undefined"!=typeof module&&(module.exports=hljs);

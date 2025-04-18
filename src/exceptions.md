@@ -37,5 +37,3 @@ special case for the `FileNotFoundException` exception.
 > construct should only be used on the boundary between Flix and Java code. 
 
 > **Note:** Flix does not (yet) support a `finally` block.
-
-> **Note:** In Flix a function can contain at most one `try-catch` block.

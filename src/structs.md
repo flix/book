@@ -65,29 +65,6 @@ specifies that we create a new instance of the `Person` struct in the region
 `rc`. We then specify the values of each field of the struct. All struct fields
 must be initialized immediately and explicitly. 
 
-In addition, the fields must be initialized in their declaration order.
-
-For example, if we write:
-
-```flix
-new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
-```
-
-The Flix compiler emits the error:
-
-```
-❌ -- Resolution Error -------------------------------------------------- 
-
->> Struct fields must be initialized in their declaration order.
-
-Expected: name, age, height
-Actual  : age, name, height
-
-11 |         new Person @ rc { age = 30, name = "Lucky Luke", height = 185 }
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-             incorrect order
-```
-
 ### Reading and Writing Fields
 
 We can read and write fields of a struct using the field access operator `->`. For example: 

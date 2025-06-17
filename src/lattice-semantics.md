@@ -166,7 +166,7 @@ pub enum D with Eq, Order, ToString {
 }
 
 instance PartialOrder[D] {
-    pub def lessEqual(x: D, y: D): Bool = 
+    pub def lessEqual(x: D, y: D): Bool =
         let D(n1) = x;
         let D(n2) = y;
         n1 >= n2        // Note: Order reversed.
@@ -183,33 +183,33 @@ instance UpperBound[D] {
 }
 
 instance JoinLattice[D] {
-    pub def leastUpperBound(x: D, y: D): D = 
+    pub def leastUpperBound(x: D, y: D): D =
         let D(n1) = x;
         let D(n2) = y;
         D(Int32.min(n1, n2))        // Note: Order reversed.
 }
 
 instance MeetLattice[D] {
-    pub def greatestLowerBound(x: D, y: D): D = 
+    pub def greatestLowerBound(x: D, y: D): D =
         let D(n1) = x;
         let D(n2) = y;
         D(Int32.max(n1, n2))        // Note: Order reversed.
 }
 
 def shortestPath(g: Set[(t, Int32, t)], o: t): Map[t, D] with Order[t] =
-    let db = inject g into Edge;
+    let db = inject g into Edge/3;
     let pr = #{
         Dist(o; D(0)).
         Dist(y; add(d1 , D(d2))) :- Dist(x; d1), Edge(x, d2, y).
     };
     query db, pr select (x , d) from Dist(x; d) |> Vector.toMap
 
-def add(x: D, y: D): D = 
+def add(x: D, y: D): D =
     let D(n1) = x;
     let D(n2) = y;
     D(n1 + n2)
 
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let g = Set#{
         ("Aarhus", 200, "Flensburg"),
         ("Flensburg", 150, "Hamburg")
@@ -220,23 +220,23 @@ def main(): Unit \ IO =
 
 Flix actually comes with a type like `D` built-in. It's called `Down` and simply
 reverses the order on the underlying type. We can use it and write the program
-as: 
+as:
 
 ```flix
 def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Order[t] =
-    let db = inject g into Edge;
+    let db = inject g into Edge/3;
     let pr = #{
         Dist(o; Down(0)).
         Dist(y; add(d1 , Down(d2))) :- Dist(x; d1), Edge(x, d2, y).
     };
     query db, pr select (x , d) from Dist(x; d) |> Vector.toMap
 
-def add(x: Down[Int32], y: Down[Int32]): Down[Int32] = 
+def add(x: Down[Int32], y: Down[Int32]): Down[Int32] =
     let Down(n1) = x;
     let Down(n2) = y;
     Down(n1 + n2)
 
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     let g = Set#{
         ("Aarhus", 200, "Flensburg"),
         ("Flensburg", 150, "Hamburg")

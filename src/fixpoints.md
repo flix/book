@@ -23,7 +23,7 @@ def isConnected(s: Set[(Int32, Int32)], src: Int32, dst: Int32): Bool =
         Path(x, y) :- Edge(x, y).
         Path(x, z) :- Path(x, y), Edge(y, z).
     };
-    let edges = inject s into Edge;
+    let edges = inject s into Edge/2;
     let paths = query edges, rules select true from Path(src, dst);
     not (paths |> Vector.isEmpty)
 
@@ -220,13 +220,16 @@ convert it to a collection of Datalog facts:
 
 ```flix
 let l = (1, 2) :: (2, 3) :: Nil;
-let p = inject l into Edge;
+let p = inject l into Edge/2;
 ```
 
 where `l` has type `List[(Int32, Int32)]`.
 The `inject` expression converts `l` into a Datalog
 constraint set `p` of type
 `#{ Edge(Int32, Int32) | ... }`.
+The expression includes the predicate's arity:
+`Edge/2`.
+The general form is `Predicate/Arity`.
 
 The `inject` expression works with any type that
 implements the `Foldable` trait.
@@ -240,7 +243,7 @@ For example:
 ```flix
 let names = "Lucky Luke" :: "Luke Skywalker" :: Nil;
 let jedis = "Luke Skywalker" :: Nil;
-let p = inject names, jedis into Name, Jedi;
+let p = inject names, jedis into Name/1, Jedi/1;
 ```
 
 where `p` has type

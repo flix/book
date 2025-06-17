@@ -10,7 +10,7 @@ Copenhagen](https://di.ku.dk/).
 Flix is inspired by OCaml and Haskell with ideas from Rust and Scala. Flix looks
 like Scala, but its type system is based on Hindley-Milner which supports
 complete type inference. Flix is a *state-of-the-art* programming language with
-multiple innovative features, including: 
+multiple innovative features, including:
 
 - a polymorphic type and effect system with full type inference.
 - region-based local mutable memory.
@@ -117,12 +117,12 @@ def main(): Unit \ {Net, IO} =
                 Logger.info("Saving response to file: '${file}'");
                 let body = Http.Response.body(response);
                 match FileWriteWithResult.write(str = body, file) {
-                    case Result.Ok(_) => 
+                    case Result.Ok(_) =>
                         Logger.info("Response saved to file: '${file}'")
-                    case Result.Err(err) => 
+                    case Result.Err(err) =>
                         Logger.fatal("Unable to write file: '${err}'")
                 }
-            case Result.Err(err) => 
+            case Result.Err(err) =>
                 Logger.fatal("Unable to download URL: '${err}'")
         }
     } with FileWriteWithResult.runWithIO
@@ -145,11 +145,11 @@ def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
     let hour = MyTime.getCurrentHour();
     if (hour < 12)
         MyPrint.println("Good morning, ${name}")
-    else 
+    else
         MyPrint.println("Good afternoon, ${name}")
 }
 
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     run {
         (sayGreeting("Mr. Bond, James Bond"): Unit)
     } with handler MyPrint {
@@ -163,7 +163,7 @@ Here is an example that uses **first-class Datalog constraints**:
 
 ```flix
 def reachable(edges: List[(Int32, Int32)], src: Int32, dst: Int32): Bool =
-    let db = inject edges into Edge;
+    let db = inject edges into Edge/2;
     let pr = #{
         Path(x, y) :- Edge(x, y).
         Path(x, z) :- Path(x, y), Edge(y, z).

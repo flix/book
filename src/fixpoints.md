@@ -227,8 +227,8 @@ where `l` has type `List[(Int32, Int32)]`.
 The `inject` expression converts `l` into a Datalog
 constraint set `p` of type
 `#{ Edge(Int32, Int32) | ... }`.
-Note that predicate's arity is included in the
-expression in `Edge/2`.
+The expression includes the predicate's arity:
+`Edge/2`.
 The general form is `Predicate/Arity`.
 
 The `inject` expression works with any type that

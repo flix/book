@@ -18,7 +18,7 @@ def newRunnable(): Runnable \ IO = new Runnable {
 
 Every time we call `newRunnable` we get a *fresh* object that implements `java.lang.Runnable`.
 
-> **Note:** The implicit `this` argument is always passed as the first argument in a new expression.
+> **Note:** The implicit `this` argument is always explicitly passed as the first argument in a new expression.
 
 As another example, we can create an object that implements the `java.io.Closeable` interface:
 

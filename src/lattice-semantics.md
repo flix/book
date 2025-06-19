@@ -161,6 +161,8 @@ forms a lattice with the reverse order of the integers (e.g. the smallest
 element is `Int32.maxValue()`).
 
 ```flix
+use D.D;
+
 pub enum D with Eq, Order, ToString {
     case D(Int32)
 }

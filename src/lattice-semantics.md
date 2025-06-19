@@ -11,6 +11,8 @@ that have lattice semantics.
 We begin with the definition of the `Sign` data type:
 
 ```flix
+use Sign.{Top, Neg, Zer, Pos, Bot};
+
 enum Sign {
     case Top,
     case Neg,
@@ -161,6 +163,8 @@ forms a lattice with the reverse order of the integers (e.g. the smallest
 element is `Int32.maxValue()`).
 
 ```flix
+use D.D;
+
 pub enum D with Eq, Order, ToString {
     case D(Int32)
 }
@@ -223,6 +227,8 @@ reverses the order on the underlying type. We can use it and write the program
 as:
 
 ```flix
+use Down.Down;
+
 def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Order[t] =
     let db = inject g into Edge/3;
     let pr = #{

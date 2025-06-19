@@ -11,6 +11,8 @@ that have lattice semantics.
 We begin with the definition of the `Sign` data type:
 
 ```flix
+use Sign.{Top, Neg, Zer, Pos, Bot};
+
 enum Sign {
     case Top,
     case Neg,

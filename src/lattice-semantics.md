@@ -223,6 +223,8 @@ reverses the order on the underlying type. We can use it and write the program
 as:
 
 ```flix
+use Down.Down;
+
 def shortestPaths(g: Set[(t, Int32, t)], o: t): Map[t, Down[Int32]] with Order[t] =
     let db = inject g into Edge/3;
     let pr = #{

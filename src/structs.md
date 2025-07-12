@@ -52,8 +52,8 @@ mod Person {
 }
 ```
 
-The `mkPerson` function takes one argument: the region capability `rc` to
-associate to the struct with. 
+The `mkLuckyLuke` function takes one argument: the region capability `rc` to
+associate with the struct.
 
 The syntax:
 
@@ -151,7 +151,7 @@ mod Point { // Companion module for Point
 }
 ```
 
-If we want to provide access to the ields of a struct from outside its companion
+If we want to provide access to the fields of a struct from outside its companion
 module, we can introduce explicit getters and setters. For example: 
 
 ```flix

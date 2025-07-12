@@ -61,7 +61,7 @@ The Flix compiler reports:
              complex instance type
 ```
 
-This is because, at least for the moment, it is not possible type define
+This is because, at least for the moment, it is not possible to define
 trait instances on records (or Datalog schema rows). This may change in the
 future. Until then, it is necessary to wrap the record in an algebraic data
 type. For example:

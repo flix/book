@@ -94,7 +94,7 @@ def main(): Unit \ IO =
     concatStrings("Hello", " World!") |> println
 ```
 
-While this feature is powerful, in many cases using a fully-qualified might be
+While this feature is powerful, in many cases using a fully-qualified name might be
 more appropriate.
 
 ## Modules and Enums

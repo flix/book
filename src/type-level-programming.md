@@ -9,7 +9,7 @@ types.
 
 A unique Flix feature is its support for _type-level Boolean formulas_. This
 means `true` and `false` are types, but also that formulas such as `x and (not
-y)` are types. A type-level Boolean formulas has kind `Bool`. Two type-level
+y)` are types. A type-level Boolean formula has kind `Bool`. Two type-level
 Boolean formulas are equal if the formulas are equivalent (i.e. have the same
 truth tables). For example, the two types `true` and `x or not x` are _the same
 type_.

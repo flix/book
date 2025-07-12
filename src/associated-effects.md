@@ -88,7 +88,7 @@ instance Dividable[Int32] {
 
 We often want to use associated effects in combination with regions.
 
-Assume we have the `ForEach` trait from the before:
+Assume we have the `ForEach` trait from before:
 
 ```flix
 trait ForEach[t] {

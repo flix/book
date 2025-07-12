@@ -28,7 +28,7 @@ is to say, once you have tainted yourself with impurity, you remain tainted.
 In addition to the all-important `IO` effect, Flix has a small collection of
 pre-defined primitive effects. The point of these primitive effects is to
 provide more information about the specific actions a function can take. Except
-for the `NonDet` effect, all of effects below always come together with the `IO`
+for the `NonDet` effect, all of the effects below always come together with the `IO`
 effect. 
 
 - **Env**: The `Env` effect represents actions that involve access to

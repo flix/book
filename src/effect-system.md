@@ -70,4 +70,4 @@ library-level effect system, essentially a custom `IO` monad. While this
 approach has some advantages, the downsides are at least twofold (a) we do not
 get any of the guarantees offered by a traditional type and effect system (e.g.,
 we cannot know when a function is pure), and (b) we must write our program in a
-monadic-style which is burdensome.
+monadic-style, which is burdensome.

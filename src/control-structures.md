@@ -32,4 +32,4 @@ The following table gives some uses cases for each construct:
 | Work with `Validation`s                                       | [Applicative For-Yield](./applicative-for-yield.md) |
 
 > **Note:** Flix does not have traditional `while` or `for`-loops. Instead, we
-> recommend the use recursion and/or one of the above constructs. 
+> recommend the use of recursion and/or one of the above constructs.

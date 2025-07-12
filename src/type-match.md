@@ -61,7 +61,7 @@ def main(): Unit \ IO =
 ```
 
 > **Warning:** While type match is a powerful meta-programming construct, it
-> should be sparingly and with great care.
+> should be used sparingly and with great care.
 
 A typical legitimate use case for type match is when we want to work around
 limitations imposed by the JVM. For example, the Flix Standard Library use type

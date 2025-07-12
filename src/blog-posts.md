@@ -4,10 +4,10 @@ A few people are writing about various aspects of Flix on their blogs:
 
 __Paul Butcher__ is writing a blog post series on Flix:
 
-- [An introduction to Datalog in Flix: Part 1](https://paulbutcher.com/blog/2022/datalog1/)
-- [An introduction to Datalog in Flix: Part 2](https://paulbutcher.com/blog/2022/datalog2/)
-- [An introduction to Datalog in Flix: Part 3](https://paulbutcher.com/blog/2022/datalog3/)
-- [An introduction to Datalog in Flix: Part 4](https://paulbutcher.com/blog/2022/datalog4/)
+- [An introduction to Datalog in Flix: Part 1](https://paulbutcher.com/datalog1.html)
+- [An introduction to Datalog in Flix: Part 2](https://paulbutcher.com/datalog2.html)
+- [An introduction to Datalog in Flix: Part 3](https://paulbutcher.com/datalog3.html)
+- [An introduction to Datalog in Flix: Part 4](https://paulbutcher.com/datalog4.html)
 
 __Susan Potter__ is writing a blog post series on Flix:
 
@@ -25,6 +25,10 @@ __Magnus Madsen__ wrote a few blog posts on Flix during COVID:
 - [Naming Functional and Destructive Operations](https://flix.dev/blog/naming-functional-and-destructive-operations/)
 - [Redundancies as Compile-Time Errors](https://flix.dev/blog/redundancies-as-compile-time-errors/)
 - [Design Flaws in Flix](https://flix.dev/blog/design-flaws-in-flix/)
+
+__Lutz Hühnken__ wrote a blog post on Flix for Java progammers:
+
+- [Flix For Java Programmers](https://www.reactivesystems.eu/2022/06/24/flix-for-java-programmers.html)
 
 __Magnus Madsen__ did an interview about Flix on the Happy Path Programming podcast:
 

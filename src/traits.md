@@ -115,7 +115,7 @@ mod Zoo {
     }
 
     instance Animal[Penguin] {
-        pub def isMammal(_: Penguin): Bool = true
+        pub def isMammal(_: Penguin): Bool = false
     }
 
     pub enum Giraffe

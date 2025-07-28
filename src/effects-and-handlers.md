@@ -61,7 +61,7 @@ the following works without issue:
 
 ```flix
 def main(): Unit \ IO = 
-    let l = List#{1, 2, 0};
+    let l = List#{1, 2, 0, 3};
     run {
         List.map(x -> println(divide(42, x)), l);
         ()

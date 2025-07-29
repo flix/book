@@ -63,7 +63,7 @@ Note that the elements are inserted from left to right, thus 1 is inserted first
 
 #### Map Literals
 
-A map literal is written using the notion
+A map literal is written using the notation
 `Map#{k1 => v1, k2 => v2, ...}`.
 For example:
 

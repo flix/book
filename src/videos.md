@@ -5,7 +5,7 @@ A collection of videos about Flix.
 ### Industry Talks
 
 - Magnus Madsen @ LambdaDays 2025: [An Introduction to Effectful Programming in Flix](https://www.youtube.com/watch?v=DHB4SvB7g84) ([slides](https://flix.dev/talks/lambdadays2025.pdf))
-- Magnus Madsen @ Devoxx Greece 2025: [Effectful Programming in the Flix Programming Language](https://www.youtube.com/watch?v=2LSOqikNqxM) ([slides](https://flix.dev/talks/devoxx2025.pdf))
+- Magnus Madsen @ Devoxx Greece 2025: [Effectful Programming in the Flix Programming Language](https://www.youtube.com/watch?v=o7-JWY0uLmc) ([slides](https://flix.dev/talks/devoxx2025.pdf))
 - Magnus Madsen @ Goto 2023: [An Introduction to Functional Imperative Programming in Flix](https://www.youtube.com/watch?v=2LSOqikNqxM)
 
 ### Research Talks

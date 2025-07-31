@@ -59,8 +59,7 @@ The JAR-file contains all class files from the `build` directory. The built JAR
 may depend on external JARs, if the project, or one of its dependencies, depends
 on JAR-files.
 
-> **Note:** The project must be compiled with `build` before running
-> `build-jar`.
+> **Note:** `build-jar` automatically invokes the `build` command.
 
 ### Building a fat JAR-file (bundling all dependencies)
 
@@ -73,8 +72,7 @@ The JAR-file contains all class files from the `build` directory together with
 all class files extract from all Maven dependencies found in the `lib`
 directory. 
 
-> **Note:** The project must be compiled with `build` before running
-> `build-fatjar`.
+> **Note:** `build-fatjar` automatically invokes the `build` command.
 
 ### Building a Flix Project
 

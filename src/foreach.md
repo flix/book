@@ -11,7 +11,7 @@ For example, the program:
 ```flix
 def main(): Unit \ IO = 
     let fruits = List#{"Apple", "Pear", "Mango"};
-    foreach(fruit <- fruits) 
+    foreach (fruit <- fruits) 
         println(fruit)
 ```
 
@@ -23,8 +23,8 @@ We can also iterate through multiple collections:
 def main(): Unit \ IO = 
     let fruits = List#{"Apple", "Pear", "Mango"};
     let creams = List#{"Vanilla", "Stracciatella"};
-    foreach(fruit <- fruits) 
-        foreach(cream <- creams)
+    foreach (fruit <- fruits) 
+        foreach (cream <- creams)
             println("Would you like some ${fruit} with ${cream} icecream?")
 ```
 
@@ -34,7 +34,7 @@ The same loop can also be written:
 def main(): Unit \ IO = 
     let fruits = List#{"Apple", "Pear", "Mango"};
     let creams = List#{"Vanilla", "Stracciatella"};
-    foreach(fruit <- fruits; cream <- creams) 
+    foreach (fruit <- fruits; cream <- creams) 
         println("Would you like some ${fruit} with ${cream} icecream?")
 ```
 
@@ -44,7 +44,7 @@ We can also write loops with a filter. For example:
 def main(): Unit \ IO = 
     let fruits = List#{"Apple", "Pear", "Mango"};
     let creams = List#{"Vanilla", "Stracciatella"};
-    foreach(fruit <- fruits; if isExcotic(fruit); cream <- creams) 
+    foreach (fruit <- fruits; if isExcotic(fruit); cream <- creams) 
         println("Would you like some ${fruit} with ${cream} icecream?")
 
 def isExcotic(fruit: String): Bool = match fruit {
@@ -59,11 +59,14 @@ We can sometimes improve the visual clarity of a `foreach` expression by adding
 braces:
 
 ```flix
-foreach(fruit <- fruits) {
-    foreach(cream <- creams) {
-        println("Would you like some ${fruit} with ${cream} icecream?")
+def main(): Unit \ IO = 
+    let fruits = List#{"Apple", "Pear", "Mango"};
+    let creams = List#{"Vanilla", "Stracciatella"};
+    foreach (fruit <- fruits) {
+        foreach (cream <- creams) {
+            println("Would you like some ${fruit} with ${cream} icecream?")
+        }
     }
-}
 ```
 
 The braces have no impact on the meaning of the `foreach` loop; they are purely

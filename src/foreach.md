@@ -69,26 +69,33 @@ foreach(fruit <- fruits) {
 The braces have no impact on the meaning of the `foreach` loop; they are purely
 stylistic. 
 
-### The Iterable Trait
+### The ForEach Trait
 
 We can use the `foreach` syntax to iterate through any collection type that
-implements the `Iterable` trait. In particular, the `Iterable` trait
+implements the `ForEach` trait. In particular, the `ForEach` trait
 defines a single signature: 
 
 ```flix
 ///
-/// A trait for immutable data structures that can be iterated.
+/// A trait for data structures that support a forEach operation.
 ///
-pub trait Iterable[t] {
-     ///
-    /// The element type of the Iterable.
-    ///
-    type Elm[t]: Type
+trait ForEach[t] {
 
     ///
-    /// Returns an iterator over `t`.
+    /// The type of elements in the data structure.
     ///
-    pub def iterator(rc: Region[r], t: t): Iterator[Iterable.Elm[t], r + aef, r] \ (r + aef) where Iterable.Aef[t] ~ aef
+    type Elm: Type
+
+    ///
+    /// The effect of `forEach`.
+    ///
+    type Aef: Eff = {}
+
+    ///
+    /// Applies `f` to each element in the data structure.
+    ///
+    pub def forEach(f: ForEach.Elm[t] -> Unit \ ef, t: t): Unit \ (ef + ForEach.Aef[t])
+
 }
 ```
 

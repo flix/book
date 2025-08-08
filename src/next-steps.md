@@ -14,7 +14,7 @@ def wc(file: String): Unit \ {Console, FileReadWithResult} = {
                 let totalLines = List.length(lines);
                 let totalWords = List.sumWith(numberOfWords, lines);
                 Console.println("Lines: ${totalLines}, Words: ${totalWords}")
-        case Err(_) => 
+            case Err(_) => 
                 Console.println("Unable to read file: ${file}")
         }
 }

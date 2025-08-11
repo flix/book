@@ -86,7 +86,7 @@ the function must know to which region the returned array should belong.
 
 ### Allocating Arrays with Uninitialized Elements
 
-We can use the `Array.new` function to create an array of a given length where
+We can use the `Array.empty` function to create an array of a given length where
 the content of the array is uninitialized. For example:
 
 ```flix

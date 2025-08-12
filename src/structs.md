@@ -1,7 +1,7 @@
 ## Structs
 
 Flix supports mutable _scoped_ structs. A struct is a sequence of user-defined
-fields. Fields are immutable by default, but can made mutable by marking them
+fields. Fields are immutable by default, but can be made mutable by marking them
 with the `mut` modifier. Like all mutable memory in Flix, every struct must
 belong to some region. 
 

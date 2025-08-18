@@ -57,9 +57,50 @@ nvim --version
 There is a Lua [plugin](https://github.com/flix/nvim) which provides an LSP configuration for the native neovim lsp, and several functions to interact with the flix cli. It's repo has detailed installation and configuration instructions.
 It can be installed with a plugin manager of choice or cloned locally into your neovim runtime path.
 
+The plugin provides no Keymappings but sets the Flix LSP server up, allowing it to work with your default LSP mappings. An example of setting up LSP keymappings with nvim 0.11 can be seen below. Once your `LspAttach` autocmd has been set the keymappings will apply to *all* configured lsp servers.
+
+```lua
+-- create auto command that is triggered when your LSP server attatches to the buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  -- give it a name to prevent autocmd conflicts
+  group = vim.api.nvim_create_augroup('my.lsp', {}),
+  -- the function to run when the server attatches
+  callback = function(args)
+    -- helper function to set keybinding options with an optional description string
+    -- !!! important !!!
+    -- `buffer` makes these mappings local to the buffer triggering the autocmd
+    local function get_opts(desc)
+      return { desc = desc, buffer = args.buf, noremap = true, silent = true }
+    end
+    -- check that the LSP client supports features before setting bindings
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    if client:supports_method('textDocument/format') then
+      vim.keymap.set('n', '<leader>=', vim.lsp.buf.format, get_opts('format buffer'))
+    end
+    if client:supports_method('textDocument/rename') then
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, get_opts('rename'))
+    end
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, get_opts("lsp code action"))
+    vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, get_opts("lsp codelens run"))
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, get_opts("lsp references"))
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, get_opts("lsp definition"))
+    vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, get_opts("lsp document highlight"))
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, get_opts("lsp hover"))
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, get_opts("lsp buf implementation"))
+    vim.keymap.set('i', '<C-a>', '<C-x><C-o>', get_opts("manual expand completion"))
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, get_opts(""))
+    vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, get_opts("diagnostic open float"))
+    vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, get_opts("lsp workspace symbol"))
+    vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, get_opts("lsp doc symbol"))
+  end
+})
+```
+
 > Previously [lspconfig](https://github.com/neovim/nvim-lspconfig) provided LSP functionality to neovim and lsp configurations. However, after version 0.11 neovim has LSP built in, lspconfig only provides configurations for common lsp servers. This makes its installation less necessary but it is still recommended.
 
 ![Visual Studio Code1](images/neovim.png)
+
+#### Manual Neovim Configuration
 
 ### Using Flix from Emacs
 

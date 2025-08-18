@@ -108,8 +108,8 @@ This is because mutable data is not safe to share between threads.
 
 ### Derivation of Coerce
 
-We can automatically derive implementations of the `Coerce` type class.
-The `Coerce` class converts a simple (one-case) data type
+We can automatically derive implementations of the `Coerce` trait.
+The `Coerce` trait converts a simple (one-case) data type
 to its underlying implementation.
 
 ```flix

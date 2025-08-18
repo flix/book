@@ -46,11 +46,19 @@ The workhorse behind the `foreach-yield` construct is the `Iterable` trait
 (discussed in the previous section) and the `Collectable` trait. 
 
 ```flix
+///
+/// A trait representing collections that can be produced from an Iterator.
+///
 pub trait Collectable[t: Type] {
     ///
     /// The element type of the Collectable.
     ///
     type Elm[t]: Type
+
+    ///
+    /// The associated effect of the Collectable which represents the effect of accessing its elements.
+    ///
+    type Aef[t]: Eff = {}
 
     ///
     /// Run an Iterator collecting the results.

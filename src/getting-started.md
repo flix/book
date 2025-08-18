@@ -96,11 +96,92 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 ```
 
+The snippet above provides the following keybindings.
+
+| Keybinding      | Action                   |
+|-----------------|--------------------------|
+| `gd`            | Go to definition         |
+| `gi`            | Go to implementation     |
+| `gr`            | Find references          |
+| `ctrl+a`        | Trigger auto-complete    |
+| `shift+k`       | Hover                    |
+| `<leader>rn`    | Rename symbol            |
+| `<leader>ca`    | Code actions             |
+| `<leader>cl`    | Run Code lens            |
+| `<leader>ws`    | Show workspace symbols   |
+| `<leader>ds`    | Show document symbols    |
+| `<leader>d`     | Show diagnostics         |
+| `<leader>h`     | Show document highlight  |
+
 > Previously [lspconfig](https://github.com/neovim/nvim-lspconfig) provided LSP functionality to neovim and lsp configurations. However, after version 0.11 neovim has LSP built in, lspconfig only provides configurations for common lsp servers. This makes its installation less necessary but it is still recommended.
 
 ![Visual Studio Code1](images/neovim.png)
 
 #### Manual Neovim Configuration
+
+If you would rather setup the LSP server yourself the code from the plugin is as follows.
+
+1. Tell nvim what filetypes are Flix files
+
+```lua
+vim.filetype.add({
+  extension = {
+    flix = "flix",
+  }
+})
+```
+
+2. Configure the Flix LSP for neovim's native LSP client
+
+```lua
+-- check if "flix" has already been setup
+if not vim.lsp.config["flix"] then
+  -- create flix LSP configuration for native LSP
+  vim.lsp.config('flix', {
+    -- choose just one `cmd` definition
+    -- for a project local `flix.jar` ie flix.jar is installed in the root of your project
+    cmd = { "java", "-jar", "flix.jar", "lsp" },
+    -- for a global flix installation ie with "homebrew" or "nix"
+    cmd = {"flix", "lsp"},
+    filetypes = { "flix" },
+    root_markers = { "flix.toml" }, -- where to set the root directory
+    cmd_cwd = vim.fs.root(0, { 'flix.toml' }),
+    root_dir = vim.fs.root(0, { 'flix.toml' }),
+})
+end
+```
+
+3. Create an autocmd to set flix defualts such as comments and indenting, and to run the codelens whenever your flix buffer changes.
+
+```lua
+-- auto commands
+-- create named "groups" to prevent autocmd conflicts
+local flix = vim.api.nvim_create_augroup("flix.ft", { clear = true })
+local flix_lsp = vim.api.nvim_create_augroup("flix.lsp", { clear = true })
+-- autocmd that activates when a "flix" buffer is entered
+vim.api.nvim_create_autocmd("FileType", {
+  group = flix,
+  pattern = "flix",
+  callback = function(args)
+    vim.api.nvim_clear_autocmds({ group = flix_lsp, buffer = args.buf }) -- prevent duplicates
+    -- set flix defaults
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.bo.commentstring = "// %s"
+    -- refresh codelens
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+      group = flix_lsp,
+      buffer = args.buf,
+      callback = function()
+        vim.lsp.codelens.refresh({ bufnr = args.buf })
+      end
+    })
+  end
+})
+```
+
+> place this code in your `$HOME/.config/nvim/init.lua` or wherever you configure your lsp in neovim.
 
 ### Using Flix from Emacs
 

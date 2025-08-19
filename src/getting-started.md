@@ -31,7 +31,7 @@ started:
 
 > 1. Create a new empty folder (e.g. `my-flix-project`).
 > 2. Open VSCode and choose `File -> Open Folder`.
-> 3. Create a new file called `Main.flix` in the folder. 
+> 3. Create a new file called `Main.flix` in the folder.
 > 4. VSCode will ask you want to search the marketplace for extensions. Say "Yes".
 > 5. The Flix _extension_ will be downloaded and installed. Once done, it will
 >    ask if you want to download the Flix _compiler_. Say "Yes" again.
@@ -45,179 +45,147 @@ A screenshot of the Flix Visual Studio Code extension in action:
 
 Flix can also be used from [Neovim](https://neovim.io/). Follow these steps to
 get started:
-
-#### Step 1: Install Neovim (v0.9 +)
-
-Install Neovim using your preferred package manager or follow the [official installation guide](https://github.com/neovim/neovim/blob/master/INSTALL.md).
-
-You can check if Neovim is installed and its version by running:
+- the [official plugin](https://github.com/flix/nvim) relies on features released in Neovim 0.11
+- check the version of neovim installed
 
 ```shell
 nvim --version
 ```
 
-#### Step 2: Add nvim-lspconfig plugin to your Neovim
+#### Neovim Flix plugin
 
-Install the `nvim-lspconfig` plugin using your preferred Neovim plugin manager.
+There is a Lua [plugin](https://github.com/flix/nvim) which provides an LSP configuration for the native neovim lsp, and several functions to interact with the flix cli. It's repo has detailed installation and configuration instructions.
+It can be installed with a plugin manager of choice or cloned locally into your neovim runtime path.
 
-If you are not using a plugin manager, you can install it manually by running
-the following command (assuming your Neovim configuration directory is
-`~/.config/nvim`):
-
-```shell
-git clone https://github.com/neovim/nvim-lspconfig \
-          ~/.config/nvim/pack/nvim/start/nvim-lspconfig
-```
-
-If you are on Windows, you can run:
-
-```shell
-cd %LOCALAPPDATA%/nvim/pack/nvim/start
-git clone https://github.com/neovim/nvim-lspconfig
-```
-
-#### Step 3: Configure Flix LSP in Neovim
-
-Add the following minimal configuration to your `~/.config/nvim/init.lua`:
-
-If you are on Windows, the file should be stored at:
-
-```shell
-%LOCALAPPDATA%/nvim/init.lua
-```
+The plugin provides no Keymappings but sets the Flix LSP server up, allowing it to work with your default LSP mappings. An example of setting up LSP keymappings with nvim 0.11 can be seen below. Once your `LspAttach` autocmd has been set the keymappings will apply to *all* configured lsp servers.
 
 ```lua
-local lspconfig = require("lspconfig")
-local configs = require("lspconfig.configs")
- -- Replace with the actual path to your Flix jar
-local start_cmd = { "java", "-jar", "flix.jar", "lsp" }
-
--- Set Flix as the filetype for *.flix files
-vim.filetype.add({
-    extension = {
-        flix = "flix",
-    },
-})
-
--- Add the flix language server
-if not configs.flix then
-    configs.flix = {
-        default_config = {
-            cmd = start_cmd,
-            filetypes = { "flix" },
-			root_dir = function(fname)
-                -- Search for flix.toml/flix.jar upwards recursively, with a fallback to the current directory
-                local root_dir = vim.fs.dirname(vim.fs.find({"flix.toml", "flix.jar"}, { path = fname, upward = true })[1])
-                    or vim.fs.dirname(fname)
-                local flix_jar_path = vim.fs.joinpath(root_dir, "flix.jar")
-                -- Make sure flix.jar is found in the root directory, otherwise return nil to prevent the LSP server from starting
-                if vim.loop.fs_stat(flix_jar_path) == nil then
-                    print("Failed to start the LSP server: flix.jar not found in project root (" .. root_dir .. ")!\n")
-                    return nil
-                end
-                return root_dir
-            end,
-            settings = {},
-        },
-    }
-end
-
--- Setup the flix server
-lspconfig.flix.setup({
-    capabilities = vim.lsp.protocol.make_client_capabilities(),
-    on_attach = function(client , bufnr)
-        print("Flix LSP attached to buffer " .. bufnr)
-
-        -- Automatically refresh LSP codelens on certain events
-        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-          pattern = "<buffer>",
-          callback = function()
-            vim.lsp.codelens.refresh({ bufnr = bufnr })
-          end,
-        })
-
-        -- Function to run the Flix program using a Java command
-        local runMain = function(command, context)
-          vim.cmd("split | terminal java -jar flix.jar run")
-        end
-
-        -- Register the function as an LSP command for Flix
-        client.commands["flix.runMain"] = runMain
-
-        -- Setup shortcuts
-        local bufopts = { noremap = true, silent = true, buffer = bufnr }
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, bufopts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-        vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, bufopts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('i', '<C-a>', '<C-x><C-o>', bufopts)
-        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, bufopts)
-        vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, bufopts)
-        vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, bufopts)
-    end,
-    flags = {},
+-- create auto command that is triggered when your LSP server attatches to the buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  -- give it a name to prevent autocmd conflicts
+  group = vim.api.nvim_create_augroup('my.lsp', {}),
+  -- the function to run when the server attatches
+  callback = function(args)
+    -- helper function to set keybinding options with an optional description string
+    -- !!! important !!!
+    -- `buffer` makes these mappings local to the buffer triggering the autocmd
+    local function get_opts(desc)
+      return { desc = desc, buffer = args.buf, noremap = true, silent = true }
+    end
+    -- check that the LSP client supports features before setting bindings
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+    if client:supports_method('textDocument/format') then
+      vim.keymap.set('n', '<leader>=', vim.lsp.buf.format, get_opts('format buffer'))
+    end
+    if client:supports_method('textDocument/rename') then
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, get_opts('rename'))
+    end
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, get_opts("lsp code action"))
+    vim.keymap.set("n", "<leader>cl", vim.lsp.codelens.run, get_opts("lsp codelens run"))
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, get_opts("lsp references"))
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, get_opts("lsp definition"))
+    vim.keymap.set("n", "<leader>h", vim.lsp.buf.document_highlight, get_opts("lsp document highlight"))
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, get_opts("lsp hover"))
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, get_opts("lsp buf implementation"))
+    vim.keymap.set('i', '<C-a>', '<C-x><C-o>', get_opts("manual expand completion"))
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, get_opts(""))
+    vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, get_opts("diagnostic open float"))
+    vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, get_opts("lsp workspace symbol"))
+    vim.keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, get_opts("lsp doc symbol"))
+  end
 })
 ```
 
-You can verify that `nvim-lspconfig` and the Flix language server is installed
-correctly by running: `nvim` and then running the command `:LspInfo`.
-
-#### Step 4: Programming with Flix with Neovim
-
-You can now open any `*.flix` file provided that the Flix compiler jar
-(`flix.jar`) is located in the same directory as the file or in one of its parent directories.
-When you open a Flix, you should see message "Flix LSP attached to buffer
-<buffer_number>" in the status line. Moreover, the opened file should be syntax
-highlighted. 
-
-The default Flix LSP configuration includes the following keybindings:
+The snippet above provides the following keybindings.
 
 | Keybinding      | Action                   |
 |-----------------|--------------------------|
 | `gd`            | Go to definition         |
-| `gi`            | Go to implementation     | 
-| `gr`            | Find references          | 
+| `gi`            | Go to implementation     |
+| `gr`            | Find references          |
 | `ctrl+a`        | Trigger auto-complete    |
 | `shift+k`       | Hover                    |
 | `<leader>rn`    | Rename symbol            |
-| `<leader>ca`    | Code actions             | 
-| `<leader>cl`    | Run Code lens            | 
-| `<leader>ws`    | Show workspace symbols   | 
-| `<leader>ds`    | Show document symbols    | 
+| `<leader>ca`    | Code actions             |
+| `<leader>cl`    | Run Code lens            |
+| `<leader>ws`    | Show workspace symbols   |
+| `<leader>ds`    | Show document symbols    |
 | `<leader>d`     | Show diagnostics         |
 | `<leader>h`     | Show document highlight  |
 
-#### Step 5: Integrating with other Neovim plugins
-
-There are many other neovim plugins that can enhance your Flix programming experience. We recommend the following:
-- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp): which will trigger auto-completion as you typing. Just remember to add lsp to the sources of completions:
-   ```lua
-    cmp.setup({
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" }, -- lsp
-        ...
-      }),
-    })
-    ```
-- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim): which is a  fuzzy finder over lists. It can be used to view and search for symbols, references, and definitions in your Flix project. Just call Telescope over the LSP commands:
-    ```lua
-    keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts) 
-    keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) 
-    keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) 
-    keymap.set("n", "<leader>d", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) 
-    keymap.set("n", "<leader>ds", "<cmd>Telescope lsp_document_symbols<CR>", opts)
-    keymap.set("n", "<leader>ws", "<cmd>Telescope lsp_workspace_symbols<CR>", opts)
-    ```
+> Previously [lspconfig](https://github.com/neovim/nvim-lspconfig) provided LSP functionality to neovim and lsp configurations. However, after version 0.11 neovim has LSP built in, lspconfig only provides configurations for common lsp servers. This makes its installation less necessary but it is still recommended.
 
 ![Visual Studio Code1](images/neovim.png)
 
+#### Manual Neovim Configuration
+
+If you would rather setup the LSP server yourself the code from the plugin is as follows.
+
+1. Tell nvim what filetypes are Flix files
+
+```lua
+vim.filetype.add({
+  extension = {
+    flix = "flix",
+  }
+})
+```
+
+2. Configure the Flix LSP for neovim's native LSP client
+
+```lua
+-- check if "flix" has already been setup
+if not vim.lsp.config["flix"] then
+  -- create flix LSP configuration for native LSP
+  vim.lsp.config('flix', {
+    -- choose just one `cmd` definition
+    -- for a project local `flix.jar` ie flix.jar is installed in the root of your project
+    cmd = { "java", "-jar", "flix.jar", "lsp" },
+    -- for a global flix installation ie with "homebrew" or "nix"
+    cmd = {"flix", "lsp"},
+    filetypes = { "flix" },
+    root_markers = { "flix.toml" }, -- where to set the root directory
+    cmd_cwd = vim.fs.root(0, { 'flix.toml' }),
+    root_dir = vim.fs.root(0, { 'flix.toml' }),
+})
+end
+```
+
+3. Create an autocmd to set flix defualts such as comments and indenting, and to run the codelens whenever your flix buffer changes.
+
+```lua
+-- auto commands
+-- create named "groups" to prevent autocmd conflicts
+local flix = vim.api.nvim_create_augroup("flix.ft", { clear = true })
+local flix_lsp = vim.api.nvim_create_augroup("flix.lsp", { clear = true })
+-- autocmd that activates when a "flix" buffer is entered
+vim.api.nvim_create_autocmd("FileType", {
+  group = flix,
+  pattern = "flix",
+  callback = function(args)
+    vim.api.nvim_clear_autocmds({ group = flix_lsp, buffer = args.buf }) -- prevent duplicates
+    -- set flix defaults
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.bo.commentstring = "// %s"
+    -- refresh codelens
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+      group = flix_lsp,
+      buffer = args.buf,
+      callback = function()
+        vim.lsp.codelens.refresh({ bufnr = args.buf })
+      end
+    })
+  end
+})
+```
+
+> place this code in your `$HOME/.config/nvim/init.lua` or wherever you configure your lsp in neovim.
+
 ### Using Flix from Emacs
 
-Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs. 
+Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs.
 
 ### Using Flix from the Command Line
 
@@ -254,7 +222,7 @@ or being set incorrectly, or (c) having the wrong version of Java installed. To
 debug these issues, ensure that:
 
 - The command `java -version` prints the right Java version.
-- The `JAVA_HOME` environmental variable is correctly set. 
+- The `JAVA_HOME` environmental variable is correctly set.
     - On Windows, you can print the variable by typing `echo %JAVA_HOME%`.
     - On Mac and Linux, you can print the variable by typing `echo $JAVA_HOME`.
 

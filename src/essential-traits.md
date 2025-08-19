@@ -74,14 +74,14 @@ Flix uses the `ToString` trait in string interpolations.
 For example, the interpolated string
 
 ```flix
-"Good morning ${name}, it is ${hour} a clock."
+"Good morning ${name}, it is ${hour} o'clock."
 ```
 
 is actually syntactic sugar for the expression:
 
 ```flix
 "Good morning " + ToString.toString(name) + ", it is " 
-                + ToString.toString(hour) + " a clock."
+                + ToString.toString(hour) + " o'clock."
 ```
 
 In the following subsection, we discuss how to automatically derive

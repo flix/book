@@ -3,7 +3,7 @@
 Flix supports algebraic effects and handlers in the style of
 [Eff](https://www.eff-lang.org/) and [Koka](https://koka-lang.github.io/). 
 
-Flix effect handlers use dynamic scope, shallow handlers, and support multiple
+Flix effect handlers use dynamic scope, deep handlers, and support multiple
 resumptions.
 
 In this section, we introduce effects and handlers, but we also recommend the

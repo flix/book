@@ -62,15 +62,7 @@ def sum(x: Int32, y: Int32): Int32 = dbg(x + y)
 
 to print the value of `x + y` _and_ return it.
 
-We can also use it inside e.g. a `for-yield` expression:
-
-```flix
-for(i <- List.range(0, 10);
-    j <- dbg(List.range(i, 10)))
-    yield (i, j)
-```
-
-Or in a pipeline:
+We can also use it inside a pipeline:
 
 ```flix
 List.range(1, 100) |>

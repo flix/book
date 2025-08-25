@@ -103,5 +103,3 @@ trait ForEach[t] {
 ```
 
 > **Note:** Flix expects the expression body of a `foreach` to have type `Unit`.
-> If you want to return a value from the loop body, you should use the
-> `foreach-yield` construct. 

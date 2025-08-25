@@ -37,9 +37,6 @@ instance ForEach[List] {
 }
 ```
 
-> **Note**: Flix does not have a `ForEach` trait, but instead has the much
-> more powerful and versatile `Foldable` trait.
-
 ### The Flix Kinds
 
 Flix supports the following kinds:

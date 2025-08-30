@@ -20,11 +20,11 @@ __Jesse Claven__ wrote a blog post on logic programming in Flix:
 
 __Magnus Madsen__ wrote a few blog posts on Flix during COVID:
 
-- [In Defense of Programming Languages](https://flix.dev/blog/in-defense-of-programming-languages/)
-- [Taming Impurity with Polymorphic Effects](https://flix.dev/blog/taming-impurity-with-polymorphic-effects/)
-- [Naming Functional and Destructive Operations](https://flix.dev/blog/naming-functional-and-destructive-operations/)
-- [Redundancies as Compile-Time Errors](https://flix.dev/blog/redundancies-as-compile-time-errors/)
-- [Design Flaws in Flix](https://flix.dev/blog/design-flaws-in-flix/)
+- [In Defense of Programming Languages](https://blog.flix.dev/blog/in-defense-of-programming-languages/)
+- [Taming Impurity with Polymorphic Effects](https://blog.flix.dev/blog/taming-impurity-with-polymorphic-effects/)
+- [Naming Functional and Destructive Operations](https://blog.flix.dev/blog/naming-functional-and-destructive-operations/)
+- [Redundancies as Compile-Time Errors](https://blog.flix.dev/blog/redundancies-as-compile-time-errors/)
+- [Design Flaws in Flix](https://blog.flix.dev/blog/design-flaws-in-flix/)
 
 __Lutz Hühnken__ wrote a blog post on Flix for Java progammers:
 

@@ -27,8 +27,8 @@ already present.
 
 ## Project Structure
 
-Flix scans for source files in the paths `*.flix`, `src/**.flix,`, and
-`test/**.flix`.
+Flix scans for source files in the paths `*.flix`, `src/**/*.flix,`, and
+`test/**/*.flix`.
 
-Flix scans for Flix packages and JARs in the paths `lib/**.fpkg` and
-`lib/**.jhar`.
+Flix scans for Flix packages and JARs in the paths `lib/**/*.fpkg` and
+`lib/**/*.jar`.

@@ -88,7 +88,7 @@ because in Flix a _pure_ function is _not_ a subtype of an impure function.
 Specifically, the `hof` requires a function with the `IO` effect, but we are
 passing in a pure function. 
 
-We can use a checked effect cast to safely upcast upcast a pure expression to an
+We can use a checked effect cast to safely upcast a pure expression to an
 impure expression: 
 
 ```flix
@@ -112,7 +112,7 @@ For example, the following does not work:
 let f: Unit -> ##java.lang.Object = checked_cast(() -> "Hello World")
 ```
 
-because it tries to cast the function type `Unit -> String` to `String ->
+because it tries to cast the function type `Unit -> String` to `Unit ->
 Object`.
 
 Instead, we should write:

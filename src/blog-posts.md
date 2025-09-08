@@ -2,6 +2,10 @@
 
 A few people are writing about various aspects of Flix on their blogs:
 
+__Valentin Erokhin__ is writing blog posts on effect handlers and Flix:
+
+- [Algebraic Effects in Practice with Flix](https://www.relax.software/blog/flix-effects-intro/)
+
 __Paul Butcher__ is writing a blog post series on Flix:
 
 - [An introduction to Datalog in Flix: Part 1](https://paulbutcher.com/datalog1.html)

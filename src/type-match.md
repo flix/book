@@ -64,7 +64,7 @@ def main(): Unit \ IO =
 > should be used sparingly and with great care.
 
 A typical legitimate use case for type match is when we want to work around
-limitations imposed by the JVM. For example, the Flix Standard Library use type
+limitations imposed by the JVM. For example, the Flix Standard Library uses type
 match to implement the `Array.copyOfRange` function as shown below:
 
 ```flix

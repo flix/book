@@ -13,7 +13,7 @@ A type ascription can be placed after an expression:
 
 but it must be wrapped in parentheses to disambiguate it from other expressions.
 
-It can also be placed on a let-binding parentheses:
+It can also be placed on a let-binding without parentheses:
 
 ```flix
 let l: List[String] = "Hello" :: "World" :: Nil
@@ -31,7 +31,7 @@ def fst1[a: Type, b: Type](p: (a, b)): a = let (x, _) = p; x
 
 Here we have specified that the _kind_ of the two type parameters `a` and `b` is
 `Type`. We will typically never have to specify such kinds since they can
-inferred.
+be inferred.
 
 We can also provide kind ascriptions on algebraic data types:
 

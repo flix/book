@@ -37,7 +37,7 @@ Flix has a `dbg` (short for "debug") function, with the same signature as the `i
 def dbg(x: a): a
 ```
 
-The `dbg` "function" isn't really a function; rather its internal compiler
+The `dbg` "function" isn't really a function; rather it's internal compiler
 magic that allows you to print _any value_ while fooling the type and effect
 system into believing that it is still pure. Using the `dbg` function this
 program:
@@ -51,7 +51,7 @@ def sum(x: Int32, y: Int32): Int32 =
 
 Now compiles and runs.
 
-The `dbg` function returns its argument. Hence its convenient to use in many
+The `dbg` function returns its argument. Hence it's convenient to use in many
 situations.
 
 For example, we can write:

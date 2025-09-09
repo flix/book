@@ -59,7 +59,7 @@ As another example, in the program:
 def main(): Unit \ IO = 
     let l: List[Int32] = List.range(1, 10);
     let n: Int32 = l?;
-    println("The value of `n` is ${n + 0}.")
+    println("The value of `n` is ${n}.")
 ```
 
 If we place the cursor on `l?`, Flix will suggest:

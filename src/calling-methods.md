@@ -97,7 +97,7 @@ def main(): Unit \ IO =
 ## Calling Constructors or Methods with VarArgs
 
 We can call a constructor or method that takes variable arguments using the
-the special syntax `...{ value1, value2, ...}`. For example:
+special syntax `...{ value1, value2, ...}`. For example:
 
 ```flix
 import java.nio.file.Path

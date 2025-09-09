@@ -121,7 +121,7 @@ In Flix, the language of effects is based on set formulas:
 
 By far the most common operation is to compute the union of effects.
 
-Its important to understand that there can be several ways to write the same
+It's important to understand that there can be several ways to write the same
 effect set. For example, `ef1 + ef2` is equivalent to `ef2 + ef1`, as one would
 expect. 
 

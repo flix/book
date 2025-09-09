@@ -6,8 +6,12 @@ In the following, we use the following import aliases:
 
 ```flix
 import java.util.{List => JList}
+import java.util.{LinkedList => JLinkedList}
+import java.util.{ArrayList => JArrayList}
 import java.util.{Set => JSet}
+import java.util.{TreeSet => JTreeSet}
 import java.util.{Map => JMap}
+import java.util.{TreeMap => JTreeMap}
 ```
 
 The following functions are available in the
@@ -21,21 +25,21 @@ The following functions _convert_ Flix collections to Java collections:
 ///
 /// Lists
 ///
-def toList(ma: m[a]): JList \ IO with Foldable[m]
-def toArrayList(ma: m[a]): ArrayList \ IO with Foldable[m]
-def toLinkedList(ma: m[a]): LinkedList \ IO with Foldable[m]
+def toList(ma: m[a]): JList \ IO + Aef[m] with Foldable[m]
+def toArrayList(ma: m[a]): JArrayList \ IO + Aef[m] with Foldable[m]
+def toLinkedList(ma: m[a]): JLinkedList \ IO + Aef[m] with Foldable[m]
 
 ///
 /// Sets
 ///
-def toSet(ma: m[a]): Set \ IO with Order[a], Foldable[m]
-def toTreeSet(ma: m[a]): TreeSet \ IO with Order[a], Foldable[m]
+def toSet(ma: m[a]): JSet \ IO + Aef[m] with Order[a], Foldable[m]
+def toTreeSet(ma: m[a]): JTreeSet \ IO + Aef[m] with Order[a], Foldable[m]
 
 ///
 /// Maps
 ///
 def toMap(m: Map[k, v]): JMap \ IO with Order[k]
-def toTreeMap(m: Map[k, v]): TreeMap \ IO with Order[k] 
+def toTreeMap(m: Map[k, v]): JTreeMap \ IO with Order[k]
 ```
 
 Each function constructs a new collection and copies all its elements into it.

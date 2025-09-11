@@ -10,7 +10,7 @@ We can read an object field as follows:
 ```flix
 import java.awt.Point
 
-def area(p: Point): Int32 \ IO = unsafe (p.x * p.y)
+def area(p: Point): Int32 \ IO = p.x * p.y
 ```
 
 ### Reading Static Fields

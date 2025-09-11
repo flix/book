@@ -142,11 +142,11 @@ then Flix reports:
 ```
 ❌ -- Resolution Error -------------------------------------------------- 
 
->> Class 'Zoo.Animal' is sealed from the module 'Lake'.
+>> Trait 'Zoo.Animal' is sealed from the module 'Lake'.
 
 21 |     instance Zoo.Animal[Swan] {
                   ^^^^^^^^^^
-                  sealed class.
+                  sealed trait.
 ```
 
 

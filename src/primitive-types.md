@@ -6,7 +6,7 @@ Flix supports the primitive types:
 |--------------|------------------------------------------|-----------------------------------|
 | Unit         | `()`                                     | The unit value.                   |
 | Bool         | `true`, `false`                          | A boolean value.                  |
-| Char         | `'a'`, `'b'`, `'c'`                      | A character value.                |
+| Char         | `'a'`, `'b'`, `'c'`                      | A character[^1] value.            |
 | Float32      | `0.0f32`, `21.42f32`, `-21.42f32`        | A 32-bit floating point integer.  |
 | Float64      | `0.0f64`, `21.42f64`, `-21.42f64`        | A 64-bit floating point integer.  |
 | Int8         | `0i8`, `1i8`, `-1i8`, `127i8`, `-128i8`  | A signed 8-bit integer.           |
@@ -93,3 +93,7 @@ Additionally, regex literals support regex escape sequences with the following n
 Regex.isMatch(regex"\\w", "W")
 ```
 
+[^1]: More precisely, a `Char` value corresponds to a single UTF-16 code unit. UTF-16 is a variable length encoding:
+    some of the Unicode code points are represented by a single UTF-16 code unit, but others need two code units.
+    (Also note that a combination of several Unicode code points may be needed to represent what is usually perceived as
+    a single character.)

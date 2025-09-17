@@ -20,6 +20,12 @@ We can construct a list of strings with the strings
 "Hello" :: "World" :: Nil
 ```
 
+or using the following notation:
+
+```flix
+List#{"Hello", "World"}
+```
+
 Given a list there are many useful operations we can
 perform on it.
 

@@ -18,7 +18,7 @@ To use higher-kinded types Flix _requires_ us to provide kind annotations, i.e.
 we had to write `t: Type -> Type` to inform Flix that `ForEach` abstracts over
 type constructors.
 
-We can implement an instance of the `ForEach` trait for `Option[t]`:
+We can implement an instance of the `ForEach` trait for `Option`:
 
 ```flix
 instance ForEach[Option] {
@@ -29,7 +29,7 @@ instance ForEach[Option] {
 }
 ```
 
-and we can implement an instance for `List[t]`:
+and we can implement an instance for `List`:
 
 ```flix
 instance ForEach[List] {

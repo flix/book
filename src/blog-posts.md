@@ -24,6 +24,7 @@ __Jesse Claven__ wrote a blog post on logic programming in Flix:
 
 __Magnus Madsen__ wrote a few blog posts on Flix during COVID:
 
+- [Effect Systems vs Print Debugging: A Pragmatic Solution](https://blog.flix.dev/blog/effect-systems-vs-print-debugging/)
 - [In Defense of Programming Languages](https://blog.flix.dev/blog/in-defense-of-programming-languages/)
 - [Taming Impurity with Polymorphic Effects](https://blog.flix.dev/blog/taming-impurity-with-polymorphic-effects/)
 - [Naming Functional and Destructive Operations](https://blog.flix.dev/blog/naming-functional-and-destructive-operations/)

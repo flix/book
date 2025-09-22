@@ -17,21 +17,22 @@ Unfortunately this does not work:
 ```
 ❌ -- Type Error -------------------------------------------------- Main.flix
 
->> Impure function declared as pure.
+>> Unable to unify the effect formulas: 'IO' and 'Pure'.
 
-1 | def sum(x: Int32, y: Int32): Int32 =
-        ^^^
-        impure function.
+1 |> def sum(x: Int32, y: Int32): Int32 =
+2 |>     println(x);
+3 |>     println(y);
+4 |>     x + y
 ```
 
-The problem is that printing is inherently an effectful operation and hence we
-cannot use it to debug our pure functions! We could make our `sum` function have
-the `IO` effect, but that is rarely what we want. Fortunately, Flix has a
+The problem is that `println` has the `IO`. Hence, we cannot use it to for 
+print debugging inside pure functions. We could make our `sum` function have
+the `IO` effect, but that is rarely what we want. Instead, Flix has a
 built-in debugging facility that allows us to do print-line debugging.
 
 ### The `Debug.dprint` and `Debug.dprintln` Functions
 
-Instead, we can write the following:
+We can write:
 
 ```flix
 use Debug.dprintln;
@@ -46,6 +47,18 @@ Inside the `sum` function, the `dprintln` has the effect `Debug`, but due to
 its special nature, the `Debug` effect "disappears" once we exit the function,
 i.e. it is not part of its type and effect signature.
 
-We should only use `dprintln` and `dprint` for debugging. 
+### Debugging with Source Locations
 
-A future version of Flix will disallow it in production mode.
+We can use the special _debug string interpolator_ to add source locations
+to our print statements:
+
+```flix
+use Debug.dprintln;
+
+def sum(x: Int32, y: Int32): Int32 =
+    dprintln(d"Hello World!");
+    x + y
+```
+
+> A longer introduction to `dprintln` is available in the
+> blog post [Effect Systems vs Print Debugging: A Pragmatic Solution](https://blog.flix.dev/blog/effect-systems-vs-print-debugging/)

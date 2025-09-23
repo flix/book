@@ -116,19 +116,19 @@ form of named parameters building on records. For example, we can write a
 function translate to translate from one language to another as follows:
 
 ```flix
-def translate(from: {from = Language}, to: {to = Language}, text: String): String = ???
+def translate(src: {src = Language}, dst: {dst = Language}, text: String): String = ???
 ```
 
 We can call this function as follows:
 
 ```flix
-translate({from = English}, {to = French}, "Where is the library?")
+translate({src = English}, {dst = French}, "Where is the library?")
 ```
 
 Since such verbosity gets tedious, we can also use the syntactic sugar:
 
 ```flix
-translate(from = English, to = French, "Where is the library?")
+translate(src = English, dst = French, "Where is the library?")
 ```
 
 which is equivalent to the above.

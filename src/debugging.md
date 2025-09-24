@@ -7,9 +7,9 @@ We might try something like:
 
 ```flix
 def sum(x: Int32, y: Int32): Int32 =
-    println(x);
-    println(y);
-    x + y
+    let result = x + y;
+    println("The sum of ${x} and ${y} is ${result}");
+    result
 ```
 
 Unfortunately this does not work:
@@ -20,9 +20,9 @@ Unfortunately this does not work:
 >> Unable to unify the effect formulas: 'IO' and 'Pure'.
 
 1 |> def sum(x: Int32, y: Int32): Int32 =
-2 |>     println(x);
-3 |>     println(y);
-4 |>     x + y
+2 |>     let result = x + y;
+3 |>     println("The sum of ${x} and ${y} is ${result}");
+4 |>     result
 ```
 
 The problem is that `println` has the `IO`. Hence, we cannot use it to for 
@@ -30,17 +30,17 @@ print debugging inside pure functions. We could make our `sum` function have
 the `IO` effect, but that is rarely what we want. Instead, Flix has a
 built-in debugging facility that allows us to do print-line debugging.
 
-### The `Debug.dprint` and `Debug.dprintln` Functions
+### The `Debug.dprintln` Function
 
-We can write:
+Instead, we can use the `Debug.dprintln` function and write:
 
 ```flix
 use Debug.dprintln;
 
 def sum(x: Int32, y: Int32): Int32 =
-    dprintln(x);
-    dprintln(y);
-    x + y
+    let result = x + y;
+    dprintln("The sum of ${x} and ${y} is ${result}");
+    result
 ```
 
 Inside the `sum` function, the `dprintln` has the effect `Debug`, but due to
@@ -56,8 +56,9 @@ to our print statements:
 use Debug.dprintln;
 
 def sum(x: Int32, y: Int32): Int32 =
-    dprintln(d"Hello World!");
-    x + y
+    let result = x + y;
+    dprintln(d"The sum of ${x} and ${y} is ${result}");
+    result
 ```
 
 > A longer introduction to `dprintln` is available in the

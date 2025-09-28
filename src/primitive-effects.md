@@ -25,6 +25,9 @@ is to say, once you have tainted yourself with impurity, you remain tainted.
 
 ### The Other Primitive Effects
 
+> **Note:** As of Flix 0.65.0 we are making changes to the primitive effects,
+> hence the text below may be slightly outdated.
+
 In addition to the all-important `IO` effect, Flix has a small collection of
 pre-defined primitive effects. The point of these primitive effects is to
 provide more information about the specific actions a function can take. Except

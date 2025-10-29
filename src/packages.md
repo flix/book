@@ -95,17 +95,12 @@ A trust level defines what features of the language are enabled.
 Setting a higher trust level enables more features.
 However, these features are also more unsafe and may expose you
 to supply-chain attacks.
+
 The levels are as follows (from lowest to highest):
 - `pure`: prohibits any use of the `IO`, Java, and unchecked casts.
 - `plain` (default): allows the `IO` effect, but prohibits any use of
   Java and unchecked casts.
 - `unrestricted`: allows everything, including `IO`, Java, and unchecked casts.
-
-Java and unchecked casts are always bundled together since Java may have
-effects that are not captured by the effect system.
-Similarly, using unchecked casts allows an author to lie to the type system,
-e.g., when using default handlers, thus allowing them to perform effects
-from within pure Flix code which is equally dangerous.
 
 You can set the trust level of each dependency in the manifest like so:
 ```toml
@@ -114,8 +109,27 @@ You can set the trust level of each dependency in the manifest like so:
 "github:magnus-madsen/helloworld" = { "version" = "1.3.0", "trust" = "unrestricted" }
 ```
 
-#### Transitive dependencies
-TODO
-- Graph inconsistency
-- Mentioning Java deps (prevents static initializers since nothing is downloaded)
-- Language feature check in Safety
+Trust levels apply transitively, so any transitive dependency are also
+trusted with your original trust level (or lower if one of your dependencies
+specifies its own dependencies with less trust).
+In case two or more dependencies depend on the same library, the lowest
+level of trust given to the library is used.
+
+The recommended approach is to not specify a trust level, i.e., using `plain`,
+which is maximally flexible while keeping you safe.
+You strive towards never using `unrestricted`, as it allows the dependencies
+along with its transitive dependencies code to do *anything*.
+Even running the Flix compiler on code with `unrestricted` trust may expose
+you to a security risk.
+
+If you are the author of a Flix library and you choose to use Java,
+the best course of action is to split the library in two;
+One library that defines the core logic and uses custom effects
+to achieve its goals and another library that defines handlers
+for these effects.
+The added benefit is that the core library is easier to test than
+if the effects were performed by Java.
+Additionally, you should attempt to keep your effects simple
+and document how users can handle your effects if they do
+not want to use your handler library, e.g., how the effects
+should behave on certain inputs.

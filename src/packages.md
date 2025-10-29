@@ -99,7 +99,7 @@ The trust levels are as follows (from lowest to highest):
 - `pure`: forbids Java interop, the `IO` effect, and unchecked casts.
 - `plain` (default): permits the `IO` effect but forbids Java interop
   and unchecked casts.
-- `unrestricted`: allows Java interop, the IO effect, and unchecked casts.
+- `unrestricted`: allows Java interop, the `IO` effect, and unchecked casts.
 
 You can set the trust level of each dependency in the manifest like so:
 ```toml

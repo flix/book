@@ -117,18 +117,24 @@ the library inherits the lowest trust level requested.
 The recommended approach is to **not** specify a trust level, thus
 defaulting to `plain`.
 It provides the best balance between flexibility and safety.
-You should avoid unrestricted when possible, as it permits
+You should avoid `unrestricted` when possible, as it permits
 (transitive) dependencies to do *anything*.
-Even building or compiling code that includes unrestricted dependencies
+Even building or compiling code that includes `unrestricted` dependencies
 can by itself expose you to a supply-chain attack.
 However, the package manager never downloads a package
 that declares Java dependencies in its manifest if it has
 trust level `plain` or lower.
 
+You should attempt to only depend on core library packages
+and use your own handlers (or in some cases default handlers).
+This allows you to limit what parts of the system a program
+can access, e.g., such as only allowing certain directories
+to be accessed or black/white-listing URLs.
+
 If you author a Flix library that uses Java, split it into two
 packages: a core library that implements pure logic and custom
 effects, and a separate handler package that performs Java interop.
-This makes the core library easier to test and review.
-Keep effects small and document the expected handler behavior so
-users can implement their own handlers if they do no wish to
-use handler library.
+Doing so also makes the core library easier to test and review.
+Try to keep effects small and focues and document the expected
+handler behavior so users can implement their own handlers if
+they do no wish to use handler library.

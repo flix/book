@@ -89,18 +89,17 @@ This happens because `flix/museum` has the following dependency tree:
         - `org.apache.commons:commons-lang3`
 
 ### Security
-To prevent supply-chain attacks (some, not all), all dependencies
-have a *trust* level--even when you don't specify one.
-A trust level defines what features of the language are enabled.
-Setting a higher trust level enables more features.
-However, these features are also more unsafe and may expose you
-to supply-chain attacks.
+To reduce supply-chain attacks, every dependency has a *trust*
+level--even if you don't set one explicitly.
+Trust levels control which language features a dependency may use.
+Higher trust levels enable more features but also increase
+the risk of supply-chain attacks.
 
-The levels are as follows (from lowest to highest):
-- `pure`: prohibits any use of the `IO`, Java, and unchecked casts.
-- `plain` (default): allows the `IO` effect, but prohibits any use of
-  Java and unchecked casts.
-- `unrestricted`: allows everything, including `IO`, Java, and unchecked casts.
+The trust levels are as follows (from lowest to highest):
+- `pure`: forbids Java interop, the `IO` effect, and unchecked casts.
+- `plain` (default): permits the `IO` effect but forbids Java interop
+  and unchecked casts.
+- `unrestricted`: allows Java interop, the IO effect, and unchecked casts.
 
 You can set the trust level of each dependency in the manifest like so:
 ```toml
@@ -109,27 +108,27 @@ You can set the trust level of each dependency in the manifest like so:
 "github:magnus-madsen/helloworld" = { "version" = "1.3.0", "trust" = "unrestricted" }
 ```
 
-Trust levels apply transitively, so any transitive dependency are also
-trusted with your original trust level (or lower if one of your dependencies
-specifies its own dependencies with less trust).
-In case two or more dependencies depend on the same library, the lowest
-level of trust given to the library is used.
+Trust levels are transitive: a dependency's trust level also applies
+to its transitive dependencies, unless a dependency explicitly declares
+a lower trust level.
+If multiple dependencies require the same library,
+the library inherits the lowest trust level requested.
 
-The recommended approach is to not specify a trust level, i.e., using `plain`,
-which is maximally flexible while keeping you safe.
-You strive towards never using `unrestricted`, as it allows the dependencies
-along with its transitive dependencies code to do *anything*.
-Even running the Flix compiler on code with `unrestricted` trust may expose
-you to a security risk.
+The recommended approach is to **not** specify a trust level, thus
+defaulting to `plain`.
+It provides the best balance of flexibility and safety.
+You should avoid unrestricted when possible, as it permits
+(transitive) dependencies to do *anything*.
+Even building or compiling code that includes unrestricted dependencies
+can by itself expose you to a supply-chain attack.
+To keep you safe, the package manager never downloads a package
+that requires Java dependencies if it has trust level `plain`
+or lower.
 
-If you are the author of a Flix library and you choose to use Java,
-the best course of action is to split the library in two;
-One library that defines the core logic and uses custom effects
-to achieve its goals and another library that defines handlers
-for these effects.
-The added benefit is that the core library is easier to test than
-if the effects were performed by Java.
-Additionally, you should attempt to keep your effects simple
-and document how users can handle your effects if they do
-not want to use your handler library, e.g., how the effects
-should behave on certain inputs.
+If you author a Flix library that uses Java, split it into two
+packages: a core library that implements pure logic and custom
+effects, and a separate handler package that performs Java interop.
+This makes the core library easier to test and review.
+Keep effects small and document the expected handler behavior so
+users can implement their own handlers if they do no wish to
+use handler library.

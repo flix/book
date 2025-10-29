@@ -88,15 +88,15 @@ This happens because `flix/museum` has the following dependency tree:
     - `flix/museum-restaurant` which depends on
         - `org.apache.commons:commons-lang3`
 
-### Security
-To reduce supply-chain attacks, every dependency has a *trust*
-level--even if you don't set one explicitly.
+### Security & Trust Levels
+To reduce the risk of supply-chain attacks, every dependency
+has a *trust* level--even if you don't set one explicitly.
 Trust levels control which language features a dependency may use.
 Higher trust levels enable more features but also increase
 the risk of supply-chain attacks.
 
 The trust levels are as follows (from lowest to highest):
-- `pure`: forbids Java interop, the `IO` effect, and unchecked casts.
+- `paranoid`: forbids Java interop, the `IO` effect, and unchecked casts.
 - `plain` (default): permits the `IO` effect but forbids Java interop
   and unchecked casts.
 - `unrestricted`: allows Java interop, the `IO` effect, and unchecked casts.
@@ -131,9 +131,10 @@ This allows you to limit what parts of the system a program
 can access, e.g., such as only allowing certain directories
 to be accessed or black/white-listing URLs.
 
-If you author a Flix library that uses Java, split it into two
-packages: a core library that implements pure logic and custom
-effects, and a separate handler package that performs Java interop.
+If you author a Flix library, e.g., `webserver`, that uses Java,
+split it into two packages: a core library `webserver-lib` that
+implements pure logic and custom effects, and a separate handler
+package `webserver-lib-handlers` that performs Java interop.
 Doing so also makes the core library easier to test and review.
 Try to keep effects small and focues and document the expected
 handler behavior so users can implement their own handlers if

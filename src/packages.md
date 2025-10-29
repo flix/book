@@ -116,14 +116,14 @@ the library inherits the lowest trust level requested.
 
 The recommended approach is to **not** specify a trust level, thus
 defaulting to `plain`.
-It provides the best balance of flexibility and safety.
+It provides the best balance between flexibility and safety.
 You should avoid unrestricted when possible, as it permits
 (transitive) dependencies to do *anything*.
 Even building or compiling code that includes unrestricted dependencies
 can by itself expose you to a supply-chain attack.
-To keep you safe, the package manager never downloads a package
-that requires Java dependencies if it has trust level `plain`
-or lower.
+However, the package manager never downloads a package
+that declares Java dependencies in its manifest if it has
+trust level `plain` or lower.
 
 If you author a Flix library that uses Java, split it into two
 packages: a core library that implements pure logic and custom

@@ -104,8 +104,8 @@ The security contexts are defined as follows (from lowest to highest):
 You can set the security context of each dependency in the manifest like so:
 ```toml
 [dependencies]
-"github:flix/museum"              = { "version" = "1.4.0", "security" = "plain" }
-"github:magnus-madsen/helloworld" = { "version" = "1.3.0", "security" = "unrestricted" }
+"github:flix/museum"              = { version = "1.4.0", security = "plain" }
+"github:magnus-madsen/helloworld" = { version = "1.3.0", security = "unrestricted" }
 ```
 
 Security contexts are transitive: a dependency's security context also applies

@@ -88,33 +88,33 @@ This happens because `flix/museum` has the following dependency tree:
     - `flix/museum-restaurant` which depends on
         - `org.apache.commons:commons-lang3`
 
-### Security & Trust Levels
+### Security
 To reduce the risk of supply-chain attacks, every dependency
-has a *trust* level--even if you don't set one explicitly.
-Trust levels control which language features a dependency may use.
-Higher trust levels enable more features but also increase
+has a *security context*--even if you don't set one explicitly.
+Security contexts control which language features a dependency may use.
+Broader security contexts enable more features but also increase
 the risk of supply-chain attacks.
 
-The trust levels are as follows (from lowest to highest):
+The security contexts are defined as follows (from lowest to highest):
 - `paranoid`: forbids Java interop, the `IO` effect, and unchecked casts.
 - `plain` (default): permits the `IO` effect but forbids Java interop
   and unchecked casts.
 - `unrestricted`: allows Java interop, the `IO` effect, and unchecked casts.
 
-You can set the trust level of each dependency in the manifest like so:
+You can set the security context of each dependency in the manifest like so:
 ```toml
 [dependencies]
-"github:flix/museum"              = { "version" = "1.4.0", "trust" = "plain" }
-"github:magnus-madsen/helloworld" = { "version" = "1.3.0", "trust" = "unrestricted" }
+"github:flix/museum"              = { "version" = "1.4.0", "security" = "plain" }
+"github:magnus-madsen/helloworld" = { "version" = "1.3.0", "security" = "unrestricted" }
 ```
 
-Trust levels are transitive: a dependency's trust level also applies
+Security contexts are transitive: a dependency's security context also applies
 to its transitive dependencies, unless a dependency explicitly declares
-a lower trust level.
+a lesser security context.
 If multiple dependencies require the same library,
-the library inherits the lowest trust level requested.
+the library inherits the most restrictive security context requested.
 
-The recommended approach is to **not** specify a trust level, thus
+The recommended approach is to **not** specify a security context, thus
 defaulting to `plain`.
 It provides the best balance between flexibility and safety.
 You should avoid `unrestricted` when possible, as it permits
@@ -123,7 +123,7 @@ Even building or compiling code that includes `unrestricted` dependencies
 can by itself expose you to a supply-chain attack.
 However, the package manager never downloads a package
 that declares Java dependencies in its manifest if it has
-trust level `plain` or lower.
+security context `plain` or lower.
 
 You should attempt to only depend on core library packages
 and use your own handlers (or in some cases default handlers).

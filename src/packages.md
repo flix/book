@@ -89,17 +89,18 @@ This happens because `flix/museum` has the following dependency tree:
         - `org.apache.commons:commons-lang3`
 
 ### Security
-To reduce the risk of supply-chain attacks, every dependency
-has a *security context*--even if you don't set one explicitly.
-Security contexts control which language features a dependency may use.
-Broader security contexts enable more features but also increase
-the risk of supply-chain attacks.
+To reduce the risk of supply-chain attacks, every dependency has a **security
+context** — even if you don't set one explicitly. Security contexts control
+which language features a dependency may use. Broader security contexts enable
+more features but also increase the risk of supply-chain attacks.
 
-The security contexts are defined as follows (from lowest to highest):
-- `paranoid`: forbids Java interop, the `IO` effect, and unchecked casts.
-- `plain` (default): permits the `IO` effect but forbids Java interop
-  and unchecked casts.
-- `unrestricted`: allows Java interop, the `IO` effect, and unchecked casts.
+The security contexts are defined as follows:
+
+| Security Context | Java Interop | Unchecked Casts | The `IO` Effect |
+|------------------|--------------|-----------------|-----------------|
+| `paranoid`       | Forbidden    | Forbidden       | Forbidden       |
+| `plain` (default)| Forbidden    | Forbidden       | Allowed         |
+| `unrestricted`   | Allowed      | Allowed         | Allowed         |
 
 You can set the security context of each dependency in the manifest like so:
 ```toml
@@ -109,33 +110,27 @@ You can set the security context of each dependency in the manifest like so:
 ```
 
 Security contexts are transitive: a dependency's security context also applies
-to its transitive dependencies, unless a dependency explicitly declares
-a lesser security context.
-If multiple dependencies require the same library,
-the library inherits the most restrictive security context requested.
+to its transitive dependencies, unless a dependency explicitly declares a lesser
+security context. If multiple dependencies require the same library, the library
+inherits the most restrictive security context requested.
 
 The recommended approach is to **not** specify a security context, thus
-defaulting to `plain`.
-It provides the best balance between flexibility and safety.
-You should avoid `unrestricted` when possible, as it permits
-(transitive) dependencies to do *anything*.
-Even building or compiling code that includes `unrestricted` dependencies
-can by itself expose you to a supply-chain attack.
-However, the package manager never downloads a package
-that declares Java dependencies in its manifest if it has
-security context `plain` or lower.
+defaulting to `plain`. It provides the best balance between flexibility and
+safety. You should avoid `unrestricted` when possible, as it permits
+(transitive) dependencies to do *anything*. Even building or compiling code that
+includes `unrestricted` dependencies can by itself expose you to a supply-chain
+attack.
 
-You should attempt to only depend on core library packages
-and use your own handlers (or in some cases default handlers).
-This allows you to limit what parts of the system a program
-can access, e.g., such as only allowing certain directories
-to be accessed or black/white-listing URLs.
+If you are the author of a Flix library that requires effects, the best
+practice is to introduce your own custom effects instead of using the `IO`
+effect directly, and to split the library into two packages:
 
-If you author a Flix library, e.g., `webserver`, that uses Java,
-split it into two packages: a core library `webserver-lib` that
-implements pure logic and custom effects, and a separate handler
-package `webserver-lib-handlers` that performs Java interop.
-Doing so also makes the core library easier to test and review.
-Try to keep effects small and focues and document the expected
-handler behavior so users can implement their own handlers if
-they do no wish to use handler library.
+| Package                  | Description                           | Security Context |
+|--------------------------|---------------------------------------|------------------|
+| `webserver-lib`          | Core functionality using effects      | `plain`          |
+| `webserver-lib-handlers` | Handlers that perform Java interop/IO | `unrestricted`   |
+
+This approach provides several benefits:
+- Most functionality remains in the trusted `plain` security context.
+- Unsafe code is isolated in `webserver-lib-handlers` for easier review.
+- Users can implement their own handlers if they don't trust the provided ones.

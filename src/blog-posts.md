@@ -37,7 +37,7 @@ __Lutz Hühnken__ wrote a blog post on Flix for Java progammers:
 
 __Varun Gandhi__ wrote a critical blog post about the value of effects, using Flix as an example:
 
-- [[On the purported benefits of effect systems](https://typesanitizer.com/blog/effects-convo.html)
+- [On the purported benefits of effect systems](https://typesanitizer.com/blog/effects-convo.html)
 
 __Magnus Madsen__ did an interview about Flix on the Happy Path Programming podcast:
 

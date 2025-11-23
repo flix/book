@@ -17,10 +17,10 @@ eff Clock {
 ```flix
 mod Clock {
     /// Runs `f` handling the `Clock` effect using `IO`.
-    def runWithIO(f: Unit -> a \ ef): a \ (ef - {Clock} + IO)
+    def runWithIO(f: Unit -> a \ ef): a \ (ef - Clock) + IO
 
     /// Returns `f` with the `Clock` effect handled using `IO`.
-    def handle(f: a -> b \ ef): a -> b \ (ef - {Clock} + IO)
+    def handle(f: a -> b \ ef): a -> b \ (ef - Clock) + IO
 }
 ```
 
@@ -208,20 +208,22 @@ The `HttpWithResult` companion module provides several convenience functions:
 
 ```flix
 mod HttpWithResult {
-    /// Send a `GET` request to the given `url` with the given `headers` 
+    /// Send a `GET` request to the given `url` with the given `headers`
     /// and wait for the response.
     def get(url: String, headers: Map[String, List[String]])
         : Result[IoError, Http.Response] \ HttpWithResult
 
-    /// Send a `POST` request to the given `url` with the given `headers` 
+    /// Send a `POST` request to the given `url` with the given `headers`
     /// and `body` and wait for the response.
     def post(url: String, headers: Map[String, List[String]], body: String)
         : Result[IoError, Http.Response] \ HttpWithResult
 
-    /// Send a `PUT` request to the given `url` with the given `headers` 
+    /// Send a `PUT` request to the given `url` with the given `headers`
     /// and `body` and wait for the response.
     def put(url: String, headers: Map[String, List[String]], body: String)
         : Result[IoError, Http.Response] \ HttpWithResult
+
+    // ... additional functions (head, delete, options, trace, patch) ...
 }
 ```
 
@@ -246,7 +248,7 @@ Flix defines a `Logger` effect for logging messages:
 ```flix
 eff Logger {
     /// Logs the given message `m` at the given severity `s`.
-    def log(s: Severity, m: String): Unit
+    def log(s: Severity, m: RichString): Unit
 }
 ```
 
@@ -255,19 +257,19 @@ The `Logger` companion module provides several convenience functions:
 ```flix
 mod Logger {
     /// Logs the message `m` at the `Trace` level.
-    def trace(m: a): Unit \ Logger with ToString[a]
+    def trace(m: a): Unit \ (Logger + Formattable.Aef[a]) with Formattable[a]
 
     /// Logs the message `m` at the `Debug` level.
-    def debug(m: a): Unit \ Logger with ToString[a]
+    def debug(m: a): Unit \ (Logger + Formattable.Aef[a]) with Formattable[a]
 
     /// Logs the message `m` at the `Info` level.
-    def info(m: a): Unit \ Logger with ToString[a]
+    def info(m: a): Unit \ (Logger + Formattable.Aef[a]) with Formattable[a]
 
     /// Logs the message `m` at the `Warn` level.
-    def warn(m: a): Unit \ Logger with ToString[a]
+    def warn(m: a): Unit \ (Logger + Formattable.Aef[a]) with Formattable[a]
 
     /// Logs the message `m` at the `Fatal` level.
-    def fatal(m: a): Unit \ Logger with ToString[a]
+    def fatal(m: a): Unit \ (Logger + Formattable.Aef[a]) with Formattable[a]
 }
 ```
 
@@ -287,11 +289,13 @@ Flix defines a `ProcessWithResult` effect for running commands outside of the JV
 
 ```flix
 eff ProcessWithResult {
-    /// Executes the command `cmd` with the arguments `args`, by the path `cwd` 
+    /// Executes the command `cmd` with the arguments `args`, by the path `cwd`
     /// and with the environment `env`.
-    def execWithCwdAndEnv(cmd: String, args: List[String], 
-                          cwd: Option[String], 
-                          env: Map[String, String]): ProcessHandle
+    def execWithCwdAndEnv(cmd: String, args: List[String],
+                          cwd: Option[String],
+                          env: Map[String, String]): Result[IoError, ProcessHandle]
+
+    // ... additional operations (exitValue, isAlive, pid, stop, waitFor, waitForTimeout) ...
 }
 ```
 
@@ -345,7 +349,7 @@ eff Random {
     /// Returns a pseudorandom 64-bit integer.
     def randomInt64(): Int64
 
-    /// Returns a pseudorandom 64-bit floating point number following a standard normal (Gaussian) distribution.
+    /// Returns a 64-bit floating point number following a standard normal (Gaussian) distribution.
     def randomGaussian(): Float64
 }
 ```

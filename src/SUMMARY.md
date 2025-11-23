@@ -32,6 +32,7 @@
   - [Effect Polymorphism](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
   - [Library Effects](./library-effects.md)
+  - [Default Handlers](./default-handlers.md)
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Modules](./modules.md)
   - [Declaring Modules](./declaring-modules.md)

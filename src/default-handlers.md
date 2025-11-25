@@ -1,7 +1,5 @@
 ## Default Handlers
 
-> **Note:** This feature requires Flix version 0.67.0
-
 Flix supports **default handlers** which means that an effect can declare a
 handler that translates the effect into the `IO` effect. This allows `main` (and
 any method annotated with `@Test`) to use that effect without explicitly

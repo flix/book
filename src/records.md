@@ -82,7 +82,7 @@ let p2 = { -y | p1 };
 Here the record `p2` has the same labels as `p1` except that the `y` label has
 been removed.
 
-## Row Polymorphism: Open and Closed Records
+## Row Polymorphism
 
 A function may specify that it requires a record with two labels:
 
@@ -104,7 +104,7 @@ def g(r: {x = Int32, y = Int32 | s}): Int32 = r#x + r#y
 We can call this function with *any* record as long as it has `x` and `y` labels
 which are of type `Int32`. We say that the record type of `r` is *open*.
 
-## Named Parameters with Records
+## Named Parameters
 
 When a function has multiple parameters that share the same type, it is easy to
 get confused about the right argument order. For example, what does

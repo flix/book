@@ -25,7 +25,7 @@ If a function argument is not used it must be
 prefixed with an underscore to explicitly mark it as
 unused.
 
-## First-Class and Higher-Order Functions
+## Higher-Order Functions
 
 A _higher-order function_ is a function that takes a
 parameter which is itself a function.

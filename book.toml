@@ -7,3 +7,4 @@ title = "Programming Flix"
 [output.html]
 git-repository-url = "https://github.com/flix/book/"
 edit-url-template = "https://github.com/flix/book/edit/master/{path}"
+sidebar-header-nav = false

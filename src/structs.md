@@ -1,4 +1,4 @@
-## Structs
+# Structs
 
 Flix supports mutable _scoped_ structs. A struct is a sequence of user-defined
 fields. Fields are immutable by default, but can be made mutable by marking them
@@ -20,7 +20,7 @@ Flix supports three operations for working with structs:
 
 Each operation has an effect in the region of the struct.
 
-### Declaring a Struct
+## Declaring a Struct
 
 We can declare a struct as follows:
 
@@ -41,7 +41,7 @@ region that the struct belongs to.
 Every struct must have a region type parameter and it must be the last in the
 type parameter list. 
 
-### Creating a Struct
+## Creating a Struct
 
 We can create an instance of the `Person` struct as follows:
 
@@ -65,7 +65,7 @@ specifies that we create a new instance of the `Person` struct in the region
 `rc`. We then specify the values of each field of the struct. All struct fields
 must be initialized immediately and explicitly. 
 
-### Reading and Writing Fields
+## Reading and Writing Fields
 
 We can read and write fields of a struct using the field access operator `->`. For example: 
 
@@ -100,7 +100,7 @@ it, whereas the latter should have space on both sides. In summary:
 - `s->f`: is a struct field access of field `f` on struct `s`.
 - `x -> x`: is a function from formal parameter `x` to the variable expression `x`.
 
-#### Field Visibility 
+### Field Visibility
 
 In Flix, the fields of a struct are only visible from within its companion
 module. We can think of this as a form of compiler-enforced encapsulation. 
@@ -163,7 +163,7 @@ mod Point {
 
 Thus access to the fields of struct is tightly controlled. 
 
-#### Immutable and Mutable Fields
+### Immutable and Mutable Fields
 
 In Flix, every field of a struct is either immutable or mutable. A mutable field
 must be marked with the `mut` modifier. Otherwise the field is immutable by
@@ -231,7 +231,7 @@ mod Book {
 Here we are not changing the field of the struct. We are changing the underlying
 mutable list. 
 
-### Recursive and Polymorphic Structs
+## Recursive and Polymorphic Structs
 
 We can define a struct for a binary search tree that is recursive and polymorphic:
 

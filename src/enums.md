@@ -1,6 +1,6 @@
-## Enums
+# Enums
 
-### Enumerated Types
+## Enumerated Types
 
 Enumerated types are used to define a type that has
 a finite (enumerated) set of values.
@@ -64,7 +64,7 @@ adding a default case as the last case.
 A default case is written with an underscore
 `case _ => ???`.
 
-### Recursive Types
+## Recursive Types
 
 Recursive types are used to define types that are
 self-referential.
@@ -98,7 +98,7 @@ If the tree is a leaf its value is simply returned.
 Otherwise the function recurses on both subtrees and
 adds their results.
 
-### Polymorphic Types
+## Polymorphic Types
 
 Polymorphic types are types parameterized by other
 types.
@@ -142,7 +142,7 @@ enum Result[e, t] {
 }
 ```
 
-### Shorthand Enum Syntax
+## Shorthand Enum Syntax
 
 A typical enum may look like:
 
@@ -168,7 +168,7 @@ enum Weekday {
 This shorthand syntax is always available, but should
 only be used for simple enums.
 
-### Singleton Enum Syntax
+## Singleton Enum Syntax
 
 An enum with a single case:
 

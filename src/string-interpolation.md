@@ -1,4 +1,4 @@
-## String Interpolation
+# String Interpolation
 
 Flix strings support interpolation. Inside a string, the form `"${e}"` evaluates
 `e` to a value and converts it to a string using the `ToString` trait. For

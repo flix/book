@@ -1,9 +1,9 @@
-## Build Management
+# Build Management
 
 We now discuss the build commands. Each command can be executed from the command
 line, from the REPL, and from VSCode. 
 
-### Creating a New Project
+## Creating a New Project
 
 We can create a new project, inside a directory, with the `init` command. 
 
@@ -30,13 +30,13 @@ The `flix.toml` manifest file is discussed in the next section.
 > **Tip:** The `init` command is safe to use; it will only create files that do
 > not already exist. 
 
-### Checking a Project
+## Checking a Project
 
 We can check a project for compiler errors with the `check` command. During
 development, the `check` command is preferable to the `build` command because it
 skips code generation (and hence is significantly faster). 
 
-### Building a Project
+## Building a Project
 
 We can compile a project with the `build` command. Running the `build` command
 will compile the entire project and emit bytecode, i.e. compiled Java classes,
@@ -45,7 +45,7 @@ to the `build` directory.
 Flix has no `clean` command. Deleting the `build` directory serves the same
 purpose.
 
-### Building a JAR-file
+## Building a JAR-file
 
 We can compile a project to a JAR-file with the `build-jar` command. The
 `build-jar` command emits a `artifact/project.jar` file. If there is `main`
@@ -61,7 +61,7 @@ on JAR-files.
 
 > **Note:** `build-jar` automatically invokes the `build` command.
 
-### Building a fat JAR-file (bundling all dependencies)
+## Building a fat JAR-file (bundling all dependencies)
 
 We can compile a project to a single standalone fat JAR-file with the
 `build-fatjar` command. The `build-fatjar` command emits a
@@ -74,7 +74,7 @@ directory.
 
 > **Note:** `build-fatjar` automatically invokes the `build` command.
 
-### Building a Flix Project
+## Building a Flix Project
 
 We can bundle a project into a Flix package file (fpkg) with the `build-pkg`
 command. Running the `build-pkg` command emits a `artifact/project.fpkg` file.
@@ -83,12 +83,12 @@ A Flix package file (fpkg) is essentially zip-file of the project source code. A
 Flix package, together with its `flix.toml` manifest, can be published on
 GitHub.
 
-### Running a Project
+## Running a Project
 
 We do not have to build a JAR-file to run a project, we can simply use the `run`
 command which will compile and run the main entry point.
 
-### Testing a Project
+## Testing a Project
 
 We can use the `test` command to run all test cases in a project. Flix will
 collect all functions marked with `@Test`, execute them, and print a summary of

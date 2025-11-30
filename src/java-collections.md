@@ -1,4 +1,4 @@
-## Java Collections
+# Java Collections
 
 Flix has support for conversion from and to Java collections. 
 
@@ -17,7 +17,7 @@ import java.util.{TreeMap => JTreeMap}
 The following functions are available in the
 [Adaptor](https://api.flix.dev/Adaptor.html) module: 
 
-### Flix to Java
+## Flix to Java
 
 The following functions _convert_ Flix collections to Java collections:
 
@@ -46,7 +46,7 @@ Each function constructs a new collection and copies all its elements into it.
 Hence each operation takes at least linear time. The result is a normal Java
 collection (which can be modified). 
 
-### Java to Flix
+## Java to Flix
 
 The following functions _convert_ Java collections to Flix collections:
 

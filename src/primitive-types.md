@@ -1,4 +1,4 @@
-## Primitive Types
+# Primitive Types
 
 Flix supports the primitive types:
 
@@ -21,11 +21,11 @@ Flix supports the primitive types:
 written without suffix, i.e. `123.0f64` can simply be written
 as `123.0` and `123i32` can be written as `123`.
 
-### Built-in Literals
+## Built-in Literals
 
 Flix has built-in syntactic sugar for lists, sets, maps and regex.
 
-#### List Literals
+### List Literals
 
 A list literal is written using the infix `::` constructor. For example:
 
@@ -45,7 +45,7 @@ Alternatively, the same list can also be written as:
 List#{1, 2, 3}
 ```
 
-#### Set Literals
+### Set Literals
 
 A set literal is written using the notation `Set#{v1, v2, ...}`. For example:
 
@@ -61,7 +61,7 @@ Set.insert(3, Set.insert(2, Set.insert(1, Set.empty())))
 
 Note that the elements are inserted from left to right, thus 1 is inserted first.
 
-#### Map Literals
+### Map Literals
 
 A map literal is written using the notation
 `Map#{k1 => v1, k2 => v2, ...}`.
@@ -79,7 +79,7 @@ Map.insert(2, "World", Map.insert(1, "Hello", Map.empty()))
 
 Note that similar to sets above, the entries are inserted left to right. In particular, if multiple entries share the same key, the rightmost one overwrites the previous values.
 
-#### Regex Literals
+### Regex Literals
 
 A regex literal is written using the notation `regex"..."`. For example:
 

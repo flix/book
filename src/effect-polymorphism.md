@@ -1,4 +1,4 @@
-## Effect Polymorphism
+# Effect Polymorphism
 
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
 
@@ -59,7 +59,7 @@ def strange(a: Array[t, r]): Unit \ {r, Clock, Net, IO}
 This function has a heap effect `r` and three primitive effects: `Clock`,
 `Net`, and `IO`.
 
-### Higher-Order Functions
+## Higher-Order Functions
 
 When we write higher-order functions, we must think carefully about their effect behavior. 
 
@@ -125,7 +125,7 @@ It's important to understand that there can be several ways to write the same
 effect set. For example, `ef1 + ef2` is equivalent to `ef2 + ef1`, as one would
 expect. 
 
-### Effect Exclusion
+## Effect Exclusion
 
 A novel feature of Flix is its support for [effect
 exclusion](https://dl.acm.org/doi/abs/10.1145/3607846). In simple terms, effect
@@ -152,7 +152,7 @@ Here the `recoverWith` function takes two function arguments: the function `f`
 that may throw an exception and a handler `h` which can handle the error.
 Notably, the effect system enforces that `h` cannot itself throw an exception.
 
-### Sub-Effecting
+## Sub-Effecting
 
 > **Note:** This feature is not yet enabled.
 

@@ -1,8 +1,8 @@
-## Publishing a Package on GitHub
+# Publishing a Package on GitHub
 
 Flix packages are published on GitHub.
 
-### Automatically Publishing a Package
+## Automatically Publishing a Package
 
 Flix can automatically package and publish artifacts on GitHub by following these steps:
 
@@ -46,7 +46,7 @@ Publishing new release...
 
 > **Warning:** Be sure to keep your token safe!
 
-### Manually Publishing a Package
+## Manually Publishing a Package
 
 A package can also be manually published by following these steps:
 

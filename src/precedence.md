@@ -1,4 +1,4 @@
-## Precedence
+# Precedence
 
 1. Unary operators (`+`, `-`, `~~~`, and `not`)
 1. User-defined operators (including operators defined in the standard library such as `|>`)

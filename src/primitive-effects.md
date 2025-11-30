@@ -1,4 +1,4 @@
-## Primitive Effects
+# Primitive Effects
 
 > **Note:** This page is slightly updated and pending a rewrite.
 
@@ -9,7 +9,7 @@ cannot be undone or reinterpreted.
 
 The most important primitive effect is the `IO` effect.
 
-### The `IO` Effect
+## The `IO` Effect
 
 The `IO` effect represents any action that interacts with the world outside the
 program. Such actions include printing to the console, creating, reading, and
@@ -25,7 +25,7 @@ The `IO` effect, and all other primitive effects, are _viral_. If a function has
 a primitive effect, all its callers will also have that primitive effect. That
 is to say, once you have tainted yourself with impurity, you remain tainted. 
 
-### The Other Primitive Effects
+## The Other Primitive Effects
 
 - **NonDet**: The `NonDet` effect represents an almost pure computation. For
   example, a function that flips a coin is virtually pure; it has no

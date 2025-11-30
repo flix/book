@@ -1,6 +1,6 @@
-## Frequently Asked Questions
+# Frequently Asked Questions
 
-### Does Flix supports constants?
+## Does Flix supports constants?
 
 Yes and no. Flix does not support top-level constants. You can, however, declare
 a pure function which takes zero arguments:

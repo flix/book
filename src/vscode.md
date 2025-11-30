@@ -1,4 +1,4 @@
-## Visual Studio Code Extension
+# Visual Studio Code Extension
 
 Flix comes with [a fully-featured Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=flix.flix):
 
@@ -9,7 +9,7 @@ messages) are always 1:1 with the real Flix programming language.
 
 Flix also comes with an (optional) Visual Studio Code color theme called "Flixify Dark".
 
-### Features
+## Features
 
 * __Semantic Syntax Highlighting__
     - Code highlighting for *.flix files. This work best with the [official vscode theme](https://marketplace.visualstudio.com/items?itemName=flix.flixify-dark).
@@ -62,7 +62,7 @@ Flix also comes with an (optional) Visual Studio Code color theme called "Flixif
 * __Semantic Tokens__
     - Additional code highlighting hints provided by the compiler.
 
-### Known Limitations
+## Known Limitations
 
 - There is a known issue with PowerShell and using file names that contain
   special characters. We recommend that Flix source files are given only ASCII

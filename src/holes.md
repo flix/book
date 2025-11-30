@@ -1,4 +1,4 @@
-## Anonymous and Named Holes
+# Anonymous and Named Holes
 
 During development, Flix encourages the use of holes for incomplete code. For
 example:
@@ -31,7 +31,7 @@ def length(l: List[a]): Int32 = match l {
 Flix requires that each named hole has a unique name.
 
 
-### Variable Holes and Auto-Completion
+## Variable Holes and Auto-Completion
 
 Flix has support for a special _variable hole_ which enables type-driven
 auto-completion suggestions. For example, in the program:

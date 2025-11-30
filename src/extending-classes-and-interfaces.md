@@ -1,4 +1,4 @@
-## Classes and Interfaces
+# Classes and Interfaces
 
 Flix allows us to create objects that extend a Java class or implements a Java interface.
 

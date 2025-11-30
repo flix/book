@@ -1,4 +1,4 @@
-## Lists
+# Lists
 
 A list is either the empty list, written as `Nil`,
 or a cons cell, written as `x :: xs` where `x` is

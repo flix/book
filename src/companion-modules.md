@@ -1,9 +1,9 @@
-## Companion Modules
+# Companion Modules
 
 In Flix every enum and trait declaration is associated with a _companion
 module_.
 
-### Enum Companions
+## Enum Companions
 
 When we declare an enum, its type and cases are automatically available inside
 its companion module. For example, we can write:
@@ -27,7 +27,7 @@ mod Color {
 Here the `Color` type and the `Red`, `Green`, and `Blue` cases are automatically
 in scope within the companion `Color` module.
 
-### Trait Companions
+## Trait Companions
 
 Every trait declaration also gives rise to a companion module.
 

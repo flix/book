@@ -1,9 +1,9 @@
-## Essential Traits
+# Essential Traits
 
 Practical programming in Flix requires knowledge of at least three traits: `Eq`,
 `Order`, and `ToString`. 
 
-### The Eq Trait
+## The Eq Trait
 
 The `Eq` trait captures when two values of a specific type are equal:
 
@@ -22,7 +22,7 @@ trait Eq[a] {
 To implement `Eq`, we only have to implement the `eq` function. When we
 implement `eq` we automatically get an implementation of `Eq.neq`.
 
-### The Order Trait
+## The Order Trait
 
 The `Order` trait captures when one value is smaller or equal to another value
 of the same type:
@@ -56,7 +56,7 @@ When we implement `compare`, we automatically get implementations of
 `Order.less`, `Order.lessThan`, `Order.greater`, `Order.greaterEqual`,
 `Order.max`, and `Order.min`.
 
-### The ToString Trait
+## The ToString Trait
 
 The `ToString` trait is used to obtain a string representation of a specific value:
 

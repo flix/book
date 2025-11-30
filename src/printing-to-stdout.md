@@ -1,4 +1,4 @@
-## Printing to Standard Out
+# Printing to Standard Out
 
 The Flix Prelude defines the `println` function which prints to standard out.
 For example:
@@ -21,7 +21,7 @@ The `println` function is rightfully effectful, hence it cannot be called from a
 pure function. To debug a pure function, use the builtin [debugging
 facilities](./debugging.md).
 
-### The Console Module
+## The Console Module
 
 The `Console` module defines additional functions for reading from or writing to
 the terminal: 

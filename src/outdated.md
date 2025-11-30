@@ -1,4 +1,4 @@
-## Finding Outdated Packages
+# Finding Outdated Packages
 
 We can use the `outdated` command to check if any Flix packages have updates
 available. 

@@ -1,4 +1,4 @@
-## Blog Posts
+# Blog Posts
 
 A few people are writing about various aspects of Flix on their blogs:
 

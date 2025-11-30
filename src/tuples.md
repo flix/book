@@ -1,4 +1,4 @@
-## Tuples
+# Tuples
 
 A tuple is a product of values. The form of a tuple is `(exp1, ..., expn)`.
 

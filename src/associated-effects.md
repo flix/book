@@ -1,4 +1,4 @@
-## Associated Effects
+# Associated Effects
 
 We have seen how associated types increase the flexibility of traits by allowing
 each instance to specify concrete types for the associated types. Associated
@@ -84,7 +84,7 @@ instance Dividable[Int32] {
 }
 ```
 
-### Associated Effects and Regions
+## Associated Effects and Regions
 
 We often want to use associated effects in combination with regions.
 

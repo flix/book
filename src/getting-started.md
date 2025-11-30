@@ -24,7 +24,7 @@ Once you have Java 21+ installed there are two ways to proceed:
 - You can use the [Flix VSCode extension](https://marketplace.visualstudio.com/items?itemName=flix.flix) (__highly recommended__) or
 - You can run the Flix compiler from the command line.
 
-### Using Flix from Visual Studio Code (VSCode)
+## Using Flix from Visual Studio Code (VSCode)
 
 Flix comes with a fully-featured VSCode plugin. Follow these steps to get
 started:
@@ -41,7 +41,7 @@ A screenshot of the Flix Visual Studio Code extension in action:
 
 ![Visual Studio Code1](images/vscode1.png)
 
-### Using Flix from Neovim
+## Using Flix from Neovim
 
 Flix can also be used from [Neovim](https://neovim.io/). Follow these steps to
 get started:
@@ -52,7 +52,7 @@ get started:
 nvim --version
 ```
 
-#### Neovim Flix plugin
+### Neovim Flix plugin
 
 There is a Lua [plugin](https://github.com/flix/nvim) which provides an LSP configuration for the native neovim lsp, and several functions to interact with the flix cli. It's repo has detailed installation and configuration instructions.
 It can be installed with a plugin manager of choice or cloned locally into your neovim runtime path.
@@ -117,7 +117,7 @@ The snippet above provides the following keybindings.
 
 ![Visual Studio Code1](images/neovim.png)
 
-#### Manual Neovim Configuration
+### Manual Neovim Configuration
 
 If you would rather setup the LSP server yourself the code from the plugin is as follows.
 
@@ -183,11 +183,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 > place this code in your `$HOME/.config/nvim/init.lua` or wherever you configure your lsp in neovim.
 
-### Using Flix from Emacs
+## Using Flix from Emacs
 
 Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs.
 
-### Using Flix from the Command Line
+## Using Flix from the Command Line
 
 Flix can also be used from the command line. Follow these steps:
 
@@ -197,7 +197,7 @@ Flix can also be used from the command line. Follow these steps:
 > 4. Run `java -jar flix.jar run` to compile and run the project.
 
 
-### Using nix
+## Using nix
 
 Flix can also be installed using the [nix package manager](https://nixos.org/).
 To install for the currently running shell run:
@@ -214,7 +214,7 @@ $ nix-env -i flix
 
 Then run `flix run` in your project directory.
 
-### Troubleshooting
+## Troubleshooting
 
 The most common reasons for Flix not working are (a) the `java` command not
 being on your `PATH`, (b) the `JAVA_HOME` environmental variable not being set

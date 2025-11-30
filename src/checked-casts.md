@@ -1,4 +1,4 @@
-## Checked Type and Effect Casts
+# Checked Type and Effect Casts
 
 The Flix type and effect system – by design – does not support sub-typing nor
 sub-effecting. To work around these limitations, which are rare in practice,
@@ -11,7 +11,7 @@ Flix has two _safe_ upcast constructs:
 > be _safe_. The Flix compiler will check at compile-time that every checked
 > cast cannot go wrong. 
 
-### Checked Type Casts
+## Checked Type Casts
 
 The following program:
 
@@ -56,7 +56,7 @@ let _: ##java.lang.Object       = checked_cast(null);
 let _: ##java.lang.String       = checked_cast(null);
 ```
 
-### Checked Effect Casts
+## Checked Effect Casts
 
 The following program:
 
@@ -102,7 +102,7 @@ The `checked_ecast` construct allows us to pretend that `x + 1` has the `IO` eff
 > require their function arguments to have a specific effect. Instead they
 > should be effect polymorphic. 
 
-### Function Types
+## Function Types
 
 Neither the `checked_cast` nor the `checked_ecast` constructs work on function types. 
 

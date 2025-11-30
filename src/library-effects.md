@@ -1,9 +1,9 @@
-## Library Effects
+# Library Effects
 
 The Flix Standard Library comes with a collection of algebraic effects and
 handlers.
 
-### Clock
+## Clock
 
 Flix defines a `Clock` effect to access the time since the [UNIX epoch](https://en.wikipedia.org/wiki/Unix_time):
 
@@ -27,7 +27,7 @@ mod Clock {
 Every effect in the standard library comes with `handle` and `runWithIO`
 functions.
 
-#### Example: Using `Clock`
+### Example: Using `Clock`
 
 ```flix
 def main(): Unit \ IO = 
@@ -37,7 +37,7 @@ def main(): Unit \ IO =
     } with Clock.runWithIO
 ```
 
-### Console
+## Console
 
 Flix defines a `Console` effect to read from and write to shell:
 
@@ -60,7 +60,7 @@ eff Console {
 }
 ```
 
-#### Example: Using `Console`
+### Example: Using `Console`
 
 ```flix
 def main(): Unit \ IO = 
@@ -71,7 +71,7 @@ def main(): Unit \ IO =
     } with Console.runWithIO
 ```
 
-### FileReadWithResult
+## FileReadWithResult
 
 Flix defines a `FileReadWithResult` effect to read from the file system:
 
@@ -124,7 +124,7 @@ eff FileReadWithResult {
 }
 ```
 
-#### Example: Using `FileReadWithResult`
+### Example: Using `FileReadWithResult`
 
 ```flix
 def main(): Unit \ IO = 
@@ -138,7 +138,7 @@ def main(): Unit \ IO =
     } with FileReadWithResult.runWithIO
 ```
 
-### FileWriteWithResult
+## FileWriteWithResult
 
 Flix defines a `FileWriteWithResult` effect to write to the file system:
 
@@ -176,7 +176,7 @@ eff FileWriteWithResult {
 }
 ```
 
-#### Example: Using `FileWriteWithResult`
+### Example: Using `FileWriteWithResult`
 
 ```flix
 def main(): Unit \ IO = 
@@ -190,7 +190,7 @@ def main(): Unit \ IO =
     } with FileWriteWithResult.runWithIO
 ```
 
-### HttpWithResult
+## HttpWithResult
 
 Flix defines a `HttpWithResult` effect to communicate over HTTP:
 
@@ -227,7 +227,7 @@ mod HttpWithResult {
 }
 ```
 
-#### Example: Using `HttpWithResult`
+### Example: Using `HttpWithResult`
 
 ```flix
 def main(): Unit \ {Net, IO} =
@@ -241,7 +241,7 @@ def main(): Unit \ {Net, IO} =
     } with HttpWithResult.runWithIO
 ```
 
-### Logger
+## Logger
 
 Flix defines a `Logger` effect for logging messages:
 
@@ -273,7 +273,7 @@ mod Logger {
 }
 ```
 
-#### Example: Using `Logger`
+### Example: Using `Logger`
 
 ```flix
 def main(): Unit \ IO =
@@ -283,7 +283,7 @@ def main(): Unit \ IO =
     } with Logger.runWithIO
 ```
 
-### ProcessWithResult
+## ProcessWithResult
 
 Flix defines a `ProcessWithResult` effect for running commands outside of the JVM:
 
@@ -316,7 +316,7 @@ def execWithEnv(cmd: String, args: List[String], env: Map[String, String])
     : Result[IoError, ProcessHandle] \ ProcessWithResult
 ```
 
-#### Example: Using `ProcessWithResult`
+### Example: Using `ProcessWithResult`
 
 ```flix
 def main(): Unit \ {Exec, IO} =
@@ -328,7 +328,7 @@ def main(): Unit \ {Exec, IO} =
     } with ProcessWithResult.runWithIO
 ```
 
-### Random
+## Random
 
 Flix defines a `Random` effect for the generation of random values:
 
@@ -354,7 +354,7 @@ eff Random {
 }
 ```
 
-#### Example: Using `Random`
+### Example: Using `Random`
 
 ```flix
 def main(): Unit \ {NonDet, IO} =
@@ -367,7 +367,7 @@ def main(): Unit \ {NonDet, IO} =
     } with Random.runWithIO
 ```
 
-### Running Multiple Effects
+## Running Multiple Effects
 
 We can easily combine multiple effects and run them:
 

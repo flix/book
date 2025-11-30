@@ -1,4 +1,4 @@
-## Using Modules
+# Using Modules
 
 As we have already seen, the `use` construct brings members of a module into local scope.
 
@@ -33,7 +33,7 @@ use A.B.Hue
 use A.B.isWarm 
 ```
 
-### All Kinds of Uses
+## All Kinds of Uses
 
 Flix supports several kinds of uses, including:
 
@@ -44,7 +44,7 @@ Flix supports several kinds of uses, including:
 
 > **Note:** Flix does not support wildcard.
 
-### Where can Uses Occur?
+## Where can Uses Occur?
 
 Flix supports uses in two places:
 
@@ -89,7 +89,7 @@ mod A {
 
 Note the use of semicolons when inside an expression. 
 
-### Default Uses
+## Default Uses
 
 In Flix, a few built-in constructors are always in scope:
 

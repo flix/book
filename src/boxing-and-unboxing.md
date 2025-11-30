@@ -1,11 +1,11 @@
-## Boxing and Unboxing
+# Boxing and Unboxing
 
 Unlike Java, Flix never performs implicit boxing or unboxing of values. 
 
 We believe auto boxing is a design flaw and do not plan to support it. Hence,
 primitive values must be manually boxed and unboxed. 
 
-### Boxing
+## Boxing
 
 The following example shows how to box a primitive integer:
 
@@ -19,7 +19,7 @@ Here the call to `Box.box(x)` returns an `Integer` object. Since `i` is an
 object, we can call `toString` on it. Boxing is a pure operation, but calling
 `toString` has the `IO` effect. 
 
-### Unboxing
+## Unboxing
 
 The following example shows how to unbox two Java `Integer` objects:
 

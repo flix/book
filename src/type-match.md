@@ -1,4 +1,4 @@
-## Type Match
+# Type Match
 
 Flix supports a type match construct that enables compile-time pattern matching
 on the type of a polymorphic value. 

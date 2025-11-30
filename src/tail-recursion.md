@@ -1,4 +1,4 @@
-## Tail Recursion
+# Tail Recursion
 
 In Flix, and in functional programming in general, iteration is expressed
 through [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)).
@@ -49,7 +49,7 @@ def main(): Unit \ IO =
 which is not the case in many other programming languages.
 
 
-### Non-Tail Calls and StackOverflows
+## Non-Tail Calls and StackOverflows
 
 While the Flix compiler _guarantees_ that tail calls cannot overflow the stack,
 the same is not true for function calls in non-tail positions.

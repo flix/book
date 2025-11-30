@@ -1,4 +1,4 @@
-## Creating Objects
+# Creating Objects
 
 In Flix, we can create objects using syntax similar to Java.
 

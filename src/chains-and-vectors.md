@@ -1,4 +1,4 @@
-## Chains and Vectors
+# Chains and Vectors
 
 In addition to immutable `List`s, Flix also supports immutable `Chain`s and
 `Vector`s. 
@@ -23,7 +23,7 @@ When to use `List`, `Chain`, or `Vector`?:
 - The `Chain` data structure is more rarely used, but shines when fast appends
   are required. 
 
-### Chains
+## Chains
 
 A `Chain[t]` is an immutable linked sequence of elements. 
 
@@ -53,7 +53,7 @@ println(c)
 
 which prints `Chain#{1}` when compiled and executed.
 
-### Vectors
+## Vectors
 
 A `Vector[t]` is an immutable fixed-length sequence of contiguous elements of
 type `t`.

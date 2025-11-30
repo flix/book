@@ -24,7 +24,7 @@ Once you have Java 21+ installed there are two ways to proceed:
 - You can use the [Flix VSCode extension](https://marketplace.visualstudio.com/items?itemName=flix.flix) (__highly recommended__) or
 - You can run the Flix compiler from the command line.
 
-## Using Flix from Visual Studio Code (VSCode)
+## Using Flix from VSCode
 
 Flix comes with a fully-featured VSCode plugin. Follow these steps to get
 started:
@@ -52,7 +52,7 @@ get started:
 nvim --version
 ```
 
-### Neovim Flix plugin
+### Neovim Plugin
 
 There is a Lua [plugin](https://github.com/flix/nvim) which provides an LSP configuration for the native neovim lsp, and several functions to interact with the flix cli. It's repo has detailed installation and configuration instructions.
 It can be installed with a plugin manager of choice or cloned locally into your neovim runtime path.
@@ -117,7 +117,7 @@ The snippet above provides the following keybindings.
 
 ![Visual Studio Code1](images/neovim.png)
 
-### Manual Neovim Configuration
+### Manual Configuration
 
 If you would rather setup the LSP server yourself the code from the plugin is as follows.
 
@@ -187,7 +187,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs.
 
-## Using Flix from the Command Line
+## Using Flix from the CLI
 
 Flix can also be used from the command line. Follow these steps:
 
@@ -196,8 +196,7 @@ Flix can also be used from the command line. Follow these steps:
 > 3. Enter the created directory (e.g. `cd my-flix-project`) and run `java -jar flix.jar init` to create an empty Flix project.
 > 4. Run `java -jar flix.jar run` to compile and run the project.
 
-
-## Using nix
+## Installing Flix with Nix
 
 Flix can also be installed using the [nix package manager](https://nixos.org/).
 To install for the currently running shell run:

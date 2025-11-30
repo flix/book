@@ -1,4 +1,4 @@
-# Primitive Types
+# Primitives
 
 Flix supports the primitive types:
 
@@ -21,7 +21,7 @@ Flix supports the primitive types:
 written without suffix, i.e. `123.0f64` can simply be written
 as `123.0` and `123i32` can be written as `123`.
 
-## Built-in Literals
+## Literals
 
 Flix has built-in syntactic sugar for lists, sets, maps and regex.
 

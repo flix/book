@@ -1,4 +1,4 @@
-## Mutable Collections
+# Mutable Collections
 
 The Flix standard library supports many immutable collections, including
 options, lists, chains, sets, and maps. We strongly encourage their use.

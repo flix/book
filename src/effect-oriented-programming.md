@@ -1,4 +1,4 @@
-## Effect-Oriented Programming
+# Effect-Oriented Programming
 
 Programming with effects requires a new mindset, _an effect-oriented mindset_.
 
@@ -18,7 +18,7 @@ that `IO` effect should be _close_ to the `main` function.
 
 We now illustrate these points with an example.
 
-#### A Guessing Game &mdash; The Wrong Way
+## A Guessing Game &mdash; The Wrong Way
 
 Consider the following program written in a mixed style of Flix and Java:
 
@@ -78,7 +78,7 @@ Programming in a effect-oriented style means that we should define effects for
 every action that interacts with the outside world. We should then _handle_
 these effects close to the `main` function.
 
-#### A Guessing Game &mdash; The Right Way
+## A Guessing Game &mdash; The Right Way
 
 Here is what we should have done:
 

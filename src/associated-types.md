@@ -1,4 +1,4 @@
-## Associated Types
+# Associated Types
 
 An associated type is a type member of a trait that is specified by each trait
 instance. Associated types are often considered a more natural alternative to
@@ -104,7 +104,7 @@ If we had such overlapping instances, an expression like `Addable.add(Set#{},
 Set#{})` would become ambiguous: Are we adding two sets? Or are we adding the
 empty set to a set? 
 
-### Example: A `ForEach` Trait
+## Example: A `ForEach` Trait
 
 We can use associated types to define a trait for collections that have a
 `forEach` function: 
@@ -152,7 +152,7 @@ instance ForEach[String] {
 }
 ```
 
-### Example: A `Collection` Trait
+## Example: A `Collection` Trait
 
 As another example, we can define a trait for collections:
 
@@ -190,7 +190,7 @@ instance Collection[Set[a]] with Order[a] {
 }
 ```
 
-### Equality Constraints
+## Equality Constraints
 
 We sometimes want to write polymorphic functions where we _restrict_ an
 associated type. 
@@ -211,7 +211,7 @@ Specifically, the equality constraint `Collection.Elm[t] ~ Int32` assert that
 This restriction ensures that the elements of the collection are integers and
 allows us to call `List.sum`.
 
-### Default Types
+## Default Types
 
 We can define a default type for an associated type.
 

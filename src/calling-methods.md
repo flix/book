@@ -1,4 +1,4 @@
-## Calling Object Methods
+# Calling Object Methods
 
 In Flix, we can call methods on Java objects using syntax similar to Java.
 

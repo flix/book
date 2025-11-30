@@ -1,4 +1,4 @@
-## Sets and Maps
+# Sets and Maps
 
 Flix has excellent support for (immutable) `Set`s and `Map` based on balanced
 trees; hence the elements of a `Set` and the keys of `Map` must implement the
@@ -8,7 +8,7 @@ trees; hence the elements of a `Set` and the keys of `Map` must implement the
 > parallelize certain operations. Such operations are marked with
 > `@ParallelWhenPure` in the API docs. 
 
-### Sets
+## Sets
 
 The empty set is written as:
 
@@ -47,7 +47,7 @@ let sr = Set.union(s1, s2);
 Since `Set`s are `SemiGroup`s, we can also use the `++` operator and write `s1
 ++ s2`. 
 
-### Maps
+## Maps
 
 The empty map is written as:
 

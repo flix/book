@@ -1,4 +1,4 @@
-## Redundancy
+# Redundancy
 
 The Flix compiler aggressively rejects programs that contain unused elements.
 The idea is to help programmers avoid subtle bugs[^1]. While this can take some
@@ -11,7 +11,7 @@ Specifically, the Flix compiler will ensure that a program does not have:
 - [Useless expressions](#useless-expressions): pure expressions whose values are discarded.
 - [Must use values](#must-use-values): expressions whose values are unused but their type is marked as `@MustUse`.
 
-### Unused Local Variables
+## Unused Local Variables
 
 Flix rejects programs with unused variables.
 
@@ -46,7 +46,7 @@ def main(): Unit \ IO =
     println("The sum is ${x + x}")
 ```
 
-### Shadowed Local Variables
+## Shadowed Local Variables
 
 Flix rejects programs with shadowed variables.
 
@@ -79,7 +79,7 @@ The shadowed variable was declared here:
 
 
 
-### Useless Expressions
+## Useless Expressions
 
 Flix rejects programs with _pure_ expressions whose results are discarded.
 
@@ -108,7 +108,7 @@ The expression has type 'Int32'
 An expression that has no side-effect and whose result is unused is suspicious,
 since it could just be removed from the program without changing its meaning.
 
-### Must Use Values
+## Must Use Values
 
 Flix rejects programs with expressions whose values are discarded but where
 their type is marked with the `@MustUse` annotation. Function types, and the

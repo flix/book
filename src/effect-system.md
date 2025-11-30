@@ -60,7 +60,7 @@ Before we continue, it is important to understand that Flix has three types of e
 We describe how traits and effects interact in the section on [Associated
 Effects](./associated-effects.md).
 
-### Direct Style
+## Direct Style
 
 Flix is a so-called _direct-style_ programming language with a traditional type
 and effect system. This is in contrast to so-called _functional effect systems_

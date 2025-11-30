@@ -1,11 +1,11 @@
-## Type-Level Programming
+# Type-Level Programming
 
 > **Note:** This feature is experimental. Do not use in production.
 
 This section assumes prior familiarity with type-level programming and phantom
 types.
 
-### Type-Level Booleans
+## Type-Level Booleans
 
 A unique Flix feature is its support for _type-level Boolean formulas_. This
 means `true` and `false` are types, but also that formulas such as `x and (not
@@ -22,7 +22,7 @@ We can use type-level Boolean formulas to statically enforce program invariants.
 
 We illustrate with a few examples:
 
-#### Humans and Vampires
+### Humans and Vampires
 
 ```flix
 ///

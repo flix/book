@@ -1,4 +1,4 @@
-## Foreach
+# Foreach
 
 Flix supports a traditional _foreach_ construct that enables imperative
 iteration through collections. 
@@ -53,7 +53,7 @@ def isExcotic(fruit: String): Bool = match fruit {
 }
 ```
 
-### Adding Optional Braces for Visual Clarity
+## Adding Optional Braces for Visual Clarity
 
 We can sometimes improve the visual clarity of a `foreach` expression by adding
 braces:
@@ -72,7 +72,7 @@ def main(): Unit \ IO =
 The braces have no impact on the meaning of the `foreach` loop; they are purely
 stylistic. 
 
-### The ForEach Trait
+## The ForEach Trait
 
 We can use the `foreach` syntax to iterate through any collection type that
 implements the `ForEach` trait. In particular, the `ForEach` trait

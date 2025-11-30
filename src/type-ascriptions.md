@@ -1,4 +1,4 @@
-## Type Ascriptions
+# Type Ascriptions
 
 While Flix supports local type inference, it can sometimes be useful to annotate
 an expression or a let-binding with its type. We call such annotations *type
@@ -18,7 +18,7 @@ It can also be placed on a let-binding without parentheses:
 ```flix
 let l: List[String] = "Hello" :: "World" :: Nil
 ```
-### Kind Ascriptions
+## Kind Ascriptions
 
 Flix also supports kind ascriptions. Where a type ascription specifies the
 _type_ of an _expression_, a kind ascription specifies the _kind_ of a _type_.

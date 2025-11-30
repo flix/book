@@ -1,4 +1,4 @@
-## Hello World
+# Hello World
 
 We can now see the famous _Hello World_ program in `src/Main.flix` file:
 

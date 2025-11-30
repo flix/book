@@ -1,4 +1,4 @@
-## Declaring Modules
+# Declaring Modules
 
 As we have already seen, modules can be declared using the `mod` keyword:
 
@@ -50,7 +50,7 @@ def main(): Unit \ IO =
     buyGift()
 ```
 
-### Accessibility
+## Accessibility
 
 A module member `m` declared in module `A` is accessible from another module `B`
 if:

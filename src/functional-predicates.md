@@ -1,4 +1,4 @@
-## Functional Predicates
+# Functional Predicates
 
 We sometimes run into a situation where we would like to use a logic predicate,
 but not to exhaustively enumerate all of its tuples. 

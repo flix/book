@@ -1,4 +1,4 @@
-## Research Literature
+# Research Literature
 
 The following research papers cover specific aspects of Flix:
 

@@ -1,4 +1,4 @@
-## Higher-Kinded Types
+# Higher-Kinded Types
 
 Flix supports [higher-kinded
 types](https://en.wikipedia.org/wiki/Kind_(type_theory)), hence traits can
@@ -37,7 +37,7 @@ instance ForEach[List] {
 }
 ```
 
-### The Flix Kinds
+## The Flix Kinds
 
 Flix supports the following kinds:
 
@@ -74,7 +74,7 @@ Flix requires explicit kind annotations in four situations:
 The most common scenario where you will need a kind annotation is when you want
 a type parameter or type member to range over an effect.
 
-### Higher-Kinded Types vs. Associated Types
+## Higher-Kinded Types vs. Associated Types
 
 In practice higher-kinded types and associated types can be used to define
 similar abstractions.

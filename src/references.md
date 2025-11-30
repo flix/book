@@ -1,4 +1,4 @@
-## References
+# References
 
 Flix supports mutable _scoped_ references. A reference is a box whose value can
 change over time. The three key reference operations are:
@@ -19,7 +19,7 @@ returns the content of a reference cell, and the assignment `Ref.put` operation
 changes the value of a reference cell. Informally, a reference cell can be
 thought of as an "object" with a single field that can be changed.
 
-### Allocating References
+## Allocating References
 
 A reference cell is allocated with the `Ref.fresh(rc, e)` function. For example:
 
@@ -33,7 +33,7 @@ region rc {
 Here we introduce a region named `rc`. Inside the region, we create a reference
 cell called `c` with the value `42` which we then dereference and print.
 
-### Dereferencing References
+## Dereferencing References
 
 A reference cell is accessed (dereferenced) with the `Ref.get` function. For example:
 
@@ -48,7 +48,7 @@ region rc {
 
 Here the program prints `42 + 42 = 84`.
 
-### Assignment
+## Assignment
 
 We can update the value of a reference cell. For example:
 
@@ -65,7 +65,7 @@ region rc {
 Here the program creates a reference cell `c` with the value `0`. We dereference
 the cell and increment its value three times. Hence the program prints `3`.
 
-### Example: A Simple Counter
+## Example: A Simple Counter
 
 We can use references to implement a simple counter:
 
@@ -100,7 +100,7 @@ are also scoped. Note that the `newCounter` function requires a region handle to
 create a new `Counter`. Moreover, note that the functions `getCount` and
 `increment` both have the `r` effect.
 
-### Aliasing and References to References
+## Aliasing and References to References
 
 References naturally support aliasing since that is their purpose. For example:
 
@@ -129,7 +129,7 @@ region rc {
 
 Here the type of `l2` is `Ref[Ref[Int32, rc], rc]`.
 
-### Mutable Tuples and Records
+## Mutable Tuples and Records
 
 Flix tuples and records are _immutable_. However, tuples and records may contain
 mutable references.

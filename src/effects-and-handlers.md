@@ -1,4 +1,4 @@
-## Effects and Handlers
+# Effects and Handlers
 
 Flix supports algebraic effects and handlers in the style of
 [Eff](https://www.eff-lang.org/) and [Koka](https://koka-lang.github.io/). 
@@ -13,7 +13,7 @@ reader take a look at:
 
 We begin a type of effect most programmers are familiar with: *exceptions*.
 
-### Non-Resumable Effects: Exceptions
+## Non-Resumable Effects: Exceptions
 
 We can use effects and handlers to implement exceptions. For example:
 
@@ -82,7 +82,7 @@ Because the first two calls to `divide` succeed, whereas the last call will
 raise a `DivByZero` exception. Notably, the Flix type and effect system can
 track the exception effect through the effect polymorphic call to `List.map`.
 
-### Resumable Effects
+## Resumable Effects
 
 Flix also supports resumable effects. For example:
 
@@ -123,7 +123,7 @@ captures the current continuation and finds the closest handler (in `main`),
 which **resumes** the computation from within `greeting` using the current hour
 of the day, as obtained from system clock. 
 
-### Multiple Effects and Handlers
+## Multiple Effects and Handlers
 
 We can write functions that use multiple effects:
 
@@ -157,7 +157,7 @@ string to the environment. We use both effects in `greeting`. In `main`, we call
 the continuation with the string `"Bond, James Bond"`. We handle the `Say`
 effect by printing to the console and resuming the continuation.
 
-### Multiple Resumptions
+## Multiple Resumptions
 
 Flix supports algebraic effects with multiple resumptions. We can use such
 effects to implement async/await, backtracking search, cooperative
@@ -227,7 +227,7 @@ handlers matters*! If we handle the `Exc` effect first then we obtain the list
 `Some(heads) :: Some(tails) :: None :: Nil`. If, on the other hand, we handle
 `Exc` last then the whole computation fails with `None`.
 
-### Algebraic Effects and Monads
+## Algebraic Effects and Monads
 
 Flix supports algebraic effect handlers and [monads](./monadic-for-yield.md)
 because we want to support both styles of programming: 
@@ -243,7 +243,7 @@ to model interaction with the outside world but prefer the `Option` and `Result`
 data types for simple error handling. Working with `Option`s and `Result`s is
 more pleasant with [monadic syntax](./monadic-for-yield.md).
 
-### Limitation: Polymorphic Effects
+## Limitation: Polymorphic Effects
 
 The Flix type and effect system does not yet support polymorphic effects.[^1] 
 
@@ -282,7 +282,7 @@ eff ThrowInt32 {
 }
 ```
 
-### Unhandled Effects in New Object and Spawn Expressions
+## Unhandled Effects in New Object and Spawn Expressions
 
 Flix does not permit unhandled effects in new object expressions nor in spawn
 expressions. 

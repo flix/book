@@ -1,4 +1,4 @@
-## Arrays
+# Arrays
 
 Flix supports mutable _scoped_ arrays. An array is a fixed-length mutable
 sequence of elements that share the same type. Arrays are laid out consecutively
@@ -26,7 +26,7 @@ recommend that arrays are used sparingly. Instead, we recommend using the
 
 > **Hint:** Use `MutList` if you need a _growable_ mutable sequence of elements.
 
-### Array Literals
+## Array Literals
 
 The syntax of an array literal is of the form `Array#{e1, e2, e3, ...} @ r`
 where `e1`, `e2`, and so forth are _element expressions_, and `r` is the _region
@@ -46,7 +46,7 @@ refer to the chapter on [Regions](regions.md).
 
 Running the program prints `Array#{"Apple", "Pear", "Mango"}`.
 
-### Allocating Arrays
+## Allocating Arrays
 
 We can allocate an array of size `n` filled with the same element using the
 `Array.repeat` function. For example:
@@ -84,7 +84,7 @@ region rc {
 Note that we must pass the region `rc` as an argument to `List.toArray` since
 the function must know to which region the returned array should belong.
 
-### Allocating Arrays with Uninitialized Elements
+## Allocating Arrays with Uninitialized Elements
 
 We can use the `Array.empty` function to create an array of a given length where
 the content of the array is uninitialized. For example:
@@ -110,7 +110,7 @@ Flix does not have a `null` value, but one can be indirectly introduced by
 reading from improperly initialized arrays which can lead to
 `NullPointerException`s.
 
-### Reading from and Writing to Arrays
+## Reading from and Writing to Arrays
 
 We can retrieve or update the element at a specific position in an array using
 `Array.get` and `Array.put`, respectively. For example:
@@ -141,7 +141,7 @@ let strings =
     Array.put("World", 1);
 ```
 
-### Slicing Arrays
+## Slicing Arrays
 
 We can slice arrays using `Array.slice`. A slice of an array is a new (shallow)
 copy of a sub-range of the original array. For example
@@ -156,7 +156,7 @@ region rc {
 
 which prints `Array#{"Pear"}` when run.
 
-### Taking the Length of an Array
+## Taking the Length of an Array
 
 We can compute the length of an array using the `Array.length` function. For
 example
@@ -174,7 +174,7 @@ which prints `3` when run.
 > we recommend to use functions such as `Array.count`, `Array.forEach`, and
 > `Array.transform`.
 
-### Additional Array Operations
+## Additional Array Operations
 
 The `Array` module offers an extensive collection of functions for working with
 arrays. For example, `Array.append`, `Array.copyOfRange`, `Array.findLeft`,

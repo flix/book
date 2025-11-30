@@ -1,4 +1,4 @@
-## Purity Reflection
+# Purity Reflection
 
 > **Note:** This is an advanced feature and should only be used by experts.
 

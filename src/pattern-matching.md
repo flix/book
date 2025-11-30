@@ -1,6 +1,6 @@
-## Pattern Matching
+# Pattern Matching
 
-### Matching on Enums
+## Matching on Enums
 
 Flix supports pattern matching on algebraic data types.
 
@@ -25,7 +25,7 @@ def area(s: Shape): Int32 = match s {
 }
 ```
 
-### Matching on Records
+## Matching on Records
 
 The above also works for record types; however, the syntax is slightly different.
 Let us rewrite the `Shape` type from before, this time using records.
@@ -114,7 +114,7 @@ To summarize, here are a few examples of record patterns:
 - `{ radius | _ }` - a record containg at least the label `radius`
 - `{ radius | r }` - a record containg at least the label `radius` where the rest of the record is bound to `r`
 
-### Let Pattern Match
+## Let Pattern Match
 
 In addition to the pattern `match` construct, a let-binding can be used to
 destruct a value. For example:
@@ -153,7 +153,7 @@ let { height | _ } = r;
 height + height
 ```
 
-### Match Lambdas
+## Match Lambdas
 
 Pattern matches can also be used with lambda expressions. For example:
 

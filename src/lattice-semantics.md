@@ -1,4 +1,4 @@
-## Using Flix to Solve Constraints on Lattices
+# Using Flix to Solve Constraints on Lattices
 
 Flix supports not only _constraints on relations_,
 but also _constraints on lattices_.
@@ -154,7 +154,7 @@ pub def main(): Unit \ IO =
 Note the careful use of `;` to designate lattice
 semantics.
 
-### Using Lattice Semantics to Compute Shortest Paths
+## Using Lattice Semantics to Compute Shortest Paths
 
 We can also use lattice semantics to compute shortest paths.
 

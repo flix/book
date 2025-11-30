@@ -1,11 +1,11 @@
-## Applicative For-Yield
+# Applicative For-Yield
 
 In addition to the monadic `forM` expression, Flix supports an applicative
 `forA` expression that builds on the `Applicative` trait. The `forA`
 construct makes it simple to write error-handling code which uses the
 `Validation[e, t]` data type. 
 
-### Working with Validations
+## Working with Validations
 
 We can use the `forA` expression to validate user input while collecting all
 errors.
@@ -61,7 +61,7 @@ evaluates to:
 Success(Connection(luckyluke, password12356789))
 ```
 
-### Applicatives are Independent Computations
+## Applicatives are Independent Computations
 
 We can write a monadic `forM` expression where the result of one monadic
 operation is used as the input to another monadic operation. For example:
@@ -96,7 +96,7 @@ then the Flix compiler emits a compiler error:
 because the computations of `x` and `y` are _independent_ and hence the value of
 `x` is _not_ in scope when we define the value of `y`.
 
-### Desugaring
+## Desugaring
 
 The `forA` expression is syntactic sugar for uses of `Functor.map` and
 `Applicative.ap`.

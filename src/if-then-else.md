@@ -1,4 +1,4 @@
-## If-then-else
+# If-then-else
 
 Flix supports the usual *if-then-else* expression:
 
@@ -10,7 +10,7 @@ which evaluates to `Hello`.
 
 But `if` guards are also supported in other parts of the language.
 
-### Guarded Pattern Matches
+## Guarded Pattern Matches
 
 We can use an `if`-guard in a pattern match:
 
@@ -21,7 +21,7 @@ def isSquare(s: Shape): Bool = match s {
 }
 ```
 
-### Guarded Datalog Rules
+## Guarded Datalog Rules
 
 We can use an `if`-guard in a Datalog rule:
 

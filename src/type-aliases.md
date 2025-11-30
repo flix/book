@@ -1,4 +1,4 @@
-## Type Aliases
+# Type Aliases
 
 Type aliases introduces a short-hand name for a
 type.

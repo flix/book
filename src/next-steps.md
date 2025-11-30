@@ -1,4 +1,4 @@
-## Next Steps
+# Next Steps
 
 We are now ready write our first real program! 
 

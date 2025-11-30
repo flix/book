@@ -1,4 +1,4 @@
-## Monadic For-Yield
+# Monadic For-Yield
 
 Flix supports a monadic _forM-yield_ construct similar to Scala's
 for-comprehensions and Haskell's do notation. The _forM_ construct is syntactic
@@ -21,7 +21,7 @@ evaluates to the list:
 (1, 1) :: (1, 2) :: (2, 1) :: (2, 2) :: Nil
 ```
 
-### Using Guard Expressions
+## Using Guard Expressions
 
 We can use _guard expressions_ in `forM` expressions. For example, the program:
 
@@ -38,7 +38,7 @@ evaluates to the list:
 (1, 2) :: Nil
 ```
 
-### Working with Options and Results
+## Working with Options and Results
 
 We can also use `forM` to work with the `Option` data type. For example:
 
@@ -82,7 +82,7 @@ either an error or the input string. Thus the local variables `fstName`,
 is successful then we print a greeting and return `Ok(())` (i.e., `Ok` of
 `Unit`). Otherwise, we return an `Err(msg)` value.
 
-### Working with Other Monads
+## Working with Other Monads
 
 We can use `forM` with other types of `Monad`s, including `Chain` and `Nel`s
 (non-empty lists). For example, we can write:
@@ -104,7 +104,7 @@ Nel((1, 1), (1, 2) :: (2, 1) :: (2, 2) :: Nil)
 > `if`-guard requires an instance of the `MonadZero` trait which is not
 > implemented by non-empty list (since such a list cannot be empty). 
 
-### Desugaring
+## Desugaring
 
 The `forM` expression is syntactic sugar for uses of `Monad.flatMap`,
 `Applicative.point`, and `MonadZero.empty`. 

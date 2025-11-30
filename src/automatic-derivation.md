@@ -1,4 +1,4 @@
-## Automatic Derivation
+# Automatic Derivation
 
 Flix supports automatic derivation of several traits, including:
 
@@ -8,7 +8,7 @@ Flix supports automatic derivation of several traits, including:
 - `Sendable` — to enable the values of an (immutable) type to be sent over a channel.
 - `Coerce` - to convert simple data types to their underlying representation.
 
-### Derivation of Eq and Order
+## Derivation of Eq and Order
 
 We can automatically derive instances of the `Eq` and `Order` traits using
 the `with` clause in the `enum` declaration. For example: 
@@ -35,7 +35,7 @@ def main(): Unit \ IO =
 > **Note**: Automatic derivation of `Eq` and `Order` requires that the inner
 > types of the `enum` implement `Eq` and `Order` themselves.
 
-### Derivation of ToString
+## Derivation of ToString
 
 We can also automatically derive `ToString` instances:
 
@@ -63,7 +63,7 @@ which prints:
 A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
 ```
 
-### Derivation of Sendable
+## Derivation of Sendable
 
 We can automatically derive implementations of the `Sendable` trait (which
 allow values of a specific type to be sent over a channel). For example:
@@ -106,7 +106,7 @@ Because it takes a type parameter of kind 'Region'.
 
 This is because mutable data is not safe to share between threads.
 
-### Derivation of Coerce
+## Derivation of Coerce
 
 We can automatically derive implementations of the `Coerce` trait.
 The `Coerce` trait converts a simple (one-case) data type

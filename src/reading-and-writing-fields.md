@@ -1,9 +1,9 @@
-## Reading and Writing Fields
+# Reading and Writing Fields
 
 Flix supports reading object fields and static (class) fields with standard Java
 syntax.
 
-### Reading Object Fields
+## Reading Object Fields
 
 We can read an object field as follows:
 
@@ -13,7 +13,7 @@ import java.awt.Point
 def area(p: Point): Int32 \ IO = p.x * p.y
 ```
 
-### Reading Static Fields
+## Reading Static Fields
 
 We can read a static field as follows:
 

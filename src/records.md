@@ -1,10 +1,10 @@
-## Records
+# Records
 
 Flix supports row polymorphic extensible records.
 
 Flix records are immutable (but may contain mutable reference cells).
 
-### Record Literals
+## Record Literals
 
 A record literal is written with curly braces:
 
@@ -26,7 +26,7 @@ which has type `{ y = Int32, x = Int32 }`. This type is equivalent to `{ x =
 Int32, y = Int32 }`. In other words, the order of labels within a record type
 does not matter.
 
-### Label Access
+## Label Access
 
 We can access the label of a record using a hash:
 
@@ -40,7 +40,7 @@ The type system ensures that we cannot access a label that does not exist.
 Records are immutable. Once constructed, the values of the record labels cannot
 be changed.
 
-### Label Update
+## Label Update
 
 While records are immutable, we can construct a new
 record with an updated label value:
@@ -56,7 +56,7 @@ The expression `{ x = 3 | p1 }` updates the record `p1` with a new value of its
 record. A record cannot be *updated* with a new label, but it can be *extended*
 with a new label, as we shall see later.
 
-### Record Extension
+## Record Extension
 
 We can add a new label to an existing record as follows:
 
@@ -70,7 +70,7 @@ Here the expression `{ +z = 3 | p1 }` extends the record `p1` with a new label
 `z` such that the result has three labels: `x`, `y`, and `z` all of which are of
 `Int32` type.
 
-### Record Restriction
+## Record Restriction
 
 Similarly to record extension, we can also remove a label from a record:
 
@@ -82,7 +82,7 @@ let p2 = { -y | p1 };
 Here the record `p2` has the same labels as `p1` except that the `y` label has
 been removed.
 
-### Row Polymorphism: Open and Closed Records
+## Row Polymorphism: Open and Closed Records
 
 A function may specify that it requires a record with two labels:
 
@@ -104,7 +104,7 @@ def g(r: {x = Int32, y = Int32 | s}): Int32 = r#x + r#y
 We can call this function with *any* record as long as it has `x` and `y` labels
 which are of type `Int32`. We say that the record type of `r` is *open*.
 
-### Named Parameters with Records
+## Named Parameters with Records
 
 When a function has multiple parameters that share the same type, it is easy to
 get confused about the right argument order. For example, what does

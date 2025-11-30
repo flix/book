@@ -1,4 +1,4 @@
-## Debugging
+# Debugging
 
 When debugging, it is often helpful to output the value of an expression or
 variable.
@@ -30,7 +30,7 @@ print debugging inside pure functions. We could make our `sum` function have
 the `IO` effect, but that is rarely what we want. Instead, Flix has a
 built-in debugging facility that allows us to do print-line debugging.
 
-### The `Debug.dprintln` Function
+## The `Debug.dprintln` Function
 
 Instead, we can use the `Debug.dprintln` function and write:
 
@@ -47,7 +47,7 @@ Inside the `sum` function, the `dprintln` has the effect `Debug`, but due to
 its special nature, the `Debug` effect "disappears" once we exit the function,
 i.e. it is not part of its type and effect signature.
 
-### Debugging with Source Locations
+## Debugging with Source Locations
 
 We can use the special _debug string interpolator_ to add source locations
 to our print statements:

@@ -1,4 +1,4 @@
-## Nested and Inner Classes
+# Nested and Inner Classes
 
 Java supports nested static and non-static inner classes:
 

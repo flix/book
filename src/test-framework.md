@@ -89,3 +89,17 @@ def testIsEven01(): Unit \ Assert =
 def testIsEven02(): Unit \ Assert =
     assertFalseWithMsg(isEven(3), "3 should be odd")
 ```
+
+## `@Test` Function Signatures
+
+A function marked with `@Test` must have one of the following signatures:
+
+```flix
+@Test
+def test01(): Unit = ...
+def test02(): Unit \ Assert = ...
+def test03(): Unit \ Assert + IO = ...
+```
+
+In addition, a `@Test` function may use any algebraic effect for which there is
+a `@DefaultHandler`.

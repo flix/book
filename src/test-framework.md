@@ -72,6 +72,22 @@ Running 5 tests...
 Passed: 5, Failed: 0. Skipped: 0. Elapsed: 3,8ms.
 ```
 
-## With Messages
+## Assertions with Custom Messages
 
-Most assertions have `WithMsg` variants for custom error messages (e.g., `Assert.assertEqWithMsg`).
+Most assertions have `WithMsg` variants for custom error messages.
+
+```flix
+use Assert.{assertEqWithMsg, assertTrueWithMsg, assertFalseWithMsg}
+
+@Test
+def testAdd01(): Unit \ Assert =
+    assertEqWithMsg(expected = 5, add(2, 3), "addition should work")
+
+@Test
+def testIsEven01(): Unit \ Assert =
+    assertTrueWithMsg(isEven(4), "4 should be even")
+
+@Test
+def testIsEven02(): Unit \ Assert =
+    assertFalseWithMsg(isEven(3), "3 should be odd")
+```

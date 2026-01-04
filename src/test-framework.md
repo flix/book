@@ -1,29 +1,27 @@
 # Test Framework
 
-Flix comes with a built-in test framework.
-
-A test is a Flix function marked with the `@Test` annotation. 
-
-A test function must have return type `Unit` and the `Assert` effect.
+Flix comes with a built-in test framework. A test is a Flix function marked with
+the `@Test` annotation. A test function must take no arguments and return
+`Unit`.
 
 The `Assert` module provides assertion functions for testing. Here are the most commonly used:
 
-| Function | Purpose |
-|----------|---------|
-| `Assert.assertEq(expected = value, actual)` | Assert equality between values |
-| `Assert.assertNeq(unexpected = value, actual)` | Assert inequality between values |
-| `Assert.assertTrue(cond)` | Assert condition is true |
-| `Assert.assertFalse(cond)` | Assert condition is false |
-| `Assert.assertSome(opt)` | Assert Option is Some |
-| `Assert.assertNone(opt)` | Assert Option is None |
-| `Assert.assertOk(res)` | Assert Result is Ok |
-| `Assert.assertErr(res)` | Assert Result is Err |
-| `Assert.assertEmpty(coll)` | Assert collection is empty |
-| `Assert.assertMemberOf(x, coll)` | Assert element is in collection |
-| `Assert.fail(msg)` | Unconditionally fail with message |
-| `Assert.success(msg)` | Unconditionally succeed with message |
+| Function                                       | Purpose                              |
+|------------------------------------------------|--------------------------------------|
+| `Assert.assertEq(expected = value, actual)`    | Assert equality between values       |
+| `Assert.assertNeq(unexpected = value, actual)` | Assert inequality between values     |
+| `Assert.assertTrue(cond)`                      | Assert condition is true             |
+| `Assert.assertFalse(cond)`                     | Assert condition is false            |
+| `Assert.assertSome(opt)`                       | Assert Option is Some                |
+| `Assert.assertNone(opt)`                       | Assert Option is None                |
+| `Assert.assertOk(res)`                         | Assert Result is Ok                  |
+| `Assert.assertErr(res)`                        | Assert Result is Err                 |
+| `Assert.assertEmpty(coll)`                     | Assert collection is empty           |
+| `Assert.assertMemberOf(x, coll)`               | Assert element is in collection      |
+| `Assert.fail(msg)`                             | Unconditionally fail with message    |
+| `Assert.success(msg)`                          | Unconditionally succeed with message |
 
-The `assertEq` and `assertNeq` require the use of a labelled argument `expected` / `unexpected`.
+The `assertEq` and `assertNeq` functions require a labelled argument `expected` / `unexpected`.
 
 Here is an example:
 

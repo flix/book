@@ -230,7 +230,7 @@ mod HttpWithResult {
 ### Example: Using `HttpWithResult`
 
 ```flix
-def main(): Unit \ {Net, IO} =
+def main(): Unit \ IO =
     run {
         match HttpWithResult.get("http://example.com/", Map.empty()) {
             case Result.Ok(response) =>
@@ -319,7 +319,7 @@ def execWithEnv(cmd: String, args: List[String], env: Map[String, String])
 ### Example: Using `ProcessWithResult`
 
 ```flix
-def main(): Unit \ {Exec, IO} =
+def main(): Unit \ IO =
     run {
         match ProcessWithResult.exec("ls", Nil) {
             case Result.Ok(_)    => ()

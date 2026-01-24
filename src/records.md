@@ -13,7 +13,7 @@ A record literal is written with curly braces:
 ```
 
 which has the record type
-`{ x = Int32, y = Int32 }`.
+`{ x: Int32, y: Int32 }`.
 
 The order of labels in a record does not matter. Hence the above record is
 equivalent to:

@@ -16,9 +16,11 @@ Flix has two _safe_ upcast constructs:
 The following program:
 
 ```flix
+import java.lang.Object
+
 def main(): Unit =
     let s = "Hello World";
-    let o: ##java.lang.Object = s;
+    let _: Object = s;
     ()
 ```
 
@@ -27,11 +29,11 @@ does not compile:
 ```
 ❌ -- Type Error --------------------------------------------------
 
->> Expected type: 'Object' but found type: 'String'.
+>> Unexpected type: expected 'java.lang.Object', found 'String'.
 
-4 |     let o: ##java.lang.Object = s;
-                                    ^
-                                    expression has unexpected type.
+5 |     let _: Object = s;
+                        ^
+                        expression has unexpected type.
 ```
 
 because in Flix the `String` type is _not_ a subtype of `Object`.
@@ -39,9 +41,11 @@ because in Flix the `String` type is _not_ a subtype of `Object`.
 We can use a checked type cast to safely upcast from `String` to `Object`:
 
 ```flix
+import java.lang.Object;
+
 def main(): Unit =
     let s = "Hello World";
-    let o: ##java.lang.Object = checked_cast(s);
+    let _: Object = checked_cast(s);
     ()
 ```
 
@@ -49,11 +53,11 @@ We can use the `checked_cast` construct to safely upcast any Java type to one of
 its super-types:
 
 ```flix
-let _: ##java.lang.Object       = checked_cast("Hello World");
-let _: ##java.lang.CharSequence = checked_cast("Hello World");
-let _: ##java.io.Serializable   = checked_cast("Hello World");
-let _: ##java.lang.Object       = checked_cast(null);
-let _: ##java.lang.String       = checked_cast(null);
+let _: Object       = checked_cast("Hello World");
+let _: CharSequence = checked_cast("Hello World");
+let _: Serializable = checked_cast("Hello World");
+let _: Object       = checked_cast(null);
+let _: String       = checked_cast(null);
 ```
 
 ## Checked Effect Casts

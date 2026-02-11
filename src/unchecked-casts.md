@@ -16,7 +16,7 @@ Flix programmers should normally never need to use an unchecked type cast.
 The expression below casts a `String` to an `Object`:
 
 ```flix
-unchecked_cast("Hello World" as ##java.lang.Object)
+unchecked_cast("Hello World" as Object)
 ```
 
 Note: It is safer to use the `checked_cast` expression.
@@ -26,7 +26,7 @@ Note: It is safer to use the `checked_cast` expression.
 The expression below casts the `null` value (of type `Null`) to `String`:
 
 ```flix
-unchecked_cast(null as ##java.lang.String)
+unchecked_cast(null as String)
 ```
 
 Note: It is safer to use the `checked_cast` expression.
@@ -37,7 +37,7 @@ The expression below contains an illegal cast and triggers a
 `ClassCastException` at runtime:
 
 ```flix
-unchecked_cast((123, 456) as ##java.lang.Integer)
+unchecked_cast((123, 456) as Integer)
 ```
 
 ## Effect Casts

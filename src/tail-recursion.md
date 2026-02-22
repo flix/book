@@ -96,9 +96,9 @@ def factorial(n: Int32): Int32 =
 
 Here the `visit` function is tail recursive, hence it cannot overflow the stack.
 
-## The @TailRec Annotation
+## The @Tailrec Annotation
 
-Flix provides the `@TailRec` annotation, which asks the compiler to verify that
+Flix provides the `@Tailrec` annotation, which asks the compiler to verify that
 every self-recursive call in a function is in tail position. The annotation is
 optional and does not change runtime behavior — it serves as a documentation and
 verification tool.
@@ -106,7 +106,7 @@ verification tool.
 For example, an accumulator-style `sum` function is tail recursive:
 
 ```flix
-@TailRec
+@Tailrec
 def sum(l: List[Int32], acc: Int32): Int32 = match l {
     case Nil     => acc
     case x :: xs => sum(xs, acc + x)
@@ -119,7 +119,7 @@ operation in the function — nothing further is done with its result.
 In contrast, the following function is rejected:
 
 ```flix
-@TailRec
+@Tailrec
 def length(l: List[Int32]): Int32 = match l {
     case Nil     => 0
     case _ :: xs => length(xs) + 1
@@ -130,7 +130,7 @@ Here, the result of `length(xs)` is used in an addition (`+ 1`), so the
 recursive call is _not_ in tail position. The compiler reports an error:
 
 ```
->> Non-tail recursive call in @TailRec function 'length'.
+>> Non-tail recursive call in @Tailrec function 'length'.
 
    ... length(xs) + 1
        ^^^^^^^^^^
@@ -139,8 +139,8 @@ recursive call is _not_ in tail position. The compiler reports an error:
 
 To fix this, rewrite the function to use an accumulator, as shown above.
 
-> **Tip:** The `@TailRec` annotation is purely a compile-time check. It does
+> **Tip:** The `@Tailrec` annotation is purely a compile-time check. It does
 > not affect code generation — Flix already performs full tail call elimination
-> for any call in tail position, whether annotated or not. Use `@TailRec` when
+> for any call in tail position, whether annotated or not. Use `@Tailrec` when
 > you want the compiler to guarantee that a function _remains_ tail recursive as
 > the code evolves.

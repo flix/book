@@ -215,23 +215,6 @@ The compiler rejects this with:
                   negative occurrence
 ```
 
-A _double negation_ is fine, because two negatives make a positive:
-
-```flix
-enum Good {
-    case MkGood((Good -> Int32) -> Int32)
-}
-
-@Terminates
-def useGood(x: Good): Int32 = match x {
-    case Good.MkGood(_) => 0
-}
-```
-
-Here, `Good` appears to the left of an arrow that is itself to the left of
-another arrow, placing it in a positive position overall. The compiler accepts
-this.
-
 ## Common Errors
 
 The most common mistake is passing the original parameter instead of a

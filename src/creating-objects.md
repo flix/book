@@ -54,9 +54,34 @@ def main(): Unit \ IO =
 
 Here `JString` refers to the Java class `java.lang.String` whereas `String`
 refers to the Flix module. Note that internally Flix and Java strings are the
-same. 
+same.
 
-> **Note:** Any interaction with Java code always has the `IO` effect. 
+## Calling Super Constructors
+
+When creating an anonymous subclass of a Java class, we can define a constructor
+that calls the parent constructor using `super`:
+
+```flix
+import java.lang.Thread
+
+def main(): Unit \ IO =
+    let t = new Thread {
+        def new(): Thread \ IO = super("my-thread")
+        def run(_this: Thread): Unit \ IO =
+            println("Hello from ${Thread.currentThread().getName()}")
+    };
+    t.start()
+```
+
+Here we extend `Thread` and pass `"my-thread"` as the thread name to the parent
+constructor. The constructor is defined with `def new()` and its body must be
+exactly a `super(...)` call. At most one constructor can be defined per `new`
+expression.
+
+If no constructor is defined, Flix automatically calls the parent's no-argument
+constructor.
+
+> **Note:** Any interaction with Java code always has the `IO` effect.
 
 > **Note:** In Flix, Java classes must be `import`ed before they can be used. In
 > particular, we _cannot_ write `new java.io.File(...)`.

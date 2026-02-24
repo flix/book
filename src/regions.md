@@ -71,9 +71,11 @@ that allocates and returns a mutable data structure.
 For example, here is the `List.toMutDeque` function:
 
 ```flix
-def toMutDeque(rc: Region[r], l: List[a]): MutDeque[a, rc] \ rc =
+def toMutDeque(rc: Region[r], l: List[a]): MutDeque[a, r] \ r =
     let d = MutDeque.empty(rc);
-    forEach(x -> MutDeque.pushBack(x, d), l);
+    foreach (x <- l) {
+        MutDeque.pushBack(x, d)
+    };
     d
 ```
 

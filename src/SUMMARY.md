@@ -100,9 +100,3 @@
   - [Research Literature](./research-literature.md)
   - [Blog Posts](./blog-posts.md)
   - [Videos](./videos.md)
-
----
-
-- [Appendix](./appendix.md)
-  - [Legal Identifiers](./identifiers.md)
-  - [Operator Precedence](./precedence.md)

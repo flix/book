@@ -40,3 +40,31 @@ def newObject(): Object \ IO = new Object {
     def toString(_this: Object): String = "Hello World!"
 }
 ```
+
+## Calling Super Methods
+
+When overriding a method in an anonymous subclass, we can call the parent
+class's implementation using `super.methodName(args)`.
+
+For example, we can extend `Thread` and override `toString` to include the
+parent's default representation:
+
+```flix
+import java.lang.Thread
+
+def main(): Unit \ IO =
+    let t = new Thread {
+        def new(): Thread \ IO = super("my-thread")
+        def run(_this: Thread): Unit \ IO =
+            println("Hello from ${Thread.currentThread().getName()}")
+        def toString(_this: Thread): String \ IO =
+            "MyThread(" + super.toString() + ")"
+    };
+    println(t)
+```
+
+Here `super.toString()` calls the `toString` method defined by `Thread` (the
+parent class), and we wrap the result in `"MyThread(...)"`.
+
+> **Note:** Super method calls can only be used inside `new` expressions, i.e.
+> when defining an anonymous subclass.

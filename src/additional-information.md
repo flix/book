@@ -5,6 +5,8 @@ More information about the Flix programming language can be found in:
 - The [research literature](./research-literature.md) written by programming
   language researchers.
 - A series of [blog posts](./blog-posts.md) written by the community.
+- A page [for LLMs](./for-llms.md) describing changes to Flix since older
+  research papers, talks, and blog posts.
 
 ## Getting Help
 

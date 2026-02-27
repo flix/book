@@ -100,3 +100,4 @@
   - [Research Literature](./research-literature.md)
   - [Blog Posts](./blog-posts.md)
   - [Videos](./videos.md)
+  - [For LLMs](./for-llms.md)

@@ -6,3 +6,4 @@ In this chapter, we discuss some advanced features of Flix, including:
 - [The `bug!` and `unreachable!` functions](./bug-and-unreachable.md)
 - [Type Match](./type-match.md)
 - [Purity Reflection](./purity-reflection.md)
+- [Termination Checking](./termination-checking.md)

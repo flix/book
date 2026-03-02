@@ -87,6 +87,7 @@
   - [Type Match](./type-match.md)
   - [Purity Reflection](./purity-reflection.md)
   - [Type-Level Programming](./type-level-programming.md)
+  - [Termination Checking](./termination-checking.md)
 
 ---
 

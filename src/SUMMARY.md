@@ -35,6 +35,7 @@
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)
   - [Http and Https](./http-and-https.md)
+  - [Process](./process.md)
 - [Modules](./modules.md)
   - [Declaring Modules](./declaring-modules.md)
   - [Using Modules](./using-modules.md)

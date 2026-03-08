@@ -86,7 +86,6 @@
   - [Unchecked Casts](./unchecked-casts.md)
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
   - [Laziness](./laziness.md)
-  - [Type Match](./type-match.md)
   - [Purity Reflection](./purity-reflection.md)
   - [Type-Level Programming](./type-level-programming.md)
   - [Termination Checking](./termination-checking.md)

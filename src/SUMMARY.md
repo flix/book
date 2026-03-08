@@ -34,6 +34,7 @@
   - [Default Handlers](./default-handlers.md)
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)
+  - [Assert](./assert.md)
   - [Http and Https](./http-and-https.md)
   - [Process](./process.md)
 - [Modules](./modules.md)

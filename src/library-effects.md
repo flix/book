@@ -190,57 +190,6 @@ def main(): Unit \ IO =
     } with FileWriteWithResult.runWithIO
 ```
 
-## HttpWithResult
-
-Flix defines a `HttpWithResult` effect to communicate over HTTP:
-
-```flix
-eff HttpWithResult {
-    def request(method: String, 
-                url: String, 
-                headers: Map[String, List[String]], 
-                body: Option[String])
-        : Result[IoError, Http.Response]
-}
-```
-
-The `HttpWithResult` companion module provides several convenience functions:
-
-```flix
-mod HttpWithResult {
-    /// Send a `GET` request to the given `url` with the given `headers`
-    /// and wait for the response.
-    def get(url: String, headers: Map[String, List[String]])
-        : Result[IoError, Http.Response] \ HttpWithResult
-
-    /// Send a `POST` request to the given `url` with the given `headers`
-    /// and `body` and wait for the response.
-    def post(url: String, headers: Map[String, List[String]], body: String)
-        : Result[IoError, Http.Response] \ HttpWithResult
-
-    /// Send a `PUT` request to the given `url` with the given `headers`
-    /// and `body` and wait for the response.
-    def put(url: String, headers: Map[String, List[String]], body: String)
-        : Result[IoError, Http.Response] \ HttpWithResult
-
-    // ... additional functions (head, delete, options, trace, patch) ...
-}
-```
-
-### Example: Using `HttpWithResult`
-
-```flix
-def main(): Unit \ IO =
-    run {
-        match HttpWithResult.get("http://example.com/", Map.empty()) {
-            case Result.Ok(response) =>
-                let body = Http.Response.body(response);
-                println(body)
-            case Result.Err(e) => println(e)
-        }
-    } with HttpWithResult.runWithIO
-```
-
 ## Logger
 
 Flix defines a `Logger` effect for logging messages:
@@ -326,61 +275,4 @@ def main(): Unit \ IO =
             case Result.Err(err) => println("Unable to execute process: ${err}")
         }
     } with ProcessWithResult.runWithIO
-```
-
-## Random
-
-Flix defines a `Random` effect for the generation of random values:
-
-```flix
-eff Random {
-    /// Returns a pseudorandom boolean value with equal probability of being `true` or `false`.
-    def randomBool(): Bool
-
-    /// Returns a pseudorandom 32-bit floating-point number in the range [0.0, 1.0].
-    def randomFloat32(): Float32
-
-    /// Returns a pseudorandom 64-bit floating-point number in the range [0.0, 1.0].
-    def randomFloat64(): Float64
-
-    /// Returns a pseudorandom 32-bit integer.
-    def randomInt32(): Int32
-
-    /// Returns a pseudorandom 64-bit integer.
-    def randomInt64(): Int64
-
-    /// Returns a 64-bit floating point number following a standard normal (Gaussian) distribution.
-    def randomGaussian(): Float64
-}
-```
-
-### Example: Using `Random`
-
-```flix
-def main(): Unit \ {NonDet, IO} =
-    run {
-        let flip = Random.randomBool();
-        if (flip) 
-            println("heads")
-        else 
-            println("tails")
-    } with Random.runWithIO
-```
-
-## Running Multiple Effects
-
-We can easily combine multiple effects and run them:
-
-```flix
-def main(): Unit \ {NonDet, IO} =
-    run {
-        Console.println("Please enter your name:");
-        let name = Console.readln();
-        let flip = Random.randomBool();
-        if (flip) 
-            Console.println("Pleased to meet you, ${name}")
-        else 
-            Console.println("Oh no, not you, ${name}")
-    } with Console.runWithIO
-      with Random.runWithIO
 ```

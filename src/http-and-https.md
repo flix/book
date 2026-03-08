@@ -392,9 +392,9 @@ def main(): Unit \ { Clock, Http, Logger, IO } =
 The `Http`, `Logger`, and `Clock` effects all have default handlers, so they are
 handled automatically when they appear in the type signature of `main`.
 
-The order of `with` clauses matters. The outermost handler (listed last) wraps
-all inner handlers. In the example above, `withLogging` is outermost, so it
-sees *every* HTTP request — including retries and circuit-breaker probes. If we
-moved `withLogging` before `withRetry`, it would only see the original requests,
-not the retries. When composing middleware, think about which layer should
-observe which requests.
+> **Note:** The order of `with` clauses matters. The outermost handler (listed
+> last) wraps all inner handlers. In the example above, `withLogging` is
+> outermost, so it sees *every* HTTP request — including retries and
+> circuit-breaker probes. If we moved `withLogging` before `withRetry`, it would
+> only see the original requests, not the retries. When composing middleware,
+> think about which layer should observe which requests.

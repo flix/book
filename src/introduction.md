@@ -107,27 +107,28 @@ def deduplicate(l: List[a]): List[a] with Order[a] =
 Here is an example that uses built-in **effects and handlers**:
 
 ```flix
-def main(): Unit \ {Net, IO} =
+use Net.Http
+use Net.HttpResponse
+
+def main(): Unit \ { Http, Logger, IO } =
     run {
         let url = "http://example.com/";
         Logger.info("Downloading URL: '${url}'");
-        match HttpWithResult.get(url, Map.empty()) {
-            case Result.Ok(response) =>
+        match Http.get(url) {
+            case Ok(resp) =>
                 let file = "data.txt";
                 Logger.info("Saving response to file: '${file}'");
-                let body = Http.Response.body(response);
+                let body = HttpResponse.body(resp);
                 match FileWriteWithResult.write(str = body, file) {
-                    case Result.Ok(_) =>
+                    case Ok(_) =>
                         Logger.info("Response saved to file: '${file}'")
-                    case Result.Err(err) =>
+                    case Err(err) =>
                         Logger.fatal("Unable to write file: '${err}'")
                 }
-            case Result.Err(err) =>
+            case Err(err) =>
                 Logger.fatal("Unable to download URL: '${err}'")
         }
     } with FileWriteWithResult.runWithIO
-      with HttpWithResult.runWithIO
-      with Logger.runWithIO
 ```
 
 Here is an example that **defines its own effects and handlers**:

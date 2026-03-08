@@ -56,9 +56,6 @@ Flix are type classes.
 ***Type Inference.*** A language feature that allows the compiler to infer the
 type of an expression without requiring annotations from the programmer. 
 
-***Type Match.*** A language feature that allows a function to inspect (reflect)
-on a type. 
-
 ***Type Member.*** See [associated type](#associated-type).
 
 ***Unchecked Cast.*** An unsafe cast which is not verified by the compiler. Can

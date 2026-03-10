@@ -61,12 +61,14 @@ Similarly, we can use `forM` to work with the `Result[e, t]` data type. For
 example:
 
 ```flix
-def main(): Result[String, Unit] \ IO = 
+use Sys.Console
+
+def main(): Result[String, Unit] \ IO =
     println("Please enter your first name, last name, and age:");
     forM (
-        fstName <- Console.readLine();
-        lstName <- Console.readLine();
-        ageLine <- Console.readLine();
+        fstName <- Console.readln();
+        lstName <- Console.readln();
+        ageLine <- Console.readln();
         ageNum  <- Int32.parse(10, ageLine)
     ) yield {
         println("Hello ${lstName}, ${fstName}.");
@@ -75,7 +77,7 @@ def main(): Result[String, Unit] \ IO =
 ```
 
 Here `main` prompts the user to enter their first name, last name, and age. Each
-call to `Console.readLine` returns a `Result[String, String]` value which is
+call to `Console.readln` returns a `Result[String, String]` value which is
 either an error or the input string. Thus the local variables `fstName`,
 `lstName`, and `ageLine` are `String`s. We parse `ageLine` into an `Int32` using
 `Int32.parse`, which returns a `Result[String, Int32]` value. If every operation

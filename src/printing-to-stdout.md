@@ -21,15 +21,19 @@ The `println` function is rightfully effectful, hence it cannot be called from a
 pure function. To debug a pure function, use the builtin [debugging
 facilities](./debugging.md).
 
-## The Console Module
+## The Console Effect
 
-The `Console` module defines additional functions for reading from or writing to
-the terminal: 
+The `Console` effect defines operations for reading from and writing to the
+terminal:
 
 ```flix
-mod Console {
-    def print(x: a): Unit \ IO with ToString[a]
-    def println(x: a): Unit \ IO with ToString[a]
-    def readLine(): Result[String, String] \ IO Impure
+use Sys.Console
+
+eff Console {
+    def readln(): String
+    def print(s: String): Unit
+    def eprint(s: String): Unit
+    def println(s: String): Unit
+    def eprintln(s: String): Unit
 }
 ```

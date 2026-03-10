@@ -27,8 +27,6 @@ The `Console` effect defines operations for reading from and writing to the
 terminal:
 
 ```flix
-use Sys.Console
-
 eff Console {
     def readln(): String
     def print(s: String): Unit

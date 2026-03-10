@@ -8,6 +8,7 @@ providing a handler in a `run-with` block.
 For example, we can write:
 
 ```flix
+use Sys.Env
 use Time.Clock
 
 def main(): Unit \ {Clock, Env, Logger} =
@@ -21,6 +22,7 @@ def main(): Unit \ {Clock, Env, Logger} =
 which the Flix compiler translates to:
 
 ```flix
+use Sys.Env
 use Time.Clock
 
 def main(): Unit \ IO =
@@ -41,6 +43,8 @@ respective effects.
 For example, `Clock.runWithIO` is declared as:
 
 ```flix
+use Time.Clock
+
 @DefaultHandler
 pub def runWithIO(f: Unit -> a \ ef): a \ (ef - Clock) + IO = ...
 ```

@@ -22,6 +22,9 @@ compiler. See [Default Handlers](./default-handlers.md) for details.
 For example, main can use the `Env` and `Exit` effects:
 
 ```flix
+use Sys.Env
+use Sys.Exit
+
 def main(): Unit \ {Env, Exit} =
     let args = Env.getArgs();
     match List.head(args) {
@@ -39,6 +42,8 @@ The command line arguments passed to the program can be accessed by calling
 `Env.getArgs()` through the `Env` effect:
 
 ```flix
+use Sys.Env
+
 def main(): Unit \ {Env, IO} =
     let args = Env.getArgs();
     println("Arguments: ${args}")
@@ -49,6 +54,8 @@ def main(): Unit \ {Env, IO} =
 The program can be terminated with a specific exit code using `Exit.exit`:
 
 ```flix
+use Sys.Exit
+
 def main(): Unit \ Exit =
     Exit.exit(0)
 ```

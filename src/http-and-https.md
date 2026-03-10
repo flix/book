@@ -281,6 +281,7 @@ appears in the type signature:
 ```flix
 use Net.Http
 use Net.HttpResponse
+use Time.Clock
 use Time.Duration.seconds
 
 def main(): Unit \ { Clock, Http, IO } =
@@ -309,6 +310,7 @@ All three require the `Clock` effect:
 ```flix
 use Net.Http
 use Net.HttpResponse
+use Time.Clock
 use Time.Duration.{milliseconds, seconds}
 
 def main(): Unit \ { Clock, Http, IO } =
@@ -362,6 +364,7 @@ URL, default headers, retry, circuit breaker, rate limiting, and logging:
 use Net.Http
 use Net.Retry
 use Net.HttpResponse
+use Time.Clock
 use Time.Duration.{milliseconds, seconds}
 
 def main(): Unit \ { Clock, Http, Logger, IO } =

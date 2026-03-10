@@ -52,12 +52,13 @@ Here the `nth` function has a heap effect in the region `r`.
 We can also write functions that mix different effects:
 
 ```flix
-def strange(a: Array[t, r]): Unit \ {r, Clock, Net, IO} 
+use Time.Clock
+
+def strange(a: Array[t, r]): Unit \ {r, Clock, Http, IO}
                                  // ^^^^^^^^^^^^^^^^^^^ a mixture of effects
 ```
 
-This function has a heap effect `r` and three primitive effects: `Clock`,
-`Net`, and `IO`.
+This function has a heap effect `r` and three effects: `Clock`, `Http`, and `IO`.
 
 ## Higher-Order Functions
 

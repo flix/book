@@ -8,7 +8,9 @@ providing a handler in a `run-with` block.
 For example, we can write:
 
 ```flix
-def main(): Unit \ {Clock, Env, Logger} = 
+use Time.Clock
+
+def main(): Unit \ {Clock, Env, Logger} =
     let ts = Clock.currentTime(TimeUnit.Milliseconds);
     let os = Env.getOsName();
     Logger.info("UNIX Timestamp:   ${ts}");
@@ -19,7 +21,9 @@ def main(): Unit \ {Clock, Env, Logger} =
 which the Flix compiler translates to:
 
 ```flix
-def main(): Unit \ IO = 
+use Time.Clock
+
+def main(): Unit \ IO =
     run {
         let ts = Clock.currentTime(TimeUnit.Milliseconds);
         let os = Env.getOsName();

@@ -4,6 +4,70 @@ Flix provides `Process` as a library effect for spawning and managing OS
 processes. The `Process` effect has a default handler, so no explicit
 `runWithIO` call is needed in `main`. The key module is `Sys.Process`.
 
+## The Process Effect
+
+The `Process` effect supports spawning processes, accessing their I/O streams,
+and waiting for completion:
+
+```flix
+pub eff Process {
+    /// Executes `cmd` with `args`, working directory `cwd`, and environment `env`.
+    def execWithCwdAndEnv(cmd: String, args: List[String],
+        cwd: Option[String], env: Map[String, String]):
+        Result[IoError, ProcessHandle]
+
+    /// Returns the exit value of the process `ph`.
+    def exitValue(ph: ProcessHandle): Result[IoError, Int32]
+
+    /// Returns whether the process `ph` is alive.
+    def isAlive(ph: ProcessHandle): Result[IoError, Bool]
+
+    /// Returns the PID of the process `ph`.
+    def pid(ph: ProcessHandle): Result[IoError, Int64]
+
+    /// Returns the stdin stream of the process `ph`.
+    def stdin(ph: ProcessHandle): Result[IoError, StdIn]
+
+    /// Returns the stdout stream of the process `ph`.
+    def stdout(ph: ProcessHandle): Result[IoError, StdOut]
+
+    /// Returns the stderr stream of the process `ph`.
+    def stderr(ph: ProcessHandle): Result[IoError, StdErr]
+
+    /// Stops the process `ph`.
+    def stop(ph: ProcessHandle): Result[IoError, Unit]
+
+    /// Waits for the process `ph` to finish and returns its exit value.
+    def waitFor(ph: ProcessHandle): Result[IoError, Int32]
+
+    /// Waits at most `time` (in the given `tUnit`) for the process `ph` to finish.
+    /// Returns `true` if the process exited, `false` if the timeout elapsed.
+    def waitForTimeout(ph: ProcessHandle, time: Int64, tUnit: TimeUnit):
+        Result[IoError, Bool]
+}
+```
+
+## The Process Module
+
+The `S` module provides convenience functions built on the `Process`
+effect:
+
+```flix
+mod Process {
+    /// Executes the command `cmd` with the arguments `args`.
+    def exec(cmd: String, args: List[String]):
+        Result[IoError, ProcessHandle] \ Process
+
+    /// Executes `cmd` with `args` and working directory `cwd`.
+    def execWithCwd(cmd: String, args: List[String], cwd: Option[String]):
+        Result[IoError, ProcessHandle] \ Process
+
+    /// Executes `cmd` with `args` and environment variables `env`.
+    def execWithEnv(cmd: String, args: List[String], env: Map[String, String]):
+        Result[IoError, ProcessHandle] \ Process
+}
+```
+
 ## Executing a Command
 
 The simplest way to spawn an OS process is with `Process.exec`. It takes a
@@ -86,13 +150,3 @@ def main(): Unit \ { Process, IO } =
     }
 ```
 
-## Other Operations
-
-The `Sys.Process` module provides several additional operations:
-
-- `Process.isAlive(ph)` — returns `true` if the process is still running
-- `Process.pid(ph)` — returns the process ID
-- `Process.stop(ph)` — terminates the process
-- `Process.stdin(ph)` — returns the process's standard input stream (implements `Writable`)
-- `Process.exitValue(ph)` — returns the exit code without blocking (fails if the process is still running)
-- `Process.waitForTimeout(ph, time, tUnit)` — blocks until the process exits or the timeout expires

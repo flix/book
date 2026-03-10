@@ -8,21 +8,23 @@ UNIX.
 We will use the opportunity to illustrate how to use algebraic effects in Flix.
 
 ```flix
+use Sys.Console
+
 def wc(file: String): Unit \ {Console, FileReadWithResult} = {
        match FileReadWithResult.readLines(file) {
-            case Ok(lines) => 
+            case Ok(lines) =>
                 let totalLines = List.length(lines);
                 let totalWords = List.sumWith(numberOfWords, lines);
                 Console.println("Lines: ${totalLines}, Words: ${totalWords}")
-            case Err(_) => 
+            case Err(_) =>
                 Console.println("Unable to read file: ${file}")
         }
 }
 
-def numberOfWords(s: String): Int32 = 
+def numberOfWords(s: String): Int32 =
      s |> String.words |> List.length
 
-def main(): Unit \ IO = 
+def main(): Unit \ IO =
     run {
         wc("Main.flix")
     } with Console.runWithIO

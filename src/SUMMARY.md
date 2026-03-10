@@ -35,6 +35,7 @@
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)
   - [Assert](./assert.md)
+  - [Console](./console.md)
   - [Http and Https](./http-and-https.md)
   - [Process](./process.md)
 - [Modules](./modules.md)

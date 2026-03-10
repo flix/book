@@ -9,6 +9,7 @@ For example, we can write:
 
 ```flix
 use Sys.Env
+use Time.Clock
 
 def main(): Unit \ {Clock, Env, Logger} =
     let ts = Clock.currentTime(TimeUnit.Milliseconds);
@@ -22,6 +23,7 @@ which the Flix compiler translates to:
 
 ```flix
 use Sys.Env
+use Time.Clock
 
 def main(): Unit \ IO =
     run {
@@ -41,6 +43,8 @@ respective effects.
 For example, `Clock.runWithIO` is declared as:
 
 ```flix
+use Time.Clock
+
 @DefaultHandler
 pub def runWithIO(f: Unit -> a \ ef): a \ (ef - Clock) + IO = ...
 ```

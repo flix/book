@@ -129,29 +129,38 @@ When handling multiple effects, use a **single** `run` block with chained
 &#x274C; **Incorrect:**
 
 ```
-def main(): Unit \ IO =
+use Math.Random
+use Time.Duration.{seconds}
+use Time.Sleep
+
+def main(): Unit \ { Logger, Random, Sleep, IO } =
     run {
         run {
-            greeting()
-        } with handler Ask {
-            def ask(_, k) = k("James Bond")
-        }
-    } with handler Say {
-        def say(s, k) = { println(s); k() }
-    }
+            println("Sleeping 3 times with ±20% jitter...");
+            Sleep.sleep(seconds(1));
+            Sleep.sleep(seconds(2));
+            Sleep.sleep(seconds(3));
+            println("Done!")
+        } with Sleep.withJitter(0.2)
+    } with Sleep.withLogging
 ```
 
 &#x2705; **Correct:**
 
 ```flix
-def main(): Unit \ IO =
+use Math.Random
+use Time.Duration.{seconds}
+use Time.Sleep
+
+def main(): Unit \ { Logger, Random, Sleep, IO } =
     run {
-        greeting()
-    } with handler Ask {
-        def ask(_, k) = k("James Bond")
-    } with handler Say {
-        def say(s, k) = { println(s); k() }
-    }
+        println("Sleeping 3 times with ±20% jitter...");
+        Sleep.sleep(seconds(1));
+        Sleep.sleep(seconds(2));
+        Sleep.sleep(seconds(3));
+        println("Done!")
+    } with Sleep.withJitter(0.2)
+      with Sleep.withLogging
 ```
 
 Note: A single `run` block can have multiple `with handler` clauses chained

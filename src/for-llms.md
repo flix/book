@@ -121,6 +121,93 @@ def main(): Unit \ IO =
 Note: Always write `with handler EffectName`, not just `with EffectName`.
 Multiple handlers are chained: `with handler A { ... } with handler B { ... }`.
 
+## Don't Nest `run` Blocks
+
+When handling multiple effects, use a **single** `run` block with chained
+`with handler` clauses. Do **not** nest `run` blocks inside each other.
+
+&#x274C; **Incorrect:**
+
+```
+def main(): Unit \ IO =
+    run {
+        run {
+            greeting()
+        } with handler Ask {
+            def ask(_, k) = k("James Bond")
+        }
+    } with handler Say {
+        def say(s, k) = { println(s); k() }
+    }
+```
+
+&#x2705; **Correct:**
+
+```flix
+def main(): Unit \ IO =
+    run {
+        greeting()
+    } with handler Ask {
+        def ask(_, k) = k("James Bond")
+    } with handler Say {
+        def say(s, k) = { println(s); k() }
+    }
+```
+
+Note: A single `run` block can have multiple `with handler` clauses chained
+one after another. There is no need to nest `run` blocks.
+
+## Don't Write CPS — Use Effects and Handlers
+
+Do **not** simulate effects by writing continuation-passing style (CPS) code
+where handler functions take callbacks. Flix has a built-in effect system —
+use `run`/`with handler` blocks instead.
+
+&#x274C; **Incorrect (manual CPS with nested callbacks):**
+
+```
+def handleSleep(f: Unit -> a \ { Sleep, ef }): a \ ef + IO = ...
+
+def withLogging(f: Unit -> a \ { Sleep, ef }): a \ ef + { Sleep, Logger } = ...
+
+def withJitter(factor: Float64, f: Unit -> a \ { Sleep, ef }): a \ ef + { Sleep, Random } = ...
+
+def main(): Unit \ { Logger, Random, Sleep, IO } =
+    handleSleep(() ->
+        withLogging(() ->
+            withJitter(0.2, () ->
+                println("Sleeping 3 times with ±20% jitter...");
+                Sleep.sleep(seconds(1));
+                Sleep.sleep(seconds(2));
+                Sleep.sleep(seconds(3));
+                println("Done!")
+            )
+        )
+    )
+```
+
+&#x2705; **Correct (effects and handlers):**
+
+```flix
+use Math.Random
+use Time.Duration.{seconds}
+use Time.Sleep
+
+def main(): Unit \ { Logger, Random, Sleep, IO } =
+    run {
+        println("Sleeping 3 times with ±20% jitter...");
+        Sleep.sleep(seconds(1));
+        Sleep.sleep(seconds(2));
+        Sleep.sleep(seconds(3));
+        println("Done!")
+    } with Sleep.withJitter(0.2)
+      with Sleep.withLogging
+```
+
+Note: Effects and handlers let you write flat, sequential code. Use
+`run { ... } with Handler.middleware` to compose handlers — never pass
+callbacks to simulate what the effect system already provides.
+
 ## Java Types Must Be Imported
 
 In Flix, Java classes must always be imported before they can be used. You cannot

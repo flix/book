@@ -9,6 +9,7 @@ effects all have default handlers, so no explicit `runWithIO` is needed in
 | [`Assert`](./assert.md)                              | Runtime assertions (`assertTrue`, `assertEq`, etc.) with configurable handlers.                |
 | [`Logger`](./logger.md)                              | Structured logging at five severity levels with filtering and collection.                      |
 | [`Math.Random`](./random.md)                         | Generating pseudorandom numbers, with optional seeded determinism.                             |
+| [`Fs.FileSystem`](./filesystem.md)                   | File I/O, metadata, directories, and middleware (chroot, atomic writes, in-memory FS, etc.).   |
 | [`Net.Http` / `Net.Https`](./http-and-https.md)      | Sending HTTP requests with a fluent API, middleware (retries, rate limiting, circuit breakers). |
 | [`Sys.Console`](./console.md)                        | Terminal I/O: reading input, printing to stdout/stderr, prompts, and menus.                    |
 | [`Sys.Env`](./env.md)                                | Accessing environment variables, system properties, and platform information.                  |

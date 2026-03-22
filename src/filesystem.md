@@ -494,25 +494,6 @@ def main(): Unit \ { FileSystem, IO } =
     } with FileSystem.withConflictCheck
 ```
 
-### Size Rotation
-
-`withSizeRotation` automatically rotates files when they reach a size
-threshold. Before append operations, the file's size is checked. If it meets
-or exceeds `maxSize`, existing rotated files are shifted (`file.1` -> `file.2`,
-etc.) and the current file is moved to `file.1`:
-
-```flix
-use Fs.FileSystem
-use Fs.Size
-
-def main(): Unit \ { FileSystem, IO } =
-    run {
-        foreach (i <- List.range(1, 20)) {
-            discard FileSystem.append(str = "Log entry ${i}\n", "app.log")
-        }
-    } with FileSystem.withSizeRotation(Size.kiloBytes(1), 3)
-```
-
 ### Transfer Limit
 
 `withTransferLimit` rejects read or write operations where the payload exceeds
@@ -554,9 +535,9 @@ def main(): Unit \ { FileSystem, IO } =
 
 ### In-Memory Filesystem
 
-`withInMemoryFS` is a terminal handler that replaces the real filesystem with
-a fully in-memory implementation. The filesystem starts empty; reads of
-non-written files return `NotFound`. No real filesystem access occurs:
+The `withInMemoryFS` handler replaces the real filesystem with a fully
+in-memory implementation. The filesystem starts empty; reads of non-written
+files return `NotFound`. No real filesystem access occurs:
 
 ```flix
 use Fs.FileSystem
@@ -591,9 +572,9 @@ but removes `FileSystem` from the effect signature since it fully handles it.
 
 ### Memory Overlay
 
-`withMemoryOverlay` layers an in-memory writable store on top of the real
-filesystem. Writes are captured in memory and subsequent reads see the written
-data, but the real filesystem is never modified. Reads of files not in the
+The `withMemoryOverlay` handler layers an in-memory writable store on top of
+the real filesystem. Writes are captured in memory and subsequent reads see the
+written data, but the real filesystem is never modified. Reads of files not in the
 overlay fall through to the real filesystem:
 
 ```flix
@@ -615,10 +596,10 @@ def main(): Unit \ { FileSystem, IO } =
 
 ## Composing Middleware
 
-We can compose middleware by stacking `with` clauses. Each `with` wraps the
-preceding block, so the outermost handler runs first. Here is an example that
-stacks base directory, parent directory creation, backup, atomic writes,
-conflict checking, and logging:
+We can compose middleware by stacking `with` clauses. The innermost handler
+(listed first) intercepts the original operation, and then delegates to the
+next outer handler. Here is an example that stacks base directory, parent
+directory creation, backup, atomic writes, conflict checking, and logging:
 
 ```flix
 use Fs.FileSystem
@@ -641,9 +622,8 @@ def main(): Unit \ { FileSystem, Logger, IO } =
       with FileSystem.withLogging
 ```
 
-The `FileSystem`, `Logger`, and `Clock` effects all have default handlers, so
-they are handled automatically when they appear in the type signature of
-`main`.
+The `FileSystem` and `Logger` effects both have default handlers, so they are
+handled automatically when they appear in the type signature of `main`.
 
 > **Note:** The order of `with` clauses matters. The outermost handler (listed
 > last) wraps all inner handlers. In the example above, `withLogging` is
@@ -653,7 +633,8 @@ they are handled automatically when they appear in the type signature of
 
 ## Middleware Summary
 
-The following table shows which middleware are available on which effects:
+The following table shows which middleware are available on which effects
+(scroll right to see the full table):
 
 | Middleware             | FileTest | FilePermission | FileTime | FileStat | FileRead | DirList | Glob | FileWrite | FileSystem |
 |------------------------|:--------:|:--------------:|:--------:|:--------:|:--------:|:-------:|:----:|:---------:|:----------:|

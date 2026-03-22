@@ -8,53 +8,40 @@ UNIX.
 We will use the opportunity to illustrate how to use algebraic effects in Flix.
 
 ```flix
-use Sys.Console
+use Fs.FileRead
 
-def wc(file: String): Unit \ {Console, FileReadWithResult} = {
-       match FileReadWithResult.readLines(file) {
-            case Ok(lines) =>
-                let totalLines = List.length(lines);
-                let totalWords = List.sumWith(numberOfWords, lines);
-                Console.println("Lines: ${totalLines}, Words: ${totalWords}")
-            case Err(_) =>
-                Console.println("Unable to read file: ${file}")
-        }
-}
+def wc(file: String): Unit \ { FileRead, IO } =
+    match FileRead.readLines(file) {
+        case Ok(lines) =>
+            let totalLines = List.length(lines);
+            let totalWords = List.sumWith(numberOfWords, lines);
+            println("Lines: ${totalLines}, Words: ${totalWords}")
+        case Err(_) =>
+            println("Unable to read file: ${file}")
+    }
 
 def numberOfWords(s: String): Int32 =
      s |> String.words |> List.length
 
-def main(): Unit \ IO =
-    run {
-        wc("Main.flix")
-    } with Console.runWithIO
-      with FileReadWithResult.runWithIO
-
+def main(): Unit \ { FileRead, IO } =
+    wc("Main.flix")
 ```
 
 The program works as follows:
 
 We define a `wc` function that takes a filename and reads all lines from the
-file using the algebraic effect `FileReadWithResult`.
+file using the `FileRead` effect.
 
 If the file is successfully read, we calculate:
 
 - The number of lines using `List.length`.
 - The number of words by summing the results of applying `numberOfWords` to each
-  line. 
+  line.
 
-The results are printed to the terminal using the `Console` algebraic effect.
+The results are printed to the terminal using `println`.
 
-If the file cannot be read, an error message is printed to the terminal using
-the same effect.
+If the file cannot be read, an error message is printed instead.
 
-The `wc` function's type and effect signature specifies the `{Console,
-FileReadWithResult}` effect set, indicating these effects are required.
-Conceptually, the function is pure except for these effects, which must be
-handled by the caller. 
-
-The `main` function calls `wc` with a fixed filename. Since `wc` uses the
-`Console` and `FileReadWithResult` effects, we must provide their
-implementations. This is achieved using the `run-with` construct, where we
-specify the default handlers `Console.runWithIO` and
-`FileReadWithResult.runWithIO`.
+The `wc` function's type and effect signature specifies the `{FileRead, IO}`
+effect set, indicating these effects are required. Both `FileRead` and `IO` have
+default handlers, so no explicit handler calls are needed in `main`.

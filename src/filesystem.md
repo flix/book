@@ -14,26 +14,14 @@ are:
 All effects have default handlers, so no explicit `runWithIO` call is needed in
 `main`.
 
-## Writing a File
-
-The simplest way to write a file is with `FileWrite.write`. It takes a named
-`str` argument and a path, and returns `Result[IoError, Unit]`:
-
-```flix
-use Fs.FileWrite
-
-def main(): Unit \ { FileWrite, IO } =
-    match FileWrite.write(str = "Hello, Flix!", "greeting.txt") {
-        case Ok(_)    => println("File written successfully.")
-        case Err(err) => println("Error: ${err}")
-    }
-```
-
-The `FileWrite` effect appears in the type signature of `main` alongside `IO`.
+There are also more fine-grained leaf effects (e.g. `FileExists`,
+`ReadFile`, `WriteFile`) that do not have default handlers but can be run into
+their parent effects using `runWith` handlers. See [The Effect
+Hierarchy](#the-effect-hierarchy) for details.
 
 ## Reading a File
 
-Use `FileRead.read` to read an entire file as a string:
+We can use `FileRead.read` to read an entire file as a string:
 
 ```flix
 use Fs.FileRead
@@ -45,10 +33,37 @@ def main(): Unit \ { FileRead, IO } =
     }
 ```
 
+All filesystem operations return `Result[IoError, ...]`. The `IoError` type is
+a pair of an `ErrorKind` and a message string. The `ErrorKind` enum tells us
+what went wrong:
+
+| ErrorKind               | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `NotFound`               | The file or directory was not found.             |
+| `AlreadyExists`          | The file or directory already exists.             |
+| `PermissionDenied`       | Access was denied (also used by middleware).      |
+| `InvalidPath`            | The path is malformed.                           |
+| ...                      | and others.                                      |
+
+> **Note:** The `IO` effect appears in the signature because of `println`.
+
+## Writing a File
+
+We can use `FileWrite.write` to write a string to a file:
+
+```flix
+use Fs.FileWrite
+
+def main(): Unit \ { FileWrite, IO } =
+    match FileWrite.write(str = "Hello, Flix!", "greeting.txt") {
+        case Ok(_)    => println("File written successfully.")
+        case Err(err) => println("Error: ${err}")
+    }
+```
+
 ## Reading and Writing Lines
 
-Use `readLines` and `writeLines` to work with files line by line. The `lines`
-argument is a `List[String]`:
+We can use `readLines` and `writeLines` to work with files line by line:
 
 ```flix
 use Fs.FileRead
@@ -68,10 +83,12 @@ def main(): Unit \ { FileRead, FileWrite, IO } =
     }
 ```
 
+> **Note:** Since we both read and write, the effect set includes `FileRead`,
+> `FileWrite`, and `IO`.
+
 ## Reading and Writing Bytes
 
-Use `readBytes` and `writeBytes` for binary data. `writeBytes` takes a
-`Vector[Int8]` directly, and `readBytes` returns one:
+We can use `readBytes` and `writeBytes` for binary data:
 
 ```flix
 use Fs.FileRead
@@ -93,8 +110,8 @@ def main(): Unit \ { FileRead, FileWrite, IO } =
 
 ## Appending to a File
 
-Use `append` to add text to an existing file without overwriting it. The file
-is created if it does not exist:
+We can use `append` to add text to an existing file without overwriting it. The
+file is created if it does not exist:
 
 ```flix
 use Fs.FileRead
@@ -119,7 +136,7 @@ There are also `appendLines` and `appendBytes` variants.
 
 ## Listing a Directory
 
-Use `DirList.list` to get the names of all files and directories in a
+We can use `DirList.list` to get the names of all files and directories in a
 directory:
 
 ```flix
@@ -137,7 +154,8 @@ def main(): Unit \ { DirList, IO } =
 
 ## Finding Files with Glob
 
-Use `Glob.glob` to find files matching a glob pattern under a base directory:
+We can use `Glob.glob` to find files matching a glob pattern under a base
+directory:
 
 ```flix
 use Fs.Glob
@@ -154,8 +172,8 @@ def main(): Unit \ { Glob, IO } =
 
 ## File Metadata
 
-The `FileStat` effect provides operations for inspecting file metadata:
-existence, type, size, permissions, and timestamps:
+We can use the `FileStat` effect to inspect file metadata: existence, type,
+size, permissions, and timestamps:
 
 ```flix
 use Fs.FileStat
@@ -200,8 +218,7 @@ The `FileStat` effect combines four sub-effects:
 
 ## Copying, Moving, and Deleting
 
-The `FileWrite` effect also provides operations for copying, moving, and
-deleting files:
+We can also use the `FileWrite` effect to copy, move, and delete files:
 
 ```flix
 use Fs.FileWrite
@@ -238,8 +255,8 @@ The `copy` and `move` functions are convenience wrappers around `copyWith` and
 
 ## Creating Directories
 
-Use `mkDir` to create a single directory, `mkDirs` to create a directory and
-all its parents, and `mkTempDir` to create a temporary directory:
+We can use `mkDir` to create a single directory, `mkDirs` to create a directory
+and all its parents, and `mkTempDir` to create a temporary directory:
 
 ```flix
 use Fs.FileWrite
@@ -259,8 +276,8 @@ def main(): Unit \ { FileWrite, IO } =
 
 The `FileSystem` effect combines all filesystem operations into a single
 effect. It includes all operations from `FileStat`, `FileRead`, `FileWrite`,
-`DirList`, and `Glob`. Use `FileSystem` when you need multiple categories of
-operations together:
+`DirList`, and `Glob`. We can use `FileSystem` when we need multiple categories
+of operations together:
 
 ```flix
 use Fs.FileSystem
@@ -276,62 +293,11 @@ def main(): Unit \ { FileSystem, IO } =
     }
 ```
 
-## The Effect Hierarchy
-
-The Flix filesystem effects form a hierarchy. At the top is `FileSystem` (29
-operations). Below it are intermediate effects that group related operations,
-and at the bottom are leaf effects for individual operations:
-
-```text
-FileSystem                          (29 ops — unified root)
-├── FileStat                        (11 ops)
-│   ├── FileTest                    (4 ops: exists, isDirectory, isRegularFile, isSymbolicLink)
-│   ├── FilePermission              (3 ops: isReadable, isWritable, isExecutable)
-│   ├── FileTime                    (3 ops: accessTime, creationTime, modificationTime)
-│   └── FileSize                    (1 op: size)
-├── FileRead                        (3 ops: read, readLines, readBytes)
-├── DirList                         (1 op: list)
-├── Glob                            (1 op: glob)
-└── FileWrite                       (13 ops: write, append, delete, copy, move, mkdir, etc.)
-```
-
-You can use any level of the hierarchy. Use a leaf effect like `FileExists`
-when you only need `exists`. Use `FileRead` when you need to read files. Use
-`FileSystem` when you need everything.
-
-Leaf effects can be run into their parent effects using `runWith` handlers.
-For example, `FileExists` can be run into `FileTest`, and `ReadFile` into
-`FileRead`:
-
-```flix
-use Fs.FileExists
-use Fs.FileRead
-use Fs.FileTest
-use Fs.ReadFile
-
-def main(): Unit \ { FileRead, FileTest, IO } =
-    run {
-        safeRead("example.txt")
-    } with FileExists.runWithFileTest
-      with ReadFile.runWithFileRead
-
-def safeRead(file: String): Unit \ { FileExists, ReadFile, IO } =
-    match FileExists.exists(file) {
-        case Err(err)  => println("Error: ${err}")
-        case Ok(false) => println("File does not exist")
-        case Ok(true)  =>
-            match ReadFile.read(file) {
-                case Ok(content) => println(content)
-                case Err(err)    => println("Read error: ${err}")
-            }
-    }
-```
-
 ## Middleware
 
-Middleware are effect handlers that intercept filesystem operations. They are
-applied using `run { ... } with FileSystem.<middleware>` (or the corresponding
-sub-effect module) and compose by stacking multiple `with` clauses.
+Middleware are effect handlers that intercept filesystem operations. We apply
+them using `run { ... } with FileSystem.<middleware>` (or the corresponding
+sub-effect module) and compose them by stacking multiple `with` clauses.
 
 ### Base Directory
 
@@ -567,7 +533,7 @@ def main(): Unit \ { FileSystem, IO } =
 
 ### Access Control
 
-Flix provides middleware for restricting which paths can be accessed:
+Flix provides middleware for restricting which paths can be accessed. We can use:
 
 - `withAllowList(dirs)` — only paths within the listed directories are allowed
 - `withDenyList(dirs)` — paths within the listed directories are blocked
@@ -649,10 +615,10 @@ def main(): Unit \ { FileSystem, IO } =
 
 ## Composing Middleware
 
-Middleware compose by stacking `with` clauses. Each `with` wraps the preceding
-block, so the outermost handler runs first. Here is an example that stacks base
-directory, parent directory creation, backup, atomic writes, conflict checking,
-and logging:
+We can compose middleware by stacking `with` clauses. Each `with` wraps the
+preceding block, so the outermost handler runs first. Here is an example that
+stacks base directory, parent directory creation, backup, atomic writes,
+conflict checking, and logging:
 
 ```flix
 use Fs.FileSystem
@@ -710,3 +676,54 @@ The following table shows which middleware are available on which effects:
 | `withSizeRotation`     |          |                |          |          |          |         |      | x         | x          |
 | `withMemoryOverlay`    |          |                |          |          |          |         |      |           | x          |
 | `withInMemoryFS`       |          |                |          |          |          |         |      |           | x          |
+
+## The Effect Hierarchy
+
+The Flix filesystem effects form a hierarchy. At the top is `FileSystem` with
+all 29 operations. Below it are intermediate effects that group related
+operations, and at the bottom are leaf effects for individual operations:
+
+```text
+FileSystem                          (29 ops — unified root)
+├── FileStat                        (11 ops)
+│   ├── FileTest                    (4 ops: exists, isDirectory, isRegularFile, isSymbolicLink)
+│   ├── FilePermission              (3 ops: isReadable, isWritable, isExecutable)
+│   ├── FileTime                    (3 ops: accessTime, creationTime, modificationTime)
+│   └── FileSize                    (1 op: size)
+├── FileRead                        (3 ops: read, readLines, readBytes)
+├── DirList                         (1 op: list)
+├── Glob                            (1 op: glob)
+└── FileWrite                       (13 ops: write, append, delete, copy, move, mkdir, etc.)
+```
+
+We can use any level of the hierarchy. For example, we can use a leaf effect
+like `FileExists` when we only need `exists`, `FileRead` when we need to read
+files, or `FileSystem` when we need everything.
+
+We can run leaf effects into their parent effects using `runWith` handlers.
+For example, we can run `FileExists` into `FileTest` and `ReadFile` into
+`FileRead`:
+
+```flix
+use Fs.FileExists
+use Fs.FileRead
+use Fs.FileTest
+use Fs.ReadFile
+
+def main(): Unit \ { FileRead, FileTest, IO } =
+    run {
+        safeRead("example.txt")
+    } with FileExists.runWithFileTest
+      with ReadFile.runWithFileRead
+
+def safeRead(file: String): Unit \ { FileExists, ReadFile, IO } =
+    match FileExists.exists(file) {
+        case Err(err)  => println("Error: ${err}")
+        case Ok(false) => println("File does not exist")
+        case Ok(true)  =>
+            match ReadFile.read(file) {
+                case Ok(content) => println(content)
+                case Err(err)    => println("Read error: ${err}")
+            }
+    }
+```

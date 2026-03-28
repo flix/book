@@ -25,21 +25,21 @@ The following functions _convert_ Flix collections to Java collections:
 ///
 /// Lists
 ///
-def toList(ma: m[a]): JList \ IO + Aef[m] with Foldable[m]
-def toArrayList(ma: m[a]): JArrayList \ IO + Aef[m] with Foldable[m]
-def toLinkedList(ma: m[a]): JLinkedList \ IO + Aef[m] with Foldable[m]
+def toList(ma: m[a]): JList[a] \ IO + Aef[m] with Foldable[m]
+def toArrayList(ma: m[a]): JArrayList[a] \ IO + Aef[m] with Foldable[m]
+def toLinkedList(ma: m[a]): JLinkedList[a] \ IO + Aef[m] with Foldable[m]
 
 ///
 /// Sets
 ///
-def toSet(ma: m[a]): JSet \ IO + Aef[m] with Order[a], Foldable[m]
-def toTreeSet(ma: m[a]): JTreeSet \ IO + Aef[m] with Order[a], Foldable[m]
+def toSet(ma: m[a]): JSet[a] \ IO + Aef[m] with Order[a], Foldable[m]
+def toTreeSet(ma: m[a]): JTreeSet[a] \ IO + Aef[m] with Order[a], Foldable[m]
 
 ///
 /// Maps
 ///
-def toMap(m: Map[k, v]): JMap \ IO with Order[k]
-def toTreeMap(m: Map[k, v]): JTreeMap \ IO with Order[k]
+def toMap(m: Map[k, v]): JMap[k, v] \ IO with Order[k]
+def toTreeMap(m: Map[k, v]): JTreeMap[k, v] \ IO with Order[k]
 ```
 
 Each function constructs a new collection and copies all its elements into it.
@@ -52,13 +52,13 @@ The following functions _convert_ Java collections to Flix collections:
 
 ```flix
 /// Lists
-def fromList(l: JList): List[a]
+def fromList(l: JList[a]): List[a]
 
 /// Sets
-def fromSet(l: JSet): Set[a] with Order[a]
+def fromSet(l: JSet[a]): Set[a] with Order[a]
 
 /// Maps
-def fromMap(m: JMap): Map[k, v] with Order[k]
+def fromMap(m: JMap[k, v]): Map[k, v] with Order[k]
 ```
 
 Each function constructs a new Flix collection from a Java Collection. Hence

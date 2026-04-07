@@ -1,0 +1,57 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2026-04-01T09:13:21Z",
+      "resolved": "github:NixOS/nixpkgs/8d029aa64915e54b7846873d9583af4c9fd21ea4?lastModified=1775034801"
+    },
+    "mdbook@latest": {
+      "last_modified": "2026-03-21T07:29:51Z",
+      "resolved": "github:NixOS/nixpkgs/09061f748ee21f68a089cd5d91ec1859cd93d0be#mdbook",
+      "source": "devbox-search",
+      "version": "0.5.2",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/fjp1q8hin7rawqw12mfiy1pa04rh2z01-mdbook-0.5.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/fjp1q8hin7rawqw12mfiy1pa04rh2z01-mdbook-0.5.2"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3hdla0hq9yyr43cmaxd1bh0pqm7wl18l-mdbook-0.5.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3hdla0hq9yyr43cmaxd1bh0pqm7wl18l-mdbook-0.5.2"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/v2b90bb9wxrbsnyg60g7365wvgqvfdy0-mdbook-0.5.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/v2b90bb9wxrbsnyg60g7365wvgqvfdy0-mdbook-0.5.2"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/rqpwp6g23h2awcwam2l4vkvlvdi0401a-mdbook-0.5.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/rqpwp6g23h2awcwam2l4vkvlvdi0401a-mdbook-0.5.2"
+        }
+      }
+    }
+  }
+}

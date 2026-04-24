@@ -225,4 +225,4 @@ debug these issues, ensure that:
     - On Windows, you can print the variable by typing `echo %JAVA_HOME%`.
     - On Mac and Linux, you can print the variable by typing `echo $JAVA_HOME`.
 
-If you are still stuck, you can ask for help on [Gitter](https://gitter.im/flix/Lobby).
+If you are still stuck, you can ask for help on [Zulip](https://flix.zulipchat.com/).

@@ -313,6 +313,47 @@ def testAdd01(): Unit \ Assert =
 Note: Use `@Test`, not `@test`. Other annotations are similarly uppercase, e.g.
 `@Parallel`, `@Lazy`, `@MustUse`.
 
+## Companions Go Inside the Module
+
+A companion of a module is an enum, struct, effect, or trait whose name
+matches the module's name. The current convention is to declare the companion
+_inside_ the module, as the first declaration. The older sibling style
+(declaring the enum, struct, effect, or trait next to the module) is no
+longer idiomatic.
+
+&#x274C; **Old (no longer idiomatic):**
+
+```
+enum Color {                              // Wrong -- Outdated
+    case Red,
+    case Green,
+    case Blue
+}
+
+mod Color {
+    pub def isWarm(c: Color): Bool = ...
+}
+```
+
+&#x2705; **Current (correct, as of Flix 0.68.0):**
+
+```flix
+mod Color {
+    pub enum Color {
+        case Red,
+        case Green,
+        case Blue
+    }
+
+    pub def isWarm(c: Color): Bool = ...
+}
+```
+
+Note: The companion must be the **first** declaration inside its module,
+otherwise the compiler emits a `CompanionMustBeFirst` error. The same rule
+applies to struct, effect, and trait companions. See
+[Companion Modules](./companion-modules.md) for details.
+
 ## Datalog `inject` Requires Arity
 
 Older versions of Flix allowed `inject` without specifying the arity of the

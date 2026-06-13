@@ -18,7 +18,7 @@
 - [Mutable Data](./mutable-data.md)
   - [Regions](./regions.md)
   - [References](./references.md)
-  - [Arrays](./arrays.md)
+  - [配列](./arrays.md)
   - [Structs](./structs.md)
   - [Collections](./mutable-collections.md)
 - [Control Structures](./control-structures.md)

@@ -1,5 +1,7 @@
 # Programming Flix
 
+https://flix-jp.github.io/book/
+
 ## Build Instructions
 
 - Install [devbox](https://www.jetify.com/devbox)

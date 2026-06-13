@@ -10,3 +10,8 @@
 | 高カインドトレイト | Higher-kinded traits |
 | 関連型 | Associated types |
 | 関連エフェクト | Associated effects |
+| エフェクト指向プログラミング | Effect-oriented programming |
+| 代数エフェクト | Algebraic effect |
+| ハンドラ | Handler |
+| 経験則 | Rule of thumb |
+| ビジネスロジック | Business logic |

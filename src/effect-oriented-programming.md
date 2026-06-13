@@ -1,3 +1,142 @@
+# エフェクト指向プログラミング
+
+> 💡 **お知らせ**: このドキュメントはAIによって翻訳されています。表現に違和感がある場合は、[原文（英語）](https://doc.flix.dev/effect-oriented-programming.html)を参照してください。
+
+エフェクトを使ったプログラミングには、新しい考え方、すなわち _エフェクト指向の考え方（effect-oriented mindset）_ が必要です。
+
+JavaScript や Python から、C# や Java のような静的型付けのプログラミング言語へ移ってきたプログラマーを想像してみてください。もし彼らが自分自身の型を導入せず、オブジェクト、map、文字列ばかりでプログラミングを続けるなら、静的型システムの恩恵は失われてしまいます。同じように、もしプログラマーが _エフェクト指向の考え方_ を取り入れずに Flix にやってきたなら、Flix の型システムとエフェクトシステムの恩恵は失われてしまいます。
+
+Flix では、すべての関数に `IO` エフェクトを与えて、エフェクトを伴うコードをあらゆる場所で呼び出すこともできますが、これはエフェクト指向プログラミングではなく、悪いプログラミングスタイルです。適切なエフェクト指向のプログラム設計は、[代数エフェクトとハンドラ](./effects-and-handlers.md)を使うかもしれない関数的なコア（functional core）と、それを取り囲み `IO` を実行する命令的なシェル（imperative shell）から構成されます。経験則として、`IO` エフェクトは `main` 関数の _近く_ にあるべきです。
+
+それでは、これらの点を例を使って説明していきましょう。
+
+## 数当てゲーム &mdash; 間違ったやり方
+
+Flix と Java の混在したスタイルで書かれた、次のプログラムを考えてみましょう：
+
+```flix
+import java.lang.System
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.{Random => JRandom}
+
+def getSecretNumber(): Int32 \ {NonDet, IO} = 
+    let rnd = new JRandom();
+    rnd.nextInt()
+
+def readGuess(): Result[String, String] \ IO = 
+    let reader = new BufferedReader(new InputStreamReader(System.in));
+    let line = reader.readLine();
+    if (Object.isNull(line)) 
+        Result.Err("no input")
+    else 
+        Result.Ok(line)
+
+def readAndParseGuess(): Result[String, Int32] \ IO = 
+    forM(g <- readGuess(); 
+         n <- Int32.parse(10, g)
+    ) yield n
+
+def gameLoop(secret: Int32): Unit \ IO = {
+    println("Enter a guess:");
+    match readAndParseGuess() {
+        case Result.Ok(g) => 
+            if (secret == g) {
+                println("Correct!")
+            } else {
+                println("Incorrect!");
+                gameLoop(secret)
+            }
+        case Result.Err(_) => 
+            println("Not a number? Goodbye.");
+            println("The secret was: ${secret}")
+    }
+}
+
+def main(): Unit \ {NonDet, IO} = 
+    let secret = getSecretNumber();
+    gameLoop(secret)
+```
+
+ここでは、すべての関数、すなわち `getSecretNumber`、`readGuess`、`readAndParseGuess`、`gameLoop`、`main` が `IO` エフェクトを持っています。その結果、どの関数も何でもできてしまいます。エフェクトを伴うコードが、プログラム全体のあちこちに散らばっている点に注目してください。
+
+このスタイルで書かれたプログラムを理解し、リファクタリングし、テストするのは悪夢です。
+
+エフェクト指向のスタイルでプログラミングするということは、外側の世界と相互作用するあらゆるアクションに対してエフェクトを定義すべきだということです。そして、それらのエフェクトを `main` 関数の近くで _ハンドル_ すべきです。
+
+## 数当てゲーム &mdash; 正しいやり方
+
+本来こうすべきだったものを次に示します：
+
+```flix
+import java.lang.System
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.{Random => JRandom}
+
+eff Guess {
+    def readGuess(): Result[String, String]
+}
+
+eff Secret {
+    def getSecret(): Int32
+}
+
+eff Terminal {
+    def println(s: String): Unit    
+}
+
+def readAndParseGuess(): Result[String, Int32] \ {Guess} = 
+    forM(g <- Guess.readGuess(); 
+         n <- Int32.parse(10, g)
+    ) yield n
+
+def gameLoop(secret: Int32): Unit \ {Guess, Terminal} = {
+    Terminal.println("Enter a guess:");
+    match readAndParseGuess() {
+        case Result.Ok(g) => 
+            if (secret == g) {
+                Terminal.println("Correct!")
+            } else {
+                Terminal.println("Incorrect!");
+                gameLoop(secret)
+            }
+        case Result.Err(_) => 
+            Terminal.println("Not a number? Goodbye.");
+            Terminal.println("The secret was: ${secret}")
+    }
+}
+
+def main(): Unit \ {NonDet, IO} = 
+    run {
+        let secret = Secret.getSecret();
+        gameLoop(secret)
+    } with handler Secret {
+        def getSecret(_, resume) = 
+            let rnd = new JRandom();
+            resume(rnd.nextInt())
+    } with handler Guess {
+        def readGuess(_, resume) = 
+            let reader = new BufferedReader(new InputStreamReader(System.in));
+            let line = reader.readLine();
+            if (Object.isNull(line)) 
+                resume(Result.Err("no input"))
+            else 
+                resume(Result.Ok(line))
+    } with handler Terminal {
+        def println(s, resume) = { println(s); resume() }
+    }
+```
+
+ここでは、3つの代数エフェクトを導入しました：
+
+1. ユーザーに推測を尋ねるアクションを表す `Guess` エフェクト。
+2. 秘密の数を選ぶアクションを表す `Secret` エフェクト。
+3. コンソールへの出力というアクションを表す `Terminal` エフェクト。
+
+各関数は、関連するエフェクトのみを使うように書かれています。たとえば、`gameLoop` 関数は `Guess` と `Terminal` エフェクトを使い、それ以外のエフェクトは持ちません。さらに、すべてのエフェクトが1か所、すなわち `main` 関数の中でハンドルされるようになりました。その結果、ビジネスロジックは純粋に関数的になります。不純さが必要な箇所では、エフェクトとハンドラの使用によって、それが正確にカプセル化されます。
+
+<!--
 # Effect-Oriented Programming
 
 Programming with effects requires a new mindset, _an effect-oriented mindset_.
@@ -154,3 +293,4 @@ other effects. Furthermore, all effects are now handled in one place: in the
 `main` function. The upshot is that the business is logic is purely functional.
 Where impurity is needed, it is precisely encapsulated by the use of effects and
 handlers.
+-->

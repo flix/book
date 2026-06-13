@@ -10,3 +10,5 @@
 | 高カインドトレイト | Higher-kinded traits |
 | 関連型 | Associated types |
 | 関連エフェクト | Associated effects |
+| コンビネータ | Combinator |
+| 述語 | Predicate |

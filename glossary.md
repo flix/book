@@ -10,3 +10,8 @@
 | 高カインドトレイト | Higher-kinded traits |
 | 関連型 | Associated types |
 | 関連エフェクト | Associated effects |
+| プリミティブエフェクト | Primitive effect |
+| 代数エフェクト | Algebraic effect |
+| ヒープエフェクト | Heap effect |
+| 副作用 | Side-effect |
+| 非決定性 | Non-determinism |

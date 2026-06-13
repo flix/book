@@ -27,7 +27,7 @@
   - [Foreach](./foreach.md)
   - [Monadic For-Yield](./monadic-for-yield.md)
   - [Applicative For-Yield](./applicative-for-yield.md)
-- [Effect System](./effect-system.md)
+- [エフェクトシステム](./effect-system.md)
   - [Primitive Effects](./primitive-effects.md)
   - [Effect Polymorphism](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)

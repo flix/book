@@ -20,7 +20,7 @@
   - [References](./references.md)
   - [Arrays](./arrays.md)
   - [Structs](./structs.md)
-  - [Collections](./mutable-collections.md)
+  - [コレクション](./mutable-collections.md)
 - [Control Structures](./control-structures.md)
   - [If-Then-Else](./if-then-else.md)
   - [Pattern Matching](./pattern-matching.md)

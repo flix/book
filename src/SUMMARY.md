@@ -23,7 +23,7 @@
   - [Collections](./mutable-collections.md)
 - [Control Structures](./control-structures.md)
   - [If-Then-Else](./if-then-else.md)
-  - [Pattern Matching](./pattern-matching.md)
+  - [パターンマッチング](./pattern-matching.md)
   - [Foreach](./foreach.md)
   - [Monadic For-Yield](./monadic-for-yield.md)
   - [Applicative For-Yield](./applicative-for-yield.md)

@@ -10,7 +10,7 @@
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
 - [Functions](./functions.md)
-- [Immutable Data](./immutable-data.md)
+- [イミュータブルなデータ](./immutable-data.md)
   - [Lists](./lists.md)
   - [Chains and Vectors](./chains-and-vectors.md)
   - [Sets and Maps](./sets-and-maps.md)

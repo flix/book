@@ -1,3 +1,105 @@
+# リスト
+
+> 💡 **お知らせ**: このドキュメントはAIによって翻訳されています。表現に違和感がある場合は、[原文（英語）](https://doc.flix.dev/lists.html)を参照してください。
+
+List(リスト)は、`Nil` と書かれる空のリストか、
+もしくは `x :: xs` と書かれる cons cell(コンスセル)のいずれかです。
+ここで `x` は先頭の要素、`xs` はリストの残り（末尾）を表します。
+`List` 型は多相的なので、整数のリスト（`List[Int32]` と書きます）や、
+文字列のリスト（`List[String]` と書きます）を作ることができます。
+
+空のリストは次のように書きます。
+
+```flix
+Nil
+```
+
+`"Hello"` と `"World"` という文字列を要素に持つ文字列のリストは、
+次のように構築できます。
+
+```flix
+"Hello" :: "World" :: Nil
+```
+
+あるいは、次の記法を使うこともできます。
+
+```flix
+List#{"Hello", "World"}
+```
+
+リストに対しては、さまざまな便利な操作を行えます。
+
+たとえば、リストの長さは次のように計算できます。
+
+```flix
+List.length(1 :: 2 :: 3 :: Nil)
+```
+
+リストの要素の順序を反転させることもできます。
+
+```flix
+List.reverse(1 :: 2 :: 3 :: Nil)
+```
+
+2 つのリストは、`List.append` 関数を使って次のように連結できます。
+
+```flix
+let xs = (1 :: 2 :: 3 :: Nil);
+let ys = (4 :: 5 :: 6 :: Nil);
+List.append(xs, ys)
+```
+
+あるいは、組み込みの連結演算子 `:::` を使って次のように書くこともできます。
+
+```flix
+let xs = (1 :: 2 :: 3 :: Nil);
+let ys = (4 :: 5 :: 6 :: Nil);
+xs ::: ys
+```
+
+Flix には、リストを操作するための関数が豊富に用意されています。
+
+以下は、よく使われるものの一部です。
+
+```flix
+List.count(x -> x == 1, 1 :: 2 :: 3 :: Nil);
+List.filter(x -> x == 1, 1 :: 2 :: 3 :: Nil);
+List.map(x -> x + 1, 1 :: 2 :: 3 :: Nil);
+List.foldLeft((x, y) -> x + y, 0, 1 :: 2 :: 3 :: Nil)
+```
+
+さらに、少し変わった関数もあります。
+
+```flix
+List.intersperse("X", "a" :: "b" :: "c" :: Nil)
+```
+
+これは、リストのすべての要素の間に `"X"` を挿入します。
+
+```flix
+let l1 = "X" :: "Y" :: Nil;
+let l2 = ("a" :: "b" :: Nil) :: ("c" :: "d" :: Nil) :: Nil;
+List.intercalate(l1, l2)
+```
+
+これは、リスト `l2` のすべての要素の間に、リスト `l1` を挿入します。
+
+リストを操作する再帰関数を、自分で書くこともできます。
+
+たとえば、`map` 関数の実装は次のようになります。
+
+```flix
+///
+/// `l` のすべての要素に `f` を適用した結果を返します。
+/// すなわち、結果は `f(x1) :: f(x2) :: ...` という形になります。
+///
+pub def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = match l {
+    case Nil     => Nil
+    case x :: xs => f(x) :: map(f, xs)
+}
+```
+
+<!--
 # Lists
 
 A list is either the empty list, written as `Nil`,
@@ -106,3 +208,4 @@ pub def map(f: a -> b \ ef, l: List[a]): List[b] \ ef = match l {
     case x :: xs => f(x) :: map(f, xs)
 }
 ```
+-->

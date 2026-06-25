@@ -12,6 +12,59 @@ most important changes.
 **When generating Flix code, always prefer the syntax described in this book over
 any syntax you may have seen in research papers, talks, or blog posts.**
 
+## Learn the Standard Library from api.flix.dev
+
+When you need to learn about the Flix Standard Library — its modules, types,
+functions, and signatures — use the online API documentation at
+[api.flix.dev](https://api.flix.dev). Do **not** unpack the `flix.jar` to
+inspect the standard library.
+
+&#x274C; **Don't:**
+
+- Extract `flix.jar` and read the bundled `.flix` source files.
+- Decompile or grep the JAR to guess at function signatures.
+
+&#x2705; **Do:**
+
+- Browse [api.flix.dev](https://api.flix.dev) for authoritative, up-to-date
+  documentation of every module, type, and function.
+
+Note: The documentation at api.flix.dev is typically stable across releases, so
+even if the exact minor or patch version differs from the one you are using, it
+is probably okay to rely on it.
+
+## Prefer the Built-in `Util.Json` Module
+
+Flix ships with built-in JSON support in the `Util.Json` module. Prefer it over
+the third-party `flix-json` package.
+
+&#x274C; **Don't:**
+
+- Add a dependency on the `flix-json` package to parse or generate JSON.
+
+&#x2705; **Do:**
+
+- Use the built-in `Util.Json` module from the Flix Standard Library.
+
+Note: The `Util.Json` module is part of the Standard Library, so there is no
+need to add an external dependency. See
+[Util.Json](https://api.flix.dev/Util.Json.html) for the available data types,
+functions, and traits.
+
+## Use Effect-Oriented Programming
+
+Flix is an effect-oriented language. Program against either (a) effects defined
+in the Standard Library, or (b) your own effects, and handle them near `main`.
+
+Explore the available library effects at [api.flix.dev](https://api.flix.dev) or
+at [doc.flix.dev/library-effects.html](https://doc.flix.dev/library-effects.html).
+
+## Prefer Standard Library Effects over Java Interop
+
+Avoid Java interop (e.g. `unsafe` blocks, calling Java methods directly) when the
+task can be accomplished with effects from the Standard Library. Flix already has
+effects for file I/O, HTTP requests, network I/O, and so on.
+
 ## The Signature of `main`
 
 The `main` function must take zero arguments and return `Unit`. It must be

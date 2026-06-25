@@ -4,6 +4,8 @@ A collection of videos about Flix.
 
 ## Industry Talks
 
+- **[Everything About the Flix Language](https://www.youtube.com/watch?v=qMyl2kyDI0I)**\
+  *Magnus Madsen @ Rock the JVM 2026*
 - **[Four Fascinating Programming Languages You've Probably Never Heard Of](https://www.youtube.com/watch?v=_rHoHLanuQg)**\
   *Lutz Hühnken @ BOB 2026*
 - **[An Introduction to Effectful Programming in Flix](https://www.youtube.com/watch?v=DHB4SvB7g84)**\

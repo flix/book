@@ -23,3 +23,8 @@
 | 型カインド | Type-kind |
 | コンビネータ | Combinator |
 | 述語 | Predicate |
+| プリミティブエフェクト | Primitive effect |
+| 代数エフェクト | Algebraic effect |
+| ヒープエフェクト | Heap effect |
+| 副作用 | Side-effect |
+| 非決定性 | Non-determinism |

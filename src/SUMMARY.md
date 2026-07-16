@@ -28,7 +28,7 @@
   - [Monadic For-Yield](./monadic-for-yield.md)
   - [Applicative For-Yield](./applicative-for-yield.md)
 - [エフェクトシステム](./effect-system.md)
-  - [Primitive Effects](./primitive-effects.md)
+  - [プリミティブエフェクト](./primitive-effects.md)
   - [エフェクト多相](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
   - [デフォルトハンドラ](./default-handlers.md)

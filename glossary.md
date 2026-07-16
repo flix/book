@@ -16,3 +16,6 @@
 | パイプライン演算子 | Pipeline operator |
 | ラムダ式 | Lambda expression |
 | 型エイリアス | Type alias |
+| リージョン | Region |
+| レキシカルスコープ | Lexical scope |
+| ミューテーション | Mutation |

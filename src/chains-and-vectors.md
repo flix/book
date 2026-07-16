@@ -1,5 +1,88 @@
 # Chains and Vectors
 
+> 💡 **お知らせ**: このドキュメントはAIによって翻訳されています。表現に違和感がある場合は、[原文（英語）](https://doc.flix.dev/chains-and-vectors.html)を参照してください。
+
+Flix は不変な `List` に加えて、不変な `Chain` と `Vector` もサポートしています。
+
+次の表は、list、chain、vector のあいだの性能上のトレードオフを示しています：
+
+| 操作 \ 型             |   List   | Chain |  Vector  |
+|-----------------------|:--------:|:-----:|:--------:|
+| 先頭要素の取得        |   O(1)   |  O(n) |   O(1)   |
+| 末尾要素の取得        |   O(n)   |  O(n) |   O(1)   |
+| インデックス指定の取得 |   O(n)   |  O(n) |   O(1)   |
+| Cons                  |   O(1)   |  O(n) |   O(n)   |
+| Append                | O(n + m) |  O(1) | O(n + m) |
+
+`List`、`Chain`、`Vector` のどれを使うべきでしょうか？：
+
+- `List` データ構造は、シンプルでよく知られているため、デフォルトの選択肢になります。
+- `Vector` データ構造は、コレクションのサイズが固定されている場合や、高速なランダムアクセスが必要な場合に最適な選択肢です。
+- `Chain` データ構造はあまり使われませんが、高速な append が必要な場合に真価を発揮します。
+
+## Chains
+
+`Chain[t]` は、要素の不変な連結シーケンスです。
+
+`Chain[t]` データ型は次のように定義されています：
+
+```flix
+enum Chain[t] {
+    case Empty
+    case One(t)
+    case Chain(Chain[t], Chain[t])
+}
+```
+
+このデータ構造が `O(1)` の append をサポートするのは、`Chain` コンストラクタ（より適切には `Chain.append`）を使って、既存の2つの chain から新しい chain を構築できるためです。
+
+chain は `Chain.empty`、`Chain.singleton`、`Chain.cons`、`Chain.append` を使って構築できます。
+
+たとえば、次のように書けます：
+
+```flix
+let c = Chain.cons(1, Chain.empty());
+println(c)
+```
+
+これはコンパイルして実行すると `Chain#{1}` を出力します。
+
+## Vectors
+
+`Vector[t]` は、型 `t` の連続した要素からなる、不変で固定長のシーケンスです。
+
+Flix は `Vector` リテラルをサポートしています。たとえば、次のように書けます：
+
+
+```flix
+Vector#{1, 2, 3}
+```
+
+これは、要素 1、2、3 を持つ長さ 3 の vector を作成します。
+
+vector は `Vector.get` 操作による高速なランダムアクセスをサポートしています：
+
+```flix
+let v = Vector#{1, 2, 3};
+println(Vector.get(2, v))
+```
+
+これはコンパイルして実行すると `3` を出力します。
+
+> **警告:** vector の範囲を超えたインデックスでアクセスすると、プログラムはパニックします。
+
+vector は多くの操作をサポートしています。たとえば、vector に対して関数をマップできます：
+
+```flix
+let v = Vector#{1, 2, 3};
+Vector.map(x -> x + 1, v)
+```
+
+これは `Vector#{2, 3, 4}` に評価されます。
+
+<!--
+# Chains and Vectors
+
 In addition to immutable `List`s, Flix also supports immutable `Chain`s and
 `Vector`s. 
 
@@ -86,3 +169,4 @@ Vector.map(x -> x + 1, v)
 ```
 
 evaluates to `Vector#{2, 3, 4}`.
+-->

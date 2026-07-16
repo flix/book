@@ -10,3 +10,8 @@
 | 高カインドトレイト | Higher-kinded traits |
 | 関連型 | Associated types |
 | 関連エフェクト | Associated effects |
+| 高階関数 | Higher-order function |
+| カリー化 | Currying |
+| 関数合成 | Function composition |
+| パイプライン演算子 | Pipeline operator |
+| ラムダ式 | Lambda expression |

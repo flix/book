@@ -9,7 +9,7 @@
   - [タプル](./tuples.md)
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
-- [Functions](./functions.md)
+- [関数](./functions.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)
   - [Chains and Vectors](./chains-and-vectors.md)

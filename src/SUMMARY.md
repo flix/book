@@ -30,7 +30,7 @@
 - [エフェクトシステム](./effect-system.md)
   - [プリミティブエフェクト](./primitive-effects.md)
   - [エフェクト多相](./effect-polymorphism.md)
-  - [Effects and Handlers](./effects-and-handlers.md)
+  - [エフェクトとハンドラ](./effects-and-handlers.md)
   - [デフォルトハンドラ](./default-handlers.md)
   - [エフェクト指向プログラミング](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)

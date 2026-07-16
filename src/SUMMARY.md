@@ -19,7 +19,7 @@
   - [Regions](./regions.md)
   - [References](./references.md)
   - [配列](./arrays.md)
-  - [Structs](./structs.md)
+  - [構造体](./structs.md)
   - [コレクション](./mutable-collections.md)
 - [制御構造](./control-structures.md)
   - [If-Then-Else](./if-then-else.md)

@@ -10,3 +10,4 @@
 | 高カインドトレイト | Higher-kinded traits |
 | 関連型 | Associated types |
 | 関連エフェクト | Associated effects |
+| 型エイリアス | Type alias |

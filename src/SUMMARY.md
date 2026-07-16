@@ -8,7 +8,7 @@
   - [プリミティブ型](./primitive-types.md)
   - [タプル](./tuples.md)
   - [列挙型](./enums.md)
-  - [Type Aliases](./type-aliases.md)
+  - [型エイリアス](./type-aliases.md)
 - [Functions](./functions.md)
 - [Immutable Data](./immutable-data.md)
   - [Lists](./lists.md)

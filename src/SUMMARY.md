@@ -14,7 +14,7 @@
   - [Lists](./lists.md)
   - [Chains and Vectors](./chains-and-vectors.md)
   - [Sets and Maps](./sets-and-maps.md)
-  - [Records](./records.md)
+  - [レコード](./records.md)
 - [Mutable Data](./mutable-data.md)
   - [Regions](./regions.md)
   - [References](./references.md)

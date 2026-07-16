@@ -28,3 +28,7 @@
 | ヒープエフェクト | Heap effect |
 | 副作用 | Side-effect |
 | 非決定性 | Non-determinism |
+| エフェクト指向プログラミング | Effect-oriented programming |
+| ハンドラ | Handler |
+| 経験則 | Rule of thumb |
+| ビジネスロジック | Business logic |

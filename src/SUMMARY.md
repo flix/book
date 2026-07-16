@@ -32,7 +32,7 @@
   - [エフェクト多相](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
   - [デフォルトハンドラ](./default-handlers.md)
-  - [Effect-Oriented Programming](./effect-oriented-programming.md)
+  - [エフェクト指向プログラミング](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)
   - [Assert](./assert.md)
   - [Clock](./clock.md)

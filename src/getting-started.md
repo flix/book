@@ -220,7 +220,7 @@ Flix が動作しない最も一般的な原因は、(a) `java` コマンドが 
     - Windows では、`echo %JAVA_HOME%` と入力して変数を表示できます。
     - Mac および Linux では、`echo $JAVA_HOME` と入力して変数を表示できます。
 
-まだ問題が解決しない場合は、[Gitter](https://gitter.im/flix/Lobby) でヘルプを求めることができます。
+まだ問題が解決しない場合は、[Zulip](https://flix.zulipchat.com/) でヘルプを求めることができます。
 
 <!--
 # Getting Started
@@ -450,5 +450,6 @@ debug these issues, ensure that:
     - On Windows, you can print the variable by typing `echo %JAVA_HOME%`.
     - On Mac and Linux, you can print the variable by typing `echo $JAVA_HOME`.
 
-If you are still stuck, you can ask for help on [Gitter](https://gitter.im/flix/Lobby).
+If you are still stuck, you can ask for help on [Zulip](https://flix.zulipchat.com/).
 -->
+

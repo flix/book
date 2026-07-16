@@ -18,15 +18,11 @@ Spawned processes are always associated with a region; the region
 will not exit until all the processes associated with it have completed:
 
 ```flix
-def slowPrint(delay: Int32, message: String): Unit \ IO =
-    Thread.sleep(Time.Duration.fromSeconds(delay));
-    println(message)
-
 def main(): Unit \ IO =
     region r1 {
         region r2 {
-            spawn slowPrint(2, "Hello from r1") @ r1;
-            spawn slowPrint(1, "Hello from r2") @ r2
+            spawn println("Hello from r1") @ r1;
+            spawn println("Hello from r2") @ r2
         };
         println("r2 is now complete")
     };
@@ -150,14 +146,15 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(tx: Sender[String]): Unit \ {Chan, IO} =
-    Thread.sleep(Time.Duration.fromSeconds(60));
+def slow(tx: Sender[String]): Unit \ {Chan, NonDet, IO} =
+    let delay = Channel.timeout(60, Time.TimeUnit.Seconds);
+    Channel.recv(delay);
     Channel.send("I am very slow", tx)
 
 def main(): Unit \ {Chan, NonDet, IO} = region rc {
     let (tx, rx) = Channel.buffered(1);
     spawn slow(tx) @ rc;
-    let timeout = Channel.timeout(Time.Duration.fromSeconds(5));
+    let timeout = Channel.timeout(5, Time.TimeUnit.Seconds);
     select {
         case m <- recv(rx)       => m
         case _ <- recv(timeout)  => "timeout"

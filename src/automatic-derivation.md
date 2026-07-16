@@ -5,7 +5,6 @@ Flix supports automatic derivation of several traits, including:
 - `Eq` — to derive structural equality on the values of a type.
 - `Order` — to derive a total ordering on the values of a type.
 - `ToString` — to derive a human-readable string representation on the values of a type.
-- `Sendable` — to enable the values of an (immutable) type to be sent over a channel.
 - `Coerce` - to convert simple data types to their underlying representation.
 
 ## Derivation of Eq and Order
@@ -62,49 +61,6 @@ which prints:
 ```
 A Circle(123), Square(123), and Rectangle(123, 456) walk into a bar.
 ```
-
-## Derivation of Sendable
-
-We can automatically derive implementations of the `Sendable` trait (which
-allow values of a specific type to be sent over a channel). For example:
-
-```flix
-enum Shape with Sendable, ToString {
-    case Circle(Int32)
-}
-
-def main(): Unit \ IO = 
-    region rc {
-        let (tx, rx) = Channel.buffered(rc, 10);
-        Channel.send(Circle(123), tx); // OK, since Shape is Sendable.
-        println(Channel.recv(rx))
-    }
-```
-
-We _cannot_ derive `Sendable` for types that rely on scoped mutable memory. For
-example, if we try:
-
-```flix
-enum Shape[r: Region] with Sendable {
-    case Circle(Array[Int32, r])
-}
-```
-
-The Flix compiler emits a compiler error:
-
-```
-❌ -- Safety Error --------------------------------------
-
->> Cannot derive 'Sendable' for type Shape[b27587945]
-
-Because it takes a type parameter of kind 'Region'.
-
-1 | enum Shape[r: Region] with Sendable {
-                               ^^^^^^^^
-                               unable to derive Sendable.
-```
-
-This is because mutable data is not safe to share between threads.
 
 ## Derivation of Coerce
 

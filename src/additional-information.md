@@ -10,10 +10,9 @@ More information about the Flix programming language can be found in:
 
 ## Getting Help
 
-If you have a question or comment we are happy to help you out on our Gitter
-channel:
+If you have a question or comment we are happy to help you out on our Zulip chat:
 
-[https://gitter.im/flix/Lobby](https://gitter.im/flix/Lobby)
+[https://flix.zulipchat.com/](https://flix.zulipchat.com/)
 
 ## Reporting a Bug
 
@@ -21,4 +20,4 @@ If you encounter a bug, you can report it here:
 
 [https://github.com/flix/flix/issues](https://github.com/flix/flix/issues)
 
-but first you may wish to talk to us on Gitter.
+but first you may wish to talk to us on Zulip.

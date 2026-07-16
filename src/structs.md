@@ -26,20 +26,23 @@ Flix は、構造体を扱うために 3 つの操作をサポートしていま
 
 ## 構造体の宣言
 
-構造体は次のように宣言できます。
+構造体は、同じ名前のモジュール——その[コンパニオン](companion-modules.md)——の
+内部で宣言します。たとえば：
 
 ```flix
-struct Person[r] {
-    name: String,
-    mut age: Int32,
-    mut height: Int32
+mod Person {
+    pub struct Person[r] {
+        name: String,
+        mut age: Int32,
+        mut height: Int32
+    }
 }
 ```
 
 ここでは、`name`、`age`、`height` という 3 つのフィールドを持つ構造体を
 宣言しています。`name` フィールドは immutable であり、構造体インスタンスが
-生成された後に変更することはできません。`age` と `height` は mutable なので、
-生成後に変更できます。`Person` 構造体は、`r` という 1 つの型パラメータを持ち、
+生成された後に変更することはできません。`age` と `height` のフィールドは
+mutable なので、生成後に変更できます。`Person` 構造体は、`r` という 1 つの型パラメータを持ち、
 これは構造体が属する region を指定します。
 
 すべての構造体は region の型パラメータを持たなければならず、それは型パラメータの
@@ -114,9 +117,11 @@ Flix では、構造体のフィールドはそのコンパニオンモジュー
 たとえば、次のように書くと：
 
 ```flix
-struct Point[r] {
-    x: Int32,
-    y: Int32
+mod Point {
+    pub struct Point[r] {
+        x: Int32,
+        y: Int32
+    }
 }
 
 def area(p: Point[r]): Int32 \ r = 
@@ -146,12 +151,12 @@ Flix コンパイラは 2 つのエラーを出力します。
 代わりに、`area` 関数はコンパニオンモジュールの _内部_ で定義すべきです。
 
 ```flix
-struct Point[r] {
-    x: Int32,
-    y: Int32
-}
+mod Point {
+    pub struct Point[r] {
+        x: Int32,
+        y: Int32
+    }
 
-mod Point { // Point のコンパニオンモジュール
     pub def area(p: Point[r]): Int32 \ r = 
         p->x * p->y
 }
@@ -180,10 +185,12 @@ mutable なフィールドには `mut` 修飾子を付けなければなりま�
 たとえば、ユーザーを表す構造体を次のように定義できます。
 
 ```flix
-struct User[r] {
-    id: Int32,
-    mut name: String,
-    mut email: String
+mod User {
+    pub struct User[r] {
+        id: Int32,
+        mut name: String,
+        mut email: String
+    }
 }
 ```
 
@@ -218,9 +225,11 @@ Mark the field as 'mut' in the declaration of the struct.
 たとえば、次の構造体を定義できます。
 
 ```flix
-struct Book[r] {
-    title: String,
-    authors: MutList[String, r]
+mod Book {
+    pub struct Book[r] {
+        title: String,
+        authors: MutList[String, r]
+    }
 }
 ```
 
@@ -244,11 +253,13 @@ mutable なリストを変更しているのです。
 定義できます。
 
 ```flix
-struct Tree[k, v, r] {
-    key: k,
-    mut value: v,
-    mut left: Option[Tree[k, v, r]],
-    mut right: Option[Tree[k, v, r]]
+mod Tree {
+    pub struct Tree[k, v, r] {
+        key: k,
+        mut value: v,
+        mut left: Option[Tree[k, v, r]],
+        mut right: Option[Tree[k, v, r]]
+    }
 }
 ```
 
@@ -302,21 +313,24 @@ Each operation has an effect in the region of the struct.
 
 ## Declaring a Struct
 
-We can declare a struct as follows:
+A struct is declared inside a module of the same name — its
+[companion](companion-modules.md). For example:
 
 ```flix
-struct Person[r] {
-    name: String,
-    mut age: Int32,
-    mut height: Int32
+mod Person {
+    pub struct Person[r] {
+        name: String,
+        mut age: Int32,
+        mut height: Int32
+    }
 }
 ```
 
 Here we declare a struct with three fields: `name`, `age`, and `height`. The
 `name` field is immutable, i.e. cannot be changed once the struct instance has
-been created. The `age` and `heights` are mutable and hence can be changed after
-creation. The `Person` struct has one type parameter: `r` which specifies the
-region that the struct belongs to.
+been created. The `age` and `height` fields are mutable and hence can be
+changed after creation. The `Person` struct has one type parameter: `r` which
+specifies the region that the struct belongs to.
 
 Every struct must have a region type parameter and it must be the last in the
 type parameter list. 
@@ -388,9 +402,11 @@ module. We can think of this as a form of compiler-enforced encapsulation.
 For example, if we write:
 
 ```flix
-struct Point[r] {
-    x: Int32,
-    y: Int32
+mod Point {
+    pub struct Point[r] {
+        x: Int32,
+        y: Int32
+    }
 }
 
 def area(p: Point[r]): Int32 \ r = 
@@ -420,12 +436,12 @@ The Flix compiler emits two errors:
 Instead, we should define the `area` function _inside_ the companion module:
 
 ```flix
-struct Point[r] {
-    x: Int32,
-    y: Int32
-}
+mod Point {
+    pub struct Point[r] {
+        x: Int32,
+        y: Int32
+    }
 
-mod Point { // Companion module for Point
     pub def area(p: Point[r]): Int32 \ r = 
         p->x * p->y
 }
@@ -453,10 +469,12 @@ been created.
 For example, we can define a struct to represent a user:
 
 ```flix
-struct User[r] {
-    id: Int32,
-    mut name: String,
-    mut email: String
+mod User {
+    pub struct User[r] {
+        id: Int32,
+        mut name: String,
+        mut email: String
+    }
 }
 ```
 
@@ -491,9 +509,11 @@ We remark that field immutability is _not_ transitive.
 For example, we can define a struct:
 
 ```flix
-struct Book[r] {
-    title: String,
-    authors: MutList[String, r]
+mod Book {
+    pub struct Book[r] {
+        title: String,
+        authors: MutList[String, r]
+    }
 }
 ```
 
@@ -516,11 +536,13 @@ mutable list.
 We can define a struct for a binary search tree that is recursive and polymorphic:
 
 ```flix
-struct Tree[k, v, r] {
-    key: k,
-    mut value: v,
-    mut left: Option[Tree[k, v, r]],
-    mut right: Option[Tree[k, v, r]]
+mod Tree {
+    pub struct Tree[k, v, r] {
+        key: k,
+        mut value: v,
+        mut left: Option[Tree[k, v, r]],
+        mut right: Option[Tree[k, v, r]]
+    }
 }
 ```
 

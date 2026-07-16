@@ -6,7 +6,7 @@
   - [Next Steps](./next-steps.md)
 - [データ型](./data-types.md)
   - [プリミティブ型](./primitive-types.md)
-  - [Tuples](./tuples.md)
+  - [タプル](./tuples.md)
   - [Enums](./enums.md)
   - [Type Aliases](./type-aliases.md)
 - [Functions](./functions.md)

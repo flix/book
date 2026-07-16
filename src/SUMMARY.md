@@ -13,7 +13,7 @@
 - [イミュータブルなデータ](./immutable-data.md)
   - [リスト](./lists.md)
   - [Chains and Vectors](./chains-and-vectors.md)
-  - [Sets and Maps](./sets-and-maps.md)
+  - [Set と Map](./sets-and-maps.md)
   - [レコード](./records.md)
 - [Mutable Data](./mutable-data.md)
   - [Regions](./regions.md)

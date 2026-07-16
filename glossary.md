@@ -19,3 +19,4 @@
 | リージョン | Region |
 | レキシカルスコープ | Lexical scope |
 | ミューテーション | Mutation |
+| 平衡木 | Balanced tree |

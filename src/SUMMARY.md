@@ -15,7 +15,7 @@
   - [Chains and Vectors](./chains-and-vectors.md)
   - [Set と Map](./sets-and-maps.md)
   - [レコード](./records.md)
-- [Mutable Data](./mutable-data.md)
+- [ミュータブルなデータ](./mutable-data.md)
   - [Regions](./regions.md)
   - [References](./references.md)
   - [配列](./arrays.md)

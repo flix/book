@@ -21,7 +21,7 @@
   - [配列](./arrays.md)
   - [Structs](./structs.md)
   - [コレクション](./mutable-collections.md)
-- [Control Structures](./control-structures.md)
+- [制御構造](./control-structures.md)
   - [If-Then-Else](./if-then-else.md)
   - [パターンマッチング](./pattern-matching.md)
   - [Foreach](./foreach.md)

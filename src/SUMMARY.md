@@ -31,7 +31,7 @@
   - [Primitive Effects](./primitive-effects.md)
   - [エフェクト多相](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
-  - [Default Handlers](./default-handlers.md)
+  - [デフォルトハンドラ](./default-handlers.md)
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)
   - [Assert](./assert.md)

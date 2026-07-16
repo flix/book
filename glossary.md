@@ -21,3 +21,5 @@
 | ミューテーション | Mutation |
 | 平衡木 | Balanced tree |
 | 型カインド | Type-kind |
+| コンビネータ | Combinator |
+| 述語 | Predicate |

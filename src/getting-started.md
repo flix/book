@@ -117,71 +117,63 @@ The snippet above provides the following keybindings.
 
 ![Visual Studio Code1](images/neovim.png)
 
-### Manual Configuration
+#### Installation
 
-If you would rather setup the LSP server yourself the code from the plugin is as follows.
+Install with your plugin manager of choice using the repo `flix/nvim`.
 
-1. Tell nvim what filetypes are Flix files
-
-```lua
-vim.filetype.add({
-  extension = {
-    flix = "flix",
-  }
-})
-```
-
-2. Configure the Flix LSP for neovim's native LSP client
+Neovim 0.12 ships a built-in plugin manager, so no third party is required:
 
 ```lua
--- check if "flix" has already been setup
-if not vim.lsp.config["flix"] then
-  -- create flix LSP configuration for native LSP
-  vim.lsp.config('flix', {
-    -- choose just one `cmd` definition
-    -- for a project local `flix.jar` ie flix.jar is installed in the root of your project
-    cmd = { "java", "-jar", "flix.jar", "lsp" },
-    -- for a global flix installation ie with "homebrew" or "nix"
-    cmd = {"flix", "lsp"},
-    filetypes = { "flix" },
-    root_markers = { "flix.toml" }, -- where to set the root directory
-    cmd_cwd = vim.fs.root(0, { 'flix.toml' }),
-    root_dir = vim.fs.root(0, { 'flix.toml' }),
-})
-end
+-- Neovim 0.12+ (vim.pack)
+vim.pack.add({ "https://github.com/flix/nvim" })
+
+require("flix").setup()
+vim.lsp.enable("flix")
 ```
 
-3. Create an autocmd to set flix defualts such as comments and indenting, and to run the codelens whenever your flix buffer changes.
+With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
--- auto commands
--- create named "groups" to prevent autocmd conflicts
-local flix = vim.api.nvim_create_augroup("flix.ft", { clear = true })
-local flix_lsp = vim.api.nvim_create_augroup("flix.lsp", { clear = true })
--- autocmd that activates when a "flix" buffer is entered
-vim.api.nvim_create_autocmd("FileType", {
-  group = flix,
-  pattern = "flix",
-  callback = function(args)
-    vim.api.nvim_clear_autocmds({ group = flix_lsp, buffer = args.buf }) -- prevent duplicates
-    -- set flix defaults
-    vim.opt_local.tabstop = 4
-    vim.opt_local.shiftwidth = 4
-    vim.opt_local.softtabstop = 4
-    vim.bo.commentstring = "// %s"
-    -- refresh codelens
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
-      group = flix_lsp,
-      buffer = args.buf,
-      callback = function()
-        vim.lsp.codelens.refresh({ bufnr = args.buf })
-      end
-    })
-  end
-})
+{
+  "flix/nvim",
+  ft = "flix",
+  config = function()
+    require("flix").setup()
+    vim.lsp.enable("flix")
+  end,
+}
 ```
 
-> place this code in your `$HOME/.config/nvim/init.lua` or wherever you configure your lsp in neovim.
+#### Configuration
+
+Call `require("flix").setup()` to register the config, then enable the server:
+
+```lua
+-- create the Flix LSP config
+require("flix").setup()
+-- enable the server
+vim.lsp.enable("flix")
+```
+
+Set local Flix keybindings with an autocommand or by creating `ftplugin/flix.lua`
+in your own config. The example below maps run/test for a Flix project:
+
+```lua
+-- import the `flix_cmd` function
+local flix_cmd = require("flix.commands").flix_cmd
+-- setting `buffer` keeps the mappings scoped to Flix buffers
+local bufnr = vim.api.nvim_get_current_buf()
+
+vim.keymap.set("n", "<Space>br", function() flix_cmd("run") end,
+  { noremap = true, silent = true, buffer = bufnr, desc = "run flix project" })
+vim.keymap.set("n", "<Space>bt", function() flix_cmd("test") end,
+  { noremap = true, silent = true, buffer = bufnr, desc = "test flix project" })
+```
+
+`flix_cmd` finds the project root from `root_markers`, so it works even when the
+LSP is not attached, and reports an error if no `flix.toml` is found.
+
+> place this code in your `$HOME/.config/nvim/init.lua` or wherever you configure your plugins in neovim.
 
 ## Using Flix from Emacs
 

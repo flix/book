@@ -1,9 +1,9 @@
 # Research Literature
 
-The following research papers cover specific aspects of Flix.
-
-Flix has evolved significantly since many of these papers were published. The
-book is the authoritative reference for the current language.
+The following research papers cover specific aspects of Flix. They are written
+for a research audience and are not necessarily accessible to the general
+reader. Flix has also evolved significantly since many of these papers were
+published; the book is the authoritative reference for the current language.
 
 ## Language Design
 

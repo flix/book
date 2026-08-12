@@ -177,7 +177,21 @@ LSP is not attached, and reports an error if no `flix.toml` is found.
 
 ## Using Flix from Emacs
 
-Flix can be used from [Emacs](https://www.gnu.org/software/emacs/) as well by installing the [flix-mode](https://codeberg.org/mdiin/flix-mode) package. Follow the instructions there to get started writing Flix code in Emacs.
+Flix can be used from [Emacs](https://www.gnu.org/software/emacs/), either in
+plain Emacs or in [Spacemacs](https://www.spacemacs.org/). Both drive the Flix
+compiler's LSP server for full language support.
+
+### Plain Emacs
+
+Install the [flix-mode](https://github.com/flix/emacs) package (the major
+mode) and configure it with an LSP client (`eglot` or `lsp-mode`). Its README
+has minimal, ready-to-use configurations for both.
+
+### Spacemacs
+
+Add the [flix layer](https://github.com/flix/spacemacs), which wires up
+flix-mode with `lsp-mode` and the Spacemacs key-binding system. Its README has
+installation and configuration instructions.
 
 ## Using Flix from the CLI
 

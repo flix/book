@@ -76,8 +76,8 @@ The JAR-file contains all class files of the project together with any files in
 the `resources` directory. The built JAR may depend on external JARs, if the
 project, or one of its dependencies, depends on JAR-files.
 
-> **Note:** `build-jar` compiles the project itself; it does not write anything
-> to the `build` directory.
+> **Note:** `build-jar` compiles the project itself and places the compiled
+> JAR-file in the `artifact` directory.
 
 ## Building a fat JAR-file (bundling all dependencies)
 
@@ -89,8 +89,8 @@ bundled into one single JAR-file.
 The JAR-file contains all class files of the project together with the contents
 of all JAR dependencies found in the `lib` directory. 
 
-> **Note:** `build-fatjar` compiles the project itself; it does not write
-> anything to the `build` directory.
+> **Note:** `build-fatjar` compiles the project itself and places the compiled
+> JAR-file in the `artifact` directory.
 
 ## Building a Flix Project
 

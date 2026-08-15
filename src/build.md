@@ -77,7 +77,8 @@ the `resources` directory. The built JAR may depend on external JARs, if the
 project, or one of its dependencies, depends on JAR-files.
 
 > **Note:** `build-jar` compiles the project itself and places the compiled
-> JAR-file in the `artifact` directory.
+> JAR-file in the `artifact` directory. There is no need to run `build` or
+> `build-classes` before running `build-jar`.
 
 ## Building a fat JAR-file (bundling all dependencies)
 
@@ -90,7 +91,8 @@ The JAR-file contains all class files of the project together with the contents
 of all JAR dependencies found in the `lib` directory. 
 
 > **Note:** `build-fatjar` compiles the project itself and places the compiled
-> JAR-file in the `artifact` directory.
+> JAR-file in the `artifact` directory. There is no need to run `build` or
+> `build-classes` before running `build-fatjar`.
 
 ## Building a Flix Project
 

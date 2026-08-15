@@ -10,17 +10,19 @@ The Flix build system supports the following commands:
 
 - `init`: creates a new Flix project in the current directory.
 - `check`: checks the current project for compiler errors.
-- `build`: builds the current project (i.e. emits Java bytecode).
+- `build`: builds (i.e. compiles) the current project.
+- `build-classes`: builds the current project and writes the class files to the `build` directory.
 - `build-jar`: builds a jar-file from the current project. 
 - `build-fatjar`: builds a jar-file with all dependencies bundled.
 - `build-pkg`: builds a fpkg-file from the current project. 
+- `clean`: removes the `build` directory.
 - `run`: runs main in current project.  
 - `test`: runs all tests in the current project.
 
 All commands can be executed from the command line, from the REPL, and from
 VSCode.
 
-All commands, except `build-pkg` work without a manifest file. To build,
+All commands, except `build-pkg` and `clean`, work without a manifest file. To build,
 package, and publish a Flix project, a `flix.toml` manifest is required. The
 `init` command will create an empty skeleton `flix.toml` manifest, if not
 already present. 

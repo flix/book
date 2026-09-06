@@ -62,7 +62,7 @@ def main(): Unit \ { Http, IO } =
 
 ## POST Requests and JSON
 
-Use `HttpRequest.post` to create a POST request with a body. The request builder
+Use `HttpRequest.postWith` to create a POST request with a body. The request builder
 supports `withContentType` and `withAccept` for setting common headers. Send the
 built request with `Http.send`:
 
@@ -73,7 +73,7 @@ use Net.HttpResponse
 
 def main(): Unit \ { Http, IO } =
     let body = "{\"name\": \"Asterix\", \"age\": 35}";
-    let req = HttpRequest.post("https://flix.dev/api/users", body)
+    let req = HttpRequest.postWith("https://flix.dev/api/users", body)
                 |> HttpRequest.withContentType("application/json")
                 |> HttpRequest.withAccept("application/json");
     match Http.send(req) {
@@ -118,7 +118,11 @@ def main(): Unit \ { Http, IO } =
 
 Constructors are available for all HTTP methods: `HttpRequest.get`,
 `HttpRequest.post`, `HttpRequest.put`, `HttpRequest.patch`, and
-`HttpRequest.delete`.
+`HttpRequest.delete`. Each takes only a URL and creates a request with no body.
+For `post`, `put`, and `patch`, the `HttpRequest.postWith`,
+`HttpRequest.putWith`, and `HttpRequest.patchWith` variants take a body as a
+second argument. Alternatively, a body can be added to any request later with
+`HttpRequest.withBody` or `HttpRequest.withBodyBytes`.
 
 ## The Https Effect
 

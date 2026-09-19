@@ -16,16 +16,20 @@ The Flix build system supports the following commands:
 - `build-fatjar`: builds a jar-file with all dependencies bundled.
 - `build-pkg`: builds a fpkg-file from the current project. 
 - `clean`: removes the `build` directory.
+- `doc`: generates API documentation for the current project.
+- `format`: formats the Flix source files of the current project.
+- `outdated`: shows dependencies which have newer versions available.
+- `release`: releases a new version of the current project to GitHub.
 - `run`: runs main in current project.  
 - `test`: runs all tests in the current project.
 
 All commands can be executed from the command line, from the REPL, and from
 VSCode.
 
-All commands, except `build-pkg` and `clean`, work without a manifest file. To build,
-package, and publish a Flix project, a `flix.toml` manifest is required. The
-`init` command will create an empty skeleton `flix.toml` manifest, if not
-already present. 
+All commands, except `build-pkg`, `clean`, and `release`, work without a manifest
+file. To build, package, and publish a Flix project, a `flix.toml` manifest is
+required. The `init` command will create an empty skeleton `flix.toml` manifest,
+if not already present. 
 
 ## Project Structure
 
@@ -33,4 +37,9 @@ Flix scans for source files in the paths `*.flix`, `src/**/*.flix,`, and
 `test/**/*.flix`.
 
 Flix scans for Flix packages and JARs in the paths `lib/**/*.fpkg` and
-`lib/**/*.jar`.
+`lib/**/*.jar`. The `lib` directory is managed by Flix: it is where dependencies
+are downloaded to, and it should not be committed.
+
+A project with dependencies also has a `packages.lock` file next to its
+`flix.toml`. It records what every dependency was when it was downloaded, and it
+should be committed. See [Packages](./packages.md#the-lock-file).

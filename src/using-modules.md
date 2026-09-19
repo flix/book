@@ -44,6 +44,33 @@ Flix supports several kinds of uses, including:
 
 > **Note:** Flix does not support wildcard.
 
+## Uses of a Package
+
+A `use` can also reach a module of a Flix package that the project depends on. We
+write the *mount* of the package, the name it is declared under in `flix.toml`,
+followed by `::`:
+
+```flix
+use game::Board                          // a top-level module of the package
+use game::Game.Rules                     // a nested module
+use game::Game.Rules.players             // a function
+use game::{Board, Game}                  // several modules
+use game::Game.Rules.{players => count}  // with a rename
+```
+
+The `::` separates the package from the module path inside it, and the module
+path is separated by `.` as always: we write `use game::Game.Rules`, never
+`use game::Game::Rules`. There must be no whitespace around the `::`, and it can
+occur at most once in a use.
+
+A `use` that names no package is unaffected: `use Chain.Empty` reaches the
+standard library, and `use A.B.Color` reaches our own module, exactly as before.
+
+> **Note:** The `::` can be written in a `use` only. We cannot write
+> `game::Board.place()` in an expression, nor `game::Board` in a type.
+
+See [Package Management](./packages.md) for how a package is mounted.
+
 ## Where can Uses Occur?
 
 Flix supports uses in two places:

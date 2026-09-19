@@ -11,21 +11,34 @@ This will create the default Flix project structure:
 
 ```
 .
+├── .github
+│   └── workflows
+│       └── build-and-test.yaml
+├── .gitignore
 ├── flix.toml
 ├── LICENSE.md
 ├── README.md
 ├── src
-│   └── Main.flix
+│   └── Main.flix
 └── test
     └── TestMain.flix
 
-2 directories, 6 files
+4 directories, 7 files
 ```
 
 The most relevant files are `flix.toml`, `src/Main.flix` and
 `test/TestMain.flix`.
 
 The `flix.toml` manifest file is discussed in the next section.
+
+The `.github/workflows/build-and-test.yaml` file is a GitHub Actions workflow
+that checks and tests the project on every push and pull request. It downloads
+the version of Flix declared in the `flix` field of `flix.toml`.
+
+The `.gitignore` file excludes what Flix generates: the `artifact`, `build`, and
+`lib` directories, and any package- or JAR-files. It does not exclude the
+`packages.lock` file, which Flix writes when it resolves dependencies, and which
+should be committed.
 
 > **Tip:** The `init` command is safe to use; it will only create files that do
 > not already exist. 
@@ -102,6 +115,9 @@ command. Running the `build-pkg` command emits a `artifact/project.fpkg` file.
 A Flix package file (fpkg) is essentially zip-file of the project source code. A
 Flix package, together with its `flix.toml` manifest, can be published on
 GitHub.
+
+> **Note:** The `build-pkg` command checks the project first, and refuses to
+> build a package from source code that does not compile.
 
 ## Running a Project
 

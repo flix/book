@@ -1,8 +1,9 @@
 # Publishing a Package
 
-Flix packages are published on GitHub. A release holds two files: the package file
-that `build-pkg` builds, and the manifest that describes it. Whoever depends on the
-package downloads both.
+Flix packages are published on GitHub. A release holds two files, which are the two
+files that `build-pkg` leaves in the `artifact` directory: `package.fpkg`, the package
+itself, and `flix.toml`, the manifest that describes it. Whoever depends on the package
+downloads both.
 
 ## Preparing the Manifest
 

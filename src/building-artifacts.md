@@ -33,9 +33,10 @@ to someone else, we build a fat JAR-file instead.
 
 ## Building a JAR-file
 
-We can build a JAR-file with the `build-jar` command. Flix writes the JAR-file to
-the `artifact` directory, named after the project directory, and we can run it
-with `java`:
+We can build a JAR-file with the `build-jar` command. Flix writes the JAR-file to the
+`artifact` directory, named after the project directory — a project in a directory
+called `hello-world` gives us `artifact/hello-world.jar` — and we can run it with
+`java`:
 
 ```shell
 $ java -jar artifact/hello-world.jar
@@ -93,9 +94,16 @@ artifact
 └── package.fpkg
 ```
 
-The package file is always called `package.fpkg`, whatever the project is called, so
-that the two files of a release can be found from the repository and the version
-alone.
+These two files are exactly what a release holds, and exactly what the `release`
+command uploads, as described in [Publishing a Package](./publishing-a-package.md).
+Both carry a fixed name: the package is called `package.fpkg` whatever the project is
+called and wherever it is built, so that the files of a release can be addressed from
+the repository and the version alone, without reading anything first.
+
+> **Note:** JAR-files do not follow this rule: a JAR-file is a local build output that
+> nothing fetches by address, so `build-jar` and `build-fatjar` keep naming it after
+> the project directory. In a project directory called `hello-world`, the `artifact`
+> directory therefore holds `package.fpkg`, `flix.toml`, and `hello-world.jar`.
 
 A Flix package is essentially a zip-file of the source code of the project: it
 holds the manifest, the `README.md`, the `LICENSE.md`, and the Flix files in `src`.

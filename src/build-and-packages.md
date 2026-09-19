@@ -36,9 +36,13 @@ if not already present.
 Flix scans for source files in the paths `*.flix`, `src/**/*.flix,`, and
 `test/**/*.flix`.
 
-Flix scans for Flix packages and JARs in the paths `lib/**/*.fpkg` and
-`lib/**/*.jar`. The `lib` directory is managed by Flix: it is where dependencies
-are downloaded to, and it should not be committed.
+Flix places the dependencies declared in `flix.toml` into the `lib` directory:
+Flix packages in `lib`, Maven JAR-artifacts in `lib/cache`, and JAR-files
+downloaded from a URL in `lib/external`. The directory is not scanned: Flix loads
+the dependencies that `flix.toml` declares, and nothing else, so a package or
+JAR-file placed in `lib` by hand is ignored.
+
+The `lib` directory is managed by Flix and should not be committed.
 
 A project with dependencies also has a `packages.lock` file next to its
 `flix.toml`. It records what every dependency was when it was downloaded, and it

@@ -69,6 +69,38 @@ of the release to it: `package.fpkg` and `flix.toml`.
 > **Tip:** See the [Museum Project](https://github.com/flix/museum) for an example of
 > a package that has been published on GitHub.
 
+## Versioning a Package
+
+Two version numbers in the manifest follow [SemVer](https://semver.org/), and they say
+different things.
+
+The `version` field is the version of the package itself. Which part we increment tells
+our dependents what kind of change to expect:
+
+- A **patch** release, `1.2.3` to `1.2.4`, fixes something and leaves the API alone.
+- A **minor** release, `1.2.3` to `1.3.0`, adds to the API without breaking what was
+  already there.
+- A **major** release, `1.2.3` to `2.0.0`, changes or removes something that dependents
+  may rely on.
+
+Here the distinction is not only a convention: it is what dependency resolution runs on.
+Flix builds a package at one version, which must be at or above what every dependent
+requires and have the same major version. A patch or a minor release is therefore
+something our dependents can take without thinking, whereas a major release is a step
+each of them has to make deliberately, as described in
+[Versions and Upgrades](./versions-and-upgrades.md). That is also what the three columns
+of `outdated` separate.
+
+The `flix` field is the oldest version of the Flix compiler that can build the package.
+Flix compares it against the compiler that is running, and refuses to build a package
+that wants a newer one, so raising this field shuts out every dependent that has not
+upgraded yet. We raise it when the package needs something a newer compiler provides,
+and preferably in a minor or a major release rather than in a patch.
+
+> **Note:** Flix itself is at major version `0`, so its own minor releases may change
+> the language. The `flix` field is a lower bound only: Flix assumes that a newer
+> compiler can build a package that asks for an older one.
+
 ## What a Package Promises
 
 Two fields of the manifest are promises to whoever depends on the package:
@@ -76,15 +108,10 @@ Two fields of the manifest are promises to whoever depends on the package:
 - The `version` field must match the tag the package is released under. A release of
   `v1.2.3` whose manifest declares another version is rejected when it is resolved,
   and only its author can fix it.
-- The `flix` field must be the oldest version of Flix that can build the package.
-  Flix refuses to build a package that requires a newer version than the one that is
-  running, so raising this field in a new release excludes everyone who has not
-  upgraded.
+- The `flix` field must be the oldest version of Flix that can build the package. A
+  package that declares a newer version than it needs excludes dependents for no
+  reason; one that declares an older version than it needs does not compile for them.
 
 A published package is compiled from source by whoever depends on it, so only its
 `pub` declarations can be reached. Every module our dependents are meant to use must
 be declared `pub`.
-
-> **Note:** Version numbers must follow [SemVer](https://semver.org/), and a package
-> is built at one version only. A breaking change therefore belongs in a new major
-> version, as described in [Versions and Upgrades](./versions-and-upgrades.md).

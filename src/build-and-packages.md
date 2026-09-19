@@ -19,24 +19,29 @@ commands can also be run from the REPL, where they are written with a colon, e.g
 checked as we type, and `▶ Run` and `▶ Run Tests` appear above `main` and above
 every test.
 
+> **Tip:** We should prefer the REPL while we work. The REPL keeps the project in
+> memory and recompiles only what has changed, so `:check` and `:test` in the REPL
+> are much faster than re-running the same commands from the shell, where every run
+> starts from scratch.
+
 ## The Commands at a Glance
 
-| Command         | Description                                             | Described in                                                        |
-|-----------------|---------------------------------------------------------|---------------------------------------------------------------------|
-| `init`          | creates a new project in the current directory.         | [Creating a Project](./creating-a-project.md)                        |
-| `check`         | checks the project for compiler errors.                 | [Checking, Running, and Testing](./checking-running-and-testing.md)  |
-| `run`           | runs `main` in the project.                             | [Checking, Running, and Testing](./checking-running-and-testing.md)  |
-| `test`          | runs all tests in the project.                          | [Checking, Running, and Testing](./checking-running-and-testing.md)  |
-| `doc`           | generates API documentation for the project.            | [Checking, Running, and Testing](./checking-running-and-testing.md)  |
-| `stat`          | prints statistics about the project.                    | [Checking, Running, and Testing](./checking-running-and-testing.md)  |
-| `build`         | compiles the entire project.                            | [Building Artifacts](./building-artifacts.md)                        |
-| `build-classes` | compiles the project to Java class files.               | [Building Artifacts](./building-artifacts.md)                        |
-| `build-jar`     | builds a JAR-file from the project.                     | [Building Artifacts](./building-artifacts.md)                        |
-| `build-fatjar`  | builds a JAR-file with all dependencies bundled.        | [Building Artifacts](./building-artifacts.md)                        |
-| `build-pkg`     | builds a Flix package (an fpkg-file) from the project.  | [Building Artifacts](./building-artifacts.md)                        |
-| `clean`         | removes the `build` directory.                          | [Building Artifacts](./building-artifacts.md)                        |
-| `outdated`      | shows dependencies which have newer versions available. | [Versions and Upgrades](./versions-and-upgrades.md)                  |
-| `release`       | releases a new version of the project to GitHub.        | [Publishing a Package](./publishing-a-package.md)                    |
+| Command         | Description                                             |
+|-----------------|---------------------------------------------------------|
+| `init`          | creates a new project in the current directory.         |
+| `check`         | checks the project for compiler errors.                 |
+| `run`           | runs `main` in the project.                             |
+| `test`          | runs all tests in the project.                          |
+| `doc`           | generates API documentation for the project.            |
+| `stat`          | prints statistics about the project.                    |
+| `build`         | compiles the entire project.                            |
+| `build-classes` | compiles the project to Java class files.               |
+| `build-jar`     | builds a JAR-file from the project.                     |
+| `build-fatjar`  | builds a JAR-file with all dependencies bundled.        |
+| `build-pkg`     | builds a Flix package (an fpkg-file) from the project.  |
+| `clean`         | removes the `build` directory.                          |
+| `outdated`      | shows dependencies which have newer versions available. |
+| `release`       | releases a new version of the project to GitHub.        |
 
 We declare the dependencies of a project in its manifest, as described in
 [Using Dependencies](./using-dependencies.md). Every dependency is built in a
@@ -47,5 +52,3 @@ We declare the dependencies of a project in its manifest, as described in
 > then loads source files from `*.flix`, `src/**`, and `test/**`, and has no
 > dependencies to resolve. The `build-pkg`, `clean`, and `release` commands
 > require a manifest.
-
-We begin by creating a project.

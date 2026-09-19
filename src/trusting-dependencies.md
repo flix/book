@@ -1,7 +1,6 @@
 # Trusting Dependencies
 
-A dependency is code we did not write, compiled and run on our own machine. To
-reduce the risk of supply-chain attacks, Flix builds every Flix dependency in a
+To reduce the risk of supply-chain attacks, Flix builds every package dependency in a
 *security context* that limits which language features it may use.
 
 The security contexts are:
@@ -12,10 +11,18 @@ The security contexts are:
 | `plain` (default) | Forbidden    | Forbidden       | Allowed         |
 | `unrestricted`    | Allowed      | Allowed         | Allowed         |
 
-A dependency built in the `plain` context can compute and it can use effects, but
-it cannot reach outside Flix: no `import` of a Java class, no calls to Java
-constructors, methods, or fields, no `unsafe`, and no unchecked casts. A dependency
-built in the `paranoid` context cannot even use the `IO` effect.
+A dependency built in the `plain` context can compute and it can use effects, but it
+cannot reach outside Flix: no `import` of a Java class, no calls to Java constructors,
+methods, or fields, no `unsafe`, and no unchecked casts. A dependency built in the
+`paranoid` context cannot even use the `IO` effect.
+
+This is what makes `plain` and `paranoid` safe to depend on: a package that cannot
+reach Java, and cannot cast its way around the type system, can only do what its types
+and effects say it does. We read the signature of a function we call, and the effect
+system tells us what calling it can bring about — a `paranoid` package that returns a
+pure value cannot touch the file system, open a socket, or read the clock, however it
+is written inside. In the `unrestricted` context we have no such guarantee, and the
+signatures tell us nothing about what the code may do.
 
 ## Setting the Security Context
 

@@ -4,6 +4,12 @@ A Flix project can depend on three kinds of things: Flix packages published on
 GitHub, Java libraries published on Maven, and JAR-files downloaded from a URL. We
 declare all three in the manifest, and Flix downloads them for us.
 
+Ideally a Flix project depends on Flix packages only. A Flix package is compiled from
+source, is built in a security context that limits what it may do, and is written in
+the language we are writing. A Maven library, and even more so a JAR-file from a URL,
+is a last resort: we should look for a Flix package first, and reach for Java only
+when there is none.
+
 ## Adding a Flix Package
 
 We can add a dependency on a Flix package in the `[dependencies]` section of the
@@ -72,7 +78,6 @@ same package under different names.
 
 > **Note:** The `::` can be written in a `use` only. We cannot write
 > `museum::Museum.visitMuseum()` in an expression, nor `museum::Museum` in a type.
-> See [Using Modules](./using-modules.md) for the forms a `use` can take.
 
 > **Note:** Only the `pub` declarations of a package can be reached. A module that
 > a package does not declare `pub` is private to it.
@@ -124,9 +129,9 @@ Downloading external jar dependencies...
   Downloading `commons-lang3.jar` from `https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar`... OK.
 ```
 
-> **Warning:** A JAR-dependency is whatever the URL serves. The lock file records
-> Flix packages only, so nothing detects that the file at the URL has changed. We
-> prefer a Maven dependency when the library is on Maven.
+> **Warning:** A JAR-dependency is whatever the URL serves, from wherever it points.
+> We should avoid external JAR-dependencies: a Flix package is better, and a Maven
+> library is better than a URL.
 
 ## The lib Directory
 
@@ -147,5 +152,3 @@ lib
 The `lib` directory is managed by Flix and should not be committed. It is not
 scanned: Flix loads the dependencies that `flix.toml` declares, and nothing else,
 so a package or JAR-file we place in `lib` by hand is ignored.
-
-Next we look at how Flix decides which version of a dependency to build.

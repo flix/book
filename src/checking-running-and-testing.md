@@ -1,7 +1,8 @@
 # Checking, Running, and Testing
 
-While we work on a project we mostly use three commands: `check` to find errors,
-`run` to see the program work, and `test` to see that it still works.
+While we work on a project we mostly use three commands: `check` to compile the
+project and report errors without generating code, `run` to compile the project and
+run its `main` function, and `test` to run every function marked with `@Test`.
 
 ## Checking for Errors
 
@@ -22,29 +23,26 @@ what these lines report. Our project has no dependencies yet, so there is nothin
 to download. We leave these lines out of the examples that follow.
 
 If the project does not compile, Flix reports the errors instead. If we add a
-function that refers to a name that does not exist:
+function that uses `and` on an integer:
 
 ```flix
-def sum(x: Int32, y: Int32): Int32 = x + z
+def isPositive(x: Int32): Bool = x and true
 ```
 
 then `check` reports:
 
 ```
--- Resolution Error [E2136] -------------------------------------- src/Main.flix
+-- Type Error [E7796] -------------------------------------------- src/Main.flix
 
->> Undefined name 'z'.
+>> Unexpected type: expected 'Bool', found 'Int32'.
 
-5 | def sum(x: Int32, y: Int32): Int32 = x + z
-                                             ^
-                                             name not found
+5 | def isPositive(x: Int32): Bool = x and true
+                                     ^
+                                     unexpected type
 ```
 
 During development, the `check` command is preferable to the `build` command,
 because `check` skips code generation and hence is significantly faster.
-
-> **Tip:** In VSCode we do not have to run `check` at all: the same errors appear
-> in the editor as we type.
 
 ## Running the Program
 
@@ -89,19 +87,19 @@ build
 
 We read it by opening `build/doc/index.html` in a browser.
 
-> **Tip:** The `doc` command also takes a `--library` flag, which documents the
-> bundled standard library instead of the current project.
-
 ## Printing Statistics
 
 We can print statistics about the project with the `stat` command:
 
 ```
-hello-world 0.1.0
+<unnamed> 0.1.0
 
 2 files, 5 lines: 4 code, 1 comment, 0 blank.
 0 modules, 2 defs: 0 pure, 2 effectful, 0 effect polymorphic.
 0 types, 0 traits, 0 instances, 0 effects.
 ```
+
+The header names the package by the repository it is published from, or
+`<unnamed>` when it declares none, followed by its version.
 
 Once the program does what we want, we are ready to build something we can ship.

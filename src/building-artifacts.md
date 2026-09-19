@@ -3,6 +3,10 @@
 When the program works, we can build something we can ship: Java class files, a
 JAR-file, a standalone fat JAR-file, or a Flix package.
 
+Two of these are what we usually want: a fat JAR-file, if we distribute a program to
+end users, since it runs on its own wherever Java runs, and a Flix package, if we
+share a library with other Flix developers.
+
 ## Compiling the Project
 
 We can compile the project with the `build` command. The `build` command compiles
@@ -19,6 +23,10 @@ a `main` function, we can run it with `java`:
 $ java -cp build/class Main
 Hello World!
 ```
+
+Class files are rarely what we want to ship: we have to keep the directory together,
+and we have to put every dependency on the class path ourselves. To hand the program
+to someone else, we build a fat JAR-file instead.
 
 > **Note:** If the project, or one of its dependencies, depends on JAR-files, then
 > these must also be on the class path.
@@ -77,14 +85,17 @@ dependencies — both Flix and Maven.
 ## Building a Flix Package
 
 We can bundle the project into a Flix package with the `build-pkg` command. Flix
-writes an fpkg-file to the `artifact` directory, and copies the manifest next to
-it:
+writes the package to the `artifact` directory, and copies the manifest next to it:
 
 ```
 artifact
 ├── flix.toml
-└── hello-world.fpkg
+└── package.fpkg
 ```
+
+The package file is always called `package.fpkg`, whatever the project is called, so
+that the two files of a release can be found from the repository and the version
+alone.
 
 A Flix package is essentially a zip-file of the source code of the project: it
 holds the manifest, the `README.md`, the `LICENSE.md`, and the Flix files in `src`.
@@ -105,5 +116,3 @@ class files written by `build-classes` and the documentation written by `doc`.
 
 > **Note:** The `clean` command leaves the `artifact` directory alone. We remove
 > the JAR- and package-files we have built ourselves.
-
-Next we look at how a project uses code that other people have written.

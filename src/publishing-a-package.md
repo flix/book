@@ -11,19 +11,22 @@ from:
 
 ```toml
 [package]
-name       = "museum"
 version    = "2.1.0"
 flix       = "0.76.2"
 repository = "github:flix/museum"
 ```
 
-Before we release, we check three things:
+Flix builds and uploads the package for us, but it cannot tell whether the manifest
+says what we meant. We — as the developer — must check three things before we release:
 
-1. That the `version` field is the version we mean to release.
-2. That the `repository` field names the repository we release to.
-3. That `check` and `test` both pass.
+1. That the `version` field is the version we mean to release, and that we have not
+   released it before. A version is published once and cannot be changed afterwards.
+2. That the `repository` field names the repository we release to. It is the name our
+   dependents write to depend on the package.
+3. That `check` and `test` both pass. The `release` command builds the package, which
+   means the project has to compile, but it does not run the tests for us.
 
-## Releasing with the release Command
+## Publishing with the `release` Command
 
 Flix can package and publish a release for us with the `release` command. The
 command needs a GitHub token that has read and write access to `Contents` for the
@@ -48,8 +51,8 @@ Successfully released v1.2.3
 https://github.com/user/repo/releases/tag/v1.2.3
 ```
 
-Flix builds the package, creates a release tagged `v1.2.3`, and uploads the package
-file and the manifest to it.
+Flix builds the package, creates a release tagged `v1.2.3`, and uploads the two files
+of the release to it: `package.fpkg` and `flix.toml`.
 
 > **Tip:** Flix looks for the GitHub token in three places, in order: the
 > `--github-token` option, a `.GITHUB_TOKEN` file in the project directory, and the
@@ -62,22 +65,6 @@ file and the manifest to it.
 > `.GITHUB_TOKEN` so that we do not commit it by accident.
 
 > **Note:** We cannot publish a release for an empty GitHub repository.
-
-## Publishing Manually
-
-We can also publish a release by hand:
-
-1. Run `check` and `test` to ensure that everything looks correct.
-2. Run `build-pkg` and check that the `artifact` directory is populated.
-3. Go to the repository on GitHub:
-    1. Click "Releases".
-    2. Click "Draft new release".
-    3. Enter a tag of the form `v1.2.3`, i.e. use SemVer.
-    4. Upload the package file and the `flix.toml` from the `artifact` directory.
-
-> **Warning:** We must upload _both_ the package file (`museum.fpkg`) and the
-> manifest file (`flix.toml`). A release that holds only one of them cannot be
-> resolved.
 
 > **Tip:** See the [Museum Project](https://github.com/flix/museum) for an example of
 > a package that has been published on GitHub.

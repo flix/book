@@ -10,7 +10,7 @@ Flix resolves the dependencies of a project in four steps:
 
 1. Flix reads `flix.toml` and downloads the manifest of every Flix package that can
    be reached through the dependencies, at every version they are required at.
-2. Flix selects the version that each package is built at.
+2. Flix works out which single version of each package to build.
 3. Flix downloads the package file of each selected package.
 4. Flix inspects each package for its Maven dependencies and downloads these.
 
@@ -34,6 +34,13 @@ required at, but only one of them is built.
 Flix builds a package at the greatest version that anything in the dependency graph
 requires, which is the least version that satisfies every dependent.
 
+In other words, when two parts of the dependency graph ask for different versions of
+the same package, Flix takes the newer of them. This works because a version in a
+manifest is a lower bound: a dependent that asks for an older version is happy to be
+built against a newer one, as long as the major version is the same. We therefore
+never get an older version of a package than we asked for, and we may well get a
+newer one.
+
 In the example above, `flix/museum` requires `flix/museum-clerk` at version
 `2.1.0`, whereas `flix/museum-entrance` and `flix/museum-giftshop` require it at
 `2.0.0`. Flix builds it at `2.1.0` and reports that it did so:
@@ -42,17 +49,17 @@ In the example above, `flix/museum` requires `flix/museum-clerk` at version
   Raised `flix/museum-clerk` (v2.0.0 -> v2.1.0), required by `flix/museum` (v2.1.0).
 ```
 
-A package is built at one version only. If it is required at versions that do not
-share a major version then there is nothing to select, and Flix reports an error.
-For example, if one dependent required `flix/museum-clerk` at `1.1.0` while another
-required it at `2.1.0`:
+**A package is built at one version only.** If a project transitively depends on two
+different major versions of the same package, then no single version satisfies every
+dependent, and Flix reports an error. For example, if one dependent required
+`flix/museum-clerk` at `1.1.0` while another required it at `2.1.0`:
 
 ```
 Found incompatible versions of the same package in the dependency graph:
   The package 'github:flix/museum-clerk' is required at versions that do not share a major version:
 
-    1.1.0 required by 'museum-giftshop'
-    2.1.0 required by 'museum'
+    1.1.0 required by 'flix/museum-giftshop'
+    2.1.0 required by 'flix/museum'
 
   A package is built at one version, which must satisfy every dependent: it must
   be at or above the version the dependent requires, and have the same major version.

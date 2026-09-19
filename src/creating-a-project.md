@@ -38,23 +38,26 @@ The manifest describes the project. The one that `init` writes is minimal:
 
 ```toml
 [package]
-name    = "hello-world"
 version = "0.1.0"
 flix    = "0.76.2"
+
+# repository = "github:<owner>/hello-world"
 ```
 
-The `name` is the name of the project, which `init` takes from the name of the
-directory. The `version` is the version of the project. The `flix` field is the
-oldest version of Flix that can build the project, which `init` sets to the
-version of Flix we are running.
+The `version` is the version of the project. The `flix` field is the oldest version
+of Flix that can build the project, which `init` sets to the version of Flix we are
+running. The `repository` field, which `init` leaves commented out, is the GitHub
+repository we publish the project from, as described in
+[Publishing a Package](./publishing-a-package.md).
 
 The manifest grows with the project: we add a `[dependencies]` section when we
 depend on other packages, as described in
-[Using Dependencies](./using-dependencies.md), and a `repository` field when we
-publish the project, as described in
-[Publishing a Package](./publishing-a-package.md).
+[Using Dependencies](./using-dependencies.md).
 
 > **Note:** Flix requires version numbers to follow [SemVer](https://semver.org/).
+
+> **Note:** A package is named by the repository it is published from, and by
+> nothing else. A manifest may still carry a `name` field, but Flix ignores it.
 
 ## Where Flix Looks for Source Code
 
@@ -85,8 +88,9 @@ it, but bundles it into the JAR-files we build, as described in
 
 Flix generates three directories: `build` holds class files and generated
 documentation, `artifact` holds the JAR- and package-files we build, and `lib`
-holds the dependencies Flix has downloaded. None of them belong in version
-control, and the generated `.gitignore` already excludes them:
+holds the dependencies Flix has downloaded. These directories should typically
+_not_ be checked into version control, and the generated `.gitignore` already
+excludes them:
 
 ```
 *.fpkg
@@ -104,7 +108,8 @@ which is why `.gitignore` does not exclude it. See
 [Versions and Upgrades](./versions-and-upgrades.md#the-lock-file).
 
 > **Warning:** A `.GITHUB_TOKEN` file is one of the places Flix looks for a GitHub
-> token. It is excluded so that we do not commit a token by accident.
+> token. It is excluded because a committed token can be used by anyone who can read
+> the repository, and would have to be revoked at once.
 
 ## Checking and Testing on Every Push
 
@@ -112,5 +117,3 @@ The generated `.github/workflows/build-and-test.yaml` is a GitHub Actions workfl
 that checks and tests the project on every push and pull request. It reads the
 version of Flix from the `flix` field of `flix.toml`, downloads that version of
 Flix, and runs `check` followed by `test`.
-
-We now have a project. Next we put it to work.

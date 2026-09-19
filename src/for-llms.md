@@ -81,7 +81,7 @@ Note: The `::` can occur in a `use` only, and at most once. Modules are separate
 by `.`: write `use museum::Museum.Exhibit`, never `use museum::Museum::Exhibit`,
 and never `museum::Museum.visitMuseum()` in an expression or a type. A `use` of
 the Standard Library or of the project's own modules is unaffected:
-`use Math.Shuffle` has no `::`. See [Package Management](./packages.md).
+`use Math.Shuffle` has no `::`. See [Using Dependencies](./using-dependencies.md).
 
 ## Use Effect-Oriented Programming
 

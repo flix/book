@@ -51,6 +51,38 @@ need to add an external dependency. See
 [Util.Json](https://api.flix.dev/Util.Json.html) for the available data types,
 functions, and traits.
 
+## Reach a Dependency Through Its Mount
+
+A Flix package is reached through the *mount* it is given in `flix.toml`, written
+before `::` in a `use`. Its modules are not in scope otherwise.
+
+&#x274C; **Don't:**
+
+```flix
+use Museum                          // not in scope
+def main(): Unit \ IO = Museum.visitMuseum()
+```
+
+&#x2705; **Do:**
+
+```flix
+use museum::Museum
+def main(): Unit \ IO = Museum.visitMuseum()
+```
+
+where `flix.toml` declares:
+
+```toml
+[dependencies]
+"github:flix/museum" = { version = "2.1.0", mount = "museum" }
+```
+
+Note: The `::` can occur in a `use` only, and at most once. Modules are separated
+by `.`: write `use museum::Museum.Exhibit`, never `use museum::Museum::Exhibit`,
+and never `museum::Museum.visitMuseum()` in an expression or a type. A `use` of
+the Standard Library or of the project's own modules is unaffected:
+`use Math.Shuffle` has no `::`. See [Package Management](./packages.md).
+
 ## Use Effect-Oriented Programming
 
 Flix is an effect-oriented language. Program against either (a) effects defined

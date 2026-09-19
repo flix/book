@@ -62,3 +62,19 @@ A package can also be manually published by following these steps:
 
 > **Warning:** You must upload _both_ the package file  (`foo.fpkg`) and the
 > manifest file (`flix.toml`).
+
+## What a Package Promises
+
+Two fields of the manifest are promises to whoever depends on the package:
+
+- The `version` field must match the tag the package is released under. A release
+  of `v1.2.3` whose manifest declares another version is rejected when it is
+  resolved, and only its author can fix it.
+- The `flix` field must be the oldest version of Flix that can build the package.
+  Flix refuses to build a package that requires a newer version than the one that
+  is running, so raising this field in a new release excludes everyone who has not
+  upgraded.
+
+A published package is compiled from source by whoever depends on it, so only its
+`pub` declarations can be reached, and every module its dependents are meant to
+use must be declared `pub`.

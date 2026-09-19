@@ -57,7 +57,7 @@ depend on other packages, as described in
 > **Note:** Flix requires version numbers to follow [SemVer](https://semver.org/).
 
 > **Note:** A package is named by the repository it is published from, and by
-> nothing else. A manifest may still carry a `name` field, but Flix ignores it.
+> nothing else.
 
 ## Where Flix Looks for Source Code
 

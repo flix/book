@@ -69,7 +69,7 @@ standard library, and `use A.B.Color` reaches our own module, exactly as before.
 > **Note:** The `::` can be written in a `use` only. We cannot write
 > `game::Board.place()` in an expression, nor `game::Board` in a type.
 
-See [Package Management](./packages.md) for how a package is mounted.
+See [Using Dependencies](./using-dependencies.md) for how a package is mounted.
 
 ## Where can Uses Occur?
 

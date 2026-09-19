@@ -74,31 +74,17 @@ use game::{Board, Game}                  // several modules
 use game::Game.Rules.{players => count}  // with a rename
 ```
 
-A few rules govern mounts:
+We choose the mount ourselves, in our own manifest. It must be a simple name:
+a letter followed by letters, digits, and underscores. A repository whose name
+contains a hyphen therefore needs a different one, which is why
+`github:flix/museum-clerk` is mounted as `clerk`.
 
-- The mount is chosen by whoever depends on the package, in their own manifest.
-  It cannot be renamed in a `use`.
-- A mount is a letter, upper- or lowercase, followed by letters, digits, and
-  underscores. It cannot contain a hyphen, so a repository whose name has one
-  needs a mount that does not: `github:flix/museum-clerk` is mounted as `clerk`,
-  and `github:jls/tic-tac-toe` as `ticTacToe`. A mount cannot be a Flix keyword.
-- Two dependencies cannot share a mount.
-- A mount is a name of its own and not a module: it occupies no module namespace.
-  A mount named `List` does not shadow the standard library's `List`, and a mount
-  may share its name with one of our own modules.
-- `::` may appear only in a `use`, and at most once. We cannot write
-  `museum::Museum.visitMuseum()` in an expression, nor `game::Board` in a type.
-  We must bring the name into scope with a `use` first. Modules are always
-  separated by `.`, so we write `use game::Game.Rules`, never
-  `use game::Game::Rules`.
+The `::` can be written in a `use` only: `museum::Museum.visitMuseum()` is not an
+expression, and `museum::Museum` is not a type. We bring the name into scope with
+a `use`, and then use it like any other module.
 
-Only the `pub` declarations of a package can be reached. A module that is not
-declared `pub` is private to the package that declares it, and a `use` of it is
-an error:
-
-```
->> Module 'github:flix/museum-clerk.Clerk' is not accessible from the module ''.
-```
+Only the `pub` declarations of a package can be reached. A module that a package
+does not declare `pub` is private to it.
 
 ## Adding Maven Dependencies
 

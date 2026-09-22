@@ -30,11 +30,16 @@ We can set the security context of each dependency in the manifest:
 
 ```toml
 [dependencies]
-"github:flix/museum"              = { version = "2.1.0", mount = "museum", security = "plain" }
-"github:magnus-madsen/helloworld" = { version = "1.3.0", mount = "helloworld", security = "unrestricted" }
+"github:flix/museum-giftshop" = { version = "2.0.2", mount = "giftshop", security = "plain" }
+"github:flix/museum"          = { version = "4.0.0", mount = "museum", security = "unrestricted" }
 ```
 
-A dependency that declares no security context is built in the `plain` context.
+The `flix/museum` package must be `unrestricted`, because one of its own
+dependencies uses a Java library.
+
+A dependency that declares no security context is built in the `plain` context. The
+`install` command declares none, so we set any other context by editing the
+manifest.
 
 > **Note:** Security contexts apply to dependencies. Our own code is always
 > unrestricted, whatever we declare for the packages we depend on.

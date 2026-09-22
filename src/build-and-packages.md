@@ -40,15 +40,19 @@ every test.
 | `build-fatjar`  | builds a JAR-file with all dependencies bundled.        |
 | `build-pkg`     | builds a Flix package (an fpkg-file) from the project.  |
 | `clean`         | removes the `build` and `artifact` directories.         |
+| `install`       | adds a Flix package to the dependencies.                |
+| `upgrade`       | changes the version of a Flix package dependency.       |
+| `remove`        | removes a Flix package from the dependencies.           |
 | `outdated`      | shows dependencies which have newer versions available. |
 | `release`       | releases a new version of the project to GitHub.        |
 
-We declare the dependencies of a project in its manifest, as described in
+We declare the dependencies of a project in its manifest, which we can edit
+ourselves or with the `install`, `upgrade`, and `remove` commands, as described in
 [Using Dependencies](./using-dependencies.md). Every dependency is built in a
 *security context* that limits what it is allowed to do, as described in
 [Trusting Dependencies](./trusting-dependencies.md).
 
 > **Note:** Most commands also work in a directory that has no manifest. Flix
 > then loads source files from `*.flix`, `src/**`, and `test/**`, and has no
-> dependencies to resolve. The `build-pkg`, `clean`, and `release` commands
-> require a manifest.
+> dependencies to resolve. The `build-pkg`, `clean`, `install`, `upgrade`,
+> `remove`, and `release` commands require a manifest.

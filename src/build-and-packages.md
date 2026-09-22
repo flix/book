@@ -39,7 +39,7 @@ every test.
 | `build-jar`     | builds a JAR-file from the project.                     |
 | `build-fatjar`  | builds a JAR-file with all dependencies bundled.        |
 | `build-pkg`     | builds a Flix package (an fpkg-file) from the project.  |
-| `clean`         | removes the `build` directory.                          |
+| `clean`         | removes the `build` and `artifact` directories.         |
 | `outdated`      | shows dependencies which have newer versions available. |
 | `release`       | releases a new version of the project to GitHub.        |
 

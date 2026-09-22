@@ -74,7 +74,7 @@ $ java -jar artifact/inventory.jar
 ```
 
 The fat JAR-file holds the class files of the project, the files in the `resources`
-directory, and the contents of every JAR-file in the `lib` directory, i.e. _all_
+directory, and the contents of every JAR-file the project depends on, i.e. _all_
 dependencies — both Flix and Maven.
 
 > **Note:** The `build-jar` and `build-fatjar` commands write to the same
@@ -119,8 +119,7 @@ as described in [Publishing a Package](./publishing-a-package.md).
 
 ## Cleaning Up
 
-We can remove the `build` directory with the `clean` command. This deletes the
-class files written by `build-classes` and the documentation written by `doc`.
-
-> **Note:** The `clean` command leaves the `artifact` directory alone. We remove
-> the JAR- and package-files we have built ourselves.
+We can remove the `build` and `artifact` directories with the `clean` command.
+This deletes the class files written by `build-classes`, the documentation written
+by `doc`, and the JAR- and package-files written by `build-jar`, `build-fatjar`,
+and `build-pkg`.

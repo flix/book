@@ -145,7 +145,8 @@ we declare is older. When nothing is outdated, Flix reports:
 All dependencies are up to date
 ```
 
-To upgrade a package, we change the version in `flix.toml` ourselves. Flix does not
-edit the manifest for us.
+To upgrade a package, we run `upgrade flix/museum-giftshop`, which declares the
+newest release with the same major version, here `1.1.0`. To move across a major
+version, we name the version we want: `upgrade flix/museum-giftshop@2.0.0`.
 
 > **Note:** Only Flix packages are listed. Maven dependencies are not checked.

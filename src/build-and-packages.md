@@ -40,9 +40,9 @@ every test.
 | `build-fatjar`  | builds a JAR-file with all dependencies bundled.        |
 | `build-pkg`     | builds a Flix package (an fpkg-file) from the project.  |
 | `clean`         | removes the `build` and `artifact` directories.         |
-| `install`       | adds a Flix package to the dependencies.                |
-| `upgrade`       | changes the version of a Flix package dependency.       |
-| `remove`        | removes a Flix package from the dependencies.           |
+| `install`       | adds Flix packages to the dependencies.                 |
+| `upgrade`       | changes the versions of Flix package dependencies.      |
+| `remove`        | removes Flix packages from the dependencies.            |
 | `outdated`      | shows dependencies which have newer versions available. |
 | `release`       | releases a new version of the project to GitHub.        |
 

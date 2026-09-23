@@ -22,6 +22,10 @@ command that edits it for us.
 | Change its version | change the `version` of its entry  | `upgrade <owner>/<repo>` |
 | Remove it          | delete its entry                   | `remove <owner>/<repo>`  |
 
+Each command can name several packages at once, as in
+`install flix/museum-giftshop flix/museum-entrance`, and changes either all of them
+or none.
+
 Both ways give the same manifest, and we can mix them as we like. The sections below
 show them side by side, and [How the Two Ways Differ](#how-the-two-ways-differ) sums
 up what sets them apart.
@@ -63,7 +67,7 @@ We type the mount we want, or press Enter to take the one in brackets. With the
 dependencies are resolved, `install` reports what it declared:
 
 ```
-Added 'github:flix/museum-giftshop' v2.0.2, mounted at 'giftshop'.
+Added 'flix/museum-giftshop' v2.0.2, mounted at 'giftshop'.
 ```
 
 Either way, Flix downloads the package and everything it depends on: `install` does
@@ -129,7 +133,7 @@ remove flix/museum-giftshop
 which reports:
 
 ```
-Removed 'github:flix/museum-giftshop' v2.0.2, which was mounted at 'giftshop'.
+Removed 'flix/museum-giftshop' v2.0.2, which was mounted at 'giftshop'.
 ```
 
 Either way, we can only remove a package that our manifest declares. A package that

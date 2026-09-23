@@ -157,14 +157,16 @@ We can check whether any of our Flix packages have newer releases with the
 
 ```toml
 [dependencies]
-"github:flix/museum" = { version = "3.0.1", mount = "museum", security = "unrestricted" }
+"github:flix/museum"          = { version = "3.0.1", mount = "museum", security = "unrestricted" }
+"github:flix/museum-giftshop" = { version = "2.0.1", mount = "giftshop" }
 ```
 
 the `outdated` command reports:
 
 ```
-package        declared    built    major    minor    patch
-flix/museum    3.0.1       3.0.1    4.0.0             3.0.2
+package                 declared    built    major    minor    patch
+flix/museum             3.0.1       3.0.1    4.0.0             3.0.2
+flix/museum-giftshop    2.0.1       2.0.2
 ```
 
 The package `flix/museum` has two updates available: we can upgrade from `3.0.1` to
@@ -177,16 +179,17 @@ The table has two version columns:
   declared version is the least version we can build with, and another dependent
   may require a greater one.
 
-A package is compared by the version it is built at. A dependency that is built at
-its newest release is therefore up to date, and is not listed, even if the version
-we declare is older. When nothing is outdated, Flix reports:
+A package is compared by the version it is built at. Here, `flix/museum` requires
+`flix/museum-giftshop` at `2.0.2`, its newest release, so there is nothing newer to
+move to. It is listed all the same, because we declare an older version than the one
+it is built at: we can declare `2.0.2` instead. When nothing is listed, Flix reports:
 
 ```
 All dependencies are up to date
 ```
 
-> **Tip:** The `outdated` command exits with status `1` when a dependency is
-> outdated, and with `0` otherwise, so it can fail a CI build.
+> **Tip:** The `outdated` command exits with status `1` when it lists a dependency,
+> and with `0` otherwise, so it can fail a CI build.
 
 > **Note:** Only Flix packages are listed. Maven dependencies are not checked.
 
@@ -203,9 +206,10 @@ The `upgrade` command declares the newest release that has the same major versio
 the one we declare, and tells us if there is a newer major version:
 
 ```
-A newer major of github:flix/museum is available: v4.0.0.
-Ask for it by name to move to it: flix upgrade flix/museum@4.0.0.
-Now declares 'github:flix/museum' v3.0.2, was v3.0.1.
+Upgraded 'flix/museum' v3.0.1 -> v3.0.2.
+
+A newer major release is available, ask for it by name:
+  flix upgrade flix/museum@4.0.0
 ```
 
 A new major version may break our code, so `upgrade` only moves to one when we name
@@ -218,3 +222,21 @@ upgrade flix/museum@4.0.0
 A version that we name is taken as it is, so we can also name an older release to
 move back to it. The `upgrade` command changes only the version: the mount and the
 security context stay as we declared them.
+
+We can name several packages, or none at all. With none, `upgrade` upgrades every
+Flix package that the manifest declares, each within its major version, and reports
+only the ones it changed. For the project in
+[Finding Outdated Packages](#finding-outdated-packages), it reports:
+
+```
+Upgraded 'flix/museum' v3.0.1 -> v3.0.2.
+Upgraded 'flix/museum-giftshop' v2.0.1 -> v2.0.2.
+
+A newer major release is available, ask for it by name:
+  flix upgrade flix/museum@4.0.0
+```
+
+The packages that one command upgrades are changed together or not at all. When two
+packages must move to a new major version at the same time, because the new major
+version of one requires the new major version of the other, we change both in one
+edit of `flix.toml`, or name both in one `upgrade` command.

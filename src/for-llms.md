@@ -59,27 +59,27 @@ before `::` in a `use`. Its modules are not in scope otherwise.
 &#x274C; **Don't:**
 
 ```flix
-use Museum                          // not in scope
-def main(): Unit \ IO = Museum.visitMuseum()
+use Giftshop                        // not in scope
+def main(): Unit \ IO = Giftshop.buyGift()
 ```
 
 &#x2705; **Do:**
 
 ```flix
-use museum::Museum
-def main(): Unit \ IO = Museum.visitMuseum()
+use giftshop::Giftshop
+def main(): Unit \ IO = Giftshop.buyGift()
 ```
 
 where `flix.toml` declares:
 
 ```toml
 [dependencies]
-"github:flix/museum" = { version = "2.1.0", mount = "museum" }
+"github:flix/museum-giftshop" = { version = "2.0.2", mount = "giftshop" }
 ```
 
 Note: The `::` can occur in a `use` only, and at most once. Modules are separated
-by `.`: write `use museum::Museum.Exhibit`, never `use museum::Museum::Exhibit`,
-and never `museum::Museum.visitMuseum()` in an expression or a type. A `use` of
+by `.`: write `use giftshop::Giftshop.Gift`, never `use giftshop::Giftshop::Gift`,
+and never `giftshop::Giftshop.buyGift()` in an expression or a type. A `use` of
 the Standard Library or of the project's own modules is unaffected:
 `use Math.Shuffle` has no `::`. See [Using Dependencies](./using-dependencies.md).
 

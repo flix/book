@@ -12,7 +12,7 @@ from:
 
 ```toml
 [package]
-version    = "2.1.0"
+version    = "4.0.0"
 flix       = "0.76.2"
 repository = "github:flix/museum"
 ```

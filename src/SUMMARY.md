@@ -106,6 +106,7 @@
 
 - [Common Problems](./common-problems.md)
 - [Frequently Asked Questions](./frequently-asked-questions.md)
+- [Quick Reference](./quick-reference.md)
 - [Glossary](./glossary.md)
 
 ---

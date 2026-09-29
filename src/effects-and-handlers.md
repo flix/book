@@ -243,44 +243,19 @@ to model interaction with the outside world but prefer the `Option` and `Result`
 data types for simple error handling. Working with `Option`s and `Result`s is
 more pleasant with [monadic syntax](./monadic-for-yield.md).
 
-## Limitation: Polymorphic Effects
+## Polymorphic Effects
 
-The Flix type and effect system does not yet support polymorphic effects.[^1] 
-
-For example, we *cannot* declare a polymorphic `Throw[a]` effect:
-
-```flix
-eff Throw[a] {
-    def throw(x: a): Void
-}
-```
-
-The Flix compiler emits the error message:
-
-```
-❌ -- Syntax Error --
-
->> Unexpected effect type parameters.
-
-1 | eff Throw[a] {
-              ^
-              unexpected effect type parameters
-```
-
-Unfortunately, if we need to throw values of different types, we have to declare
-different effects. 
-
-For example:
+An effect can be parameterized by a type. For example, we can declare an effect
+that emits values of type `t`:
 
 ```flix
-eff ThrowBool {
-    def throw(x: Bool): Void
-}
-
-eff ThrowInt32 {
-    def throw(x: Int32): Void
+eff Emit[t] {
+    def emit(x: t): Unit
 }
 ```
+
+We describe such effects in the section on [Polymorphic
+Effects](./polymorphic-effects.md).
 
 ## Unhandled Effects in New Object and Spawn Expressions
 
@@ -313,5 +288,3 @@ The Flix compiler emits the error message:
                   ^^^^^^^^^^^^
                   illegal effect.
 ```
-
-[^1]: We are currently investigating how to lift this restriction.

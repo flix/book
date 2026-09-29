@@ -31,6 +31,7 @@
   - [Primitive Effects](./primitive-effects.md)
   - [Effect Polymorphism](./effect-polymorphism.md)
   - [Effects and Handlers](./effects-and-handlers.md)
+  - [Polymorphic Effects](./polymorphic-effects.md)
   - [Default Handlers](./default-handlers.md)
   - [Effect-Oriented Programming](./effect-oriented-programming.md)
 - [Library Effects](./library-effects.md)

@@ -302,6 +302,43 @@ Note: Effects and handlers let you write flat, sequential code. Use
 `run { ... } with Handler.middleware` to compose handlers — never pass
 callbacks to simulate what the effect system already provides.
 
+## Effects Can Have Type Parameters
+
+Older versions of Flix did not support polymorphic effects, so we had to declare
+a separate effect for each type. This is **no longer the case**. An effect can
+declare type parameters.
+
+&#x274C; **Old (no longer necessary):**
+
+```
+eff EmitInt32 {                 // Wrong -- Outdated
+    def emit(x: Int32): Unit
+}
+
+eff EmitString {                // Wrong -- Outdated
+    def emit(x: String): Unit
+}
+```
+
+&#x2705; **Current (correct, as of Flix 0.77.0):**
+
+```flix
+eff Emit[t] {
+    def emit(x: t): Unit
+}
+
+def range(b: Int32, e: Int32): Unit \ Emit[Int32] = ...
+def greetings(): Unit \ Emit[String] = ...
+```
+
+Note: Within one function, a polymorphic effect must be used with the same type
+arguments everywhere, including in the effects handled inside the function. A
+function cannot use both `Emit[Int32]` and `Emit[String]`; move each use into
+its own function. Type parameters go on the effect, never on an operation. Call
+operations as `Emit.emit(x)` and write handlers as `with handler Emit`, both
+without type arguments. See [Polymorphic Effects](./polymorphic-effects.md) for
+details.
+
 ## Java Types Must Be Imported
 
 In Flix, Java classes must always be imported before they can be used. You cannot

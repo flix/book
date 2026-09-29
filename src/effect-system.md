@@ -2,8 +2,8 @@
 
 Flix features a state-of-the-art type and effect system fully integrated into
 the language. The Flix effect system is powerful and extensive, supporting
-effect polymorphism, sub-effecting, effect exclusion, purity reflection, and
-associated effects.
+effect polymorphism, sub-effecting, effect exclusion, purity reflection,
+associated effects, and polymorphic effects.
 
 We will explore these new and exciting features over the coming pages.
 

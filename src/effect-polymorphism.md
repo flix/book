@@ -1,5 +1,10 @@
 # Effect Polymorphism
 
+> **Note:** Effect polymorphism should not be confused with [polymorphic
+> effects](./polymorphic-effects.md). An effect polymorphic function is a
+> _function_ that is parameterized by an effect, whereas a polymorphic effect is
+> an _effect_ that is parameterized by a type.
+
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
 
 ```flix

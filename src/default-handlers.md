@@ -68,3 +68,41 @@ def myTest01(): Unit \ {Assert, Logger} =
     Logger.info("Running test!");
     Assert.assertEq(expected = 42, 42)
 ```
+
+## Polymorphic Effects
+
+A [polymorphic effect](./polymorphic-effects.md) can also have a default
+handler. For example:
+
+```flix
+mod Emit {
+    pub eff Emit[t] {
+        def emit(x: t): Unit
+    }
+
+    @DefaultHandler
+    pub def runWithIO(f: Unit -> a \ ef): a \ (ef - Emit[t]) + IO =
+        run {
+            f()
+        } with handler Emit {
+            def emit(_, resume) = resume()
+        }
+}
+
+def main(): Unit \ {Emit[Int32], IO} =
+    Emit.emit(42);
+    println("Done")
+```
+
+Here the default handler of `Emit` discards the emitted values.
+
+The default handler of a polymorphic effect `E[t]` must have a signature of the
+form:
+
+```flix
+def runWithIO(f: Unit -> a \ ef): a \ (ef - E[t]) + IO
+```
+
+where `t` is a type variable. The signature cannot have trait constraints, e.g.
+we cannot add `with ToString[t]`, because a default handler must work for every
+type `t`. This is why the default handler above cannot print the emitted values.

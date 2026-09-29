@@ -26,8 +26,10 @@ fail at runtime.
 
 ***Effect Member.*** See [associated effect](#associated-effect).
 
-***Effect Polymorphic.*** A function whose effect(s) depend on the effect(s) of
-its function argument. See also [higher-order function](#higher-order-function).
+***Effect Polymorphic.*** <a name="effect-polymorphic"></a> A function whose
+effect(s) depend on the effect(s) of its function argument. Not to be confused
+with a [polymorphic effect](#polymorphic-effect). See also [higher-order
+function](#higher-order-function).
 
 ***Effect Handler.*** An expression which handles a user-defined effect.
 
@@ -36,6 +38,10 @@ that takes a function argument or returns a function.
 
 ***IO Effect.*** A built-in generic effect which represents any interaction with
 the outside world. 
+
+***Polymorphic Effect.*** <a name="polymorphic-effect"></a> An effect that is
+parameterized by one or more types, e.g. `Emit[t]`. Not to be confused with an
+[effect polymorphic](#effect-polymorphic) function.
 
 ***Pure.*** A function (or expression) which has no effects.
 

@@ -84,10 +84,6 @@ instance Dividable[Int32] {
 }
 ```
 
-An associated effect can also be a [polymorphic
-effect](./polymorphic-effects.md), e.g. an instance can specify
-`type Aef = { Emit[Int32] }`.
-
 ## Associated Effects and Regions
 
 We often want to use associated effects in combination with regions.

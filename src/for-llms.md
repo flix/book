@@ -475,6 +475,91 @@ otherwise the compiler emits a `CompanionMustBeFirst` error. The same rule
 applies to struct, effect, and trait companions. See
 [Companion Modules](./companion-modules.md) for details.
 
+## A Module Is Declared Once
+
+Older versions of Flix allowed a module to be _reopened_, i.e. declared in
+several places. This is **no longer the case**. A module has exactly one
+declaration, across all files of the project.
+
+&#x274C; **Old (no longer valid):**
+
+```
+mod Shape {
+    pub def area(w: Int32, h: Int32): Int32 = w * h
+}
+
+mod Shape {                               // Wrong -- Outdated
+    pub def perimeter(w: Int32, h: Int32): Int32 = 2 * (w + h)
+}
+```
+
+&#x2705; **Current (correct, as of Flix 0.77.0):**
+
+```flix
+mod Shape {
+    pub def area(w: Int32, h: Int32): Int32 = w * h
+
+    pub def perimeter(w: Int32, h: Int32): Int32 = 2 * (w + h)
+}
+```
+
+Note: The modules of the Standard Library are also declared once. Do not name a
+module `List`, `Math`, `String`, or after any other module of the Standard
+Library, otherwise the compiler emits a `DuplicateModule` error. Do not name a
+top-level module `Main`: the name is reserved. See
+[Declaring Modules](./declaring-modules.md) for details.
+
+## Modules Are Private and Public Modules Go in Their Own File
+
+Older versions of Flix allowed every module to be used from everywhere. This is
+**no longer the case**. A module is private to the module it is declared in,
+unless it is declared with `pub mod`.
+
+&#x274C; **Old (no longer valid):**
+
+```
+mod Museum {
+    mod Entrance {
+        pub def buyTicket(): Unit \ IO = println("Ticket!")
+    }
+}
+
+def main(): Unit \ IO =
+    Museum.Entrance.buyTicket()           // Wrong -- Entrance is private to Museum
+```
+
+&#x2705; **Current (correct, as of Flix 0.77.0):**
+
+In the file `src/Museum.flix`:
+
+```flix
+pub mod Museum {
+    // ... members ...
+}
+```
+
+In the file `src/Museum/Entrance.flix`:
+
+```flix
+pub mod Museum.Entrance {
+    pub def buyTicket(): Unit \ IO = println("Ticket!")
+}
+```
+
+In the file `src/Main.flix`:
+
+```flix
+def main(): Unit \ IO =
+    Museum.Entrance.buyTicket()
+```
+
+Note: A `pub mod` is written at the top level of a file of its own, under its
+full name, and the path of the file must match the name: `pub mod A.B.C` goes in
+`src/A/B/C.flix`. Never write `pub mod` inside the body of another module. The
+parent of a module must be declared: `Museum.Entrance` requires `Museum`. A
+module that is only used inside its parent can stay private and nested. See
+[Declaring Modules](./declaring-modules.md) for details.
+
 ## Datalog `inject` Requires Arity
 
 Older versions of Flix allowed `inject` without specifying the arity of the

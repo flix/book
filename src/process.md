@@ -49,11 +49,11 @@ pub eff Process {
 
 ## The Process Module
 
-The `S` module provides convenience functions built on the `Process`
+The `Sys.Process` module provides convenience functions built on the `Process`
 effect:
 
 ```flix
-mod Process {
+mod Sys.Process {
     /// Executes the command `cmd` with the arguments `args`.
     def exec(cmd: String, args: List[String]):
         Result[IoError, ProcessHandle] \ Process

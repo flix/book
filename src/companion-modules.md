@@ -75,10 +75,11 @@ visibility.
 ## Effect Companions
 
 An effect may be declared as the companion of its module. The default handler
-for the effect, if any, lives in the same companion module:
+for the effect, if any, lives in the same companion module. For example, the
+Standard Library declares the `Glob` effect as:
 
 ```flix
-mod Fs.Glob {
+pub mod Fs.Glob {
     pub eff Glob {
         def glob(base: String, pattern: String): Result[IoError, List[String]]
     }
@@ -115,11 +116,11 @@ later.
 ## Instances in Companion Modules
 
 A trait instance may be declared in the companion module of its type. For
-example, instances of `Add`, `Sub`, and `ToString` for the `Size` enum are
-placed alongside the enum itself:
+example, in the Standard Library, the instances of `Add`, `Sub`, and `ToString`
+for the `Size` enum are placed alongside the enum itself:
 
 ```flix
-mod Fs.Size {
+pub mod Fs.Size {
     pub enum Size(Int64) with Eq, Order, Hash
 
     instance Add[Size] {

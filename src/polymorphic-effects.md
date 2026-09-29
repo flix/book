@@ -182,8 +182,8 @@ def main(): Unit \ IO =
 ```
 
 The problem is that `main` uses both `Emit[Int32]` and `Emit[String]`. The
-solution is to move each use into its own function, as we did with `numbers` and
-`words` above.
+solution is to handle each effect in its own function, as we did with `numbers`
+and `words` above.
 
 The restriction also means that we cannot write a function that handles an
 effect by using the same effect with a different type argument:

@@ -333,11 +333,10 @@ def greetings(): Unit \ Emit[String] = ...
 
 Note: Within one function, a polymorphic effect must be used with the same type
 arguments everywhere, including in the effects handled inside the function. A
-function cannot use both `Emit[Int32]` and `Emit[String]`; move each use into
-its own function. Type parameters go on the effect, never on an operation. Call
-operations as `Emit.emit(x)` and write handlers as `with handler Emit`, both
-without type arguments. See [Polymorphic Effects](./polymorphic-effects.md) for
-details.
+function cannot use both `Emit[Int32]` and `Emit[String]`. Type parameters go on
+the effect, never on an operation. Call operations as `Emit.emit(x)` and write
+handlers as `with handler Emit`, both without type arguments. See [Polymorphic
+Effects](./polymorphic-effects.md) for details.
 
 ## Java Types Must Be Imported
 

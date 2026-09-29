@@ -151,14 +151,3 @@ Effect Two: Emit[String]
 The issue is that a [polymorphic effect](./polymorphic-effects.md) must be used
 with the same type arguments throughout a function. This includes effects that
 are handled inside the function.
-
-The solution is to move each use into its own function. For example, we can
-write:
-
-```flix
-def f(): Unit \ Emit[Int32] =
-    Emit.emit(42)
-
-def g(): Unit \ Emit[String] =
-    Emit.emit("Hello")
-```

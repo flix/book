@@ -39,20 +39,20 @@ and so a single dependency gives us five packages:
 ```
 Found 'flix.toml'. Checking dependencies...
 Resolving Flix dependencies...
-  Downloading `flix/museum.toml` (v4.0.0)... OK.
-  Downloading `flix/museum-clerk.toml` (v2.1.3)... OK.
-  Downloading `flix/museum-entrance.toml` (v2.0.2)... OK.
-  Downloading `flix/museum-giftshop.toml` (v2.0.2)... OK.
-  Downloading `flix/museum-restaurant.toml` (v2.0.2)... OK.
-  Downloading `flix/museum-clerk.toml` (v2.1.2)... OK.
-  Cached `flix/museum-clerk.toml` (v2.1.2).
+  Downloading `flix.toml` from `flix/museum` (v4.0.0)... OK.
+  Downloading `flix.toml` from `flix/museum-clerk` (v2.1.3)... OK.
+  Downloading `flix.toml` from `flix/museum-entrance` (v2.0.2)... OK.
+  Downloading `flix.toml` from `flix/museum-giftshop` (v2.0.2)... OK.
+  Downloading `flix.toml` from `flix/museum-restaurant` (v2.0.2)... OK.
+  Downloading `flix.toml` from `flix/museum-clerk` (v2.1.2)... OK.
+  Cached `flix.toml` from `flix/museum-clerk` (v2.1.2).
   Raised `flix/museum-clerk` (v2.1.2 -> v2.1.3), required by `flix/museum` (v4.0.0).
 Downloading Flix dependencies...
-  Downloading `flix/museum-restaurant.fpkg` (v2.0.2)... OK.
-  Downloading `flix/museum-entrance.fpkg` (v2.0.2)... OK.
-  Downloading `flix/museum.fpkg` (v4.0.0)... OK.
-  Downloading `flix/museum-giftshop.fpkg` (v2.0.2)... OK.
-  Downloading `flix/museum-clerk.fpkg` (v2.1.3)... OK.
+  Downloading `package.fpkg` from `flix/museum-restaurant` (v2.0.2)... OK.
+  Downloading `package.fpkg` from `flix/museum-giftshop` (v2.0.2)... OK.
+  Downloading `package.fpkg` from `flix/museum-clerk` (v2.1.3)... OK.
+  Downloading `package.fpkg` from `flix/museum` (v4.0.0)... OK.
+  Downloading `package.fpkg` from `flix/museum-entrance` (v2.0.2)... OK.
 Resolving Maven dependencies...
   Adding `org.apache.commons:commons-lang3' (v3.12.0).
   Running Maven dependency resolver.

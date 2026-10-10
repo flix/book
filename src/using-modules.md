@@ -5,44 +5,46 @@ As we have already seen, the `use` construct brings members of a module into loc
 For example, given the program:
 
 ```flix
-mod A {
-    mod B {
-        pub enum Color {
-            case Red, Green, Blue
-        }
-
-        pub type alias Hue = Color 
-
-        pub def isWarm(c: Color): Bool = 
-            match c {
-                case Color.Red    => true
-                case Color.Green  => false
-                case Color.Blue   => false
-            }
-
+mod Paint {
+    pub enum Color {
+        case Red, Green, Blue
     }
+
+    pub type alias Hue = Color
+
+    pub def isWarm(c: Color): Bool =
+        match c {
+            case Color.Red    => true
+            case Color.Green  => false
+            case Color.Blue   => false
+        }
 }
 ```
 
 All of the following `use`s are meaningful:
 
 ```flix
-use A.B.Color 
-use A.B.Color.{Red, Green, Blue}
-use A.B.Hue
-use A.B.isWarm 
+use Paint.Color
+use Paint.Color.{Red, Green, Blue}
+use Paint.Hue
+use Paint.isWarm
 ```
 
 ## All Kinds of Uses
 
 Flix supports several kinds of uses, including:
 
-- A qualified use of a name: `use A.B.Color`.
-- A qualified use of multiple names: `use A.B.Color.{Red, Green, Blue}`.
-- A qualified use with rename: `use A.B.Color => AColor`.
-- A qualified use with multiple renames: `use A.B.Color.{Red => R, Green => G, Blue => B}`.
+- A qualified use of a name: `use Paint.Color`.
+- A qualified use of multiple names: `use Paint.Color.{Red, Green, Blue}`.
+- A qualified use with rename: `use Paint.{Color => Shade}`.
+- A qualified use with multiple renames: `use Paint.Color.{Red => R, Green => G, Blue => B}`.
 
-> **Note:** Flix does not support wildcard.
+A rename is always written inside braces, even when we rename a single name.
+
+> **Note:** Flix does not support wildcard uses.
+
+> **Note:** A use must be qualified. We cannot write `use Paint`, and we do not
+> have to: a top-level module, such as `Paint` or `List`, is always in scope.
 
 ## Uses of a Package
 
@@ -64,7 +66,8 @@ path is separated by `.` as always: we write `use game::Game.Rules`, never
 occur at most once in a use.
 
 A `use` that names no package is unaffected: `use Chain.Empty` reaches the
-standard library, and `use A.B.Color` reaches our own module, exactly as before.
+standard library, and `use Paint.Color` reaches our own module, exactly as
+before.
 
 > **Note:** The `::` can be written in a `use` only. We cannot write
 > `game::Board.place()` in an expression, nor `game::Board` in a type.
@@ -73,17 +76,21 @@ See [Using Dependencies](./using-dependencies.md) for how a package is mounted.
 
 ## Where can Uses Occur?
 
-Flix supports uses in two places:
+Flix supports uses in three places:
 
+- At the top of a file.
 - Inside modules.
 - Inside functions.
+
+A use at the top of a file, or inside a module, must be written before the
+declarations of that file or module.
 
 For example:
 
 ```flix
 mod A {
-    use Chain
     use Chain.Empty
+    use Chain.One
     use Chain.Chain
     use Int32.max
 
@@ -100,10 +107,9 @@ which can also be written as:
 
 ```flix
 mod A {
-    use Chain
-
     pub def maxValue(c: Chain[Int32]): Int32 = 
         use Chain.Empty;
+        use Chain.One;
         use Chain.Chain;
         use Int32.max;
         match c {
@@ -121,5 +127,6 @@ Note the use of semicolons when inside an expression.
 In Flix, a few built-in constructors are always in scope:
 
 - `List.Nil` and `List.Cons`.
+- `Option.None` and `Option.Some`.
 - `Result.Ok` and `Result.Err`.
 

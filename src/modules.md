@@ -11,18 +11,18 @@ the module.
 For example, we can declare a module:
 
 ```flix
-mod Math {
+mod Calc {
     pub def sum(x: Int32, y: Int32): Int32 = x + y
 }
 ```
 
-Here we have declared a module called `Math` with a function called `sum` inside
+Here we have declared a module called `Calc` with a function called `sum` inside
 it. We can refer to the `sum` function, from outside of its module, using its
 fully-qualified name:
 
 ```flix
 def main(): Unit \ IO = 
-    let result = Math.sum(123, 456);
+    let result = Calc.sum(123, 456);
     println(result)
 ```
 
@@ -30,7 +30,7 @@ Alternatively, we can bring the `sum` function into local scope with `use`:
 
 ```flix
 def main(): Unit \ IO = 
-    use Math.sum;
+    use Calc.sum;
     let result = sum(123, 456);
     println(result)
 ```
@@ -40,7 +40,7 @@ def main(): Unit \ IO =
 If we have multiple declarations in a module:
 
 ```flix
-mod Math {
+mod Calc {
     pub def sum(x: Int32, y: Int32): Int32 = x + y
     pub def mul(x: Int32, y: Int32): Int32 = x * y
 }
@@ -49,8 +49,8 @@ mod Math {
 We can, of course, `use` each declaration:
 
 ```flix
-use Math.sum;
-use Math.mul;
+use Calc.sum;
+use Calc.mul;
 
 def main(): Unit \ IO =
     mul(42, 84) |> sum(21) |> println
@@ -59,7 +59,7 @@ def main(): Unit \ IO =
 but a shorter way is to group the `use`s together into one:
 
 ```flix
-use Math.{sum, mul};
+use Calc.{sum, mul};
 
 def main(): Unit \ IO =
     mul(42, 84) |> sum(21) |> println
@@ -67,6 +67,9 @@ def main(): Unit \ IO =
 
 > **Note:** Flix does not support wildcard uses since they can lead to subtle
 > bugs.
+
+> **Note:** A `use` must be written before the declarations of the file or
+> module that it occurs in.
 
 ## Avoiding Name Clashes with Renaming
 
@@ -170,9 +173,9 @@ enum Animal with ToString {
 
 instance Zoo.Speakable[Animal] {
     pub def say(a: Animal): String = match a {
-        case Cat => "Meow"
-        case Dog => "Woof"
-        case Fox => "Roar"
+        case Animal.Cat => "Meow"
+        case Animal.Dog => "Woof"
+        case Animal.Fox => "Roar"
     }
 }
 ```

@@ -26,8 +26,8 @@ mod IntStream {
 
     enum IntStream { case SCons(Int32, Lazy[IntStream]) }
 
-    pub def from(x: Int32): IntStream =
-        IntStream.SCons(x, lazy from(x + 1))
+    pub def startFrom(x: Int32): IntStream =
+        IntStream.SCons(x, lazy startFrom(x + 1))
 }
 ```
 
@@ -51,7 +51,7 @@ Given this, we can implement functions such as `map` and `take`:
 So, for example:
 
 ```flix
-IntStream.from(42) |> IntStream.map(x -> x + 10) |> IntStream.take(10)
+IntStream.startFrom(42) |> IntStream.map(x -> x + 10) |> IntStream.take(10)
 ```
 
 Will return:
@@ -63,5 +63,5 @@ Will return:
 Flix provides `DelayList` and `DelayMap` data structures which already implement this functionality and more:
 
 ```flix
-DelayList.from(42) |> DelayList.map(x -> x + 10) |> DelayList.take(10)
+DelayList.startFrom(42) |> DelayList.map(x -> x + 10) |> DelayList.take(10)
 ```

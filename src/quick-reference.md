@@ -110,15 +110,23 @@ See [Records](./records.md).
 ## Modules
 
 ```flix
+use Calc.sum                      // use a name
+use Calc.{mul, neg}               // use several names
+use Calc.{sum => plus}            // use a name under another name
+
 mod Calc {
     pub def sum(x: Int32, y: Int32): Int32 = x + y
+    pub def mul(x: Int32, y: Int32): Int32 = x * y
+    pub def neg(x: Int32): Int32 = -x
 }
-
-use Calc.sum;
-use Calc.{sum};
 ```
 
-See [Modules](./modules.md).
+A `use` goes before the declarations of its file or module. A module is declared
+once, and is private to the module it is declared in unless it is a `pub mod`,
+which goes in a file of its own: `pub mod Museum.Entrance` in
+`src/Museum/Entrance.flix`.
+
+See [Modules](./modules.md) and [Declaring Modules](./declaring-modules.md).
 
 ## Traits and instances
 

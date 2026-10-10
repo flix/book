@@ -109,16 +109,20 @@ def main(): Unit \ IO =
 The mount is declared in our own manifest, not by the package, so two projects may
 reach the same package under different names.
 
+A dependency that declares no mount is mounted at the name of its repository, so
+`"github:flix/museum" = "4.0.0"` mounts the package at `museum`. This works only when
+the name can be a mount: a letter followed by letters, digits, and underscores, and
+not a keyword. A repository whose name contains a hyphen, like `museum-giftshop`, has
+no such default, and Flix refuses the entry until we declare one, which is also why
+`install` asks for its mount. We should write the mount even when it is the one Flix
+would derive: it is the name our code reaches the package under, and the manifest is
+where a reader looks for it.
+
 > **Note:** We can reach only the packages that our own manifest declares. A package
 > that a dependency brings with it, like `flix/museum-clerk` here, has no mount in our
 > manifest, so our code cannot `use` it, even though Flix downloads and builds it. To
 > reach it, we declare it ourselves, with its own entry in `[dependencies]` or with
 > `install flix/museum-clerk`, and reach it through the mount we give it.
-
-> **Note:** A mount must be a simple name: a letter followed by letters, digits,
-> and underscores. A repository whose name contains a hyphen therefore needs a
-> different one, which is why `github:flix/museum-giftshop` is mounted as
-> `giftshop`, and why `install` asks for its mount.
 
 > **Note:** The `::` can be written in a `use` only. We cannot write
 > `giftshop::Giftshop.buyGift()` in an expression, nor `giftshop::Giftshop` in a

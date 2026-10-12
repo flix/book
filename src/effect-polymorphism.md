@@ -8,8 +8,8 @@
 In Flix, we can express that a function is pure (i.e. has no side-effects): 
 
 ```flix
-def inc(x: Int32): Int32 \ { } = x + 1
-                        // ^^^ empty effect set
+def inc(x: Int32): Int32 \ {} = x + 1
+                        // ^^ empty effect set
 ```
 
 The `inc` function is _pure_ because its effect set is empty. When a function is
@@ -26,8 +26,8 @@ def inc(x: Int32): Int32 = x + 1
 In Flix, we can express that a function has a single effect:
 
 ```flix
-def incAndPrint(x: Int32): Int32 \ {IO} = 
-    let result = x + 1;         // ^^^^ singleton effect set
+def incAndPrint(x: Int32): Int32 \ IO = 
+    let result = x + 1;         // ^^ singleton effect set
     println(result);
     result
 ```
@@ -38,8 +38,8 @@ Here the `incAndPrint` function has the primitive `IO` effect.
 We can also express that a function has multiple effects:
 
 ```flix
-def copyFile(src: File, dst: File): Unit \ {FsRead, FsWrite, IO} = ...
-                                         // ^^^^^^^^^^^^^^^^^^^^ multiple effects
+def copyFile(src: File, dst: File): Unit \ { FsRead, FsWrite, IO } = ...
+                                         // ^^^^^^^^^^^^^^^^^^^^^^^ multiple effects
 ```
 
 Here the `copyFile` function has three primitive effects: `FsRead`, `FsWrite`,
@@ -48,8 +48,8 @@ and `IO`.
 In Flix, we can express a function that has a heap effect:
 
 ```flix
-def nth(i: Int32, a: Array[t, r]): Option[a] \ {r} = ....
-                                            // ^^^ heap effect
+def nth(i: Int32, a: Array[t, r]): Option[a] \ r = ....
+                                            // ^ heap effect
 ```
 
 Here the `nth` function has a heap effect in the region `r`.
@@ -59,8 +59,8 @@ We can also write functions that mix different effects:
 ```flix
 use Time.Clock
 
-def strange(a: Array[t, r]): Unit \ {r, Clock, Http, IO}
-                                 // ^^^^^^^^^^^^^^^^^^^ a mixture of effects
+def strange(a: Array[t, r]): Unit \ r + { Clock, Http, IO }
+                                 // ^^^^^^^^^^^^^^^^^^^^^^^ a mixture of effects
 ```
 
 This function has a heap effect `r` and three effects: `Clock`, `Http`, and `IO`.
@@ -72,8 +72,8 @@ When we write higher-order functions, we must think carefully about their effect
 For example, we can write a higher-order function `Set.exists`:
 
 ```flix
-def exists(f: a -> Bool \ { }, s: Set[a]): Bool = ...
-                          ^^^
+def exists(f: a -> Bool \ {}, s: Set[a]): Bool = ...
+                          ^^
 ```
 
 Here the `exists` function enforces the predicate function `f` to be pure. Why
@@ -100,8 +100,8 @@ pure (i.e. has no effects) then the call to `map` will be pure. If `f` has the
 
 
 ```flix
-List.map(x -> x + 1, l)               // has the { } effect (i.e., is pure)
-List.map(x -> {println(x); x + 1}, l) // has the { IO } effect
+List.map(x -> x + 1, l)               // has the {} effect (i.e., is pure)
+List.map(x -> {println(x); x + 1}, l) // has the IO effect
 ```
 
 A higher-order function that takes multiple function arguments may combine their
@@ -171,9 +171,9 @@ For example, if we write:
 if (???) { x -> x + 1 } else { x -> {println(x); x + 1}}
 ```
 
-The first branch should have type `Int32 -> Int32 \ { }` (i.e. it is pure)
-whereas the second branch has type `Int32 -> Int32 \ { IO }`. Without
-sub-effecting these two types are incompatible because `{ } != { IO }`. However,
+The first branch should have type `Int32 -> Int32 \ {}` (i.e. it is pure)
+whereas the second branch has type `Int32 -> Int32 \ IO`. Without
+sub-effecting these two types are incompatible because `{} != IO`. However,
 because of sub-effecting, Flix gives the first branch the type `Int32 -> Int32 \
 ef` for some fresh effect variable `ef`. This allows type inference to _widen_
 the effect of the first branch to `IO`. Hence the compiler is able to type check
@@ -201,7 +201,7 @@ For example, we can define the trait:
 
 ```flix
 trait Foo[t] {
-    def f(x: t): Bool \ { IO }
+    def f(x: t): Bool \ IO
 }
 ```
 
@@ -214,8 +214,8 @@ instance Foo[Int32] {
 ```
 
 The declared effect of `f` is `IO`, but here the implementation of `f` is pure
-(i.e., it has the empty effect set `{ }`). The program still type checks because
-`{ }` can be widened to `IO`.
+(i.e., it has the empty effect set `{}`). The program still type checks because
+`{}` can be widened to `IO`.
 
 Flix, however, does not allow sub-effecting for top-level functions.
 

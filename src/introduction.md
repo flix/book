@@ -149,7 +149,7 @@ eff MyTime {
     def getCurrentHour(): Int32
 }
 
-def sayGreeting(name: String): Unit \ {MyPrint, MyTime} = {
+def sayGreeting(name: String): Unit \ { MyPrint, MyTime } = {
     let hour = MyTime.getCurrentHour();
     if (hour < 12)
         MyPrint.println("Good morning, ${name}")
@@ -194,18 +194,18 @@ def sendAll(l: List[Int32], tx: Sender[Int32]): Unit \ Chan =
 
 /// A function that receives n elements
 /// and collects them into a list.
-def recvN(n: Int32, rx: Receiver[Int32]): List[Int32] \ {Chan, NonDet} =
+def recvN(n: Int32, rx: Receiver[Int32]): List[Int32] \ { Chan, NonDet } =
     match n {
         case 0 => Nil
         case _ => Channel.recv(rx) :: recvN(n - 1, rx)
     }
 
 /// A function that calls receive and sends the result on d.
-def wait(rx: Receiver[Int32], n: Int32, tx: Sender[List[Int32]]): Unit \ {Chan, NonDet} =
+def wait(rx: Receiver[Int32], n: Int32, tx: Sender[List[Int32]]): Unit \ { Chan, NonDet } =
     Channel.send(recvN(n, rx), tx)
 
 /// Spawn a process for send and wait, and print the result.
-def main(): Unit \ {Chan, NonDet, IO} = region rc {
+def main(): Unit \ { Chan, NonDet, IO } = region rc {
     let l = 1 :: 2 :: 3 :: Nil;
     let (tx1, rx1) = Channel.buffered(100);
     let (tx2, rx2) = Channel.buffered(100);

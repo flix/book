@@ -59,7 +59,7 @@ def sweetFruits(rc: Region[r]): MutList[String, r] \ r =
     MutList.push("Pear") !>
     MutList.push("Mango")
 
-def printFruits(fruits: MutList[String, r]): Unit \ {r, IO} =
+def printFruits(fruits: MutList[String, r]): Unit \ r + IO =
     MutList.forEach(println, fruits)
 ```
 

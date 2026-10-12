@@ -25,15 +25,15 @@ The following functions _convert_ Flix collections to Java collections:
 ///
 /// Lists
 ///
-def toList(ma: m[a]): JList[a] \ IO + Aef[m] with Foldable[m]
-def toArrayList(ma: m[a]): JArrayList[a] \ IO + Aef[m] with Foldable[m]
-def toLinkedList(ma: m[a]): JLinkedList[a] \ IO + Aef[m] with Foldable[m]
+def toList(ma: m[a]): JList[a] \ { Aef[m], IO } with Foldable[m]
+def toArrayList(ma: m[a]): JArrayList[a] \ { Aef[m], IO } with Foldable[m]
+def toLinkedList(ma: m[a]): JLinkedList[a] \ { Aef[m], IO } with Foldable[m]
 
 ///
 /// Sets
 ///
-def toSet(ma: m[a]): JSet[a] \ IO + Aef[m] with Order[a], Foldable[m]
-def toTreeSet(ma: m[a]): JTreeSet[a] \ IO + Aef[m] with Order[a], Foldable[m]
+def toSet(ma: m[a]): JSet[a] \ { Aef[m], IO } with Order[a], Foldable[m]
+def toTreeSet(ma: m[a]): JTreeSet[a] \ { Aef[m], IO } with Order[a], Foldable[m]
 
 ///
 /// Maps

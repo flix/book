@@ -59,7 +59,7 @@ Here is an example of sending and receiving a message
 over a channel:
 
 ```flix
-def main(): Int32 \ {Chan, NonDet, IO} = region rc {
+def main(): Int32 \ { Chan, NonDet, IO } = region rc {
     let (tx, rx) = Channel.unbuffered();
     spawn Channel.send(42, tx) @ rc;
     Channel.recv(rx)
@@ -89,7 +89,7 @@ def meow(tx: Sender[String]): Unit \ Chan =
 def woof(tx: Sender[String]): Unit \ Chan =
     Channel.send("Woof!", tx)
 
-def main(): Unit \ {Chan, NonDet, IO} = region rc {
+def main(): Unit \ { Chan, NonDet, IO } = region rc {
     let (tx1, rx1) = Channel.buffered(1);
     let (tx2, rx2) = Channel.buffered(1);
     spawn meow(tx1) @ rc;
@@ -115,7 +115,7 @@ We can achieve this with a _default case_ as shown
 below:
 
 ```flix
-def main(): String \ {Chan, NonDet} = region rc {
+def main(): String \ { Chan, NonDet } = region rc {
     let (_, rx1) = Channel.buffered(1);
     let (_, rx2) = Channel.buffered(1);
     select {
@@ -146,12 +146,12 @@ a channel, but the `select` expression relies on
 giving up:
 
 ```flix
-def slow(tx: Sender[String]): Unit \ {Chan, NonDet, IO} =
+def slow(tx: Sender[String]): Unit \ { Chan, NonDet, IO } =
     let delay = Channel.timeout(60, Time.TimeUnit.Seconds);
     Channel.recv(delay);
     Channel.send("I am very slow", tx)
 
-def main(): Unit \ {Chan, NonDet, IO} = region rc {
+def main(): Unit \ { Chan, NonDet, IO } = region rc {
     let (tx, rx) = Channel.buffered(1);
     spawn slow(tx) @ rc;
     let timeout = Channel.timeout(5, Time.TimeUnit.Seconds);

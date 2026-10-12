@@ -2,19 +2,27 @@
 
 An annotation is a marker written before a declaration, such as `@Test` before
 a function. Annotations ask the compiler to check or treat the declaration in a
-specific way. For example, `@Test` marks a function as a test, and `@Tailrec`
-asks the compiler to verify that a function is tail recursive:
+specific way.
+
+For example, the `@Tailrec` annotation asks the compiler to verify that every
+recursive call in a function is a tail call. The `sum` function below passes
+the check, because the recursive call is the last thing it does:
 
 ```flix
-@Test
-def testSum01(): Unit \ Assert =
-    Assert.assertEq(expected = 6, sum(1 :: 2 :: 3 :: Nil, 0))
-
 @Tailrec
 def sum(l: List[Int32], acc: Int32): Int32 = match l {
     case Nil     => acc
     case x :: xs => sum(xs, acc + x)
 }
+```
+
+As another example, the `@Test` annotation marks a function as a test. The test
+framework runs every such function and reports whether it passed:
+
+```flix
+@Test
+def testSum01(): Unit \ Assert =
+    Assert.assertEq(expected = 6, sum(1 :: 2 :: 3 :: Nil, 0))
 ```
 
 The set of annotations is fixed by the language. You cannot define your own,

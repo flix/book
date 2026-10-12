@@ -432,7 +432,7 @@ def testAdd01(): Unit \ Assert =
 ```
 
 Note: Use `@Test`, not `@test`. Other annotations are similarly uppercase, e.g.
-`@Parallel`, `@Lazy`, `@MustUse`.
+`@Parallel`, `@Lazy`, `@Tailrec`.
 
 ## Companions Go Inside the Module
 

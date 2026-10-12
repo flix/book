@@ -10,7 +10,7 @@ change, we would have to read every public signature of every dependency again a
 every upgrade.
 
 Effect locking does this for us. The `eff-lock` command records the type and effect
-signature of every public function of every package the project has installed in an
+signature of every public function of every dependency the project declares in an
 `effects.lock` file, and the `eff-check` command tells us which of them have changed
 since.
 
@@ -21,6 +21,7 @@ For a project that depends on:
 ```toml
 [dependencies]
 "github:flix/museum-giftshop" = { version = "2.0.2", mount = "giftshop" }
+"github:flix/museum-clerk"    = { version = "2.1.2", mount = "clerk" }
 ```
 
 the `eff-lock` command type checks the project and reports:
@@ -50,11 +51,8 @@ function's type and effect signature. The signatures that a trait declares go in
 The three functions here all have the signature `Unit -> Unit \ IO`, which is why
 they all have the same hash.
 
-The lock covers every package the project has installed, not only the ones the
-manifest declares: `flix/museum-clerk` is locked because `flix/museum-giftshop`
-depends on it. The library bundled with Flix is not locked, since the `flix` field of
-the manifest already fixes the version of Flix that provides it, and neither is our
-own code. If the project does not type check, nothing is locked.
+The lock covers the dependencies the manifest declares, and not the packages they
+depend on: a package we do not declare is one we cannot call.
 
 > **Tip:** The `effects.lock` file should be committed to version control, like
 > `packages.lock`.

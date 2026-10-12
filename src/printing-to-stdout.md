@@ -28,10 +28,40 @@ terminal:
 
 ```flix
 eff Console {
-    def readln(): String
-    def print(s: String): Unit
-    def eprint(s: String): Unit
-    def println(s: String): Unit
-    def eprintln(s: String): Unit
+    def readln(): Option[String]
+    def write(s: String): Unit
+    def writeLine(s: String): Unit
+    def writeErr(s: String): Unit
+    def writeErrLine(s: String): Unit
 }
 ```
+
+The operations work on plain `String`s. The `Console` effect is the
+[companion](./companion-modules.md) of the `Sys.Console` module, which defines
+four printing functions on top of the operations:
+
+```flix
+mod Sys.Console {
+    def print(x: a): Unit \ Console with ToString[a]
+    def println(x: a): Unit \ Console with ToString[a]
+    def eprint(x: a): Unit \ Console with ToString[a]
+    def eprintln(x: a): Unit \ Console with ToString[a]
+}
+```
+
+Like the `println` of the Prelude, these accept any value with a `ToString`
+instance, but they have the `Console` effect rather than `IO`. The `eprint` and
+`eprintln` functions write to standard error. For example:
+
+```flix
+use Sys.Console
+
+def main(): Unit \ Console =
+    let o = Some(123);
+    let l = 1 :: 2 :: 3 :: Nil;
+    Console.println(o);
+    Console.println(l);
+    Console.eprintln("Printed two values.")
+```
+
+See the [Console](./console.md) chapter for reading input and for prompts.

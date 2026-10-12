@@ -11,7 +11,7 @@ effects all have default handlers, so no explicit `runWithIO` is needed in
 | [`Math.Random`](./random.md)                         | Generating pseudorandom numbers, with optional seeded determinism.                             |
 | [`Fs.FileSystem`](./filesystem.md) <br> [`Fs.FileRead`](./filesystem.md) <br> [`Fs.FileWrite`](./filesystem.md) <br> [`Fs.FileStat`](./filesystem.md) | File I/O, metadata, directories, and middleware (chroot, atomic writes, in-memory FS, etc.).   |
 | [`Net.Http`](./http-and-https.md) <br> [`Net.Https`](./http-and-https.md) | Sending HTTP requests with a fluent API, middleware (retries, rate limiting, circuit breakers). |
-| [`Sys.Console`](./console.md)                        | Terminal I/O: reading input, printing to stdout/stderr, prompts, and menus.                    |
+| [`Sys.Console`](./console.md)                        | Terminal I/O: reading input, printing to stdout/stderr, and prompts.                           |
 | [`Sys.Env`](./env.md)                                | Accessing environment variables, system properties, and platform information.                  |
 | [`Sys.Exit`](./exit.md)                              | Terminating the program with a specific exit code.                                             |
 | [`Sys.Process`](./process.md)                        | Spawning and managing OS processes.                                                            |

@@ -63,26 +63,37 @@ example:
 ```flix
 use Sys.Console
 
-def main(): Result[String, Unit] \ IO =
-    println("Please enter your first name, last name, and age:");
+def readLine(): Result[String, String] \ Console =
+    Option.toOk("Unexpected end of input.", Console.readln())
+
+def greet(): Result[String, Unit] \ Console =
     forM (
-        fstName <- Console.readln();
-        lstName <- Console.readln();
-        ageLine <- Console.readln();
+        fstName <- readLine();
+        lstName <- readLine();
+        ageLine <- readLine();
         ageNum  <- Int32.parse(10, ageLine)
     ) yield {
-        println("Hello ${lstName}, ${fstName}.");
-        println("You are ${ageNum} years old!")
+        Console.println("Hello ${lstName}, ${fstName}.");
+        Console.println("You are ${ageNum} years old!")
+    }
+
+def main(): Unit \ Console =
+    Console.println("Please enter your first name, last name, and age:");
+    match greet() {
+        case Ok(_)    => ()
+        case Err(msg) => Console.eprintln(msg)
     }
 ```
 
-Here `main` prompts the user to enter their first name, last name, and age. Each
-call to `Console.readln` returns a `Result[String, String]` value which is
-either an error or the input string. Thus the local variables `fstName`,
-`lstName`, and `ageLine` are `String`s. We parse `ageLine` into an `Int32` using
-`Int32.parse`, which returns a `Result[String, Int32]` value. If every operation
-is successful then we print a greeting and return `Ok(())` (i.e., `Ok` of
-`Unit`). Otherwise, we return an `Err(msg)` value.
+Here `main` prompts the user to enter their first name, last name, and age, and
+`greet` reads them. `Console.readln` returns an `Option[String]` which is `None`
+at the end of input, so `readLine` turns it into a `Result[String, String]` with
+`Option.toOk`. Thus the local variables `fstName`, `lstName`, and `ageLine` are
+`String`s. We parse `ageLine` into an `Int32` using `Int32.parse`, which returns
+a `Result[String, Int32]` value. If every operation is successful then we print
+a greeting and return `Ok(())` (i.e., `Ok` of `Unit`). Otherwise, we return the
+first `Err(msg)` value. Since `main` must return `Unit`, it matches on the
+result and prints the error message, if any.
 
 ## Working with Other Monads
 

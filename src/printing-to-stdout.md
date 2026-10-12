@@ -28,10 +28,16 @@ terminal:
 
 ```flix
 eff Console {
-    def readln(): String
-    def print(s: String): Unit
-    def eprint(s: String): Unit
-    def println(s: String): Unit
-    def eprintln(s: String): Unit
+    def readln(): Option[String]
+    def write(s: String): Unit
+    def writeLine(s: String): Unit
+    def writeErr(s: String): Unit
+    def writeErrLine(s: String): Unit
 }
 ```
+
+The `Sys.Console` module defines `Console.print`, `Console.println`,
+`Console.eprint`, and `Console.eprintln` on top of these operations. Like the
+`println` of the Prelude, they accept any value with a `ToString` instance, but
+they have the `Console` effect rather than `IO`. See the
+[Console](./console.md) chapter for details.

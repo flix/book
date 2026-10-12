@@ -54,7 +54,3 @@ Flix has the following annotations:
 The last six annotations are documentation. They are shown in the API docs and
 as hints in the editor, but they do not change how the compiler translates the
 function.
-
-Annotations go on top-level declarations and on declarations inside modules,
-traits, and instances. A local function declared inside another function accepts
-only `@Tailrec` and `@Terminates`.

@@ -174,37 +174,3 @@ def main(): Unit \ Console =
         case None    => Console.println("No integer given.")
     }
 ```
-
-## Writing a Console Handler
-
-Because every function of the module is defined in terms of the five
-operations, a handler that implements those operations handles all of them. For
-example, a handler can feed scripted input and collect the output, which lets a
-program that uses `Console` run without a terminal. The handler below ignores
-standard error:
-
-```flix
-use Sys.Console
-
-def greet(): Unit \ Console =
-    Console.print("What is your name? ");
-    match Console.readln() {
-        case Some(name) => Console.println("Hello ${name}!")
-        case None       => Console.println("No name given.")
-    }
-
-def main(): Unit \ IO =
-    region rc {
-        let sb = StringBuilder.empty(rc);
-        run {
-            greet()
-        } with handler Console {
-            def readln(k)           = k(Some("Ada"))
-            def write(s, k)         = { StringBuilder.append(s, sb); k() }
-            def writeLine(s, k)     = { StringBuilder.appendLine(s, sb); k() }
-            def writeErr(_s, k)     = k()
-            def writeErrLine(_s, k) = k()
-        };
-        println(StringBuilder.toString(sb))
-    }
-```

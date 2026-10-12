@@ -1,9 +1,6 @@
 # Annotations
 
-Flix supports a limited set of built-in annotations. An annotation is a marker
-written before a declaration, such as `@Test` before a function, which asks the
-compiler to check or treat the declaration in a specific way. The set of
-annotations is fixed by the language, so you cannot define your own.
+Flix supports a limited set of built-in annotations.
 
 For example, the `@Test` annotation marks a function as a test. The test
 framework runs every such function and reports whether it passed:
@@ -26,7 +23,7 @@ def sum(l: List[Int32], acc: Int32): Int32 = match l {
 }
 ```
 
-Flix has the following annotations:
+Flix has the following built-in annotations:
 
 | Annotation          | Meaning                                                                                                                |
 |---------------------|------------------------------------------------------------------------------------------------------------------------|

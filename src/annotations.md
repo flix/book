@@ -1,8 +1,9 @@
 # Annotations
 
-An annotation is a marker written before a declaration, such as `@Test` before
-a function. Annotations ask the compiler to check or treat the declaration in a
-specific way.
+Flix supports a limited set of built-in annotations. An annotation is a marker
+written before a declaration, such as `@Test` before a function, which asks the
+compiler to check or treat the declaration in a specific way. The set of
+annotations is fixed by the language, so you cannot define your own.
 
 For example, the `@Tailrec` annotation asks the compiler to verify that every
 recursive call in a function is a tail call. The `sum` function below passes

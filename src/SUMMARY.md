@@ -92,6 +92,7 @@
   - [Using Dependencies](./using-dependencies.md)
   - [Versions and Upgrades](./versions-and-upgrades.md)
   - [Trusting Dependencies](./trusting-dependencies.md)
+  - [Locking Effects](./locking-effects.md)
   - [Publishing a Package](./publishing-a-package.md)
 ---
 

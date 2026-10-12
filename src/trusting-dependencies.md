@@ -24,6 +24,10 @@ pure value cannot touch the file system, open a socket, or read the clock, howev
 is written inside. In the `unrestricted` context we have no such guarantee, and the
 signatures tell us nothing about what the code may do.
 
+The signatures we read are those of the release we are building, and a later
+release may change them. [Locking Effects](./locking-effects.md) describes how to
+record them, so that we are told when they change.
+
 ## Setting the Security Context
 
 We can set the security context of each dependency in the manifest:

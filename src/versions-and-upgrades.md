@@ -150,6 +150,10 @@ longer the same.
 > **Note:** The lock file records Flix packages only. Maven libraries and JAR-files
 > downloaded from a URL are not covered by it.
 
+> **Note:** A project may also have an `effects.lock` file, which records the
+> signatures of its dependencies rather than their files, as described in
+> [Locking Effects](./locking-effects.md).
+
 ## Finding Outdated Packages
 
 We can check whether any of our Flix packages have newer releases with the

@@ -25,7 +25,7 @@ For example, main can use the `Env` and `Exit` effects:
 use Sys.Env
 use Sys.Exit
 
-def main(): Unit \ {Env, Exit} =
+def main(): Unit \ { Env, Exit } =
     let args = Env.getArgs();
     match List.head(args) {
         case None    =>
@@ -44,7 +44,7 @@ The command line arguments passed to the program can be accessed by calling
 ```flix
 use Sys.Env
 
-def main(): Unit \ {Env, IO} =
+def main(): Unit \ { Env, IO } =
     let args = Env.getArgs();
     println("Arguments: ${args}")
 ```

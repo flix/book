@@ -98,7 +98,6 @@
   - [Checked Casts](./checked-casts.md)
   - [Unchecked Casts](./unchecked-casts.md)
   - [Bugs and Unreachable Code](./bug-and-unreachable.md)
-  - [Laziness](./laziness.md)
   - [Purity Reflection](./purity-reflection.md)
   - [Type-Level Programming](./type-level-programming.md)
   - [Termination Checking](./termination-checking.md)

@@ -35,7 +35,9 @@ which are defined in terms of the operations.
 
 ## The Console Module
 
-The `Console` module provides the printing functions and several prompts:
+The `Console` effect is the [companion](./companion-modules.md) of the
+`Sys.Console` module, which provides the printing functions and several
+prompts:
 
 ```flix
 mod Sys.Console {
@@ -87,6 +89,30 @@ def main(): Unit \ Console =
         case None       => Console.println("No name given.")
     }
 ```
+
+## Printing Values
+
+Since the printing functions accept any value with a `ToString` instance, a
+value does not have to be converted to a `String` first. `print` and `eprint`
+write without a trailing newline, whereas `println` and `eprintln` add one.
+`eprint` and `eprintln` write to standard error:
+
+```flix
+use Sys.Console
+
+def main(): Unit \ Console =
+    let o = Some(123);
+    let l = 1 :: 2 :: 3 :: Nil;
+    Console.print("o = ");
+    Console.println(o);
+    Console.print("l = ");
+    Console.println(l);
+    Console.eprint("sum = ");
+    Console.eprintln(List.sum(l))
+```
+
+The program prints `o = Some(123)` and `l = 1 :: 2 :: 3 :: Nil` to standard
+out, and `sum = 6` to standard error.
 
 ## Confirmed Input
 

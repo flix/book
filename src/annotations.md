@@ -25,14 +25,6 @@ def testSum01(): Unit \ Assert =
     Assert.assertEq(expected = 6, sum(1 :: 2 :: 3 :: Nil, 0))
 ```
 
-The set of annotations is fixed by the language. You cannot define your own,
-annotations take no arguments, and a program cannot inspect them at runtime.
-Where other languages use annotations for language features, Flix uses keywords
-instead: for example, an instance that overrides a default implementation from
-its trait marks the function with `redef`, not `@Override`. Annotation names
-are capitalized. Several annotations may be placed on the same declaration, but
-each may appear only once.
-
 Flix has the following annotations:
 
 | Annotation          | Meaning                                                                                                                |
@@ -54,3 +46,7 @@ Flix has the following annotations:
 The last six annotations are documentation. They are shown in the API docs and
 as hints in the editor, but they do not change how the compiler translates the
 function.
+
+> **Note:** Flix has no `@Override` annotation. An instance that overrides a
+> default implementation from its trait marks the function with the `redef`
+> keyword instead.

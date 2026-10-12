@@ -79,6 +79,7 @@
   - [Tail Recursion](./tail-recursion.md)
   - [Anonymous and Named Holes](./holes.md)
   - [Type Ascriptions](./type-ascriptions.md)
+  - [Annotations](./annotations.md)
   - [Redundancy](./redundancy.md)
   - [Debugging](./debugging.md)
 - [Tools](./tools.md)

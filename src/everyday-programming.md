@@ -7,3 +7,4 @@ In this chapter we cover some everyday programming features:
 - How to use string interpolation.
 - How to use anonymous and named holes for incomplete programs.
 - How to use type ascriptions to explicitly provide some types to the compiler.
+- How to use annotations such as `@Test` and `@Tailrec`.

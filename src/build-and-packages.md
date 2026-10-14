@@ -33,6 +33,7 @@ every test.
 | `run`           | runs `main` in the project.                             |
 | `test`          | runs all tests in the project.                          |
 | `doc`           | generates API documentation for the project.            |
+| `format`        | formats the source code of the project.                 |
 | `stat`          | prints statistics about the project.                    |
 | `build`         | compiles the entire project.                            |
 | `build-classes` | compiles the project to Java class files.               |

@@ -52,6 +52,9 @@ Flix also comes with an (optional) Visual Studio Code color theme called "Flixif
     - Rename local variables or formal parameters.
     - Rename functions.
 
+* __Formatting__
+    - Format the current file.
+
 * __Code Lenses__
     - Run `main` from within the editor.
     - Run tests from within the editor.

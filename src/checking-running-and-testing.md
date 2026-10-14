@@ -87,6 +87,30 @@ build
 
 We read it by opening `build/doc/index.html` in a browser.
 
+## Formatting the Source Code
+
+We can format the source code of the project with the `format` command. The
+command rewrites every file in `src` and `test` in place. If `src/Main.flix` reads:
+
+```flix
+def   main( ) : Unit \ IO =
+  println(  "Hello World!" )
+
+def add(x:Int32,y:Int32):Int32=x+y
+```
+
+then after `format` it reads:
+
+```flix
+def main(): Unit \ IO =
+    println("Hello World!")
+
+def add(x: Int32, y: Int32): Int32 = x + y
+```
+
+If the project does not compile, `format` reports the errors and leaves the
+files untouched.
+
 ## Printing Statistics
 
 We can print statistics about the project with the `stat` command:
